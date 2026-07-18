@@ -13,7 +13,8 @@ copies them into the consuming project. There's no publish step.
 registry.json              root manifest — one entry per distributable item
 registry/
   lib/utils.ts              cn() helper (clsx + tailwind-merge)
-  new-york/ui/button.tsx     first pilot component, new-york style
+  new-york/ui/                new-york style components:
+    button.tsx, card.tsx, label.tsx, input.tsx, dialog.tsx, tabs.tsx, badge.tsx
 theme/tokens.css            same tokens as the "theme" item, as plain CSS
 ```
 
@@ -75,8 +76,9 @@ broken by an `add` re-run.
   no `tailwind.config.js`).
 - Radix UI primitives under the hood; components are copied, not installed
   as a dependency — once pulled into a consumer, edit them there.
-- The `theme` item currently ships only the core token set (background,
+- The `theme` item ships the full token set: core colors (background,
   foreground, primary/secondary/accent/muted, destructive, border/input/
-  ring). It doesn't yet include `--radius`, `--card`, `--popover`, or
-  `--chart-*` — add those to the `theme` item before pulling components
-  that need them (Card, Popover, chart primitives, etc.).
+  ring), plus `--radius`, `--card`, `--popover`, and `--chart-1..5`.
+- Available components: `button`, `card`, `label`, `input`, `dialog`,
+  `tabs`, `badge` — all `new-york` style, Radix-based, pulled from the
+  registry the same way as `theme`/`button` above.
