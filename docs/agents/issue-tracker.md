@@ -2,7 +2,7 @@
 
 Issues and PRDs for this repo live as GitHub issues (`deanjstone/design-system`). Use the `gh` CLI for all operations.
 
-> **Note:** This repo previously ran a Director-Agent workflow keyed on `.claude/tasks/task-NNN-*.md` files (see `.claude/SYSTEM.md`). As of 2026-07-18, GitHub issues are the authoritative record for all non-trivial Director-Agent work, adopting Matt Pocock's upstream convention in full. `task-001-registry-expansion.md` remains in the repo as a historical archive of the pre-migration research; no new task files are created.
+> **Note:** This repo previously ran a Director-Agent workflow keyed on `.claude/tasks/task-NNN-*.md` files (see `.claude/SYSTEM.md`). As of 2026-07-18, GitHub issues are the authoritative record for all non-trivial Director-Agent work, adopting Matt Pocock's upstream convention in full. The one task file opened pre-migration (task-001) was superseded by wayfinder map #5 and never merged to `main`; no new task files are created.
 
 ## Conventions
 

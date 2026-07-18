@@ -30,4 +30,4 @@ items with `npx shadcn add @design-system/<item>` — see README.md.
 - Code execution is blocked until the Director provides explicit approval in chat.
 - Claude executes, comments on the issue with the verification checklist and results, and closes it once the Director confirms the work is merged.
 - Chat is the interface — the GitHub issue is the record.
-- **Migration note (2026-07-18):** this repo's Director-Agent record moved from `.claude/tasks/task-NNN-*.md` files to GitHub issues, adopting Matt Pocock's skills convention in full. `task-001-registry-expansion.md` (opened 2026-07-18, pre-migration) remains as a historical archive; no new task files are created.
+- **Migration note (2026-07-18):** this repo's Director-Agent record moved from `.claude/tasks/task-NNN-*.md` files to GitHub issues, adopting Matt Pocock's skills convention in full. No task file was ever merged to `main` — the one opened pre-migration (task-001) was superseded by wayfinder map #5 and closed without merging. No new task files are created going forward.
