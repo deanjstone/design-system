@@ -24,7 +24,10 @@ items with `npx shadcn add @design-system/<item>` — see README.md.
 
 ## Director-Agent Workflow
 
-- All non-trivial work begins with a task file in `.claude/tasks/task-NNN-<name>.md`.
-- Claude must append its implementation plan to the task file before writing any code.
+- All non-trivial work begins with a GitHub issue — the issue is the source of truth, not a `.claude/tasks/` file. See `docs/agents/issue-tracker.md`.
+- Claude writes the specification into the issue body under "## Specification", then appends its implementation plan under "## AI Implementation Plan" (files to create/modify/delete, step-by-step execution, risks) before writing any code.
+- Claude summarises the plan in chat so the Director can review without opening the issue.
 - Code execution is blocked until the Director provides explicit approval in chat.
-- Chat is the UI; the task file is the source of truth.
+- Claude executes, comments on the issue with the verification checklist and results, and closes it once the Director confirms the work is merged.
+- Chat is the interface — the GitHub issue is the record.
+- **Migration note (2026-07-18):** this repo's Director-Agent record moved from `.claude/tasks/task-NNN-*.md` files to GitHub issues, adopting Matt Pocock's skills convention in full. No task file was ever merged to `main` — the one opened pre-migration (task-001) was superseded by wayfinder map #5 and closed without merging. No new task files are created going forward.
