@@ -87,6 +87,76 @@
           "type": "registry:ui"
         }
       ]
+    },
+    {
+      "name": "card",
+      "type": "registry:ui",
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/new-york/ui/card.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "label",
+      "type": "registry:ui",
+      "registryDependencies": ["utils"],
+      "dependencies": ["@radix-ui/react-label"],
+      "files": [
+        {
+          "path": "registry/new-york/ui/label.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "input",
+      "type": "registry:ui",
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/new-york/ui/input.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "dialog",
+      "type": "registry:ui",
+      "registryDependencies": ["utils"],
+      "dependencies": ["@radix-ui/react-dialog", "lucide-react"],
+      "files": [
+        {
+          "path": "registry/new-york/ui/dialog.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "tabs",
+      "type": "registry:ui",
+      "registryDependencies": ["utils"],
+      "dependencies": ["@radix-ui/react-tabs"],
+      "files": [
+        {
+          "path": "registry/new-york/ui/tabs.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "badge",
+      "type": "registry:ui",
+      "registryDependencies": ["utils"],
+      "dependencies": ["class-variance-authority", "@radix-ui/react-slot"],
+      "files": [
+        {
+          "path": "registry/new-york/ui/badge.tsx",
+          "type": "registry:ui"
+        }
+      ]
     }
   ]
 }
