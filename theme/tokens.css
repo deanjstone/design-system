@@ -34,6 +34,37 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+  --color-surface-0: var(--surface-0);
+  --color-surface-1: var(--surface-1);
+  --color-surface-2: var(--surface-2);
+  --color-surface-3: var(--surface-3);
+  --color-surface-4: var(--surface-4);
+  --color-surface-5: var(--surface-5);
+  --color-surface-border: var(--surface-border);
+  --color-surface-border-light: var(--surface-border-light);
+  --animate-pulse-slow: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  --animate-fade-in: fadeIn 0.3s ease-out;
+  --animate-slide-up: slideUp 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 :root {
@@ -61,6 +92,16 @@
   --chart-3: oklch(0.398 0.07 227.392);
   --chart-4: oklch(0.828 0.189 84.429);
   --chart-5: oklch(0.769 0.188 70.08);
+  /* Dark-elevation ramp (design-system#19) — same values in light/dark; only
+     meaningful once an app opts in by using the surface-* utilities. */
+  --surface-0: #06060a;
+  --surface-1: #0c0c14;
+  --surface-2: #13131e;
+  --surface-3: #1a1a28;
+  --surface-4: #222233;
+  --surface-5: #2a2a3d;
+  --surface-border: #2a2a3d;
+  --surface-border-light: #363650;
 }
 
 .dark {
@@ -87,4 +128,101 @@
   --chart-3: oklch(0.769 0.188 70.08);
   --chart-4: oklch(0.627 0.265 303.9);
   --chart-5: oklch(0.645 0.246 16.439);
+}
+
+/*
+ * Opt-in plain-CSS component recipes (design-system#19). Fallback layer for
+ * consumers that want a class-based surface instead of composing shadcn's
+ * component primitives directly — using them is optional, and not using
+ * them has no effect on the tokens above.
+ */
+@layer components {
+  .card {
+    background-color: var(--color-card);
+    color: var(--color-card-foreground);
+    border: 1px solid var(--color-surface-border);
+    border-radius: var(--radius-lg);
+  }
+
+  .card-hover {
+    transition:
+      background-color 0.2s ease,
+      border-color 0.2s ease;
+  }
+
+  .card-hover:hover {
+    background-color: var(--color-surface-2);
+    border-color: var(--color-surface-border-light);
+  }
+
+  .btn-primary {
+    background-color: var(--color-primary);
+    color: var(--color-primary-foreground);
+    border-radius: var(--radius-md);
+  }
+
+  .btn-ghost {
+    background-color: transparent;
+    color: var(--color-foreground);
+  }
+
+  .btn-ghost:hover {
+    background-color: var(--color-accent);
+    color: var(--color-accent-foreground);
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 9999px;
+    padding: 0.125rem 0.625rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    background-color: var(--color-secondary);
+    color: var(--color-secondary-foreground);
+  }
+
+  .input {
+    border: 1px solid var(--color-input);
+    border-radius: var(--radius-md);
+    background-color: transparent;
+  }
+
+  .input:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--color-ring);
+  }
+}
+
+/*
+ * Always-dark app extras (design-system#19) — scrollbar, selection, and
+ * calendar-picker-icon styling. Scoped under `.dark` so they only apply
+ * when a consumer sets `class="dark"`; no effect on light-mode consumers.
+ */
+.dark ::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background-color: var(--color-surface-4);
+  border-radius: 9999px;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background-color: var(--color-surface-5);
+}
+
+.dark ::selection {
+  background-color: var(--color-primary);
+  color: var(--color-primary-foreground);
+}
+
+.dark input[type="date"]::-webkit-calendar-picker-indicator,
+.dark input[type="time"]::-webkit-calendar-picker-indicator {
+  filter: invert(1);
 }
