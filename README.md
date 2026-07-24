@@ -79,6 +79,12 @@ broken by an `add` re-run.
 - The `theme` item ships the full token set: core colors (background,
   foreground, primary/secondary/accent/muted, destructive, border/input/
   ring), plus `--radius`, `--card`, `--popover`, and `--chart-1..5`.
+- Opt-in additions to the `theme` item (no effect unless a consumer uses
+  the utilities): a 6-step `surface-0..5` dark-elevation ramp plus
+  `surface-border`/`surface-border-light`, `pulse-slow`/`fade-in`/
+  `slide-up` animations, `.card`/`.card-hover`/`.btn-primary`/`.btn-ghost`/
+  `.badge`/`.input` plain-CSS component recipes, and `.dark`-scoped
+  scrollbar/selection/calendar-picker-icon styling for always-dark apps.
 - Available components: `button`, `card`, `label`, `input`, `dialog`,
   `tabs`, `badge` — all `new-york` style, Radix-based, pulled from the
   registry the same way as `theme`/`button` above.
