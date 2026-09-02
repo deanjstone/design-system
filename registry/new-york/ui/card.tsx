@@ -28,11 +28,20 @@ function CardHeader({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
-function CardTitle({ className, ...props }: React.ComponentProps<"div">) {
+function CardTitle({
+  className,
+  as: Comp = "div",
+  ...props
+}: React.ComponentProps<"div"> & { as?: React.ElementType }) {
+  // Defaults to a div so this stays non-breaking, but a page of cards has no
+  // heading structure until one is supplied. Pass `as="h3"` (matching the
+  // surrounding outline) so screen-reader users get headings to navigate by.
+  // An `as` prop rather than `asChild` deliberately: card ships with zero
+  // dependencies, and Radix Slot would change what consumers must install.
   return (
-    <div
+    <Comp
       data-slot="card-title"
-      className={cn("leading-none font-semibold", className)}
+      className={cn("leading-none font-semibold", "min-w-0 break-words", className)}
       {...props}
     />
   )
@@ -42,7 +51,13 @@ function CardDescription({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="card-description"
-      className={cn("text-muted-foreground text-sm", className)}
+      className={cn(
+        "text-muted-foreground text-sm",
+        // The header is a grid; without min-w-0 an unbroken string (a URL, an
+        // ID, a token) refuses to shrink and overflows the card.
+        "min-w-0 break-words",
+        className
+      )}
       {...props}
     />
   )
