@@ -174,10 +174,6 @@
       border-color 0.2s ease;
   }
 
-  .card-hover:hover {
-    background-color: var(--color-accent);
-  }
-
   /*
    * Always-dark consumers keep the tonal-ramp hover the recipes were written
    * for; the theme-aware default above is what light mode needs. Scoping it
@@ -187,9 +183,20 @@
     border-color: var(--color-surface-border);
   }
 
-  .dark .card-hover:hover {
-    background-color: var(--color-surface-2);
-    border-color: var(--color-surface-border-light);
+  /*
+   * Hover is not a state a touch device can leave: tapping a .card-hover
+   * element leaves it stuck in its hover fill until something else is tapped.
+   * Both rules live behind the capability query for that reason.
+   */
+  @media (hover: hover) {
+    .card-hover:hover {
+      background-color: var(--color-accent);
+    }
+
+    .dark .card-hover:hover {
+      background-color: var(--color-surface-2);
+      border-color: var(--color-surface-border-light);
+    }
   }
 
   .btn-primary {
@@ -328,5 +335,44 @@
   [data-slot="dialog-content"] {
     --tw-enter-scale: 1;
     --tw-exit-scale: 1;
+  }
+}
+
+/*
+ * Coarse-pointer sizing. The system's canonical control height is 36px, which
+ * clears WCAG 2.5.8 (24px) but sits under the 44px iOS HIG / 48px Material
+ * recommendation. Rather than inflating every control everywhere — which would
+ * cost the density the system is built around — the floor is raised only where
+ * the input is actually a finger.
+ *
+ * `pointer: coarse` is the right query, not a width breakpoint: a large
+ * touchscreen is still a finger, and a narrow desktop window is still a mouse.
+ *
+ * Deliberately unlayered. Tailwind utilities live in a cascade layer, so a
+ * layered rule here would lose to `min-w-0` on Button; unlayered styles win
+ * over layered ones regardless of specificity. On a touch device the 44px
+ * floor is meant to outrank the shrink-to-fit utility.
+ */
+@media (pointer: coarse) {
+  [data-slot="button"] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  [data-slot="input"] {
+    min-height: 44px;
+  }
+
+  [data-slot="tabs-list"] {
+    min-height: 44px;
+  }
+
+  [data-slot="tabs-trigger"] {
+    min-height: 38px;
+  }
+
+  [data-slot="dialog-close"] {
+    min-height: 44px;
+    min-width: 44px;
   }
 }

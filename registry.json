@@ -141,15 +141,17 @@
           ".card-hover": {
             "transition": "background-color 0.2s ease, border-color 0.2s ease"
           },
-          ".card-hover:hover": {
-            "background-color": "var(--color-accent)"
-          },
           ".dark .card": {
             "border-color": "var(--color-surface-border)"
           },
-          ".dark .card-hover:hover": {
-            "background-color": "var(--color-surface-2)",
-            "border-color": "var(--color-surface-border-light)"
+          "@media (hover: hover)": {
+            ".card-hover:hover": {
+              "background-color": "var(--color-accent)"
+            },
+            ".dark .card-hover:hover": {
+              "background-color": "var(--color-surface-2)",
+              "border-color": "var(--color-surface-border-light)"
+            }
           },
           ".btn-primary": {
             "background-color": "var(--color-primary)",
@@ -244,6 +246,25 @@
           "[data-slot=\"dialog-content\"]": {
             "--tw-enter-scale": "1",
             "--tw-exit-scale": "1"
+          }
+        },
+        "@media (pointer: coarse)": {
+          "[data-slot=\"button\"]": {
+            "min-height": "44px",
+            "min-width": "44px"
+          },
+          "[data-slot=\"input\"]": {
+            "min-height": "44px"
+          },
+          "[data-slot=\"tabs-list\"]": {
+            "min-height": "44px"
+          },
+          "[data-slot=\"tabs-trigger\"]": {
+            "min-height": "38px"
+          },
+          "[data-slot=\"dialog-close\"]": {
+            "min-height": "44px",
+            "min-width": "44px"
           }
         }
       }
