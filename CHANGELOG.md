@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/deanjstone/design-system/compare/v1.0.1...v1.0.2) (2026-09-02)
+
+
+### Bug Fixes
+
+* adapt tabs overflow and touch targets to input capability ([#32](https://github.com/deanjstone/design-system/issues/32)) ([5edfe24](https://github.com/deanjstone/design-system/commit/5edfe24b233ad980b17db1dcd38982b37295084d))
+
 ## [1.0.1](https://github.com/deanjstone/design-system/compare/v1.0.0...v1.0.1) (2026-09-02)
 
 
