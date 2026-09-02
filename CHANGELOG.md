@@ -1,3 +1,10 @@
+## [1.0.3](https://github.com/deanjstone/design-system/compare/v1.0.2...v1.0.3) (2026-09-02)
+
+
+### Bug Fixes
+
+* pair destructive with a foreground token and finish focus drift ([#33](https://github.com/deanjstone/design-system/issues/33)) ([c38820e](https://github.com/deanjstone/design-system/commit/c38820ebe5b0fda7ef21e77987bb9a666ae16757)), closes [#fff](https://github.com/deanjstone/design-system/issues/fff)
+
 ## [1.0.2](https://github.com/deanjstone/design-system/compare/v1.0.1...v1.0.2) (2026-09-02)
 
 
