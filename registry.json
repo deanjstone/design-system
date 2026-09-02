@@ -50,8 +50,8 @@
           "accent-foreground": "oklch(0.205 0 0)",
           "destructive": "oklch(0.577 0.245 27.325)",
           "border": "oklch(0.922 0 0)",
-          "input": "oklch(0.922 0 0)",
-          "ring": "oklch(0.708 0 0)",
+          "input": "oklch(0.64 0 0)",
+          "ring": "oklch(0.62 0 0)",
           "chart-1": "oklch(0.646 0.222 41.116)",
           "chart-2": "oklch(0.6 0.118 184.704)",
           "chart-3": "oklch(0.398 0.07 227.392)",
@@ -93,9 +93,9 @@
           "muted-foreground": "oklch(0.708 0 0)",
           "accent": "oklch(0.269 0 0)",
           "accent-foreground": "oklch(0.985 0 0)",
-          "destructive": "oklch(0.704 0.191 22.216)",
+          "destructive": "oklch(0.58 0.191 22.216)",
           "border": "oklch(1 0 0 / 10%)",
-          "input": "oklch(1 0 0 / 15%)",
+          "input": "oklch(1 0 0 / 40%)",
           "ring": "oklch(0.556 0 0)",
           "chart-1": "oklch(0.488 0.243 264.376)",
           "chart-2": "oklch(0.696 0.17 162.48)",
@@ -135,13 +135,19 @@
           ".card": {
             "background-color": "var(--color-card)",
             "color": "var(--color-card-foreground)",
-            "border": "1px solid var(--color-surface-border)",
+            "border": "1px solid var(--color-border)",
             "border-radius": "var(--radius-lg)"
           },
           ".card-hover": {
             "transition": "background-color 0.2s ease, border-color 0.2s ease"
           },
           ".card-hover:hover": {
+            "background-color": "var(--color-accent)"
+          },
+          ".dark .card": {
+            "border-color": "var(--color-surface-border)"
+          },
+          ".dark .card-hover:hover": {
             "background-color": "var(--color-surface-2)",
             "border-color": "var(--color-surface-border-light)"
           },
@@ -219,6 +225,26 @@
         },
         ".dark input[type=\"date\"]::-webkit-calendar-picker-indicator, .dark input[type=\"time\"]::-webkit-calendar-picker-indicator": {
           "filter": "invert(1)"
+        },
+        "@media (prefers-reduced-motion: reduce)": {
+          "@keyframes slideUp": {
+            "from": {
+              "opacity": "0"
+            },
+            "to": {
+              "opacity": "1"
+            }
+          },
+          ":root": {
+            "--animate-pulse-slow": "none"
+          },
+          ".card-hover": {
+            "transition-duration": "1ms"
+          },
+          "[data-slot=\"dialog-content\"]": {
+            "--tw-enter-scale": "1",
+            "--tw-exit-scale": "1"
+          }
         }
       }
     },

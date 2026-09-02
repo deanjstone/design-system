@@ -18,8 +18,8 @@ colors:
   accent-foreground: "oklch(0.205 0 0)"
   destructive: "oklch(0.577 0.245 27.325)"
   border: "oklch(0.922 0 0)"
-  input: "oklch(0.922 0 0)"
-  ring: "oklch(0.708 0 0)"
+  input: "oklch(0.64 0 0)"
+  ring: "oklch(0.62 0 0)"
   chart-1: "oklch(0.646 0.222 41.116)"
   chart-2: "oklch(0.6 0.118 184.704)"
   chart-3: "oklch(0.398 0.07 227.392)"
@@ -215,11 +215,16 @@ indigo, built for consumers that live in permanent dark.
   the hover fill for ghost and outline buttons.
 - **Quiet Text** (`oklch(0.556 0 0)`): `muted-foreground`. Card descriptions,
   placeholders, and inactive tab labels.
-- **Hairline** (`oklch(0.922 0 0)`): `border` and `input` share this value.
-  In dark mode both switch to translucent white (`oklch(1 0 0 / 10%)` and
-  `/ 15%`) so edges sit *on* the surface rather than beside it.
-- **Ring** (`oklch(0.708 0 0)`): The focus indicator, always rendered at 50%
-  opacity across a 3px spread.
+- **Hairline** (`oklch(0.922 0 0)`): `border`, used for container edges. In
+  dark mode it becomes translucent white (`oklch(1 0 0 / 10%)`) so edges sit
+  *on* the surface rather than beside it.
+- **Field Edge** (`oklch(0.64 0 0)`): `input`. Deliberately darker than
+  Hairline — an input's border is its only boundary, so it must clear 3:1
+  against the ground (WCAG 1.4.11) where a decorative container border need
+  not. Dark mode carries the same requirement at `oklch(1 0 0 / 40%)`.
+- **Ring** (`oklch(0.62 0 0)`): The focus indicator, rendered opaque across a
+  3px spread. Opacity is not applied to it: a half-transparent ring
+  composites into the background and drops below the 3:1 floor.
 
 ### The Void Ramp
 
@@ -383,7 +388,7 @@ focus ring — for keyboard users who need it.
   hover.
 - **Hover:** Every filled variant drops to 90% opacity of its own fill (80%
   for secondary). Colour never changes on hover — only its intensity.
-- **Focus:** 3px ring at 50% ring opacity, `focus-visible` only.
+- **Focus:** Opaque 3px ring, `focus-visible` only.
 - **Disabled:** 50% opacity and pointer events off.
 
 ### Badges
@@ -405,14 +410,17 @@ focus ring — for keyboard users who need it.
 - **Structure:** Seven parts — Card, Header, Title, Description, Action,
   Content, Footer. The Header is a CSS grid that grows a second column only
   when an Action is present.
+- **Heading semantics:** `CardTitle` renders a `div` by default and accepts
+  `as` (`<CardTitle as="h3">`). A page of cards has no heading outline until
+  a consumer supplies one.
 
 ### Inputs
 
 - **Style:** Transparent ground with a 1px `input` border at 8px radius,
   36px tall, `shadow-xs`. In dark mode the ground becomes `input/30` so the
   field reads as a recess rather than a cutout.
-- **Focus:** Border shifts to `ring` and a 3px ring at 50% opacity appears —
-  the same gesture as every other focusable component.
+- **Focus:** Border shifts to `ring` and an opaque 3px ring appears — the
+  same gesture as every other focusable component.
 - **Invalid:** `aria-invalid` drives a destructive border and ring; the
   attribute is the trigger, not a class.
 - **Disabled:** 50% opacity, `not-allowed` cursor, pointer events off.
@@ -455,8 +463,8 @@ sitting inert beside it.
   agree on this height, and mixed heights in a row are immediately visible.
 - **Do** express hover as an opacity shift on the existing fill (`/90`,
   `/80`) rather than a different colour.
-- **Do** use `focus-visible` with the 3px ring at 50% opacity, so pointer
-  users never see a ring that keyboard users depend on.
+- **Do** use `focus-visible` with the opaque 3px ring, so pointer users never
+  see a ring that keyboard users depend on.
 - **Do** drive invalid state from `aria-invalid`, keeping the accessible
   attribute and the visual treatment inseparable.
 - **Do** pair every new component with a `registry.json` entry in the same
@@ -476,6 +484,12 @@ sitting inert beside it.
   gap affecting four applications, not a slot to fill in passing.
 - **Don't** assume choosing a gradient accent changes anything else. The
   gradients are additive utilities and leave the flat tokens untouched.
+- **Don't** apply an opacity modifier to `ring`, `input`, or any other token
+  whose job is to make a boundary or state perceivable. Compositing halves the
+  contrast and silently breaks WCAG 1.4.11.
+- **Don't** use `surface-*` values in a rule that is not scoped under `.dark`.
+  The ramp holds the same value in both modes, so an unscoped rule applies
+  dark-only colours to light-mode consumers.
 - **Don't** hardcode white or black. `#ffffff` appears exactly twice by
   design — destructive button text and the gradient button — and both are
   fixed-fill cases.
