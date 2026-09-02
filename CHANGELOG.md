@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/deanjstone/design-system/compare/v1.0.0...v1.0.1) (2026-09-02)
+
+
+### Bug Fixes
+
+* harden contrast, cross-mode recipes, motion and overflow ([#31](https://github.com/deanjstone/design-system/issues/31)) ([1d93eaa](https://github.com/deanjstone/design-system/commit/1d93eaa9ede5891155223d7a9549c0a0ecb701fc))
+
 # 1.0.0 (2026-08-03)
 
 
