@@ -70,6 +70,35 @@ broken by an `add` re-run.
    `registryDependencies` / `dependencies`.
 3. Commit on a feature branch, open a PR — see `.claude/SYSTEM.md`.
 
+## Design tooling
+
+This repo enables the [impeccable](https://impeccable.style) plugin
+(Apache-2.0 — one skill, 23 design commands, 61 anti-pattern rules) at
+project scope via `.claude/settings.json`, and runs its detector over
+`registry/` and `theme/` on every PR. The detector version is pinned
+deliberately: its rule set *is* the pass/fail criterion, so an unpinned
+range would let an upstream release redden a green PR with no change here.
+
+**Gotcha: `enabledPlugins` does not install the plugin.** Enable and
+install are separate steps, and the gap is silent. A fresh clone will read
+`extraKnownMarketplaces`, fetch the marketplace, cache the plugin — and
+then never load it, no matter how many times Claude Code restarts.
+`claude plugin enable` reports `already enabled at project scope` while
+`~/.claude/plugins/installed_plugins.json` has no entry and the cache gets
+garbage-collected as orphaned. Run the install once per machine:
+
+```bash
+claude plugin install impeccable@impeccable --scope project
+```
+
+Then restart the session — plugins are read at startup. Verify with
+`claude plugin list`, which should report `Scope: project` and
+`Status: ✔ enabled` for it, rather than assuming a restart was enough.
+
+`/impeccable document`, `extract`, `audit` and `critique` are the commands
+that earn their place here. `/impeccable live` does not apply — it
+iterates against a running app, and this repo has none.
+
 ## Style
 
 - `new-york` shadcn style, OKLCH color tokens, Tailwind v4 (`@theme inline`,
