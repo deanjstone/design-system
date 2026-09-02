@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-09-02T07:16:01.479786Z",
+  "generatedAt": "2026-09-02T23:42:50.525708Z",
   "title": "Design System: design-system",
   "extensions": {
     "colorMeta": {
@@ -262,6 +262,16 @@
         "name": "md",
         "value": "768px",
         "note": "Input font-size steps down from 1rem to 0.875rem."
+      },
+      {
+        "name": "pointer: coarse",
+        "value": "@media (pointer: coarse)",
+        "note": "Capability query, not a width. Raises interactive controls to a 44px minimum where the input is a finger."
+      },
+      {
+        "name": "hover: hover",
+        "value": "@media (hover: hover)",
+        "note": "Guards every hover treatment; a touch device cannot leave a hover state."
       }
     ]
   },
@@ -326,9 +336,9 @@
       "name": "Tabs",
       "kind": "nav",
       "refersTo": "tabs-list",
-      "description": "Muted track with 3px inset padding; the active trigger lifts to the page background.",
+      "description": "Muted track with 3px inset padding; the active trigger lifts to the page background. Wraps rather than scrolls, so no tab is hidden behind a scroll affordance.",
       "html": "<div class=\"ds-tabs\"><button class=\"ds-tab ds-tab-active\">Overview</button><button class=\"ds-tab\">Activity</button><button class=\"ds-tab\">Settings</button></div>",
-      "css": ".ds-tabs { display: inline-flex; align-items: center; justify-content: center; width: fit-content; height: 36px; padding: 3px; border-radius: var(--radius-lg, 10px); background: var(--color-muted, oklch(0.97 0 0)); color: var(--color-muted-foreground, oklch(0.556 0 0)); } .ds-tab { display: inline-flex; align-items: center; justify-content: center; gap: 6px; flex: 1; height: calc(100% - 1px); padding: 4px 8px; border: 1px solid transparent; border-radius: var(--radius-md, 8px); background: transparent; color: inherit; font-size: 0.875rem; font-weight: 500; white-space: nowrap; cursor: pointer; transition: color 0.15s ease, box-shadow 0.15s ease; } .ds-tab-active { background: var(--color-background, oklch(1 0 0)); color: var(--color-foreground, oklch(0.145 0 0)); box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1); } .ds-tab:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--color-ring, oklch(0.62 0 0)); }"
+      "css": ".ds-tabs { display: inline-flex; flex-wrap: wrap; align-items: center; justify-content: center; width: fit-content; max-width: 100%; min-height: 36px; row-gap: 3px; padding: 3px; border-radius: var(--radius-lg, 10px); background: var(--color-muted, oklch(0.97 0 0)); color: var(--color-muted-foreground, oklch(0.556 0 0)); } .ds-tab { display: inline-flex; align-items: center; justify-content: center; gap: 6px; flex: 1; min-height: 30px; padding: 4px 8px; border: 1px solid transparent; border-radius: var(--radius-md, 8px); background: transparent; color: inherit; font-size: 0.875rem; font-weight: 500; white-space: nowrap; cursor: pointer; transition: color 0.15s ease, box-shadow 0.15s ease; } .ds-tab-active { background: var(--color-background, oklch(1 0 0)); color: var(--color-foreground, oklch(0.145 0 0)); box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1); } .ds-tab:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--color-ring, oklch(0.62 0 0)); }"
     },
     {
       "name": "Dialog",
@@ -374,6 +384,11 @@
         "name": "The One Variable Rule",
         "section": "shapes",
         "body": "Radius values are never hardcoded. If a component needs a corner, it takes a step off the scale - a literal px radius means the scale was wrong, not that the component is special."
+      },
+      {
+        "name": "The Capability Rule",
+        "section": "layout",
+        "body": "Adapt to what the device can do, not how wide it is. A width breakpoint is the wrong tool for a question about fingers and hover."
       }
     ],
     "dos": [
@@ -386,6 +401,7 @@
       "Do pair every new component with a registry.json entry in the same commit - a source file the manifest does not list is unreachable."
     ],
     "donts": [
+      "Don't reach for a width breakpoint to solve a touch or hover problem. Use pointer and hover capability queries; a wide screen is not a mouse.",
       "Don't apply an opacity modifier to ring, input, or any other token whose job is to make a boundary or state perceivable. Compositing halves the contrast and silently breaks WCAG 1.4.11.",
       "Don't use surface-* values in a rule that is not scoped under .dark. The ramp holds the same value in both modes, so an unscoped rule applies dark-only colours to light-mode consumers.",
       "Don't introduce a brand hue into the core palette. Chroma-zero is the system's central commitment, and four consumers depend on supplying their own identity.",

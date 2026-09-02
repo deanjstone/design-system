@@ -304,6 +304,31 @@ headers respond to their own width rather than the viewport.
 Dialogs are the only component with a width opinion: full width minus a 2rem
 inset, capped at 32rem from the `sm` breakpoint up, centred by transform.
 
+### Adapting to input, not to width
+
+The system adapts on **input capability rather than viewport width**, because
+width does not tell you what is touching the screen: a large tablet is still a
+finger, and a narrow desktop window is still a mouse.
+
+- **`pointer: coarse`** raises interactive controls to a 44px minimum. The
+  36px canonical height clears WCAG 2.5.8 (24px) but sits under the iOS HIG
+  and Material recommendations, so the floor is lifted only where the input is
+  actually a finger — the density the system is built around survives on
+  pointer devices.
+- **`hover: hover`** guards every hover treatment. Hover is not a state a
+  touch device can leave; without the guard, tapping a `.card-hover` element
+  leaves it stuck in its hover fill until something else is tapped.
+
+Both rules are deliberately **unlayered**. Tailwind utilities live in a
+cascade layer, and unlayered styles win over layered ones regardless of
+specificity — which is how the 44px touch floor outranks a `min-w-0` shrink
+utility on the same element.
+
+### Named Rules
+
+**The Capability Rule.** Adapt to what the device can do, not how wide it is.
+A width breakpoint is the wrong tool for a question about fingers and hover.
+
 ## Elevation & Depth
 
 **This system runs two depth mechanisms, chosen by mode, not one ladder
@@ -389,6 +414,8 @@ focus ring — for keyboard users who need it.
 - **Hover:** Every filled variant drops to 90% opacity of its own fill (80%
   for secondary). Colour never changes on hover — only its intensity.
 - **Focus:** Opaque 3px ring, `focus-visible` only.
+- **Touch:** 44px minimum in both axes under `pointer: coarse`, which is what
+  brings the 36px icon variant up to a full touch target.
 - **Disabled:** 50% opacity and pointer events off.
 
 ### Badges
@@ -427,8 +454,12 @@ focus ring — for keyboard users who need it.
 
 ### Tabs
 
-- **List:** Muted fill, 10px radius, 36px tall with 3px internal padding, so
-  the active trigger appears inset within its track.
+- **List:** Muted fill, 10px radius, a 36px minimum height with 3px internal
+  padding, so the active trigger appears inset within its track.
+- **Overflow:** The list wraps rather than scrolls. A scrolling tab strip
+  hides tabs behind an affordance the user has to discover; wrapping keeps
+  every tab reachable, and the list only grows past 36px once it needs a
+  second row.
 - **Active trigger:** Lifts to the page background with `shadow-sm` and full
   foreground text — the selected tab reads as raised out of its groove.
 - **Inactive:** Transparent with a transparent border, so activation adds
@@ -484,6 +515,8 @@ sitting inert beside it.
   gap affecting four applications, not a slot to fill in passing.
 - **Don't** assume choosing a gradient accent changes anything else. The
   gradients are additive utilities and leave the flat tokens untouched.
+- **Don't** reach for a width breakpoint to solve a touch or hover problem.
+  Use `pointer` and `hover` capability queries; a wide screen is not a mouse.
 - **Don't** apply an opacity modifier to `ring`, `input`, or any other token
   whose job is to make a boundary or state perceivable. Compositing halves the
   contrast and silently breaks WCAG 1.4.11.
