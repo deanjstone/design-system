@@ -1,0 +1,22 @@
+name: Design
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  detect:
+    name: Slop detector
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      # Pinned deliberately: the detector's rule set defines whether this check
+      # passes, so an unpinned range could fail the build on someone else's release.
+      - name: Detect UI anti-patterns
+        run: npx --yes impeccable@3.6.1 detect registry/ theme/

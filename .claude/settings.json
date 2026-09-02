@@ -1,3 +1,14 @@
 {
-  "theme": "custom:design-system"
+  "theme": "custom:design-system",
+  "extraKnownMarketplaces": {
+    "impeccable": {
+      "source": {
+        "source": "github",
+        "repo": "pbakaus/impeccable"
+      }
+    }
+  },
+  "enabledPlugins": {
+    "impeccable@impeccable": true
+  }
 }
