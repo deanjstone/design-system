@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-09-02T23:42:50.525708Z",
+  "generatedAt": "2026-09-02T23:52:35.961839Z",
   "title": "Design System: design-system",
   "extensions": {
     "colorMeta": {
@@ -163,6 +163,22 @@
         "displayName": "Field Edge",
         "canonical": "oklch(0.64 0 0)",
         "note": "An input's border is its only boundary, so it clears 3:1 (WCAG 1.4.11) where a decorative border need not. Dark: oklch(1 0 0 / 40%).",
+        "tonalRamp": [
+          "oklch(0.150 0 0)",
+          "oklch(0.260 0 0)",
+          "oklch(0.370 0 0)",
+          "oklch(0.490 0 0)",
+          "oklch(0.600 0 0)",
+          "oklch(0.720 0 0)",
+          "oklch(0.830 0 0)",
+          "oklch(0.950 0 0)"
+        ]
+      },
+      "destructive-foreground": {
+        "role": "tertiary",
+        "displayName": "Alarm Text",
+        "canonical": "oklch(1 0 0)",
+        "note": "Pairs with destructive. White is correct on the fill in both modes (4.76:1 / 4.72:1); it is a token so an overriding consumer can correct it.",
         "tonalRamp": [
           "oklch(0.150 0 0)",
           "oklch(0.260 0 0)",
@@ -346,7 +362,7 @@
       "refersTo": "dialog-content",
       "description": "The only component granted real lift. Close icon inlined as SVG at 70% opacity.",
       "html": "<div class=\"ds-dialog\"><div class=\"ds-dialog-title\">Delete project</div><div class=\"ds-dialog-desc\">This action cannot be undone.</div><button class=\"ds-dialog-close\" aria-label=\"Close\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\"><path d=\"M18 6 6 18M6 6l12 12\"/></svg></button></div>",
-      "css": ".ds-dialog { position: relative; display: grid; gap: 16px; width: 100%; max-width: 32rem; padding: 24px; border: 1px solid var(--color-border, oklch(0.922 0 0)); border-radius: var(--radius-lg, 10px); background: var(--color-background, oklch(1 0 0)); color: var(--color-foreground, oklch(0.145 0 0)); box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1); } .ds-dialog-title { font-size: 1.125rem; font-weight: 600; line-height: 1; } .ds-dialog-desc { font-size: 0.875rem; color: var(--color-muted-foreground, oklch(0.556 0 0)); } .ds-dialog-close { position: absolute; top: 16px; right: 16px; display: inline-flex; padding: 0; border: none; background: transparent; color: inherit; opacity: 0.7; cursor: pointer; transition: opacity 0.15s ease; } .ds-dialog-close:hover { opacity: 1; }"
+      "css": ".ds-dialog { position: relative; display: grid; gap: 16px; width: 100%; max-width: 32rem; padding: 24px; border: 1px solid var(--color-border, oklch(0.922 0 0)); border-radius: var(--radius-lg, 10px); background: var(--color-background, oklch(1 0 0)); color: var(--color-foreground, oklch(0.145 0 0)); box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1); } .ds-dialog-title { font-size: 1.125rem; font-weight: 600; line-height: 1; } .ds-dialog-desc { font-size: 0.875rem; color: var(--color-muted-foreground, oklch(0.556 0 0)); } .ds-dialog-close { position: absolute; display: inline-flex; align-items: center; justify-content: center; top: 16px; right: 16px; display: inline-flex; padding: 0; border: none; background: transparent; color: inherit; opacity: 0.7; cursor: pointer; transition: opacity 0.15s ease; } .ds-dialog-close:hover { opacity: 1; } .ds-dialog-close:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--color-ring, oklch(0.62 0 0)); }"
     }
   ],
   "narrative": {
@@ -410,7 +426,7 @@
       "Don't reach for shadow-lg outside an overlay.",
       "Don't add a font-family token casually. The absence is an unresolved gap affecting four applications, not a slot to fill in passing.",
       "Don't assume choosing a gradient accent changes anything else. The gradients are additive utilities and leave the flat tokens untouched.",
-      "Don't hardcode white or black. #ffffff appears exactly twice by design - destructive button text and the gradient button - and both are fixed-fill cases."
+      "Don't hardcode white or black. Two literals remain by design and no more: the gradient button's text, whose fills are fixed hues chosen so white clears AA, and the dialog overlay's bg-black/50 scrim. Neither earns a system token."
     ]
   }
 }

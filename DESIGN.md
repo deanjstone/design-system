@@ -17,6 +17,7 @@ colors:
   accent: "oklch(0.97 0 0)"
   accent-foreground: "oklch(0.205 0 0)"
   destructive: "oklch(0.577 0.245 27.325)"
+  destructive-foreground: "oklch(1 0 0)"
   border: "oklch(0.922 0 0)"
   input: "oklch(0.64 0 0)"
   ring: "oklch(0.62 0 0)"
@@ -75,7 +76,7 @@ components:
     height: "36px"
   button-destructive:
     backgroundColor: "{colors.destructive}"
-    textColor: "#ffffff"
+    textColor: "{colors.destructive-foreground}"
     rounded: "{rounded.md}"
     padding: "8px 16px"
     height: "36px"
@@ -238,7 +239,11 @@ flat grey.
 
 ### Signal
 
-- **Alarm** (`oklch(0.577 0.245 27.325)`): `destructive`. The only chromatic
+- **Alarm** (`oklch(0.577 0.245 27.325)`): `destructive`, paired with
+  `destructive-foreground` (`oklch(1 0 0)`). White is correct on the fill in
+  both modes (4.76:1 light, 4.72:1 dark), but it is a token rather than a
+  literal so a consumer who overrides the fill can correct its text with it.
+  The only chromatic
   colour in the core palette, and the clearest statement of the system's
   position — colour means something here.
 - **Chart 1–5**: The one place a full hue range is sanctioned, because data
@@ -250,6 +255,8 @@ Four approved gradient pairs, each a two-stop `linear-gradient(115deg, …)`:
 **Orchid** (`#a21caf` → `#4338ca`), **Nebula** (`#0369a1` → `#6d28d9`),
 **Lagoon** (`#134e4a` → `#0e7490`), **Garnet** (`#881337` → `#e11d48`).
 Every stop independently clears WCAG AA (4.5:1) against white button text.
+Each family also ships a lighter `-1-dark` stop (`#f0abfc`, `#7dd3fc`,
+`#5eead4`, `#fda4af`) for use as an accent on a dark ground.
 
 ### Named Rules
 
@@ -403,8 +410,8 @@ focus ring — for keyboard users who need it.
 - **Height:** 36px default, 32px small, 40px large — all with the same radius,
   so size changes never change the silhouette.
 - **Default:** Graphite fill, near-white text, `shadow-xs`, 8px/16px padding.
-- **Destructive:** Alarm fill with white text — the only button that hardcodes
-  `#ffffff` rather than using a foreground token, because the fill is fixed.
+- **Destructive:** Alarm fill with `destructive-foreground` text, following
+  the same fill/foreground pairing every other semantic colour uses.
 - **Outline:** 1px hairline border on the page ground; fills with Whisper on
   hover.
 - **Secondary / Ghost:** Whisper fill and transparent respectively; both
@@ -471,8 +478,9 @@ focus ring — for keyboard users who need it.
 - **Content:** Page background, 1px border, 10px radius, 24px padding,
   `shadow-lg`, centred by transform. Enters with a simultaneous fade and 95%
   zoom over 200ms.
-- **Close:** A 16px icon at 70% opacity in the top-right corner, reaching full
-  opacity on hover.
+- **Close:** A 16px icon at 70% opacity in the top-inline-end corner, reaching
+  full opacity on hover, centred inside its tap target and carrying the same
+  opaque 3px `focus-visible` ring as every other focusable control.
 
 ### Labels
 
@@ -523,6 +531,7 @@ sitting inert beside it.
 - **Don't** use `surface-*` values in a rule that is not scoped under `.dark`.
   The ramp holds the same value in both modes, so an unscoped rule applies
   dark-only colours to light-mode consumers.
-- **Don't** hardcode white or black. `#ffffff` appears exactly twice by
-  design — destructive button text and the gradient button — and both are
-  fixed-fill cases.
+- **Don't** hardcode white or black. Two literals remain by design and no
+  more: the gradient button's text, whose four fills are fixed hues chosen so
+  white clears AA against all of them, and the dialog overlay's `bg-black/50`
+  scrim. Both are single local exceptions; neither earns a system token.
