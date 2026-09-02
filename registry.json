@@ -243,8 +243,8 @@
               "opacity": "1"
             }
           },
-          ":root": {
-            "--animate-pulse-slow": "none"
+          ".animate-pulse-slow": {
+            "animation": "none"
           },
           ".card-hover": {
             "transition-duration": "1ms"
