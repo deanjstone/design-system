@@ -1,0 +1,481 @@
+---
+name: design-system
+description: An achromatic shadcn/ui token layer four apps tint with their own identity.
+colors:
+  background: "oklch(1 0 0)"
+  foreground: "oklch(0.145 0 0)"
+  card: "oklch(1 0 0)"
+  card-foreground: "oklch(0.145 0 0)"
+  popover: "oklch(1 0 0)"
+  popover-foreground: "oklch(0.145 0 0)"
+  primary: "oklch(0.205 0 0)"
+  primary-foreground: "oklch(0.985 0 0)"
+  secondary: "oklch(0.97 0 0)"
+  secondary-foreground: "oklch(0.205 0 0)"
+  muted: "oklch(0.97 0 0)"
+  muted-foreground: "oklch(0.556 0 0)"
+  accent: "oklch(0.97 0 0)"
+  accent-foreground: "oklch(0.205 0 0)"
+  destructive: "oklch(0.577 0.245 27.325)"
+  border: "oklch(0.922 0 0)"
+  input: "oklch(0.922 0 0)"
+  ring: "oklch(0.708 0 0)"
+  chart-1: "oklch(0.646 0.222 41.116)"
+  chart-2: "oklch(0.6 0.118 184.704)"
+  chart-3: "oklch(0.398 0.07 227.392)"
+  chart-4: "oklch(0.828 0.189 84.429)"
+  chart-5: "oklch(0.769 0.188 70.08)"
+  surface-0: "#06060a"
+  surface-1: "#0c0c14"
+  surface-2: "#13131e"
+  surface-3: "#1a1a28"
+  surface-4: "#222233"
+  surface-5: "#2a2a3d"
+  surface-border: "#2a2a3d"
+  surface-border-light: "#72729c"
+  accent-orchid-1: "#a21caf"
+  accent-orchid-2: "#4338ca"
+  accent-nebula-1: "#0369a1"
+  accent-nebula-2: "#6d28d9"
+  accent-lagoon-1: "#134e4a"
+  accent-lagoon-2: "#0e7490"
+  accent-garnet-1: "#881337"
+  accent-garnet-2: "#e11d48"
+typography:
+  headline:
+    fontSize: "1.125rem"
+    fontWeight: 600
+    lineHeight: 1
+  title:
+    fontWeight: 600
+    lineHeight: 1
+  body:
+    fontSize: "0.875rem"
+    fontWeight: 400
+  label:
+    fontSize: "0.875rem"
+    fontWeight: 500
+    lineHeight: 1
+  caption:
+    fontSize: "0.75rem"
+    fontWeight: 500
+rounded:
+  sm: "6px"
+  md: "8px"
+  lg: "10px"
+  xl: "14px"
+  full: "9999px"
+components:
+  button-default:
+    backgroundColor: "{colors.primary}"
+    textColor: "{colors.primary-foreground}"
+    typography: "{typography.label}"
+    rounded: "{rounded.md}"
+    padding: "8px 16px"
+    height: "36px"
+  button-destructive:
+    backgroundColor: "{colors.destructive}"
+    textColor: "#ffffff"
+    rounded: "{rounded.md}"
+    padding: "8px 16px"
+    height: "36px"
+  button-secondary:
+    backgroundColor: "{colors.secondary}"
+    textColor: "{colors.secondary-foreground}"
+    rounded: "{rounded.md}"
+    padding: "8px 16px"
+    height: "36px"
+  button-outline:
+    backgroundColor: "{colors.background}"
+    textColor: "{colors.foreground}"
+    rounded: "{rounded.md}"
+    padding: "8px 16px"
+    height: "36px"
+  button-ghost:
+    backgroundColor: "transparent"
+    textColor: "{colors.foreground}"
+    rounded: "{rounded.md}"
+    padding: "8px 16px"
+    height: "36px"
+  button-ghost-hover:
+    backgroundColor: "{colors.accent}"
+    textColor: "{colors.accent-foreground}"
+  button-sm:
+    rounded: "{rounded.md}"
+    padding: "0 12px"
+    height: "32px"
+    typography: "{typography.caption}"
+  button-lg:
+    rounded: "{rounded.md}"
+    padding: "0 32px"
+    height: "40px"
+  button-icon:
+    rounded: "{rounded.md}"
+    height: "36px"
+    width: "36px"
+  badge-default:
+    backgroundColor: "{colors.primary}"
+    textColor: "{colors.primary-foreground}"
+    typography: "{typography.caption}"
+    rounded: "{rounded.full}"
+    padding: "2px 8px"
+  badge-secondary:
+    backgroundColor: "{colors.secondary}"
+    textColor: "{colors.secondary-foreground}"
+    rounded: "{rounded.full}"
+    padding: "2px 8px"
+  badge-outline:
+    backgroundColor: "transparent"
+    textColor: "{colors.foreground}"
+    rounded: "{rounded.full}"
+    padding: "2px 8px"
+  card:
+    backgroundColor: "{colors.card}"
+    textColor: "{colors.card-foreground}"
+    rounded: "{rounded.xl}"
+    padding: "24px 0"
+  input:
+    backgroundColor: "transparent"
+    textColor: "{colors.foreground}"
+    rounded: "{rounded.md}"
+    padding: "4px 12px"
+    height: "36px"
+  tabs-list:
+    backgroundColor: "{colors.muted}"
+    textColor: "{colors.muted-foreground}"
+    rounded: "{rounded.lg}"
+    padding: "3px"
+    height: "36px"
+  tabs-trigger-active:
+    backgroundColor: "{colors.background}"
+    textColor: "{colors.foreground}"
+    rounded: "{rounded.md}"
+    padding: "4px 8px"
+  dialog-content:
+    backgroundColor: "{colors.background}"
+    textColor: "{colors.foreground}"
+    rounded: "{rounded.lg}"
+    padding: "24px"
+---
+
+# Design System: design-system
+
+## Overview
+
+**Creative North Star: "The Neutral Substrate"**
+
+This is a foundation, not a face. Every core token in the palette is
+chroma-zero — literally hueless — and that is the whole thesis. The registry
+is consumed by four separate applications (`myargus`, `atto1`, `budget`,
+`erto-apps`), and identity is something each of them adds on top, never
+something this layer imposes from below. A shared system that arrived with
+opinions about brand colour would force four apps to look like each other.
+
+What it does own is rhythm and mechanics: a uniform 36px control height, a
+single radius variable everything else derives from, a consistent 3px focus
+ring, and hover states that shift opacity rather than swapping colour. The
+restraint is not minimalism for its own sake — it is what makes the layer
+safe to share. Colour is a guest here, not a resident.
+
+Depth is the one place the system genuinely runs two mechanisms rather than
+one, and it does so deliberately: light-mode consumers get borders and
+hairline shadows, always-dark consumers get a six-step tonal ramp. Both
+express the same intent through the materials their mode actually has.
+
+**Key Characteristics:**
+
+- Chroma-zero core; the only chromatic core token is `destructive`
+- One radius variable (`--radius: 0.625rem`) generates the entire corner scale
+- 36px is the canonical control height across button, input, and tabs
+- Colour arrives only as signal, data, or an explicit consumer opt-in
+- No build step — components are copied into consumers and edited there
+
+## Colors
+
+Paper and void. Light mode runs paper-white through graphite in pure
+neutrals; the `surface-0..5` ramp is a near-black void that climbs toward
+indigo, built for consumers that live in permanent dark.
+
+### Primary
+
+- **Graphite** (`oklch(0.205 0 0)`): The filled default for buttons and
+  badges, and the `.dark` selection background. Near-black rather than true
+  black, so it reads as ink rather than a hole. In dark mode this token and
+  its foreground invert wholesale, which is why nothing hardcodes either.
+
+### Neutral
+
+- **Paper** (`oklch(1 0 0)`): Pure white. The `background`, `card`, and
+  `popover` ground in light mode; all three are deliberately the same value,
+  so containers are distinguished by border rather than fill.
+- **Ink** (`oklch(0.145 0 0)`): Body text and the dark-mode ground. The
+  system's darkest neutral.
+- **Whisper** (`oklch(0.97 0 0)`): `secondary`, `muted`, and `accent` share
+  this one value — the faintest tint that still separates from Paper. It is
+  the hover fill for ghost and outline buttons.
+- **Quiet Text** (`oklch(0.556 0 0)`): `muted-foreground`. Card descriptions,
+  placeholders, and inactive tab labels.
+- **Hairline** (`oklch(0.922 0 0)`): `border` and `input` share this value.
+  In dark mode both switch to translucent white (`oklch(1 0 0 / 10%)` and
+  `/ 15%`) so edges sit *on* the surface rather than beside it.
+- **Ring** (`oklch(0.708 0 0)`): The focus indicator, always rendered at 50%
+  opacity across a 3px spread.
+
+### The Void Ramp
+
+Six steps from `#06060a` to `#2a2a3d`, plus `surface-border` (`#2a2a3d`) and
+`surface-border-light` (`#72729c`). Unlike every other colour here, these
+hold **the same values in light and dark** — they are not a themed pair but a
+dark-only elevation ladder that does nothing until a consumer opts in by
+using the `surface-*` utilities. Each step carries a faint blue cast rather
+than being true neutral, which is what keeps a stack of them from reading as
+flat grey.
+
+### Signal
+
+- **Alarm** (`oklch(0.577 0.245 27.325)`): `destructive`. The only chromatic
+  colour in the core palette, and the clearest statement of the system's
+  position — colour means something here.
+- **Chart 1–5**: The one place a full hue range is sanctioned, because data
+  series need to be told apart. Light and dark ship different values.
+
+### Opt-In Accents
+
+Four approved gradient pairs, each a two-stop `linear-gradient(115deg, …)`:
+**Orchid** (`#a21caf` → `#4338ca`), **Nebula** (`#0369a1` → `#6d28d9`),
+**Lagoon** (`#134e4a` → `#0e7490`), **Garnet** (`#881337` → `#e11d48`).
+Every stop independently clears WCAG AA (4.5:1) against white button text.
+
+### Named Rules
+
+**The Guest Rule.** Colour is a guest, not a resident. The core palette is
+chroma-zero on purpose; any hue that appears must be carrying meaning —
+danger, a data series, or an accent a consumer deliberately chose.
+
+**The Opt-In Accent Rule.** Choosing a gradient has *no effect* on the flat
+`primary`/`accent` tokens. The four candidates are additive utilities, not a
+brand decision made on the consumer's behalf. A consumer that picks none is
+in a fully supported state, not an unfinished one.
+
+## Typography
+
+**Font family: none.** This system ships no font tokens at all — no
+`--font-*` declarations, no `fontFamily` in the frontmatter. Components
+specify size, weight, and line-height only, and inherit whatever stack the
+consuming application sets.
+
+This is recorded as an **open gap, not a doctrine.** Each of the four
+consumers currently picks its own family, and the resulting cross-app
+inconsistency is a known cost that has not been decided on either way.
+Anyone resolving it should treat this section as the place the decision
+lands, not as evidence that delegation was the intent.
+
+### Hierarchy
+
+- **Headline** (600, 1.125rem, line-height 1): Dialog titles. The largest
+  type the system defines.
+- **Title** (600, inherited size, line-height 1): Card titles. Deliberately
+  unsized — it takes the consumer's base size and asserts only weight.
+- **Body** (400, 0.875rem): Default UI text. Inputs step up to 1rem below the
+  `md` breakpoint to prevent iOS zoom-on-focus, then back down.
+- **Label** (500, 0.875rem, line-height 1): Form labels and button text.
+- **Caption** (500, 0.75rem): Badges and small buttons.
+
+## Layout
+
+No custom spacing scale is defined; the system uses Tailwind's default steps
+and simply uses them consistently. The observed rhythm is a 4px base with a
+strong preference for even multiples: **4px** inside dense controls,
+**8px** for inline gaps and badge padding, **12px** for input side padding,
+**16px** for default button padding and card header gaps, **24px** for card
+padding and dialog interiors, **32px** for large button padding.
+
+Cards are the clearest expression: 24px vertical padding on the container,
+24px horizontal on every child region, and a 24px gap between regions, so a
+card reads as one uniform inset regardless of how many sections it holds. The
+card header is a container query context (`@container/card-header`), letting
+headers respond to their own width rather than the viewport.
+
+Dialogs are the only component with a width opinion: full width minus a 2rem
+inset, capped at 32rem from the `sm` breakpoint up, centred by transform.
+
+## Elevation & Depth
+
+**This system runs two depth mechanisms, chosen by mode, not one ladder
+applied everywhere.**
+
+In light mode, depth is carried by borders and near-invisible shadows.
+Buttons and inputs take `shadow-xs`, cards and the active tab take
+`shadow-sm`, and only the dialog takes real lift with `shadow-lg` — because
+it genuinely floats above everything else. At these values the shadows are
+structural hairlines that separate a surface from its neighbour; they are not
+atmosphere, and nothing glows.
+
+In always-dark consumers, shadows stop working — a black shadow on a
+near-black ground is invisible. Those consumers convey the same hierarchy
+through the tonal `surface-0..5` ramp instead: a higher surface is a lighter
+step, not a shadowed one. Same intent, different material.
+
+### Shadow Vocabulary
+
+- **Control** (`shadow-xs`): Buttons and inputs at rest. Separates an
+  interactive element from the page without implying it floats.
+- **Container** (`shadow-sm`): Cards and the active tab trigger. Marks a
+  resting surface.
+- **Overlay** (`shadow-lg`): Dialog content only. The single component
+  allowed to look airborne.
+
+### Named Rules
+
+**The Two Systems Rule.** Never mix the mechanisms. A light-mode surface
+gains depth from a border and a hairline shadow; a dark-mode surface gains it
+from the next step up the ramp. Stacking both produces a muddy edge that
+reads as neither.
+
+**The Overlay-Only Lift Rule.** `shadow-lg` belongs to the dialog. If a new
+component seems to need it, the real question is whether that component
+should be an overlay at all.
+
+## Shapes
+
+Every corner in the system derives from one variable. `--radius` is
+`0.625rem` (10px), and the scale is generated from it by arithmetic:
+`sm` = radius − 4px (6px), `md` = radius − 2px (8px), `lg` = radius (10px),
+`xl` = radius + 4px (14px). Changing the single variable rescales every
+component's corners in proportion, which is the point.
+
+In practice: buttons, inputs, and tab triggers take **md** (8px); dialogs and
+the tab list take **lg** (10px); cards take **xl** (14px), making them the
+softest shape in the system. Badges and scrollbar thumbs break the scale
+entirely with a full pill (`9999px`), which is what marks a badge as a label
+rather than a container.
+
+Borders are uniformly 1px and hairline-weight. There is no decorative
+stroke, no double border, and no clipping geometry anywhere in the system.
+
+### Named Rules
+
+**The One Variable Rule.** Radius values are never hardcoded. If a component
+needs a corner, it takes a step off the scale — a literal px radius means the
+scale was wrong, not that the component is special.
+
+## Components
+
+Refined and restrained. Nothing here is louder than it needs to be:
+components sit at a uniform height, shift by 10% opacity on hover rather than
+changing colour outright, and reserve their one assertive gesture — a 3px
+focus ring — for keyboard users who need it.
+
+### Buttons
+
+- **Shape:** Gently rounded (8px, `rounded-md`); the icon variant is a
+  36px square with the same corner.
+- **Height:** 36px default, 32px small, 40px large — all with the same radius,
+  so size changes never change the silhouette.
+- **Default:** Graphite fill, near-white text, `shadow-xs`, 8px/16px padding.
+- **Destructive:** Alarm fill with white text — the only button that hardcodes
+  `#ffffff` rather than using a foreground token, because the fill is fixed.
+- **Outline:** 1px hairline border on the page ground; fills with Whisper on
+  hover.
+- **Secondary / Ghost:** Whisper fill and transparent respectively; both
+  resolve to the same Whisper hover, so they converge on interaction.
+- **Link:** Text-only in Graphite with a 4px underline offset, underlining on
+  hover.
+- **Hover:** Every filled variant drops to 90% opacity of its own fill (80%
+  for secondary). Colour never changes on hover — only its intensity.
+- **Focus:** 3px ring at 50% ring opacity, `focus-visible` only.
+- **Disabled:** 50% opacity and pointer events off.
+
+### Badges
+
+- **Shape:** Full pill (`9999px`), 2px/8px padding, 0.75rem medium text.
+- **Variants:** Default (Graphite), Secondary (Whisper), Destructive (Alarm),
+  Outline (text-only). The three filled variants carry a transparent border so
+  swapping to Outline does not shift layout by a pixel.
+- **Behaviour:** Hover styles apply only when the badge is rendered as an
+  anchor (`[a&]:hover`) — a static badge is inert, and correctly so.
+
+### Cards
+
+- **Corner:** 14px (`rounded-xl`), the softest shape in the system.
+- **Background:** `card` on `card-foreground`, 1px hairline border,
+  `shadow-sm`.
+- **Padding:** 24px vertical on the container; each region supplies its own
+  24px horizontal.
+- **Structure:** Seven parts — Card, Header, Title, Description, Action,
+  Content, Footer. The Header is a CSS grid that grows a second column only
+  when an Action is present.
+
+### Inputs
+
+- **Style:** Transparent ground with a 1px `input` border at 8px radius,
+  36px tall, `shadow-xs`. In dark mode the ground becomes `input/30` so the
+  field reads as a recess rather than a cutout.
+- **Focus:** Border shifts to `ring` and a 3px ring at 50% opacity appears —
+  the same gesture as every other focusable component.
+- **Invalid:** `aria-invalid` drives a destructive border and ring; the
+  attribute is the trigger, not a class.
+- **Disabled:** 50% opacity, `not-allowed` cursor, pointer events off.
+
+### Tabs
+
+- **List:** Muted fill, 10px radius, 36px tall with 3px internal padding, so
+  the active trigger appears inset within its track.
+- **Active trigger:** Lifts to the page background with `shadow-sm` and full
+  foreground text — the selected tab reads as raised out of its groove.
+- **Inactive:** Transparent with a transparent border, so activation adds
+  colour without shifting geometry.
+
+### Dialog
+
+- **Overlay:** Flat black at 50%, fading in and out.
+- **Content:** Page background, 1px border, 10px radius, 24px padding,
+  `shadow-lg`, centred by transform. Enters with a simultaneous fade and 95%
+  zoom over 200ms.
+- **Close:** A 16px icon at 70% opacity in the top-right corner, reaching full
+  opacity on hover.
+
+### Labels
+
+Medium 0.875rem with `select-none`, and — distinctively — the label dims to
+50% when its associated control is disabled, via both `peer-disabled` and
+`group-data-[disabled=true]`. The label tracks the field's state rather than
+sitting inert beside it.
+
+## Do's and Don'ts
+
+### Do:
+
+- **Do** take every colour from a semantic token (`bg-primary`,
+  `text-muted-foreground`). Both modes are defined; hardcoding a value breaks
+  one of them.
+- **Do** derive corners from the radius scale so a change to `--radius`
+  rescales the whole system.
+- **Do** keep interactive controls at 36px. Button, input, and tab list all
+  agree on this height, and mixed heights in a row are immediately visible.
+- **Do** express hover as an opacity shift on the existing fill (`/90`,
+  `/80`) rather than a different colour.
+- **Do** use `focus-visible` with the 3px ring at 50% opacity, so pointer
+  users never see a ring that keyboard users depend on.
+- **Do** drive invalid state from `aria-invalid`, keeping the accessible
+  attribute and the visual treatment inseparable.
+- **Do** pair every new component with a `registry.json` entry in the same
+  commit — a source file the manifest does not list is unreachable.
+
+### Don't:
+
+- **Don't** introduce a brand hue into the core palette. Chroma-zero is the
+  system's central commitment, and four consumers depend on supplying their
+  own identity.
+- **Don't** treat the `surface-*` ramp as a light-mode tool. It holds the same
+  values in both modes and only makes sense under an always-dark consumer.
+- **Don't** stack a tonal surface step and a shadow on the same element —
+  pick the mechanism that belongs to the mode.
+- **Don't** reach for `shadow-lg` outside an overlay.
+- **Don't** add a font-family token casually. The absence is an unresolved
+  gap affecting four applications, not a slot to fill in passing.
+- **Don't** assume choosing a gradient accent changes anything else. The
+  gradients are additive utilities and leave the flat tokens untouched.
+- **Don't** hardcode white or black. `#ffffff` appears exactly twice by
+  design — destructive button text and the gradient button — and both are
+  fixed-fill cases.

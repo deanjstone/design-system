@@ -1,0 +1,377 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-02T06:45:37.392378Z",
+  "title": "Design System: design-system",
+  "extensions": {
+    "colorMeta": {
+      "primary": {
+        "role": "primary",
+        "displayName": "Graphite",
+        "canonical": "oklch(0.205 0 0)",
+        "tonalRamp": [
+          "oklch(0.150 0 0)",
+          "oklch(0.260 0 0)",
+          "oklch(0.370 0 0)",
+          "oklch(0.490 0 0)",
+          "oklch(0.600 0 0)",
+          "oklch(0.720 0 0)",
+          "oklch(0.830 0 0)",
+          "oklch(0.950 0 0)"
+        ]
+      },
+      "foreground": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "canonical": "oklch(0.145 0 0)",
+        "tonalRamp": [
+          "oklch(0.150 0 0)",
+          "oklch(0.260 0 0)",
+          "oklch(0.370 0 0)",
+          "oklch(0.490 0 0)",
+          "oklch(0.600 0 0)",
+          "oklch(0.720 0 0)",
+          "oklch(0.830 0 0)",
+          "oklch(0.950 0 0)"
+        ]
+      },
+      "background": {
+        "role": "neutral",
+        "displayName": "Paper",
+        "canonical": "oklch(1 0 0)",
+        "tonalRamp": [
+          "oklch(0.150 0 0)",
+          "oklch(0.260 0 0)",
+          "oklch(0.370 0 0)",
+          "oklch(0.490 0 0)",
+          "oklch(0.600 0 0)",
+          "oklch(0.720 0 0)",
+          "oklch(0.830 0 0)",
+          "oklch(0.950 0 0)"
+        ]
+      },
+      "muted-foreground": {
+        "role": "neutral",
+        "displayName": "Quiet Text",
+        "canonical": "oklch(0.556 0 0)",
+        "tonalRamp": [
+          "oklch(0.150 0 0)",
+          "oklch(0.260 0 0)",
+          "oklch(0.370 0 0)",
+          "oklch(0.490 0 0)",
+          "oklch(0.600 0 0)",
+          "oklch(0.720 0 0)",
+          "oklch(0.830 0 0)",
+          "oklch(0.950 0 0)"
+        ]
+      },
+      "border": {
+        "role": "neutral",
+        "displayName": "Hairline",
+        "canonical": "oklch(0.922 0 0)",
+        "note": "Dark mode switches to translucent white oklch(1 0 0 / 10%).",
+        "tonalRamp": [
+          "oklch(0.150 0 0)",
+          "oklch(0.260 0 0)",
+          "oklch(0.370 0 0)",
+          "oklch(0.490 0 0)",
+          "oklch(0.600 0 0)",
+          "oklch(0.720 0 0)",
+          "oklch(0.830 0 0)",
+          "oklch(0.950 0 0)"
+        ]
+      },
+      "ring": {
+        "role": "neutral",
+        "displayName": "Ring",
+        "canonical": "oklch(0.708 0 0)",
+        "note": "Always rendered at 50% opacity across a 3px spread.",
+        "tonalRamp": [
+          "oklch(0.150 0 0)",
+          "oklch(0.260 0 0)",
+          "oklch(0.370 0 0)",
+          "oklch(0.490 0 0)",
+          "oklch(0.600 0 0)",
+          "oklch(0.720 0 0)",
+          "oklch(0.830 0 0)",
+          "oklch(0.950 0 0)"
+        ]
+      },
+      "destructive": {
+        "role": "tertiary",
+        "displayName": "Alarm",
+        "canonical": "oklch(0.577 0.245 27.325)",
+        "note": "The only chromatic token in the core palette.",
+        "tonalRamp": [
+          "oklch(0.150 0.245 27.325)",
+          "oklch(0.260 0.245 27.325)",
+          "oklch(0.370 0.245 27.325)",
+          "oklch(0.490 0.245 27.325)",
+          "oklch(0.600 0.245 27.325)",
+          "oklch(0.720 0.245 27.325)",
+          "oklch(0.830 0.245 27.325)",
+          "oklch(0.950 0.245 27.325)"
+        ]
+      },
+      "surface-0": {
+        "role": "neutral",
+        "displayName": "The Void Ramp",
+        "canonical": "#06060a",
+        "note": "Project-defined tonal scale; identical in light and dark. Six real steps, not synthesized.",
+        "tonalRamp": [
+          "#06060a",
+          "#0c0c14",
+          "#13131e",
+          "#1a1a28",
+          "#222233",
+          "#2a2a3d"
+        ]
+      },
+      "accent-orchid-1": {
+        "role": "secondary",
+        "displayName": "Orchid",
+        "canonical": "#a21caf",
+        "note": "Opt-in gradient stop 1 of 2; pairs with #4338ca at 115deg.",
+        "tonalRamp": [
+          "oklch(0.150 0.2 320)",
+          "oklch(0.260 0.2 320)",
+          "oklch(0.370 0.2 320)",
+          "oklch(0.490 0.2 320)",
+          "oklch(0.600 0.2 320)",
+          "oklch(0.720 0.2 320)",
+          "oklch(0.830 0.2 320)",
+          "oklch(0.950 0.2 320)"
+        ]
+      },
+      "accent-nebula-1": {
+        "role": "secondary",
+        "displayName": "Nebula",
+        "canonical": "#0369a1",
+        "note": "Opt-in gradient stop 1 of 2; pairs with #6d28d9 at 115deg.",
+        "tonalRamp": [
+          "oklch(0.150 0.14 245)",
+          "oklch(0.260 0.14 245)",
+          "oklch(0.370 0.14 245)",
+          "oklch(0.490 0.14 245)",
+          "oklch(0.600 0.14 245)",
+          "oklch(0.720 0.14 245)",
+          "oklch(0.830 0.14 245)",
+          "oklch(0.950 0.14 245)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Dialog titles. The largest type the system defines."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Card titles. Deliberately unsized - asserts weight only, inherits the consumer's base size."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Default UI text. Inputs step up to 1rem below the md breakpoint to prevent iOS zoom-on-focus."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Form labels and button text."
+      },
+      "caption": {
+        "displayName": "Caption",
+        "purpose": "Badges and small buttons."
+      },
+      "_note": "The system ships NO font-family token. Family is inherited from the consuming app; this is a recorded open gap, not a doctrine."
+    },
+    "shadows": [
+      {
+        "name": "control",
+        "value": "0 1px 2px 0 rgb(0 0 0 / 0.05)",
+        "purpose": "Buttons and inputs at rest (Tailwind shadow-xs). Separates an interactive element without implying it floats."
+      },
+      {
+        "name": "container",
+        "value": "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
+        "purpose": "Cards and the active tab trigger (Tailwind shadow-sm). Marks a resting surface."
+      },
+      {
+        "name": "overlay",
+        "value": "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
+        "purpose": "Dialog content only (Tailwind shadow-lg). The one component allowed to look airborne."
+      },
+      {
+        "name": "focus-ring",
+        "value": "0 0 0 3px var(--color-ring)",
+        "purpose": "Applied at 50% ring opacity on focus-visible across button, input, badge and tabs."
+      }
+    ],
+    "motion": [
+      {
+        "name": "fade-in",
+        "value": "fadeIn 0.3s ease-out",
+        "purpose": "Opacity 0 to 1. Token: --animate-fade-in."
+      },
+      {
+        "name": "slide-up",
+        "value": "slideUp 0.3s ease-out",
+        "purpose": "Opacity plus 10px upward translate. Token: --animate-slide-up."
+      },
+      {
+        "name": "pulse-slow",
+        "value": "pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+        "purpose": "Ambient attention loop. Token: --animate-pulse-slow."
+      },
+      {
+        "name": "surface-hover",
+        "value": "background-color 0.2s ease, border-color 0.2s ease",
+        "purpose": "The .card-hover recipe's transition."
+      },
+      {
+        "name": "overlay-enter",
+        "value": "200ms",
+        "purpose": "Dialog fade plus 95% zoom, in and out."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "sm",
+        "value": "640px",
+        "note": "Dialog max-width caps at 32rem from here up."
+      },
+      {
+        "name": "md",
+        "value": "768px",
+        "note": "Input font-size steps down from 1rem to 0.875rem."
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-default",
+      "description": "The filled default. Graphite fill, hover drops to 90% of its own fill.",
+      "html": "<button class=\"ds-btn-primary\">Save changes</button>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 36px; padding: 8px 16px; border: none; border-radius: var(--radius-md, 8px); background: var(--color-primary, oklch(0.205 0 0)); color: var(--color-primary-foreground, oklch(0.985 0 0)); font-size: 0.875rem; font-weight: 500; white-space: nowrap; box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05); transition: background-color 0.15s ease; cursor: pointer; } .ds-btn-primary:hover { background: color-mix(in oklab, var(--color-primary, oklch(0.205 0 0)) 90%, transparent); } .ds-btn-primary:focus-visible { outline: none; box-shadow: 0 0 0 3px color-mix(in oklab, var(--color-ring, oklch(0.708 0 0)) 50%, transparent); } .ds-btn-primary:disabled { opacity: 0.5; pointer-events: none; }"
+    },
+    {
+      "name": "Outline Button",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "Hairline border on the page ground; fills with Whisper on hover.",
+      "html": "<button class=\"ds-btn-outline\">Cancel</button>",
+      "css": ".ds-btn-outline { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 36px; padding: 8px 16px; border: 1px solid var(--color-border, oklch(0.922 0 0)); border-radius: var(--radius-md, 8px); background: var(--color-background, oklch(1 0 0)); color: var(--color-foreground, oklch(0.145 0 0)); font-size: 0.875rem; font-weight: 500; box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05); transition: background-color 0.15s ease, color 0.15s ease; cursor: pointer; } .ds-btn-outline:hover { background: var(--color-accent, oklch(0.97 0 0)); color: var(--color-accent-foreground, oklch(0.205 0 0)); } .ds-btn-outline:focus-visible { outline: none; box-shadow: 0 0 0 3px color-mix(in oklab, var(--color-ring, oklch(0.708 0 0)) 50%, transparent); }"
+    },
+    {
+      "name": "Ghost Button",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Transparent at rest; resolves to the same Whisper hover as Secondary.",
+      "html": "<button class=\"ds-btn-ghost\">Dismiss</button>",
+      "css": ".ds-btn-ghost { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 36px; padding: 8px 16px; border: none; border-radius: var(--radius-md, 8px); background: transparent; color: var(--color-foreground, oklch(0.145 0 0)); font-size: 0.875rem; font-weight: 500; transition: background-color 0.15s ease, color 0.15s ease; cursor: pointer; } .ds-btn-ghost:hover { background: var(--color-accent, oklch(0.97 0 0)); color: var(--color-accent-foreground, oklch(0.205 0 0)); } .ds-btn-ghost:focus-visible { outline: none; box-shadow: 0 0 0 3px color-mix(in oklab, var(--color-ring, oklch(0.708 0 0)) 50%, transparent); }"
+    },
+    {
+      "name": "Gradient Button",
+      "kind": "button",
+      "refersTo": "button-default",
+      "description": "The opt-in accent path. Base class supplies direction and white text; the modifier sets only the two stops.",
+      "html": "<button class=\"ds-btn-gradient ds-gradient-orchid\">Get started</button>",
+      "css": ".ds-btn-gradient { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 36px; padding: 8px 16px; border: none; border-radius: var(--radius-md, 8px); background-image: linear-gradient(115deg, var(--ds-grad-1), var(--ds-grad-2)); color: #fff; font-size: 0.875rem; font-weight: 500; cursor: pointer; transition: filter 0.15s ease; } .ds-btn-gradient:hover { filter: brightness(1.08); } .ds-btn-gradient:focus-visible { outline: none; box-shadow: 0 0 0 3px color-mix(in oklab, var(--color-ring, oklch(0.708 0 0)) 50%, transparent); } .ds-gradient-orchid { --ds-grad-1: #a21caf; --ds-grad-2: #4338ca; }"
+    },
+    {
+      "name": "Text Input",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Transparent ground, hairline border, border shifts to Ring on focus alongside the 3px ring.",
+      "html": "<input class=\"ds-input\" type=\"text\" placeholder=\"you@example.com\" />",
+      "css": ".ds-input { display: block; width: 100%; height: 36px; padding: 4px 12px; border: 1px solid var(--color-input, oklch(0.922 0 0)); border-radius: var(--radius-md, 8px); background: transparent; color: var(--color-foreground, oklch(0.145 0 0)); font-size: 0.875rem; box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05); transition: color 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease; } .ds-input::placeholder { color: var(--color-muted-foreground, oklch(0.556 0 0)); } .ds-input:focus-visible { outline: none; border-color: var(--color-ring, oklch(0.708 0 0)); box-shadow: 0 0 0 3px color-mix(in oklab, var(--color-ring, oklch(0.708 0 0)) 50%, transparent); } .ds-input[aria-invalid=\"true\"] { border-color: var(--color-destructive, oklch(0.577 0.245 27.325)); } .ds-input:disabled { opacity: 0.5; cursor: not-allowed; }"
+    },
+    {
+      "name": "Badge",
+      "kind": "chip",
+      "refersTo": "badge-default",
+      "description": "Full pill. Filled variants carry a transparent border so swapping to Outline shifts nothing.",
+      "html": "<span class=\"ds-badge\">Active</span> <span class=\"ds-badge ds-badge-secondary\">Draft</span> <span class=\"ds-badge ds-badge-outline\">Archived</span>",
+      "css": ".ds-badge { display: inline-flex; align-items: center; justify-content: center; gap: 4px; width: fit-content; padding: 2px 8px; border: 1px solid transparent; border-radius: 9999px; background: var(--color-primary, oklch(0.205 0 0)); color: var(--color-primary-foreground, oklch(0.985 0 0)); font-size: 0.75rem; font-weight: 500; white-space: nowrap; overflow: hidden; transition: color 0.15s ease, box-shadow 0.15s ease; } .ds-badge-secondary { background: var(--color-secondary, oklch(0.97 0 0)); color: var(--color-secondary-foreground, oklch(0.205 0 0)); } .ds-badge-outline { background: transparent; border-color: var(--color-border, oklch(0.922 0 0)); color: var(--color-foreground, oklch(0.145 0 0)); }"
+    },
+    {
+      "name": "Card",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "The softest shape in the system at 14px. 24px inset held uniformly across every region.",
+      "html": "<div class=\"ds-card\"><div class=\"ds-card-header\"><div class=\"ds-card-title\">Monthly spend</div><div class=\"ds-card-desc\">Across all tracked accounts.</div></div><div class=\"ds-card-content\">$1,284.00</div></div>",
+      "css": ".ds-card { display: flex; flex-direction: column; gap: 24px; padding: 24px 0; border: 1px solid var(--color-border, oklch(0.922 0 0)); border-radius: var(--radius-xl, 14px); background: var(--color-card, oklch(1 0 0)); color: var(--color-card-foreground, oklch(0.145 0 0)); box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1); } .ds-card-header { display: grid; gap: 8px; padding: 0 24px; } .ds-card-title { font-weight: 600; line-height: 1; } .ds-card-desc { font-size: 0.875rem; color: var(--color-muted-foreground, oklch(0.556 0 0)); } .ds-card-content { padding: 0 24px; font-size: 1.5rem; font-weight: 600; }"
+    },
+    {
+      "name": "Tabs",
+      "kind": "nav",
+      "refersTo": "tabs-list",
+      "description": "Muted track with 3px inset padding; the active trigger lifts to the page background.",
+      "html": "<div class=\"ds-tabs\"><button class=\"ds-tab ds-tab-active\">Overview</button><button class=\"ds-tab\">Activity</button><button class=\"ds-tab\">Settings</button></div>",
+      "css": ".ds-tabs { display: inline-flex; align-items: center; justify-content: center; width: fit-content; height: 36px; padding: 3px; border-radius: var(--radius-lg, 10px); background: var(--color-muted, oklch(0.97 0 0)); color: var(--color-muted-foreground, oklch(0.556 0 0)); } .ds-tab { display: inline-flex; align-items: center; justify-content: center; gap: 6px; flex: 1; height: calc(100% - 1px); padding: 4px 8px; border: 1px solid transparent; border-radius: var(--radius-md, 8px); background: transparent; color: inherit; font-size: 0.875rem; font-weight: 500; white-space: nowrap; cursor: pointer; transition: color 0.15s ease, box-shadow 0.15s ease; } .ds-tab-active { background: var(--color-background, oklch(1 0 0)); color: var(--color-foreground, oklch(0.145 0 0)); box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1); } .ds-tab:focus-visible { outline: none; box-shadow: 0 0 0 3px color-mix(in oklab, var(--color-ring, oklch(0.708 0 0)) 50%, transparent); }"
+    },
+    {
+      "name": "Dialog",
+      "kind": "custom",
+      "refersTo": "dialog-content",
+      "description": "The only component granted real lift. Close icon inlined as SVG at 70% opacity.",
+      "html": "<div class=\"ds-dialog\"><div class=\"ds-dialog-title\">Delete project</div><div class=\"ds-dialog-desc\">This action cannot be undone.</div><button class=\"ds-dialog-close\" aria-label=\"Close\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\"><path d=\"M18 6 6 18M6 6l12 12\"/></svg></button></div>",
+      "css": ".ds-dialog { position: relative; display: grid; gap: 16px; width: 100%; max-width: 32rem; padding: 24px; border: 1px solid var(--color-border, oklch(0.922 0 0)); border-radius: var(--radius-lg, 10px); background: var(--color-background, oklch(1 0 0)); color: var(--color-foreground, oklch(0.145 0 0)); box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1); } .ds-dialog-title { font-size: 1.125rem; font-weight: 600; line-height: 1; } .ds-dialog-desc { font-size: 0.875rem; color: var(--color-muted-foreground, oklch(0.556 0 0)); } .ds-dialog-close { position: absolute; top: 16px; right: 16px; display: inline-flex; padding: 0; border: none; background: transparent; color: inherit; opacity: 0.7; cursor: pointer; transition: opacity 0.15s ease; } .ds-dialog-close:hover { opacity: 1; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Neutral Substrate",
+    "overview": "This is a foundation, not a face. Every core token in the palette is chroma-zero - literally hueless - and that is the whole thesis. The registry is consumed by four separate applications (myargus, atto1, budget, erto-apps), and identity is something each of them adds on top, never something this layer imposes from below. A shared system that arrived with opinions about brand colour would force four apps to look like each other.\n\nWhat it does own is rhythm and mechanics: a uniform 36px control height, a single radius variable everything else derives from, a consistent 3px focus ring, and hover states that shift opacity rather than swapping colour. The restraint is not minimalism for its own sake - it is what makes the layer safe to share. Colour is a guest here, not a resident.\n\nDepth is the one place the system genuinely runs two mechanisms rather than one, and it does so deliberately: light-mode consumers get borders and hairline shadows, always-dark consumers get a six-step tonal ramp. Both express the same intent through the materials their mode actually has.",
+    "keyCharacteristics": [
+      "Chroma-zero core; the only chromatic core token is destructive",
+      "One radius variable (--radius: 0.625rem) generates the entire corner scale",
+      "36px is the canonical control height across button, input, and tabs",
+      "Colour arrives only as signal, data, or an explicit consumer opt-in",
+      "No build step - components are copied into consumers and edited there"
+    ],
+    "rules": [
+      {
+        "name": "The Guest Rule",
+        "section": "colors",
+        "body": "Colour is a guest, not a resident. The core palette is chroma-zero on purpose; any hue that appears must be carrying meaning - danger, a data series, or an accent a consumer deliberately chose."
+      },
+      {
+        "name": "The Opt-In Accent Rule",
+        "section": "colors",
+        "body": "Choosing a gradient has no effect on the flat primary/accent tokens. The four candidates are additive utilities, not a brand decision made on the consumer's behalf. A consumer that picks none is in a fully supported state, not an unfinished one."
+      },
+      {
+        "name": "The Two Systems Rule",
+        "section": "elevation",
+        "body": "Never mix the mechanisms. A light-mode surface gains depth from a border and a hairline shadow; a dark-mode surface gains it from the next step up the ramp. Stacking both produces a muddy edge that reads as neither."
+      },
+      {
+        "name": "The Overlay-Only Lift Rule",
+        "section": "elevation",
+        "body": "shadow-lg belongs to the dialog. If a new component seems to need it, the real question is whether that component should be an overlay at all."
+      },
+      {
+        "name": "The One Variable Rule",
+        "section": "shapes",
+        "body": "Radius values are never hardcoded. If a component needs a corner, it takes a step off the scale - a literal px radius means the scale was wrong, not that the component is special."
+      }
+    ],
+    "dos": [
+      "Do take every colour from a semantic token (bg-primary, text-muted-foreground). Both modes are defined; hardcoding a value breaks one of them.",
+      "Do derive corners from the radius scale so a change to --radius rescales the whole system.",
+      "Do keep interactive controls at 36px. Button, input, and tab list all agree on this height, and mixed heights in a row are immediately visible.",
+      "Do express hover as an opacity shift on the existing fill (/90, /80) rather than a different colour.",
+      "Do use focus-visible with the 3px ring at 50% opacity, so pointer users never see a ring that keyboard users depend on.",
+      "Do drive invalid state from aria-invalid, keeping the accessible attribute and the visual treatment inseparable.",
+      "Do pair every new component with a registry.json entry in the same commit - a source file the manifest does not list is unreachable."
+    ],
+    "donts": [
+      "Don't introduce a brand hue into the core palette. Chroma-zero is the system's central commitment, and four consumers depend on supplying their own identity.",
+      "Don't treat the surface-* ramp as a light-mode tool. It holds the same values in both modes and only makes sense under an always-dark consumer.",
+      "Don't stack a tonal surface step and a shadow on the same element - pick the mechanism that belongs to the mode.",
+      "Don't reach for shadow-lg outside an overlay.",
+      "Don't add a font-family token casually. The absence is an unresolved gap affecting four applications, not a slot to fill in passing.",
+      "Don't assume choosing a gradient accent changes anything else. The gradients are additive utilities and leave the flat tokens untouched.",
+      "Don't hardcode white or black. #ffffff appears exactly twice by design - destructive button text and the gradient button - and both are fixed-fill cases."
+    ]
+  }
+}
