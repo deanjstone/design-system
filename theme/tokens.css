@@ -7,6 +7,7 @@
  */
 
 @theme inline {
+  --font-sans: var(--font-sans-stack);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -81,6 +82,20 @@
 }
 
 :root {
+  /*
+   * Typeface is mechanics, not identity (ADR-0002). The component metrics —
+   * the 32px control height, the 0.75/0.8/0.875rem steps, the 500 and 600
+   * weights — assume a UI sans that actually has those weights and sane
+   * figures. A consumer supplying a display face does not just look
+   * different; the rhythm breaks.
+   *
+   * Consumers must import the face themselves, once, at the top of their CSS:
+   *   @import "@fontsource-variable/ibm-plex-sans";
+   * An @import cannot be injected from a registry css block because it has to
+   * precede every other rule in the file.
+   */
+  --font-sans-stack: "IBM Plex Sans Variable", "IBM Plex Sans", ui-sans-serif,
+    system-ui, sans-serif;
   --radius: 0.625rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);

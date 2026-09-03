@@ -50,10 +50,20 @@ components are Base UI (`@base-ui/react`), per
 `-b radix` or `-b aria` installs a component library the registry's
 components do not import.
 
-Note the preset (`-p nova` above) brings its own typeface and base
-stylesheet. This registry deliberately ships no font token, so whatever
-preset a consumer picks decides its typography by default rather than by
-choice — see [#37](https://github.com/deanjstone/design-system/issues/37).
+**Add the font import.** The `theme` item owns the typeface
+([ADR-0002](docs/adr/0002-registry-owns-the-font-token.md)) and declares
+`@fontsource-variable/ibm-plex-sans` as a dependency, so the package
+installs — but an `@import` has to precede every other rule in a stylesheet
+and cannot be injected from a registry `css` block. Add it yourself, once,
+at the top of your CSS entry:
+
+```css
+@import "@fontsource-variable/ibm-plex-sans";
+```
+
+Note the preset (`-p nova` above) also brings its own typeface and base
+stylesheet. Pulling the `theme` item overrides `--font-sans`, so Plex wins,
+but the preset's font package stays installed unless you remove it.
 
 (Do **not** add this repo under `components.json`'s `registries` field with
 a bare `registry.json` URL — that field requires a `{name}`-templated
@@ -147,7 +157,9 @@ iterates against a running app, and this repo has none.
   Switched from `new-york`/Radix in [ADR-0001](docs/adr/0001-switch-component-library-to-base-ui.md).
 - The `theme` item ships the full token set: core colors (background,
   foreground, primary/secondary/accent/muted, destructive, border/input/
-  ring), plus `--radius`, `--card`, `--popover`, and `--chart-1..5`.
+  ring), plus `--radius`, `--card`, `--popover`, `--chart-1..5`, and
+  `--font-sans` (IBM Plex Sans — typeface is mechanics here, not identity;
+  see [ADR-0002](docs/adr/0002-registry-owns-the-font-token.md)).
 - Opt-in additions to the `theme` item (no effect unless a consumer uses
   the utilities): a 6-step `surface-0..5` dark-elevation ramp plus
   `surface-border`/`surface-border-light`, `pulse-slow`/`fade-in`/
