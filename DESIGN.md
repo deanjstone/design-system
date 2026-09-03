@@ -490,6 +490,37 @@ the indicator. Applied on `focus-visible`, so pointer users never see it.
 Medium 0.875rem that dims to 50% when its associated control is disabled, so
 the label tracks the field's state rather than sitting inert beside it.
 
+
+### The full set
+
+Twenty-four components ship. The sections above describe the ones that define
+the system's behaviour; the rest follow the same rules — the shared focus
+treatment, the radius scale, the 32px control height where they are controls —
+and are listed here so the inventory is not something you have to infer from
+`registry.json`.
+
+**Controls** — `button`, `input`, `textarea`, `select`, `checkbox`,
+`switch`, `slider`, `label`. Anything the user operates directly. All take the
+control height and the two-layer focus treatment; `checkbox`, `switch` and
+`slider` are the three that carry state in their own geometry rather than in a
+fill.
+
+**Surfaces and overlays** — `card`, `dialog`, `alert-dialog`, `sheet`,
+`drawer`, `popover`, `dropdown-menu`, `collapsible`, `scroll-area`. Containers
+and things that appear above them. The overlays share the dialog's lift; the
+rest stay flat and lean on borders, per the two-mechanism depth rule.
+`alert-dialog` and `sheet` compose `button`, so pulling either pulls it too.
+
+**Display and feedback** — `badge`, `avatar`, `progress`, `skeleton`,
+`separator`, `tabs`, `sonner`. Things that report rather than accept input.
+`skeleton` and `progress` are the two that animate at rest, so they are the
+ones the reduced-motion rules matter most for.
+
+The set is deliberately bounded to what the consuming apps actually use rather
+than to shadcn's full catalogue — 24 of 63. Adding another is mechanical
+(fetch the base-nova item, add a `registry.json` entry, rebuild `r/`), so
+demand can pull components in rather than the registry pushing them out.
+
 ## Do's and Don'ts
 
 ### Do:

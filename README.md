@@ -13,8 +13,8 @@ copies them into the consuming project. There's no publish step.
 registry.json              root manifest — one entry per distributable item
 registry/
   lib/utils.ts              cn() helper (clsx + tailwind-merge)
-  base-nova/ui/               base-nova style components (Base UI):
-    button.tsx, card.tsx, label.tsx, input.tsx, dialog.tsx, tabs.tsx, badge.tsx
+  base-nova/ui/               24 base-nova style components (Base UI)
+r/                         generated per-item output — what tagged URLs resolve
 theme/tokens.css            same tokens as the "theme" item, as plain CSS
 ```
 
@@ -217,6 +217,15 @@ iterates against a running app, and this repo has none.
   `slide-up` animations, `.card`/`.card-hover`/`.btn-primary`/`.btn-ghost`/
   `.badge`/`.input` plain-CSS component recipes, and `.dark`-scoped
   scrollbar/selection/calendar-picker-icon styling for always-dark apps.
-- Available components: `button`, `card`, `label`, `input`, `dialog`,
-  `tabs`, `badge` — all `base-nova` style, Base UI-based, pulled from the
-  registry the same way as `theme`/`button` above.
+- **24 components**, all `base-nova` style and Base UI-based, pulled the same
+  way as `theme`/`button` above:
+  - *Controls* — `button`, `input`, `textarea`, `select`, `checkbox`,
+    `switch`, `slider`, `label`
+  - *Surfaces and overlays* — `card`, `dialog`, `alert-dialog`, `sheet`,
+    `drawer`, `popover`, `dropdown-menu`, `collapsible`, `scroll-area`
+  - *Display and feedback* — `badge`, `avatar`, `progress`, `skeleton`,
+    `separator`, `tabs`, `sonner`
+
+  The set is bounded to what the consuming apps actually use — 24 of shadcn's
+  63 — rather than shipping the full catalogue. Adding another is mechanical,
+  so ask rather than vendoring a copy locally.
