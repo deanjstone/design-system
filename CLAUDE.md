@@ -6,7 +6,7 @@
 
 ## Key architecture notes
 
-- `new-york` shadcn style, Tailwind v4 (`@theme inline`, no `tailwind.config.js`), OKLCH color tokens. Fixed — don't add a second style variant without an ADR.
+- `base-nova` shadcn style on Base UI (`@base-ui/react`), Tailwind v4 (`@theme inline`, no `tailwind.config.js`), OKLCH color tokens. Switched from `new-york`/Radix in ADR-0001 — don't add a second style variant without an ADR.
 - No build step, no npm publish. Files are copied into consumer repos as-is by the shadcn CLI.
 - Every new component: source file(s) under `registry/`, plus a matching `registry.json` entry, in the same commit — the two must never drift.
 

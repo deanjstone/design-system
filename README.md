@@ -13,7 +13,7 @@ copies them into the consuming project. There's no publish step.
 registry.json              root manifest — one entry per distributable item
 registry/
   lib/utils.ts              cn() helper (clsx + tailwind-merge)
-  new-york/ui/                new-york style components:
+  base-nova/ui/               base-nova style components (Base UI):
     button.tsx, card.tsx, label.tsx, input.tsx, dialog.tsx, tabs.tsx, badge.tsx
 theme/tokens.css            same tokens as the "theme" item, as plain CSS
 ```
@@ -63,7 +63,7 @@ broken by an `add` re-run.
 
 ## Adding a new component
 
-1. Add the source file(s) under `registry/new-york/ui/` (or `registry/lib/`
+1. Add the source file(s) under `registry/base-nova/ui/` (or `registry/lib/`
    for non-UI code).
 2. Add a matching entry to `registry.json` — `name`, `type`
    (`registry:ui` / `registry:lib` / `registry:hook`), `files`, and any
@@ -101,10 +101,12 @@ iterates against a running app, and this repo has none.
 
 ## Style
 
-- `new-york` shadcn style, OKLCH color tokens, Tailwind v4 (`@theme inline`,
+- `base-nova` shadcn style, OKLCH color tokens, Tailwind v4 (`@theme inline`,
   no `tailwind.config.js`).
-- Radix UI primitives under the hood; components are copied, not installed
-  as a dependency — once pulled into a consumer, edit them there.
+- Base UI (`@base-ui/react`) primitives under the hood; components are copied,
+  not installed as a dependency — once pulled into a consumer, edit them there.
+  Composition uses Base UI's `render` prop, not Radix's `asChild`.
+  Switched from `new-york`/Radix in [ADR-0001](docs/adr/0001-switch-component-library-to-base-ui.md).
 - The `theme` item ships the full token set: core colors (background,
   foreground, primary/secondary/accent/muted, destructive, border/input/
   ring), plus `--radius`, `--card`, `--popover`, and `--chart-1..5`.
@@ -115,5 +117,5 @@ iterates against a running app, and this repo has none.
   `.badge`/`.input` plain-CSS component recipes, and `.dark`-scoped
   scrollbar/selection/calendar-picker-icon styling for always-dark apps.
 - Available components: `button`, `card`, `label`, `input`, `dialog`,
-  `tabs`, `badge` — all `new-york` style, Radix-based, pulled from the
+  `tabs`, `badge` — all `base-nova` style, Base UI-based, pulled from the
   registry the same way as `theme`/`button` above.

@@ -57,6 +57,10 @@ typography:
     fontSize: "0.875rem"
     fontWeight: 500
     lineHeight: 1
+  label-sm:
+    fontSize: "0.8rem"
+    fontWeight: 500
+    lineHeight: 1
   caption:
     fontSize: "0.75rem"
     fontWeight: 500
@@ -71,91 +75,72 @@ components:
     backgroundColor: "{colors.primary}"
     textColor: "{colors.primary-foreground}"
     typography: "{typography.label}"
-    rounded: "{rounded.md}"
-    padding: "8px 16px"
-    height: "36px"
-  button-destructive:
-    backgroundColor: "{colors.destructive}"
-    textColor: "{colors.destructive-foreground}"
-    rounded: "{rounded.md}"
-    padding: "8px 16px"
-    height: "36px"
-  button-secondary:
-    backgroundColor: "{colors.secondary}"
-    textColor: "{colors.secondary-foreground}"
-    rounded: "{rounded.md}"
-    padding: "8px 16px"
-    height: "36px"
+    rounded: "{rounded.lg}"
+    padding: "0 10px"
+    height: "32px"
   button-outline:
     backgroundColor: "{colors.background}"
     textColor: "{colors.foreground}"
-    rounded: "{rounded.md}"
-    padding: "8px 16px"
-    height: "36px"
+    rounded: "{rounded.lg}"
+    padding: "0 10px"
+    height: "32px"
+  button-secondary:
+    backgroundColor: "{colors.secondary}"
+    textColor: "{colors.secondary-foreground}"
+    rounded: "{rounded.lg}"
+    height: "32px"
   button-ghost:
     backgroundColor: "transparent"
     textColor: "{colors.foreground}"
+    rounded: "{rounded.lg}"
+    height: "32px"
+  button-destructive:
+    backgroundColor: "transparent"
+    textColor: "{colors.destructive}"
+    rounded: "{rounded.lg}"
+    height: "32px"
+  button-xs:
     rounded: "{rounded.md}"
-    padding: "8px 16px"
-    height: "36px"
-  button-ghost-hover:
-    backgroundColor: "{colors.accent}"
-    textColor: "{colors.accent-foreground}"
+    height: "24px"
+    typography: "{typography.caption}"
   button-sm:
     rounded: "{rounded.md}"
-    padding: "0 12px"
-    height: "32px"
-    typography: "{typography.caption}"
+    height: "28px"
   button-lg:
-    rounded: "{rounded.md}"
-    padding: "0 32px"
-    height: "40px"
-  button-icon:
-    rounded: "{rounded.md}"
+    rounded: "{rounded.lg}"
     height: "36px"
-    width: "36px"
+  button-icon:
+    rounded: "{rounded.lg}"
+    height: "32px"
+    width: "32px"
   badge-default:
     backgroundColor: "{colors.primary}"
     textColor: "{colors.primary-foreground}"
     typography: "{typography.caption}"
     rounded: "{rounded.full}"
-    padding: "2px 8px"
-  badge-secondary:
-    backgroundColor: "{colors.secondary}"
-    textColor: "{colors.secondary-foreground}"
-    rounded: "{rounded.full}"
-    padding: "2px 8px"
-  badge-outline:
-    backgroundColor: "transparent"
-    textColor: "{colors.foreground}"
-    rounded: "{rounded.full}"
-    padding: "2px 8px"
+    height: "20px"
   card:
     backgroundColor: "{colors.card}"
     textColor: "{colors.card-foreground}"
     rounded: "{rounded.xl}"
-    padding: "24px 0"
   input:
     backgroundColor: "transparent"
     textColor: "{colors.foreground}"
-    rounded: "{rounded.md}"
-    padding: "4px 12px"
-    height: "36px"
+    rounded: "{rounded.lg}"
+    height: "32px"
   tabs-list:
     backgroundColor: "{colors.muted}"
     textColor: "{colors.muted-foreground}"
     rounded: "{rounded.lg}"
-    padding: "3px"
-    height: "36px"
+    height: "32px"
   tabs-trigger-active:
     backgroundColor: "{colors.background}"
     textColor: "{colors.foreground}"
     rounded: "{rounded.md}"
-    padding: "4px 8px"
   dialog-content:
     backgroundColor: "{colors.background}"
     textColor: "{colors.foreground}"
-    rounded: "{rounded.lg}"
+    rounded: "{rounded.xl}"
     padding: "24px"
 ---
 
@@ -172,9 +157,9 @@ is consumed by four separate applications (`myargus`, `atto1`, `budget`,
 something this layer imposes from below. A shared system that arrived with
 opinions about brand colour would force four apps to look like each other.
 
-What it does own is rhythm and mechanics: a uniform 36px control height, a
-single radius variable everything else derives from, a consistent 3px focus
-ring, and hover states that shift opacity rather than swapping colour. The
+What it does own is rhythm and mechanics: a 32px canonical control height, a
+single radius variable everything else derives from, a consistent focus
+treatment, and hover states that shift opacity rather than swapping colour. The
 restraint is not minimalism for its own sake — it is what makes the layer
 safe to share. Colour is a guest here, not a resident.
 
@@ -187,7 +172,7 @@ express the same intent through the materials their mode actually has.
 
 - Chroma-zero core; the only chromatic core token is `destructive`
 - One radius variable (`--radius: 0.625rem`) generates the entire corner scale
-- 36px is the canonical control height across button, input, and tabs
+- 32px is the canonical control height across button, input, and tabs
 - Colour arrives only as signal, data, or an explicit consumer opt-in
 - No build step — components are copied into consumers and edited there
 
@@ -291,6 +276,9 @@ lands, not as evidence that delegation was the intent.
 - **Body** (400, 0.875rem): Default UI text. Inputs step up to 1rem below the
   `md` breakpoint to prevent iOS zoom-on-focus, then back down.
 - **Label** (500, 0.875rem, line-height 1): Form labels and button text.
+- **Label-sm** (500, 0.8rem, line-height 1): The small button variant only.
+  An odd step, and a real one — it exists so a 28px control's text stays
+  optically centred without dropping all the way to caption size.
 - **Caption** (500, 0.75rem): Badges and small buttons.
 
 ## Layout
@@ -381,11 +369,12 @@ Every corner in the system derives from one variable. `--radius` is
 `xl` = radius + 4px (14px). Changing the single variable rescales every
 component's corners in proportion, which is the point.
 
-In practice: buttons, inputs, and tab triggers take **md** (8px); dialogs and
-the tab list take **lg** (10px); cards take **xl** (14px), making them the
-softest shape in the system. Badges and scrollbar thumbs break the scale
-entirely with a full pill (`9999px`), which is what marks a badge as a label
-rather than a container.
+In practice: buttons, inputs, and the tab list take **lg** (10px); the active
+tab trigger takes **md** (8px); cards and dialogs take **xl** (14px), making
+them the softest shapes in the system. The xs and sm button variants clamp to
+`min(var(--radius-md), 10px)` so a smaller control never out-rounds its
+container. Badges and scrollbar thumbs break the scale entirely with a full
+pill, which is what marks a badge as a label rather than a container.
 
 Borders are uniformly 1px and hairline-weight. There is no decorative
 stroke, no double border, and no clipping geometry anywhere in the system.
@@ -399,95 +388,81 @@ scale was wrong, not that the component is special.
 ## Components
 
 Refined and restrained. Nothing here is louder than it needs to be:
-components sit at a uniform height, shift by 10% opacity on hover rather than
-changing colour outright, and reserve their one assertive gesture — a 3px
-focus ring — for keyboard users who need it.
+components sit at a uniform height, shift by opacity on hover rather than
+changing colour outright, and reserve their assertive gesture — an opaque
+border plus a translucent ring — for keyboard users who need it.
+
+Composition is Base UI's `render` prop throughout. There is no `asChild`.
+
+### Focus, system-wide
+
+Every focusable component uses the same two-layer treatment: `border-ring`
+turns the element's existing (usually transparent) 1px border opaque, and a
+3px `ring-ring/50` glow sits outside it. **The opaque border is the part that
+carries the signal** — 3.64:1 in light and 4.18:1 in dark against WCAG
+1.4.11's 3:1 — with the translucent ring reading as atmosphere rather than
+the indicator. Applied on `focus-visible`, so pointer users never see it.
 
 ### Buttons
 
-- **Shape:** Gently rounded (8px, `rounded-md`); the icon variant is a
-  36px square with the same corner.
-- **Height:** 36px default, 32px small, 40px large — all with the same radius,
-  so size changes never change the silhouette.
-- **Default:** Graphite fill, near-white text, `shadow-xs`, 8px/16px padding.
-- **Destructive:** Alarm fill with `destructive-foreground` text, following
-  the same fill/foreground pairing every other semantic colour uses.
-- **Outline:** 1px hairline border on the page ground; fills with Whisper on
-  hover.
-- **Secondary / Ghost:** Whisper fill and transparent respectively; both
-  resolve to the same Whisper hover, so they converge on interaction.
-- **Link:** Text-only in Graphite with a 4px underline offset, underlining on
-  hover.
-- **Hover:** Every filled variant drops to 90% opacity of its own fill (80%
-  for secondary). Colour never changes on hover — only its intensity.
-- **Focus:** Opaque 3px ring, `focus-visible` only.
-- **Touch:** 44px minimum in both axes under `pointer: coarse`, which is what
-  brings the 36px icon variant up to a full touch target.
+- **Shape:** 10px (`rounded-lg`); the xs and sm variants tighten to the
+  `--radius-md` step, capped so they never out-round the container.
+- **Height:** 32px default, with 24px (xs), 28px (sm) and 36px (lg). The icon
+  variant is a 32px square.
+- **Default:** Graphite fill, near-white text, dropping to 80% of its own fill
+  on hover.
+- **Destructive:** A **tinted** treatment — `destructive` text on a 10%
+  `destructive` wash — not a solid fill. It reads as a warning rather than a
+  primary action, which is the point.
+- **Outline / Secondary / Ghost:** Hairline border on the page ground, Whisper
+  fill, and transparent respectively; outline and ghost both resolve to a
+  muted hover, so they converge on interaction.
+- **Link:** Text-only in Graphite with a 4px underline offset.
+- **Active:** A 1px downward translate on press, suppressed on menu triggers.
 - **Disabled:** 50% opacity and pointer events off.
 
 ### Badges
 
-- **Shape:** Full pill (`9999px`), 2px/8px padding, 0.75rem medium text.
-- **Variants:** Default (Graphite), Secondary (Whisper), Destructive (Alarm),
-  Outline (text-only). The three filled variants carry a transparent border so
-  swapping to Outline does not shift layout by a pixel.
-- **Behaviour:** Hover styles apply only when the badge is rendered as an
-  anchor (`[a&]:hover`) — a static badge is inert, and correctly so.
+- **Shape:** Full pill (`rounded-4xl`), 20px tall, 0.75rem medium text.
+- **Behaviour:** Composes through `render`, so a badge can become a link
+  without a wrapper.
 
 ### Cards
 
-- **Corner:** 14px (`rounded-xl`), the softest shape in the system.
-- **Background:** `card` on `card-foreground`, 1px hairline border,
-  `shadow-sm`.
-- **Padding:** 24px vertical on the container; each region supplies its own
-  24px horizontal.
-- **Structure:** Seven parts — Card, Header, Title, Description, Action,
-  Content, Footer. The Header is a CSS grid that grows a second column only
-  when an Action is present.
-- **Heading semantics:** `CardTitle` renders a `div` by default and accepts
-  `as` (`<CardTitle as="h3">`). A page of cards has no heading outline until
-  a consumer supplies one.
+- **Corner:** 14px (`rounded-xl`), the softest shape in the system, with the
+  header and footer regions rounding to match at top and bottom.
+- **Background:** `card` on `card-foreground` with a 1px hairline border.
+- **Structure:** Header, Title, Description, Action, Content and Footer, with
+  the header growing a second column only when an Action is present.
 
 ### Inputs
 
-- **Style:** Transparent ground with a 1px `input` border at 8px radius,
-  36px tall, `shadow-xs`. In dark mode the ground becomes `input/30` so the
-  field reads as a recess rather than a cutout.
-- **Focus:** Border shifts to `ring` and an opaque 3px ring appears — the
-  same gesture as every other focusable component.
+- **Style:** Transparent ground with a 1px `input` border at 10px radius,
+  32px tall.
+- **Focus:** Border shifts to `ring` with the 3px glow — the same gesture as
+  every other focusable component.
 - **Invalid:** `aria-invalid` drives a destructive border and ring; the
   attribute is the trigger, not a class.
-- **Disabled:** 50% opacity, `not-allowed` cursor, pointer events off.
 
 ### Tabs
 
-- **List:** Muted fill, 10px radius, a 36px minimum height with 3px internal
-  padding, so the active trigger appears inset within its track.
-- **Overflow:** The list wraps rather than scrolls. A scrolling tab strip
-  hides tabs behind an affordance the user has to discover; wrapping keeps
-  every tab reachable, and the list only grows past 36px once it needs a
-  second row.
-- **Active trigger:** Lifts to the page background with `shadow-sm` and full
-  foreground text — the selected tab reads as raised out of its groove.
+- **List:** Muted track at 10px radius, 32px tall.
+- **Active trigger:** Lifts to the page background at the 8px step, reading as
+  raised out of its groove.
 - **Inactive:** Transparent with a transparent border, so activation adds
   colour without shifting geometry.
 
 ### Dialog
 
-- **Overlay:** Flat black at 50%, fading in and out.
-- **Content:** Page background, 1px border, 10px radius, 24px padding,
-  `shadow-lg`, centred by transform. Enters with a simultaneous fade and 95%
-  zoom over 200ms.
-- **Close:** A 16px icon at 70% opacity in the top-inline-end corner, reaching
-  full opacity on hover, centred inside its tap target and carrying the same
-  opaque 3px `focus-visible` ring as every other focusable control.
+- **Content:** Page background, 1px border, 14px radius, 24px padding,
+  centred, with a fade-and-scale entrance.
+- **Composition:** Depends on the `button` item — pulling `dialog` alone pulls
+  `button` with it.
 
 ### Labels
 
-Medium 0.875rem with `select-none`, and — distinctively — the label dims to
-50% when its associated control is disabled, via both `peer-disabled` and
-`group-data-[disabled=true]`. The label tracks the field's state rather than
-sitting inert beside it.
+Medium 0.875rem that dims to 50% when its associated control is disabled, so
+the label tracks the field's state rather than sitting inert beside it.
 
 ## Do's and Don'ts
 
@@ -498,7 +473,7 @@ sitting inert beside it.
   one of them.
 - **Do** derive corners from the radius scale so a change to `--radius`
   rescales the whole system.
-- **Do** keep interactive controls at 36px. Button, input, and tab list all
+- **Do** keep interactive controls at 32px. Button, input, and tab list all
   agree on this height, and mixed heights in a row are immediately visible.
 - **Do** express hover as an opacity shift on the existing fill (`/90`,
   `/80`) rather than a different colour.

@@ -293,11 +293,11 @@
       ],
       "dependencies": [
         "class-variance-authority",
-        "@radix-ui/react-slot"
+        "@base-ui/react"
       ],
       "files": [
         {
-          "path": "registry/new-york/ui/button.tsx",
+          "path": "registry/base-nova/ui/button.tsx",
           "type": "registry:ui"
         }
       ]
@@ -310,7 +310,7 @@
       ],
       "files": [
         {
-          "path": "registry/new-york/ui/card.tsx",
+          "path": "registry/base-nova/ui/card.tsx",
           "type": "registry:ui"
         }
       ]
@@ -321,12 +321,9 @@
       "registryDependencies": [
         "utils"
       ],
-      "dependencies": [
-        "@radix-ui/react-label"
-      ],
       "files": [
         {
-          "path": "registry/new-york/ui/label.tsx",
+          "path": "registry/base-nova/ui/label.tsx",
           "type": "registry:ui"
         }
       ]
@@ -339,24 +336,27 @@
       ],
       "files": [
         {
-          "path": "registry/new-york/ui/input.tsx",
+          "path": "registry/base-nova/ui/input.tsx",
           "type": "registry:ui"
         }
+      ],
+      "dependencies": [
+        "@base-ui/react"
       ]
     },
     {
       "name": "dialog",
       "type": "registry:ui",
       "registryDependencies": [
-        "utils"
+        "utils",
+        "button"
       ],
       "dependencies": [
-        "@radix-ui/react-dialog",
-        "lucide-react"
+        "@base-ui/react"
       ],
       "files": [
         {
-          "path": "registry/new-york/ui/dialog.tsx",
+          "path": "registry/base-nova/ui/dialog.tsx",
           "type": "registry:ui"
         }
       ]
@@ -368,11 +368,12 @@
         "utils"
       ],
       "dependencies": [
-        "@radix-ui/react-tabs"
+        "class-variance-authority",
+        "@base-ui/react"
       ],
       "files": [
         {
-          "path": "registry/new-york/ui/tabs.tsx",
+          "path": "registry/base-nova/ui/tabs.tsx",
           "type": "registry:ui"
         }
       ]
@@ -385,11 +386,11 @@
       ],
       "dependencies": [
         "class-variance-authority",
-        "@radix-ui/react-slot"
+        "@base-ui/react"
       ],
       "files": [
         {
-          "path": "registry/new-york/ui/badge.tsx",
+          "path": "registry/base-nova/ui/badge.tsx",
           "type": "registry:ui"
         }
       ]

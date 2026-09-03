@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-09-02T23:52:35.961839Z",
+  "generatedAt": "2026-09-03T01:25:31.616208Z",
   "title": "Design System: design-system",
   "extensions": {
     "colorMeta": {
@@ -212,7 +212,11 @@
         "displayName": "Caption",
         "purpose": "Badges and small buttons."
       },
-      "_note": "The system ships NO font-family token. Family is inherited from the consuming app; this is a recorded open gap, not a doctrine."
+      "_note": "The system ships NO font-family token. Family is inherited from the consuming app; this is a recorded open gap, not a doctrine.",
+      "label-sm": {
+        "displayName": "Label-sm",
+        "purpose": "The small button variant only. An odd step and a real one: it keeps a 28px control's text optically centred without dropping to caption size."
+      }
     },
     "shadows": [
       {
@@ -298,7 +302,7 @@
       "refersTo": "button-default",
       "description": "The filled default. Graphite fill, hover drops to 90% of its own fill.",
       "html": "<button class=\"ds-btn-primary\">Save changes</button>",
-      "css": ".ds-btn-primary { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 36px; padding: 8px 16px; border: none; border-radius: var(--radius-md, 8px); background: var(--color-primary, oklch(0.205 0 0)); color: var(--color-primary-foreground, oklch(0.985 0 0)); font-size: 0.875rem; font-weight: 500; white-space: nowrap; box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05); transition: background-color 0.15s ease; cursor: pointer; } .ds-btn-primary:hover { background: color-mix(in oklab, var(--color-primary, oklch(0.205 0 0)) 90%, transparent); } .ds-btn-primary:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--color-ring, oklch(0.62 0 0)); } .ds-btn-primary:disabled { opacity: 0.5; pointer-events: none; }"
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 32px; padding: 8px 16px; border: none; border-radius: var(--radius-lg, 10px); background: var(--color-primary, oklch(0.205 0 0)); color: var(--color-primary-foreground, oklch(0.985 0 0)); font-size: 0.875rem; font-weight: 500; white-space: nowrap; box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05); transition: background-color 0.15s ease; cursor: pointer; } .ds-btn-primary:hover { background: color-mix(in oklab, var(--color-primary, oklch(0.205 0 0)) 90%, transparent); } .ds-btn-primary:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--color-ring, oklch(0.62 0 0)); } .ds-btn-primary:disabled { opacity: 0.5; pointer-events: none; }"
     },
     {
       "name": "Outline Button",
@@ -306,7 +310,7 @@
       "refersTo": "button-outline",
       "description": "Hairline border on the page ground; fills with Whisper on hover.",
       "html": "<button class=\"ds-btn-outline\">Cancel</button>",
-      "css": ".ds-btn-outline { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 36px; padding: 8px 16px; border: 1px solid var(--color-border, oklch(0.922 0 0)); border-radius: var(--radius-md, 8px); background: var(--color-background, oklch(1 0 0)); color: var(--color-foreground, oklch(0.145 0 0)); font-size: 0.875rem; font-weight: 500; box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05); transition: background-color 0.15s ease, color 0.15s ease; cursor: pointer; } .ds-btn-outline:hover { background: var(--color-accent, oklch(0.97 0 0)); color: var(--color-accent-foreground, oklch(0.205 0 0)); } .ds-btn-outline:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--color-ring, oklch(0.62 0 0)); }"
+      "css": ".ds-btn-outline { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 32px; padding: 8px 16px; border: 1px solid var(--color-border, oklch(0.922 0 0)); border-radius: var(--radius-lg, 10px); background: var(--color-background, oklch(1 0 0)); color: var(--color-foreground, oklch(0.145 0 0)); font-size: 0.875rem; font-weight: 500; box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05); transition: background-color 0.15s ease, color 0.15s ease; cursor: pointer; } .ds-btn-outline:hover { background: var(--color-accent, oklch(0.97 0 0)); color: var(--color-accent-foreground, oklch(0.205 0 0)); } .ds-btn-outline:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--color-ring, oklch(0.62 0 0)); }"
     },
     {
       "name": "Ghost Button",
@@ -314,7 +318,7 @@
       "refersTo": "button-ghost",
       "description": "Transparent at rest; resolves to the same Whisper hover as Secondary.",
       "html": "<button class=\"ds-btn-ghost\">Dismiss</button>",
-      "css": ".ds-btn-ghost { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 36px; padding: 8px 16px; border: none; border-radius: var(--radius-md, 8px); background: transparent; color: var(--color-foreground, oklch(0.145 0 0)); font-size: 0.875rem; font-weight: 500; transition: background-color 0.15s ease, color 0.15s ease; cursor: pointer; } .ds-btn-ghost:hover { background: var(--color-accent, oklch(0.97 0 0)); color: var(--color-accent-foreground, oklch(0.205 0 0)); } .ds-btn-ghost:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--color-ring, oklch(0.62 0 0)); }"
+      "css": ".ds-btn-ghost { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 32px; padding: 8px 16px; border: none; border-radius: var(--radius-lg, 10px); background: transparent; color: var(--color-foreground, oklch(0.145 0 0)); font-size: 0.875rem; font-weight: 500; transition: background-color 0.15s ease, color 0.15s ease; cursor: pointer; } .ds-btn-ghost:hover { background: var(--color-accent, oklch(0.97 0 0)); color: var(--color-accent-foreground, oklch(0.205 0 0)); } .ds-btn-ghost:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--color-ring, oklch(0.62 0 0)); }"
     },
     {
       "name": "Gradient Button",
@@ -322,7 +326,7 @@
       "refersTo": "button-default",
       "description": "The opt-in accent path. Base class supplies direction and white text; the modifier sets only the two stops.",
       "html": "<button class=\"ds-btn-gradient ds-gradient-orchid\">Get started</button>",
-      "css": ".ds-btn-gradient { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 36px; padding: 8px 16px; border: none; border-radius: var(--radius-md, 8px); background-image: linear-gradient(115deg, var(--ds-grad-1), var(--ds-grad-2)); color: #fff; font-size: 0.875rem; font-weight: 500; cursor: pointer; transition: filter 0.15s ease; } .ds-btn-gradient:hover { filter: brightness(1.08); } .ds-btn-gradient:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--color-ring, oklch(0.62 0 0)); } .ds-gradient-orchid { --ds-grad-1: #a21caf; --ds-grad-2: #4338ca; }"
+      "css": ".ds-btn-gradient { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 32px; padding: 8px 16px; border: none; border-radius: var(--radius-lg, 10px); background-image: linear-gradient(115deg, var(--ds-grad-1), var(--ds-grad-2)); color: #fff; font-size: 0.875rem; font-weight: 500; cursor: pointer; transition: filter 0.15s ease; } .ds-btn-gradient:hover { filter: brightness(1.08); } .ds-btn-gradient:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--color-ring, oklch(0.62 0 0)); } .ds-gradient-orchid { --ds-grad-1: #a21caf; --ds-grad-2: #4338ca; }"
     },
     {
       "name": "Text Input",
@@ -330,7 +334,7 @@
       "refersTo": "input",
       "description": "Transparent ground, hairline border, border shifts to Ring on focus alongside the 3px ring.",
       "html": "<input class=\"ds-input\" type=\"text\" placeholder=\"you@example.com\" />",
-      "css": ".ds-input { display: block; width: 100%; height: 36px; padding: 4px 12px; border: 1px solid var(--color-input, oklch(0.64 0 0)); border-radius: var(--radius-md, 8px); background: transparent; color: var(--color-foreground, oklch(0.145 0 0)); font-size: 0.875rem; box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05); transition: color 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease; } .ds-input::placeholder { color: var(--color-muted-foreground, oklch(0.556 0 0)); } .ds-input:focus-visible { outline: none; border-color: var(--color-ring, oklch(0.708 0 0)); box-shadow: 0 0 0 3px var(--color-ring, oklch(0.62 0 0)); } .ds-input[aria-invalid=\"true\"] { border-color: var(--color-destructive, oklch(0.577 0.245 27.325)); } .ds-input:disabled { opacity: 0.5; cursor: not-allowed; }"
+      "css": ".ds-input { display: block; width: 100%; height: 32px; padding: 4px 12px; border: 1px solid var(--color-input, oklch(0.64 0 0)); border-radius: var(--radius-lg, 10px); background: transparent; color: var(--color-foreground, oklch(0.145 0 0)); font-size: 0.875rem; box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05); transition: color 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease; } .ds-input::placeholder { color: var(--color-muted-foreground, oklch(0.556 0 0)); } .ds-input:focus-visible { outline: none; border-color: var(--color-ring, oklch(0.708 0 0)); box-shadow: 0 0 0 3px var(--color-ring, oklch(0.62 0 0)); } .ds-input[aria-invalid=\"true\"] { border-color: var(--color-destructive, oklch(0.577 0.245 27.325)); } .ds-input:disabled { opacity: 0.5; cursor: not-allowed; }"
     },
     {
       "name": "Badge",
@@ -354,7 +358,7 @@
       "refersTo": "tabs-list",
       "description": "Muted track with 3px inset padding; the active trigger lifts to the page background. Wraps rather than scrolls, so no tab is hidden behind a scroll affordance.",
       "html": "<div class=\"ds-tabs\"><button class=\"ds-tab ds-tab-active\">Overview</button><button class=\"ds-tab\">Activity</button><button class=\"ds-tab\">Settings</button></div>",
-      "css": ".ds-tabs { display: inline-flex; flex-wrap: wrap; align-items: center; justify-content: center; width: fit-content; max-width: 100%; min-height: 36px; row-gap: 3px; padding: 3px; border-radius: var(--radius-lg, 10px); background: var(--color-muted, oklch(0.97 0 0)); color: var(--color-muted-foreground, oklch(0.556 0 0)); } .ds-tab { display: inline-flex; align-items: center; justify-content: center; gap: 6px; flex: 1; min-height: 30px; padding: 4px 8px; border: 1px solid transparent; border-radius: var(--radius-md, 8px); background: transparent; color: inherit; font-size: 0.875rem; font-weight: 500; white-space: nowrap; cursor: pointer; transition: color 0.15s ease, box-shadow 0.15s ease; } .ds-tab-active { background: var(--color-background, oklch(1 0 0)); color: var(--color-foreground, oklch(0.145 0 0)); box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1); } .ds-tab:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--color-ring, oklch(0.62 0 0)); }"
+      "css": ".ds-tabs { display: inline-flex; flex-wrap: wrap; align-items: center; justify-content: center; width: fit-content; max-width: 100%; min-height: 32px; row-gap: 3px; padding: 3px; border-radius: var(--radius-lg, 10px); background: var(--color-muted, oklch(0.97 0 0)); color: var(--color-muted-foreground, oklch(0.556 0 0)); } .ds-tab { display: inline-flex; align-items: center; justify-content: center; gap: 6px; flex: 1; min-height: 30px; padding: 4px 8px; border: 1px solid transparent; border-radius: var(--radius-lg, 10px); background: transparent; color: inherit; font-size: 0.875rem; font-weight: 500; white-space: nowrap; cursor: pointer; transition: color 0.15s ease, box-shadow 0.15s ease; } .ds-tab-active { background: var(--color-background, oklch(1 0 0)); color: var(--color-foreground, oklch(0.145 0 0)); box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1); } .ds-tab:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--color-ring, oklch(0.62 0 0)); }"
     },
     {
       "name": "Dialog",
@@ -367,11 +371,11 @@
   ],
   "narrative": {
     "northStar": "The Neutral Substrate",
-    "overview": "This is a foundation, not a face. Every core token in the palette is chroma-zero - literally hueless - and that is the whole thesis. The registry is consumed by four separate applications (myargus, atto1, budget, erto-apps), and identity is something each of them adds on top, never something this layer imposes from below. A shared system that arrived with opinions about brand colour would force four apps to look like each other.\n\nWhat it does own is rhythm and mechanics: a uniform 36px control height, a single radius variable everything else derives from, a consistent 3px focus ring, and hover states that shift opacity rather than swapping colour. The restraint is not minimalism for its own sake - it is what makes the layer safe to share. Colour is a guest here, not a resident.\n\nDepth is the one place the system genuinely runs two mechanisms rather than one, and it does so deliberately: light-mode consumers get borders and hairline shadows, always-dark consumers get a six-step tonal ramp. Both express the same intent through the materials their mode actually has.",
+    "overview": "This is a foundation, not a face. Every core token in the palette is chroma-zero - literally hueless - and that is the whole thesis. The registry is consumed by four separate applications (myargus, atto1, budget, erto-apps), and identity is something each of them adds on top, never something this layer imposes from below. A shared system that arrived with opinions about brand colour would force four apps to look like each other.\n\nWhat it does own is rhythm and mechanics: a 32px canonical control height, a single radius variable everything else derives from, a consistent 3px focus ring, and hover states that shift opacity rather than swapping colour. The restraint is not minimalism for its own sake - it is what makes the layer safe to share. Colour is a guest here, not a resident.\n\nDepth is the one place the system genuinely runs two mechanisms rather than one, and it does so deliberately: light-mode consumers get borders and hairline shadows, always-dark consumers get a six-step tonal ramp. Both express the same intent through the materials their mode actually has.",
     "keyCharacteristics": [
       "Chroma-zero core; the only chromatic core token is destructive",
       "One radius variable (--radius: 0.625rem) generates the entire corner scale",
-      "36px is the canonical control height across button, input, and tabs",
+      "32px is the canonical control height across button, input, and tabs",
       "Colour arrives only as signal, data, or an explicit consumer opt-in",
       "No build step - components are copied into consumers and edited there"
     ],
@@ -405,12 +409,17 @@
         "name": "The Capability Rule",
         "section": "layout",
         "body": "Adapt to what the device can do, not how wide it is. A width breakpoint is the wrong tool for a question about fingers and hover."
+      },
+      {
+        "name": "The Two-Layer Focus Rule",
+        "section": "components",
+        "body": "The opaque border carries the focus signal; the translucent ring is atmosphere layered on it. Measured at 3.64:1 light and 4.18:1 dark, so the indicator clears WCAG 1.4.11 on the border alone."
       }
     ],
     "dos": [
       "Do take every colour from a semantic token (bg-primary, text-muted-foreground). Both modes are defined; hardcoding a value breaks one of them.",
       "Do derive corners from the radius scale so a change to --radius rescales the whole system.",
-      "Do keep interactive controls at 36px. Button, input, and tab list all agree on this height, and mixed heights in a row are immediately visible.",
+      "Do keep interactive controls at 32px. Button, input, and tab list all agree on this height, and mixed heights in a row are immediately visible.",
       "Do express hover as an opacity shift on the existing fill (/90, /80) rather than a different colour.",
       "Do use focus-visible with the opaque 3px ring, so pointer users never see a ring that keyboard users depend on.",
       "Do drive invalid state from aria-invalid, keeping the accessible attribute and the visual treatment inseparable.",
