@@ -1,3 +1,10 @@
+# [2.3.0](https://github.com/deanjstone/design-system/compare/v2.2.0...v2.3.0) (2026-09-03)
+
+
+### Features
+
+* expand the registry to 24 components ([#46](https://github.com/deanjstone/design-system/issues/46)) ([e362422](https://github.com/deanjstone/design-system/commit/e362422bef449682e83579d92ba9a5c0d96cdeab))
+
 # [2.2.0](https://github.com/deanjstone/design-system/compare/v2.1.0...v2.2.0) (2026-09-03)
 
 
