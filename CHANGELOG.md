@@ -1,3 +1,10 @@
+# [2.2.0](https://github.com/deanjstone/design-system/compare/v2.1.0...v2.2.0) (2026-09-03)
+
+
+### Features
+
+* publish per-item registry output so consumers can pin ([#45](https://github.com/deanjstone/design-system/issues/45)) ([935a848](https://github.com/deanjstone/design-system/commit/935a8489d42724f106a30fbfca1e2e50f0b4317b))
+
 # [2.1.0](https://github.com/deanjstone/design-system/compare/v2.0.0...v2.1.0) (2026-09-03)
 
 
