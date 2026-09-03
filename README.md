@@ -126,12 +126,39 @@ ownership of the typeface
 ([ADR-0002](docs/adr/0002-registry-owns-the-font-token.md)), which changes
 how every consumer looks.
 
-Making the registry pinnable needs per-item output — `shadcn build` into
-`r/{name}.json`, committed — so consumers can register a tagged, templated
-URL under `components.json`'s `registries` field. Tracked in
-[#43](https://github.com/deanjstone/design-system/issues/43). Until then,
-read the CHANGELOG before re-running `add`, and treat a major bump as a
-migration rather than an update.
+### Pinning to a release
+
+Per-item output lives in `r/`, one self-contained JSON per item with the
+source inlined. Because a tag includes `r/`, a tagged raw URL resolves to
+exactly the code that shipped in that release.
+
+Register it once in the consumer's `components.json`:
+
+```json
+{
+  "registries": {
+    "@design-system": {
+      "url": "https://raw.githubusercontent.com/deanjstone/design-system/v2.1.0/r/{name}.json"
+    }
+  }
+}
+```
+
+then add by alias, and bump the tag in that URL when you want to upgrade:
+
+```bash
+npx shadcn add @design-system/theme @design-system/button
+```
+
+This is the `{name}`-templated endpoint the warning above refers to — the
+thing a bare `registry.json` URL cannot be. The unpinned
+`deanjstone/design-system/<item>` shorthand still works and still tracks
+`main`; it is the convenience path, not the one to build on.
+
+`r/` is generated. Rebuild it with `npx shadcn build --output ./r` whenever
+`registry.json` or a source file changes; CI rebuilds and fails on any
+difference, because a stale `r/` would serve a tag's consumers older code
+than the tag claims.
 
 ## Adding a new component
 
