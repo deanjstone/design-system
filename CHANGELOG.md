@@ -1,3 +1,10 @@
+# [2.1.0](https://github.com/deanjstone/design-system/compare/v2.0.0...v2.1.0) (2026-09-03)
+
+
+### Features
+
+* the registry owns the font token (IBM Plex Sans) ([#40](https://github.com/deanjstone/design-system/issues/40)) ([15b2a2f](https://github.com/deanjstone/design-system/commit/15b2a2f4ab9d380331b08914a1a899acc9d2228e))
+
 # [2.0.0](https://github.com/deanjstone/design-system/compare/v1.0.4...v2.0.0) (2026-09-03)
 
 
