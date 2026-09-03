@@ -3,3 +3,9 @@ dist/
 .DS_Store
 *.log
 .vscode/settings.json
+
+# Impeccable's per-session design-hook cache. Machine-local and keyed by
+# session id, so it must never be committed. It was only ever excluded via
+# .git/info/exclude, which is not shared — every other clone saw it as
+# untracked noise. The design.json sidecar beside it IS tracked.
+.impeccable/hook.cache.json
