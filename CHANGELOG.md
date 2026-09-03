@@ -1,3 +1,10 @@
+## [1.0.4](https://github.com/deanjstone/design-system/compare/v1.0.3...v1.0.4) (2026-09-03)
+
+
+### Bug Fixes
+
+* reduced-motion pulse override targeted a variable that does not exist ([#34](https://github.com/deanjstone/design-system/issues/34)) ([f86fbaf](https://github.com/deanjstone/design-system/commit/f86fbaff483319fa178700d3f6e8c3d20df837c6)), closes [#31](https://github.com/deanjstone/design-system/issues/31)
+
 ## [1.0.3](https://github.com/deanjstone/design-system/compare/v1.0.2...v1.0.3) (2026-09-02)
 
 
