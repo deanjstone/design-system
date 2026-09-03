@@ -1,3 +1,15 @@
+# [2.0.0](https://github.com/deanjstone/design-system/compare/v1.0.4...v2.0.0) (2026-09-03)
+
+
+* feat!: switch the component library from Radix to Base UI ([#38](https://github.com/deanjstone/design-system/issues/38)) ([a9e23b5](https://github.com/deanjstone/design-system/commit/a9e23b5e2f528435c405afe5db354ae06b2cb8f6)), closes [#10](https://github.com/deanjstone/design-system/issues/10) [31-#34](https://github.com/31-/issues/34) [#31](https://github.com/deanjstone/design-system/issues/31) [#5](https://github.com/deanjstone/design-system/issues/5) [#10](https://github.com/deanjstone/design-system/issues/10)
+
+
+### BREAKING CHANGES
+
+* components are Base UI, not Radix. `asChild` no longer
+exists; use Base UI's `render` prop. Consumers must reinstall with
+`shadcn init -b base` (the CLI default) rather than `-b radix`.
+
 ## [1.0.4](https://github.com/deanjstone/design-system/compare/v1.0.3...v1.0.4) (2026-09-03)
 
 
