@@ -104,10 +104,34 @@ be overwritten by the next `shadcn add`:
 
 ## Versioning
 
-Consumers pin the registry URL to a branch, tag, or commit SHA (swap `main`
-above for a tag once this stabilizes). Breaking token or variant changes
-should land as a tagged release so existing consumers aren't silently
-broken by an `add` re-run.
+Releases are cut automatically by semantic-release from Conventional
+Commits on `main` — there is no manual tagging step. A `fix:` bumps the
+patch, a `feat:` the minor, and a `feat!:` or `BREAKING CHANGE:` footer the
+major. Every release gets a `vX.Y.Z` tag, a GitHub release, and a CHANGELOG
+entry.
+
+**Consumers currently cannot pin, and should know it.** The
+`<owner>/<repo>/<item>` shorthand always resolves against the default
+branch — there is no ref in the address. Verified against the CLI: a tag in
+the address (`design-system@v2.1.0/theme`, `design-system/theme@v2.1.0`),
+a `github:` prefix, and a raw `registry.json` URL at a tag are all rejected;
+only the unpinned form resolves.
+
+So every `shadcn add` against this registry pulls whatever `main` holds at
+that moment, and an `add` re-run can pull a breaking change without warning.
+It has happened twice already: `v2.0.0` replaced Radix with Base UI
+([ADR-0001](docs/adr/0001-switch-component-library-to-base-ui.md)) and
+changed the component API from `asChild` to a `render` prop; `v2.1.0` took
+ownership of the typeface
+([ADR-0002](docs/adr/0002-registry-owns-the-font-token.md)), which changes
+how every consumer looks.
+
+Making the registry pinnable needs per-item output — `shadcn build` into
+`r/{name}.json`, committed — so consumers can register a tagged, templated
+URL under `components.json`'s `registries` field. Tracked in
+[#43](https://github.com/deanjstone/design-system/issues/43). Until then,
+read the CHANGELOG before re-running `add`, and treat a major bump as a
+migration rather than an update.
 
 ## Adding a new component
 
