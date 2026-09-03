@@ -44,24 +44,30 @@ colors:
   accent-garnet-2: "#e11d48"
 typography:
   headline:
+    fontFamily: "IBM Plex Sans Variable, IBM Plex Sans, ui-sans-serif, system-ui, sans-serif"
     fontSize: "1.125rem"
     fontWeight: 600
     lineHeight: 1
   title:
+    fontFamily: "IBM Plex Sans Variable, IBM Plex Sans, ui-sans-serif, system-ui, sans-serif"
     fontWeight: 600
     lineHeight: 1
   body:
+    fontFamily: "IBM Plex Sans Variable, IBM Plex Sans, ui-sans-serif, system-ui, sans-serif"
     fontSize: "0.875rem"
     fontWeight: 400
   label:
+    fontFamily: "IBM Plex Sans Variable, IBM Plex Sans, ui-sans-serif, system-ui, sans-serif"
     fontSize: "0.875rem"
     fontWeight: 500
     lineHeight: 1
   label-sm:
+    fontFamily: "IBM Plex Sans Variable, IBM Plex Sans, ui-sans-serif, system-ui, sans-serif"
     fontSize: "0.8rem"
     fontWeight: 500
     lineHeight: 1
   caption:
+    fontFamily: "IBM Plex Sans Variable, IBM Plex Sans, ui-sans-serif, system-ui, sans-serif"
     fontSize: "0.75rem"
     fontWeight: 500
 rounded:
@@ -256,16 +262,36 @@ in a fully supported state, not an unfinished one.
 
 ## Typography
 
-**Font family: none.** This system ships no font tokens at all — no
-`--font-*` declarations, no `fontFamily` in the frontmatter. Components
-specify size, weight, and line-height only, and inherit whatever stack the
-consuming application sets.
+**Font family: IBM Plex Sans**, via `--font-sans`
+(`"IBM Plex Sans Variable", "IBM Plex Sans", ui-sans-serif, system-ui,
+sans-serif`).
 
-This is recorded as an **open gap, not a doctrine.** Each of the four
-consumers currently picks its own family, and the resulting cross-app
-inconsistency is a known cost that has not been decided on either way.
-Anyone resolving it should treat this section as the place the decision
-lands, not as evidence that delegation was the intent.
+**Typeface is mechanics here, not identity** — the one place this system
+deliberately departs from the North Star's hands-off stance. Colour is
+identity and stays with the consumer; type is not. The component metrics
+assume a face that genuinely has what they ask for: a true 500 *and* 600,
+figures that hold a column, and a 0.8rem step that still reads. Hand the
+system a display face and the rhythm breaks rather than merely looking
+different. That is the test for whether something belongs to the registry.
+
+Plex was chosen over the obvious candidates for two concrete reasons. It
+was drawn for technical and data contexts, so its lining figures hold up in
+`budget`'s ledgers and `atto1`'s range tracking, where the chart tokens
+already anticipate numeric display. And unlike Inter and Geist it is not on
+impeccable's `overused-font` list, so a consumer running the detector over
+their built CSS does not inherit a permanent advisory from a choice this
+registry made for them.
+
+**Consumers must import the face themselves**, once, at the top of their
+stylesheet:
+
+```css
+@import "@fontsource-variable/ibm-plex-sans";
+```
+
+The `theme` item declares `@fontsource-variable/ibm-plex-sans` as a
+dependency so the package installs, but an `@import` has to precede every
+other rule in a file and cannot be injected from a registry `css` block.
 
 ### Hierarchy
 

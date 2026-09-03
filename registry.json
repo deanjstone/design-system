@@ -12,6 +12,7 @@
           "radius-md": "calc(var(--radius) - 2px)",
           "radius-lg": "var(--radius)",
           "radius-xl": "calc(var(--radius) + 4px)",
+          "font-sans": "var(--font-sans-stack)",
           "color-surface-0": "var(--surface-0)",
           "color-surface-1": "var(--surface-1)",
           "color-surface-2": "var(--surface-2)",
@@ -38,6 +39,7 @@
         },
         "light": {
           "radius": "0.625rem",
+          "font-sans-stack": "\"IBM Plex Sans Variable\", \"IBM Plex Sans\", ui-sans-serif, system-ui, sans-serif",
           "background": "oklch(1 0 0)",
           "foreground": "oklch(0.145 0 0)",
           "card": "oklch(1 0 0)",
@@ -273,7 +275,10 @@
             "min-width": "44px"
           }
         }
-      }
+      },
+      "dependencies": [
+        "@fontsource-variable/ibm-plex-sans"
+      ]
     },
     {
       "name": "utils",
