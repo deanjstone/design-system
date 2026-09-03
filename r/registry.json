@@ -1,0 +1,404 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "design-system",
+  "homepage": "https://github.com/deanjstone/design-system",
+  "items": [
+    {
+      "name": "theme",
+      "type": "registry:theme",
+      "cssVars": {
+        "theme": {
+          "radius-sm": "calc(var(--radius) - 4px)",
+          "radius-md": "calc(var(--radius) - 2px)",
+          "radius-lg": "var(--radius)",
+          "radius-xl": "calc(var(--radius) + 4px)",
+          "font-sans": "var(--font-sans-stack)",
+          "color-surface-0": "var(--surface-0)",
+          "color-surface-1": "var(--surface-1)",
+          "color-surface-2": "var(--surface-2)",
+          "color-surface-3": "var(--surface-3)",
+          "color-surface-4": "var(--surface-4)",
+          "color-surface-5": "var(--surface-5)",
+          "color-surface-border": "var(--surface-border)",
+          "color-surface-border-light": "var(--surface-border-light)",
+          "color-accent-orchid-1": "var(--accent-orchid-1)",
+          "color-accent-orchid-2": "var(--accent-orchid-2)",
+          "color-accent-orchid-1-dark": "var(--accent-orchid-1-dark)",
+          "color-accent-nebula-1": "var(--accent-nebula-1)",
+          "color-accent-nebula-2": "var(--accent-nebula-2)",
+          "color-accent-nebula-1-dark": "var(--accent-nebula-1-dark)",
+          "color-accent-lagoon-1": "var(--accent-lagoon-1)",
+          "color-accent-lagoon-2": "var(--accent-lagoon-2)",
+          "color-accent-lagoon-1-dark": "var(--accent-lagoon-1-dark)",
+          "color-accent-garnet-1": "var(--accent-garnet-1)",
+          "color-accent-garnet-2": "var(--accent-garnet-2)",
+          "color-accent-garnet-1-dark": "var(--accent-garnet-1-dark)",
+          "animate-pulse-slow": "pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+          "animate-fade-in": "fadeIn 0.3s ease-out",
+          "animate-slide-up": "slideUp 0.3s ease-out"
+        },
+        "light": {
+          "radius": "0.625rem",
+          "font-sans-stack": "\"IBM Plex Sans Variable\", \"IBM Plex Sans\", ui-sans-serif, system-ui, sans-serif",
+          "background": "oklch(1 0 0)",
+          "foreground": "oklch(0.145 0 0)",
+          "card": "oklch(1 0 0)",
+          "card-foreground": "oklch(0.145 0 0)",
+          "popover": "oklch(1 0 0)",
+          "popover-foreground": "oklch(0.145 0 0)",
+          "primary": "oklch(0.205 0 0)",
+          "primary-foreground": "oklch(0.985 0 0)",
+          "secondary": "oklch(0.97 0 0)",
+          "secondary-foreground": "oklch(0.205 0 0)",
+          "muted": "oklch(0.97 0 0)",
+          "muted-foreground": "oklch(0.556 0 0)",
+          "accent": "oklch(0.97 0 0)",
+          "accent-foreground": "oklch(0.205 0 0)",
+          "destructive": "oklch(0.577 0.245 27.325)",
+          "destructive-foreground": "oklch(1 0 0)",
+          "border": "oklch(0.922 0 0)",
+          "input": "oklch(0.64 0 0)",
+          "ring": "oklch(0.62 0 0)",
+          "chart-1": "oklch(0.646 0.222 41.116)",
+          "chart-2": "oklch(0.6 0.118 184.704)",
+          "chart-3": "oklch(0.398 0.07 227.392)",
+          "chart-4": "oklch(0.828 0.189 84.429)",
+          "chart-5": "oklch(0.769 0.188 70.08)",
+          "surface-0": "#06060a",
+          "surface-1": "#0c0c14",
+          "surface-2": "#13131e",
+          "surface-3": "#1a1a28",
+          "surface-4": "#222233",
+          "surface-5": "#2a2a3d",
+          "surface-border": "#2a2a3d",
+          "surface-border-light": "#72729c",
+          "accent-orchid-1": "#a21caf",
+          "accent-orchid-2": "#4338ca",
+          "accent-orchid-1-dark": "#f0abfc",
+          "accent-nebula-1": "#0369a1",
+          "accent-nebula-2": "#6d28d9",
+          "accent-nebula-1-dark": "#7dd3fc",
+          "accent-lagoon-1": "#134e4a",
+          "accent-lagoon-2": "#0e7490",
+          "accent-lagoon-1-dark": "#5eead4",
+          "accent-garnet-1": "#881337",
+          "accent-garnet-2": "#e11d48",
+          "accent-garnet-1-dark": "#fda4af"
+        },
+        "dark": {
+          "background": "oklch(0.145 0 0)",
+          "foreground": "oklch(0.985 0 0)",
+          "card": "oklch(0.205 0 0)",
+          "card-foreground": "oklch(0.985 0 0)",
+          "popover": "oklch(0.205 0 0)",
+          "popover-foreground": "oklch(0.985 0 0)",
+          "primary": "oklch(0.922 0 0)",
+          "primary-foreground": "oklch(0.205 0 0)",
+          "secondary": "oklch(0.269 0 0)",
+          "secondary-foreground": "oklch(0.985 0 0)",
+          "muted": "oklch(0.269 0 0)",
+          "muted-foreground": "oklch(0.708 0 0)",
+          "accent": "oklch(0.269 0 0)",
+          "accent-foreground": "oklch(0.985 0 0)",
+          "destructive": "oklch(0.58 0.191 22.216)",
+          "destructive-foreground": "oklch(1 0 0)",
+          "border": "oklch(1 0 0 / 10%)",
+          "input": "oklch(1 0 0 / 40%)",
+          "ring": "oklch(0.556 0 0)",
+          "chart-1": "oklch(0.488 0.243 264.376)",
+          "chart-2": "oklch(0.696 0.17 162.48)",
+          "chart-3": "oklch(0.769 0.188 70.08)",
+          "chart-4": "oklch(0.627 0.265 303.9)",
+          "chart-5": "oklch(0.645 0.246 16.439)",
+          "surface-0": "#06060a",
+          "surface-1": "#0c0c14",
+          "surface-2": "#13131e",
+          "surface-3": "#1a1a28",
+          "surface-4": "#222233",
+          "surface-5": "#2a2a3d",
+          "surface-border": "#2a2a3d",
+          "surface-border-light": "#72729c"
+        }
+      },
+      "css": {
+        "@keyframes fadeIn": {
+          "from": {
+            "opacity": "0"
+          },
+          "to": {
+            "opacity": "1"
+          }
+        },
+        "@keyframes slideUp": {
+          "from": {
+            "opacity": "0",
+            "transform": "translateY(10px)"
+          },
+          "to": {
+            "opacity": "1",
+            "transform": "translateY(0)"
+          }
+        },
+        "@layer components": {
+          ".card": {
+            "background-color": "var(--color-card)",
+            "color": "var(--color-card-foreground)",
+            "border": "1px solid var(--color-border)",
+            "border-radius": "var(--radius-lg)"
+          },
+          ".card-hover": {
+            "transition": "background-color 0.2s ease, border-color 0.2s ease"
+          },
+          ".dark .card": {
+            "border-color": "var(--color-surface-border)"
+          },
+          "@media (hover: hover)": {
+            ".card-hover:hover": {
+              "background-color": "var(--color-accent)"
+            },
+            ".dark .card-hover:hover": {
+              "background-color": "var(--color-surface-2)",
+              "border-color": "var(--color-surface-border-light)"
+            }
+          },
+          ".btn-primary": {
+            "background-color": "var(--color-primary)",
+            "color": "var(--color-primary-foreground)",
+            "border-radius": "var(--radius-md)"
+          },
+          ".btn-ghost": {
+            "background-color": "transparent",
+            "color": "var(--color-foreground)"
+          },
+          ".btn-ghost:hover": {
+            "background-color": "var(--color-accent)",
+            "color": "var(--color-accent-foreground)"
+          },
+          ".badge": {
+            "display": "inline-flex",
+            "align-items": "center",
+            "border-radius": "9999px",
+            "padding": "0.125rem 0.625rem",
+            "font-size": "0.75rem",
+            "font-weight": "500",
+            "background-color": "var(--color-secondary)",
+            "color": "var(--color-secondary-foreground)"
+          },
+          ".input": {
+            "border": "1px solid var(--color-input)",
+            "border-radius": "var(--radius-md)",
+            "background-color": "transparent"
+          },
+          ".input:focus": {
+            "outline": "none",
+            "box-shadow": "0 0 0 2px var(--color-ring)"
+          },
+          ".btn-gradient": {
+            "background-image": "linear-gradient(115deg, var(--grad-1), var(--grad-2))",
+            "color": "#fff",
+            "border": "none"
+          },
+          ".gradient-orchid": {
+            "--grad-1": "var(--color-accent-orchid-1)",
+            "--grad-2": "var(--color-accent-orchid-2)"
+          },
+          ".gradient-nebula": {
+            "--grad-1": "var(--color-accent-nebula-1)",
+            "--grad-2": "var(--color-accent-nebula-2)"
+          },
+          ".gradient-lagoon": {
+            "--grad-1": "var(--color-accent-lagoon-1)",
+            "--grad-2": "var(--color-accent-lagoon-2)"
+          },
+          ".gradient-garnet": {
+            "--grad-1": "var(--color-accent-garnet-1)",
+            "--grad-2": "var(--color-accent-garnet-2)"
+          }
+        },
+        ".dark ::-webkit-scrollbar": {
+          "width": "8px",
+          "height": "8px"
+        },
+        ".dark ::-webkit-scrollbar-track": {
+          "background": "transparent"
+        },
+        ".dark ::-webkit-scrollbar-thumb": {
+          "background-color": "var(--color-surface-4)",
+          "border-radius": "9999px"
+        },
+        ".dark ::-webkit-scrollbar-thumb:hover": {
+          "background-color": "var(--color-surface-5)"
+        },
+        ".dark ::selection": {
+          "background-color": "var(--color-primary)",
+          "color": "var(--color-primary-foreground)"
+        },
+        ".dark input[type=\"date\"]::-webkit-calendar-picker-indicator, .dark input[type=\"time\"]::-webkit-calendar-picker-indicator": {
+          "filter": "invert(1)"
+        },
+        "@media (prefers-reduced-motion: reduce)": {
+          "@keyframes slideUp": {
+            "from": {
+              "opacity": "0"
+            },
+            "to": {
+              "opacity": "1"
+            }
+          },
+          ".animate-pulse-slow": {
+            "animation": "none"
+          },
+          ".card-hover": {
+            "transition-duration": "1ms"
+          },
+          "[data-slot=\"dialog-content\"]": {
+            "--tw-enter-scale": "1",
+            "--tw-exit-scale": "1"
+          }
+        },
+        "@media (pointer: coarse)": {
+          "[data-slot=\"button\"]": {
+            "min-height": "44px",
+            "min-width": "44px"
+          },
+          "[data-slot=\"input\"]": {
+            "min-height": "44px"
+          },
+          "[data-slot=\"tabs-list\"]": {
+            "min-height": "44px"
+          },
+          "[data-slot=\"tabs-trigger\"]": {
+            "min-height": "38px"
+          },
+          "[data-slot=\"dialog-close\"]": {
+            "min-height": "44px",
+            "min-width": "44px"
+          }
+        }
+      },
+      "dependencies": [
+        "@fontsource-variable/ibm-plex-sans"
+      ]
+    },
+    {
+      "name": "utils",
+      "type": "registry:lib",
+      "files": [
+        {
+          "path": "registry/lib/utils.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "button",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "utils"
+      ],
+      "dependencies": [
+        "class-variance-authority",
+        "@base-ui/react"
+      ],
+      "files": [
+        {
+          "path": "registry/base-nova/ui/button.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "card",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "utils"
+      ],
+      "files": [
+        {
+          "path": "registry/base-nova/ui/card.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "label",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "utils"
+      ],
+      "files": [
+        {
+          "path": "registry/base-nova/ui/label.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "input",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "utils"
+      ],
+      "files": [
+        {
+          "path": "registry/base-nova/ui/input.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "dependencies": [
+        "@base-ui/react"
+      ]
+    },
+    {
+      "name": "dialog",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "utils",
+        "button"
+      ],
+      "dependencies": [
+        "@base-ui/react"
+      ],
+      "files": [
+        {
+          "path": "registry/base-nova/ui/dialog.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "tabs",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "utils"
+      ],
+      "dependencies": [
+        "class-variance-authority",
+        "@base-ui/react"
+      ],
+      "files": [
+        {
+          "path": "registry/base-nova/ui/tabs.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "badge",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "utils"
+      ],
+      "dependencies": [
+        "class-variance-authority",
+        "@base-ui/react"
+      ],
+      "files": [
+        {
+          "path": "registry/base-nova/ui/badge.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    }
+  ]
+}

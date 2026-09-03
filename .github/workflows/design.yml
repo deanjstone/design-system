@@ -20,3 +20,27 @@ jobs:
       # passes, so an unpinned range could fail the build on someone else's release.
       - name: Detect UI anti-patterns
         run: npx --yes impeccable@3.6.1 detect registry/ theme/
+
+  registry:
+    name: Registry output current
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      # r/ is generated from registry.json and the sources it points at, and it
+      # is what tagged URLs resolve against — so a stale r/ silently serves
+      # consumers an older component than the tag claims. Rebuilding and
+      # diffing is the only thing that catches it; nothing else in CI reads r/.
+      - name: Rebuild per-item output and fail if it drifted
+        run: |
+          npx --yes shadcn@4.19.1 build --output ./r
+          if ! git diff --quiet -- r/; then
+            echo "::error::r/ is out of date. Run 'npx shadcn build --output ./r' and commit the result."
+            git diff --stat -- r/
+            exit 1
+          fi
+          echo "r/ matches registry.json and the current sources."
