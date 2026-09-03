@@ -1,3 +1,10 @@
+## [2.3.1](https://github.com/deanjstone/design-system/compare/v2.3.0...v2.3.1) (2026-09-03)
+
+
+### Bug Fixes
+
+* stop emitting a self-referential font token into consumer CSS ([#47](https://github.com/deanjstone/design-system/issues/47)) ([30a8038](https://github.com/deanjstone/design-system/commit/30a8038330722a87abc7f587470b78e7f4c7cfc5)), closes [#42](https://github.com/deanjstone/design-system/issues/42)
+
 # [2.3.0](https://github.com/deanjstone/design-system/compare/v2.2.0...v2.3.0) (2026-09-03)
 
 

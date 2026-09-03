@@ -1,6 +1,6 @@
 {
   "name": "design-system",
-  "version": "2.3.0",
+  "version": "2.3.1",
   "private": true,
   "description": "Shared shadcn/ui component registry and design tokens consumed by myargus, atto1, budget, and erto-apps via the shadcn CLI",
   "packageManager": "pnpm@11.9.0",
