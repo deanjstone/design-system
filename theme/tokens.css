@@ -317,6 +317,7 @@
  *   fadeIn      unchanged; opacity carries no motion
  *   slideUp     redefined as a pure fade, so arrival still registers
  *   pulse-slow  stopped; an infinite attention loop has no reduced form
+ * The pulse rule targets the utility class deliberately — see below.
  * The dialog's enter/exit comes from the consumer's tailwindcss-animate /
  * tw-animate-css plugin. Neutralising its scale variables keeps the fade and
  * drops the zoom; it is an inert no-op for consumers not using the plugin.
@@ -331,8 +332,14 @@
     }
   }
 
-  :root {
-    --animate-pulse-slow: none;
+  /*
+   * Overrides the utility, not the variable. `@theme inline` INLINES its
+   * values into the generated utility rather than referencing them through
+   * var(), so Tailwind emits no --animate-* custom property at all and
+   * reassigning one here changes nothing. Verified against a real build.
+   */
+  .animate-pulse-slow {
+    animation: none;
   }
 
   .card-hover {
