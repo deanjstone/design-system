@@ -20,16 +20,40 @@ theme/tokens.css            same tokens as the "theme" item, as plain CSS
 
 ## Consuming this registry from another project
 
-Pull items straight from GitHub with the CLI — no `components.json` config
-needed:
+A consumer needs a `components.json` first, then pulls items straight from
+GitHub by address:
 
 ```bash
+npx shadcn init            # once per project, if there is no components.json
 npx shadcn add deanjstone/design-system/theme
 npx shadcn add deanjstone/design-system/button
 ```
 
 This uses shadcn's native GitHub-registry support: any public repo with a
 root `registry.json` is installable directly via `<owner>/<repo>/<item>`.
+No `registries` entry in `components.json` is needed — see the warning
+below for why you should not add one.
+
+**`shadcn init` is a prerequisite, not an optional step.** `shadcn add`
+cannot write anything without a `components.json`; run without one it stops
+and prompts to create the file. `init` is also interactive by default — it
+asks for a component library and a preset with arrow-key menus that cannot
+be driven non-interactively — so scripted setups need both flags:
+
+```bash
+npx shadcn init -b base -p nova -y --css-variables
+```
+
+`-b base` is the CLI's own default and is what this registry expects: its
+components are Base UI (`@base-ui/react`), per
+[ADR-0001](docs/adr/0001-switch-component-library-to-base-ui.md). Passing
+`-b radix` or `-b aria` installs a component library the registry's
+components do not import.
+
+Note the preset (`-p nova` above) brings its own typeface and base
+stylesheet. This registry deliberately ships no font token, so whatever
+preset a consumer picks decides its typography by default rather than by
+choice — see [#37](https://github.com/deanjstone/design-system/issues/37).
 
 (Do **not** add this repo under `components.json`'s `registries` field with
 a bare `registry.json` URL — that field requires a `{name}`-templated
@@ -53,6 +77,20 @@ for alias resolution, not files it references. If the root config has no
 `./@/` directory instead of `./src/`. Fix is adding `baseUrl`/`paths`
 directly to the root `tsconfig.json` (redundant with the referenced
 config, but required for the CLI to find it).
+
+**Gotcha for Vite consumers using the default React ESLint config:**
+`button` exports `buttonVariants` alongside the component, which
+`react-refresh/only-export-components` rejects. That is upstream shadcn's
+convention across the whole ecosystem, so the fix belongs in the consumer's
+lint config rather than in the component — editing the vendored file would
+be overwritten by the next `shadcn add`:
+
+```js
+{
+  files: ['src/components/ui/**/*.{ts,tsx}'],
+  rules: { 'react-refresh/only-export-components': 'off' },
+}
+```
 
 ## Versioning
 
