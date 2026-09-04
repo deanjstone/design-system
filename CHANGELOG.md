@@ -1,3 +1,10 @@
+## [2.3.2](https://github.com/deanjstone/design-system/compare/v2.3.1...v2.3.2) (2026-09-04)
+
+
+### Bug Fixes
+
+* replace unshipped IconPlaceholder with lucide-react icons ([#49](https://github.com/deanjstone/design-system/issues/49)) ([ab233d6](https://github.com/deanjstone/design-system/commit/ab233d6b9c721935b90dc1ac1be2b233716dc322)), closes [#48](https://github.com/deanjstone/design-system/issues/48)
+
 ## [2.3.1](https://github.com/deanjstone/design-system/compare/v2.3.0...v2.3.1) (2026-09-03)
 
 
