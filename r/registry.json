@@ -359,7 +359,8 @@
         "button"
       ],
       "dependencies": [
-        "@base-ui/react"
+        "@base-ui/react",
+        "lucide-react"
       ],
       "files": [
         {
@@ -442,7 +443,8 @@
         "utils"
       ],
       "dependencies": [
-        "@base-ui/react"
+        "@base-ui/react",
+        "lucide-react"
       ],
       "files": [
         {
@@ -490,7 +492,8 @@
         "utils"
       ],
       "dependencies": [
-        "@base-ui/react"
+        "@base-ui/react",
+        "lucide-react"
       ],
       "files": [
         {
@@ -554,7 +557,8 @@
         "utils"
       ],
       "dependencies": [
-        "@base-ui/react"
+        "@base-ui/react",
+        "lucide-react"
       ],
       "files": [
         {
@@ -587,7 +591,8 @@
         "utils"
       ],
       "dependencies": [
-        "@base-ui/react"
+        "@base-ui/react",
+        "lucide-react"
       ],
       "files": [
         {
@@ -633,7 +638,8 @@
       ],
       "dependencies": [
         "next-themes",
-        "sonner"
+        "sonner",
+        "lucide-react"
       ],
       "files": [
         {
