@@ -350,6 +350,48 @@ utility on the same element.
 **The Capability Rule.** Adapt to what the device can do, not how wide it is.
 A width breakpoint is the wrong tool for a question about fingers and hover.
 
+## App Shell
+
+CSS-layer mechanics (design-system#51) for the environments a browser tab
+doesn't have to think about: an installed PWA, a frameless Electron window.
+All of it is inert until a consumer's own shell opts in — no shipped
+component reads any of these tokens or utilities.
+
+**Safe-area insets.** `pt-safe` / `pb-safe` / `pl-safe` / `pr-safe` wrap
+`env(safe-area-inset-*)` for a surface that renders edge-to-edge. Each
+resolves to `0` when the browser already constrains the layout viewport to
+the safe area, so applying them speculatively costs nothing.
+
+**Topbar/titlebar geometry.** `--app-titlebar-height` /
+`-inset-top` / `-inset-left` / `-inset-right` / `-native-controls-inset`
+describe where a fixed app-shell topbar should sit and how much horizontal
+room to leave for window controls. Three environments write to
+`--app-titlebar-inset-top`, each only where it applies:
+
+- An ordinary browser tab: `0px` — the browser's own chrome already handles
+  it.
+- `@media (display-mode: standalone)`: an installed PWA owns the full screen
+  down to the device status bar, so the shell clears
+  `env(safe-area-inset-top)` itself.
+- `.wco`: an Electron shell that exposes native titlebar control geometry
+  adds this class, and every geometry token switches to reading
+  `env(titlebar-area-*)` so the shell's topbar clears the real window
+  controls instead of drawing its own.
+
+**`.drag-region`.** Marks a frameless Electron window's draggable strip.
+Interactive descendants (`button`, `input`, `textarea`, `select`, `a`) opt
+back out to `-webkit-app-region: no-drag`, so a button inside the drag strip
+stays clickable.
+
+### Scrollbar
+
+`--app-scrollbar-width` / `-thumb` / `-thumb-hover` (design-system#51) now
+drive the WebKit scrollbar rules in both modes — previously the theme item
+only styled the dark thumb, leaving light mode on the browser default. The
+dark values are unchanged from before the tokens existed, so an always-dark
+consumer sees no visual difference; a light-mode consumer gains a styled
+thumb it didn't have.
+
 ## Elevation & Depth
 
 **This system runs two depth mechanisms, chosen by mode, not one ladder
@@ -376,6 +418,38 @@ step, not a shadowed one. Same intent, different material.
 - **Overlay** (`shadow-lg`): Dialog content only. The single component
   allowed to look airborne.
 
+### Glass Surfaces
+
+A third, opt-in depth material (design-system#51), for a consumer that wants
+a translucent chrome surface instead of either depth mechanism above. Three
+tokens — `--glass-blur`, `--glass-opacity`, `--glass-saturation` — drive every
+glass utility, so tuning the recipe once retunes every surface using it. Dark
+mode gets its own trio (a heavier 16px blur, a lower 1.08 saturation) rather
+than reusing the light values verbatim.
+
+- **`surface-glass`**: The generic recipe — a `--color-background` tint at
+  `--glass-opacity`, blurred and saturated.
+- **`dialog-glass`** / **`dropdown-glass`**: The same recipe against
+  `--color-background` / `--color-popover` respectively, each adding the
+  hairline border the surface would otherwise get from its solid variant.
+
+Every glass utility carries its own `@supports not (backdrop-filter)`
+fallback to an opaque background, so a browser without the feature gets a
+solid surface instead of see-through content. None of the three is used by a
+shipped component; each is additive, opt-in chrome for a consumer's own
+shell.
+
+### Grain
+
+`surface-grain` (design-system#51) lays a subtle `feTurbulence` noise tile
+over an element's own `background-color`, for a consumer building a chrome
+surface that floats above the body and wants the same texture rather than
+reading as a flat cutout. Baked into the surface's own background rather
+than a full-viewport overlay, so it costs a re-blend only where it's used, not
+across the whole compositor layer every frame. `--surface-grain` /
+`--surface-grain-size` are mode-invariant and unused until an element opts in
+with the utility.
+
 ### Named Rules
 
 **The Two Systems Rule.** Never mix the mechanisms. A light-mode surface
@@ -386,6 +460,11 @@ reads as neither.
 **The Overlay-Only Lift Rule.** `shadow-lg` belongs to the dialog. If a new
 component seems to need it, the real question is whether that component
 should be an overlay at all.
+
+**The Third Material Rule.** Glass and grain are a third option alongside
+border-and-shadow and the tonal ramp, not a replacement for either — reach
+for them only when a consumer's own shell explicitly wants translucent or
+textured chrome, never as the default surface treatment.
 
 ## Shapes
 
@@ -401,6 +480,12 @@ them the softest shapes in the system. The xs and sm button variants clamp to
 `min(var(--radius-md), 10px)` so a smaller control never out-rounds its
 container. Badges and scrollbar thumbs break the scale entirely with a full
 pill, which is what marks a badge as a label rather than a container.
+
+`radius-2xl` (`+8px`) and `radius-3xl` (`+12px`) extend the arithmetic scale
+past `xl` (design-system#51). No shipped component uses either yet — they
+exist so a consumer building a larger opt-in surface (a full-bleed sheet, an
+oversized modal) still derives its corner from `--radius` instead of a
+literal.
 
 Borders are uniformly 1px and hairline-weight. There is no decorative
 stroke, no double border, and no clipping geometry anywhere in the system.
