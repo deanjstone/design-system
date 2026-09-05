@@ -1,3 +1,10 @@
+# [2.4.0](https://github.com/deanjstone/design-system/compare/v2.3.2...v2.4.0) (2026-09-05)
+
+
+### Features
+
+* add PWA/Electron app-shell mechanics to the theme item ([#51](https://github.com/deanjstone/design-system/issues/51)) ([#53](https://github.com/deanjstone/design-system/issues/53)) ([341c174](https://github.com/deanjstone/design-system/commit/341c1746683ce4213b42faeefd1b5015bc1288b9))
+
 ## [2.3.2](https://github.com/deanjstone/design-system/compare/v2.3.1...v2.3.2) (2026-09-04)
 
 
