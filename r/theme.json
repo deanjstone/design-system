@@ -10,6 +10,8 @@
       "radius-md": "calc(var(--radius) - 2px)",
       "radius-lg": "var(--radius)",
       "radius-xl": "calc(var(--radius) + 4px)",
+      "radius-2xl": "calc(var(--radius) + 8px)",
+      "radius-3xl": "calc(var(--radius) + 12px)",
       "font-sans": "var(--font-sans-stack)",
       "color-surface-0": "var(--surface-0)",
       "color-surface-1": "var(--surface-1)",
@@ -80,7 +82,20 @@
       "accent-lagoon-1-dark": "#5eead4",
       "accent-garnet-1": "#881337",
       "accent-garnet-2": "#e11d48",
-      "accent-garnet-1-dark": "#fda4af"
+      "accent-garnet-1-dark": "#fda4af",
+      "glass-blur": "12px",
+      "glass-opacity": "80%",
+      "glass-saturation": "1.14",
+      "app-scrollbar-width": "8px",
+      "app-scrollbar-thumb": "rgb(217 217 217)",
+      "app-scrollbar-thumb-hover": "rgb(191 191 191)",
+      "app-titlebar-height": "52px",
+      "app-titlebar-inset-top": "0px",
+      "app-titlebar-inset-left": "calc(env(safe-area-inset-left, 0px) + 0.75rem)",
+      "app-titlebar-inset-right": "calc(env(safe-area-inset-right, 0px) + 0.75rem)",
+      "app-titlebar-native-controls-inset": "0px",
+      "surface-grain": "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E\")",
+      "surface-grain-size": "256px 256px"
     },
     "dark": {
       "background": "oklch(0.145 0 0)",
@@ -114,13 +129,18 @@
       "surface-4": "#222233",
       "surface-5": "#2a2a3d",
       "surface-border": "#2a2a3d",
-      "surface-border-light": "#72729c"
+      "surface-border-light": "#72729c",
+      "glass-blur": "16px",
+      "glass-saturation": "1.08",
+      "app-scrollbar-thumb": "var(--color-surface-4)",
+      "app-scrollbar-thumb-hover": "var(--color-surface-5)"
     }
   },
   "css": {
     ":root": {
       "--font-sans-stack": "\"IBM Plex Sans Variable\", \"IBM Plex Sans\", ui-sans-serif, system-ui, sans-serif"
     },
+    "@custom-variant wco (&:is(.wco, .wco *))": {},
     "@keyframes fadeIn": {
       "from": {
         "opacity": "0"
@@ -215,19 +235,37 @@
         "--grad-2": "var(--color-accent-garnet-2)"
       }
     },
-    ".dark ::-webkit-scrollbar": {
-      "width": "8px",
-      "height": "8px"
+    "@media (display-mode: standalone)": {
+      ":root": {
+        "--app-titlebar-inset-top": "env(safe-area-inset-top, 0px)"
+      }
     },
-    ".dark ::-webkit-scrollbar-track": {
+    ".wco": {
+      "--app-titlebar-height": "env(titlebar-area-height, 52px)",
+      "--app-titlebar-inset-top": "env(titlebar-area-y, 0px)",
+      "--app-titlebar-inset-left": "calc(env(titlebar-area-x, 0px) + 0.75rem)",
+      "--app-titlebar-inset-right": "calc(100vw - env(titlebar-area-width, 100vw) - env(titlebar-area-x, 0px) + 0.75rem)",
+      "--app-titlebar-native-controls-inset": "calc(100vw - env(titlebar-area-width, 100vw) - env(titlebar-area-x, 0px) + 0.75rem)"
+    },
+    ".drag-region": {
+      "-webkit-app-region": "drag"
+    },
+    ".drag-region button, .drag-region input, .drag-region textarea, .drag-region select, .drag-region a": {
+      "-webkit-app-region": "no-drag"
+    },
+    "::-webkit-scrollbar": {
+      "width": "var(--app-scrollbar-width)",
+      "height": "var(--app-scrollbar-width)"
+    },
+    "::-webkit-scrollbar-track": {
       "background": "transparent"
     },
-    ".dark ::-webkit-scrollbar-thumb": {
-      "background-color": "var(--color-surface-4)",
+    "::-webkit-scrollbar-thumb": {
+      "background-color": "var(--app-scrollbar-thumb)",
       "border-radius": "9999px"
     },
-    ".dark ::-webkit-scrollbar-thumb:hover": {
-      "background-color": "var(--color-surface-5)"
+    "::-webkit-scrollbar-thumb:hover": {
+      "background-color": "var(--app-scrollbar-thumb-hover)"
     },
     ".dark ::selection": {
       "background-color": "var(--color-primary)",
@@ -274,6 +312,49 @@
         "min-height": "44px",
         "min-width": "44px"
       }
+    },
+    "@utility pt-safe": {
+      "padding-top": "max(env(safe-area-inset-top), 0px)"
+    },
+    "@utility pb-safe": {
+      "padding-bottom": "max(env(safe-area-inset-bottom), 0px)"
+    },
+    "@utility pl-safe": {
+      "padding-left": "max(env(safe-area-inset-left), 0px)"
+    },
+    "@utility pr-safe": {
+      "padding-right": "max(env(safe-area-inset-right), 0px)"
+    },
+    "@utility surface-glass": {
+      "background": "color-mix(in srgb, var(--color-background) var(--glass-opacity), transparent)",
+      "-webkit-backdrop-filter": "blur(var(--glass-blur)) saturate(var(--glass-saturation))",
+      "backdrop-filter": "blur(var(--glass-blur)) saturate(var(--glass-saturation))",
+      "@supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px)))": {
+        "background": "var(--color-background) !important"
+      }
+    },
+    "@utility dialog-glass": {
+      "background": "color-mix(in srgb, var(--color-background) var(--glass-opacity), transparent)",
+      "-webkit-backdrop-filter": "blur(var(--glass-blur)) saturate(var(--glass-saturation))",
+      "backdrop-filter": "blur(var(--glass-blur)) saturate(var(--glass-saturation))",
+      "border-color": "color-mix(in srgb, var(--color-foreground) 10%, transparent)",
+      "@supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px)))": {
+        "background": "var(--color-popover) !important"
+      }
+    },
+    "@utility dropdown-glass": {
+      "background": "color-mix(in srgb, var(--color-popover) var(--glass-opacity), transparent)",
+      "-webkit-backdrop-filter": "blur(var(--glass-blur)) saturate(var(--glass-saturation))",
+      "backdrop-filter": "blur(var(--glass-blur)) saturate(var(--glass-saturation))",
+      "border": "1px solid color-mix(in srgb, var(--color-foreground) 10%, transparent)",
+      "@supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px)))": {
+        "background": "var(--color-popover) !important"
+      }
+    },
+    "@utility surface-grain": {
+      "background-image": "var(--surface-grain)",
+      "background-repeat": "repeat",
+      "background-size": "var(--surface-grain-size)"
     }
   },
   "type": "registry:theme"

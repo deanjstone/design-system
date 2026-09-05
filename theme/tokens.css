@@ -6,6 +6,13 @@
  * to run the CLI at all.
  */
 
+/*
+ * Window Controls Overlay variant (design-system#51). Active when an Electron
+ * shell adds `.wco` to the document — inert everywhere else, so this has no
+ * effect on the current web consumers (myargus, atto1, budget, erto-apps).
+ */
+@custom-variant wco (&:is(.wco, .wco *));
+
 @theme inline {
   --font-sans: var(--font-sans-stack);
   --color-background: var(--background);
@@ -36,6 +43,8 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
   --color-surface-0: var(--surface-0);
   --color-surface-1: var(--surface-1);
   --color-surface-2: var(--surface-2);
@@ -147,6 +156,31 @@
   --accent-garnet-1: #881337;
   --accent-garnet-2: #e11d48;
   --accent-garnet-1-dark: #fda4af;
+  /* PWA/app-shell mechanics (design-system#51) — CSS-layer only, no effect
+     until a consumer opts in by using the utility/selector that reads each
+     token. Values are mode-invariant, so there is no .dark counterpart
+     except where noted below. */
+  --glass-blur: 12px;
+  --glass-opacity: 80%;
+  --glass-saturation: 1.14;
+  --app-scrollbar-width: 8px;
+  --app-scrollbar-thumb: rgb(217 217 217);
+  --app-scrollbar-thumb-hover: rgb(191 191 191);
+  /* Generic app-shell topbar/titlebar geometry. Defaults assume a normal
+     browser tab; @media (display-mode: standalone) and .wco below override
+     --app-titlebar-inset-top for a PWA install and an Electron shell
+     respectively, since neither has ordinary browser chrome to provide it. */
+  --app-titlebar-height: 52px;
+  --app-titlebar-inset-top: 0px;
+  --app-titlebar-inset-left: calc(env(safe-area-inset-left, 0px) + 0.75rem);
+  --app-titlebar-inset-right: calc(env(safe-area-inset-right, 0px) + 0.75rem);
+  --app-titlebar-native-controls-inset: 0px;
+  /* Grain texture (see the .surface-grain utility below) for chrome surfaces
+     that float above the body. A 256px feTurbulence tile kept cheap enough
+     to bake into a surface's own background rather than a full-viewport
+     overlay. */
+  --surface-grain: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  --surface-grain-size: 256px 256px;
 }
 
 .dark {
@@ -174,6 +208,53 @@
   --chart-3: oklch(0.769 0.188 70.08);
   --chart-4: oklch(0.627 0.265 303.9);
   --chart-5: oklch(0.645 0.246 16.439);
+  --glass-blur: 16px;
+  --glass-saturation: 1.08;
+  --app-scrollbar-thumb: var(--color-surface-4);
+  --app-scrollbar-thumb-hover: var(--color-surface-5);
+}
+
+/*
+ * PWA/app-shell chrome (design-system#51). Both blocks below only override
+ * --app-titlebar-inset-top for environments that lack ordinary browser
+ * chrome to provide it; a regular browser tab is untouched.
+ */
+
+/* Installed PWA (standalone display mode) owns the full screen down to the
+   device status bar, so the topbar must clear it itself. */
+@media (display-mode: standalone) {
+  :root {
+    --app-titlebar-inset-top: env(safe-area-inset-top, 0px);
+  }
+}
+
+/* Window Controls Overlay: an Electron shell adds `.wco` to the document
+   when it exposes native titlebar control geometry, so the app-shell topbar
+   can clear the native window controls instead of drawing its own. */
+.wco {
+  --app-titlebar-height: env(titlebar-area-height, 52px);
+  --app-titlebar-inset-top: env(titlebar-area-y, 0px);
+  --app-titlebar-inset-left: calc(env(titlebar-area-x, 0px) + 0.75rem);
+  --app-titlebar-inset-right: calc(
+    100vw - env(titlebar-area-width, 100vw) - env(titlebar-area-x, 0px) + 0.75rem
+  );
+  --app-titlebar-native-controls-inset: calc(
+    100vw - env(titlebar-area-width, 100vw) - env(titlebar-area-x, 0px) + 0.75rem
+  );
+}
+
+/* Frameless-titlebar drag region for an Electron shell. The exceptions keep
+   ordinary controls inside the draggable area interactive. */
+.drag-region {
+  -webkit-app-region: drag;
+}
+
+.drag-region button,
+.drag-region input,
+.drag-region textarea,
+.drag-region select,
+.drag-region a {
+  -webkit-app-region: no-drag;
 }
 
 /*
@@ -293,26 +374,34 @@
 }
 
 /*
- * Always-dark app extras (design-system#19) — scrollbar, selection, and
+ * Always-dark app extras (design-system#19) — selection and
  * calendar-picker-icon styling. Scoped under `.dark` so they only apply
  * when a consumer sets `class="dark"`; no effect on light-mode consumers.
  */
-.dark ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+
+/*
+ * Tokenized scrollbar thumb (design-system#51). Previously .dark-only with
+ * hardcoded colors; --app-scrollbar-thumb/-hover now carry light values here
+ * and the .dark override above, so the same rule serves both modes. The dark
+ * values are unchanged from before this token existed, so dark consumers see
+ * no visual difference — light mode gains a styled thumb it didn't have.
+ */
+::-webkit-scrollbar {
+  width: var(--app-scrollbar-width);
+  height: var(--app-scrollbar-width);
 }
 
-.dark ::-webkit-scrollbar-track {
+::-webkit-scrollbar-track {
   background: transparent;
 }
 
-.dark ::-webkit-scrollbar-thumb {
-  background-color: var(--color-surface-4);
+::-webkit-scrollbar-thumb {
+  background-color: var(--app-scrollbar-thumb);
   border-radius: 9999px;
 }
 
-.dark ::-webkit-scrollbar-thumb:hover {
-  background-color: var(--color-surface-5);
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--app-scrollbar-thumb-hover);
 }
 
 .dark ::selection {
@@ -404,4 +493,75 @@
     min-height: 44px;
     min-width: 44px;
   }
+}
+
+/*
+ * Safe-area inset utilities (design-system#51) for surfaces that opt into
+ * edge-to-edge rendering. Each resolves to 0 when the browser already
+ * constrains the layout viewport to the safe area.
+ */
+@utility pt-safe {
+  padding-top: max(env(safe-area-inset-top), 0px);
+}
+
+@utility pb-safe {
+  padding-bottom: max(env(safe-area-inset-bottom), 0px);
+}
+
+@utility pl-safe {
+  padding-left: max(env(safe-area-inset-left), 0px);
+}
+
+@utility pr-safe {
+  padding-right: max(env(safe-area-inset-right), 0px);
+}
+
+/*
+ * Tokenized glass surfaces (design-system#51), driven by the --glass-blur/
+ * -opacity/-saturation trio declared above. Each utility carries its own
+ * @supports fallback so a browser without backdrop-filter gets an opaque
+ * surface instead of see-through content.
+ */
+@utility surface-glass {
+  background: color-mix(in srgb, var(--color-background) var(--glass-opacity), transparent);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturation));
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturation));
+
+  @supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+    background: var(--color-background) !important;
+  }
+}
+
+@utility dialog-glass {
+  background: color-mix(in srgb, var(--color-background) var(--glass-opacity), transparent);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturation));
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturation));
+  border-color: color-mix(in srgb, var(--color-foreground) 10%, transparent);
+
+  @supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+    background: var(--color-popover) !important;
+  }
+}
+
+@utility dropdown-glass {
+  background: color-mix(in srgb, var(--color-popover) var(--glass-opacity), transparent);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturation));
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturation));
+  border: 1px solid color-mix(in srgb, var(--color-foreground) 10%, transparent);
+
+  @supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+    background: var(--color-popover) !important;
+  }
+}
+
+/*
+ * Grain-texture overlay (design-system#51), driven by --surface-grain/
+ * -grain-size above. Layered over the element's own background-color rather
+ * than a full-viewport overlay, so it composes with bg-* utilities and
+ * doesn't force a re-blend of the whole viewport every frame.
+ */
+@utility surface-grain {
+  background-image: var(--surface-grain);
+  background-repeat: repeat;
+  background-size: var(--surface-grain-size);
 }

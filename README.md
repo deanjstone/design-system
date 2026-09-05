@@ -215,8 +215,13 @@ iterates against a running app, and this repo has none.
   the utilities): a 6-step `surface-0..5` dark-elevation ramp plus
   `surface-border`/`surface-border-light`, `pulse-slow`/`fade-in`/
   `slide-up` animations, `.card`/`.card-hover`/`.btn-primary`/`.btn-ghost`/
-  `.badge`/`.input` plain-CSS component recipes, and `.dark`-scoped
-  scrollbar/selection/calendar-picker-icon styling for always-dark apps.
+  `.badge`/`.input` plain-CSS component recipes, `.dark`-scoped
+  selection/calendar-picker-icon styling for always-dark apps, a tokenized
+  scrollbar thumb (both modes), `radius-2xl`/`radius-3xl`, `surface-glass`/
+  `dialog-glass`/`dropdown-glass`/`surface-grain` opt-in chrome textures, and
+  PWA/Electron app-shell mechanics (`pt-safe`/`pb-safe`/`pl-safe`/`pr-safe`,
+  `--app-titlebar-*` topbar geometry, the `.wco` variant, `.drag-region`) —
+  see [DESIGN.md](DESIGN.md#app-shell).
 - **24 components**, all `base-nova` style and Base UI-based, pulled the same
   way as `theme`/`button` above:
   - *Controls* — `button`, `input`, `textarea`, `select`, `checkbox`,
