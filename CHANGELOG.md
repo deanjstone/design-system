@@ -1,3 +1,10 @@
+## [2.4.1](https://github.com/deanjstone/design-system/compare/v2.4.0...v2.4.1) (2026-09-06)
+
+
+### Bug Fixes
+
+* target data-orientation in the four orientation-aware components ([#55](https://github.com/deanjstone/design-system/issues/55)) ([c07013f](https://github.com/deanjstone/design-system/commit/c07013f64fbd1cc11ad3e23dea24ba3e55e13a87)), closes [#54](https://github.com/deanjstone/design-system/issues/54)
+
 # [2.4.0](https://github.com/deanjstone/design-system/compare/v2.3.2...v2.4.0) (2026-09-05)
 
 
