@@ -15,6 +15,14 @@
           "radius-2xl": "calc(var(--radius) + 8px)",
           "radius-3xl": "calc(var(--radius) + 12px)",
           "font-sans": "var(--font-sans-stack)",
+          "color-sidebar": "var(--sidebar)",
+          "color-sidebar-foreground": "var(--sidebar-foreground)",
+          "color-sidebar-primary": "var(--sidebar-primary)",
+          "color-sidebar-primary-foreground": "var(--sidebar-primary-foreground)",
+          "color-sidebar-accent": "var(--sidebar-accent)",
+          "color-sidebar-accent-foreground": "var(--sidebar-accent-foreground)",
+          "color-sidebar-border": "var(--sidebar-border)",
+          "color-sidebar-ring": "var(--sidebar-ring)",
           "color-surface-0": "var(--surface-0)",
           "color-surface-1": "var(--surface-1)",
           "color-surface-2": "var(--surface-2)",
@@ -65,6 +73,14 @@
           "chart-3": "oklch(0.398 0.07 227.392)",
           "chart-4": "oklch(0.828 0.189 84.429)",
           "chart-5": "oklch(0.769 0.188 70.08)",
+          "sidebar": "oklch(0.985 0 0)",
+          "sidebar-foreground": "oklch(0.145 0 0)",
+          "sidebar-primary": "oklch(0.205 0 0)",
+          "sidebar-primary-foreground": "oklch(0.985 0 0)",
+          "sidebar-accent": "oklch(0.97 0 0)",
+          "sidebar-accent-foreground": "oklch(0.205 0 0)",
+          "sidebar-border": "oklch(0.922 0 0)",
+          "sidebar-ring": "oklch(0.62 0 0)",
           "surface-0": "#06060a",
           "surface-1": "#0c0c14",
           "surface-2": "#13131e",
@@ -124,6 +140,14 @@
           "chart-3": "oklch(0.769 0.188 70.08)",
           "chart-4": "oklch(0.627 0.265 303.9)",
           "chart-5": "oklch(0.645 0.246 16.439)",
+          "sidebar": "oklch(0.205 0 0)",
+          "sidebar-foreground": "oklch(0.985 0 0)",
+          "sidebar-primary": "oklch(0.922 0 0)",
+          "sidebar-primary-foreground": "oklch(0.205 0 0)",
+          "sidebar-accent": "oklch(0.269 0 0)",
+          "sidebar-accent-foreground": "oklch(0.985 0 0)",
+          "sidebar-border": "oklch(1 0 0 / 10%)",
+          "sidebar-ring": "oklch(0.556 0 0)",
           "surface-0": "#06060a",
           "surface-1": "#0c0c14",
           "surface-2": "#13131e",
@@ -377,7 +401,7 @@
       "name": "button",
       "type": "registry:ui",
       "registryDependencies": [
-        "utils"
+        "deanjstone/design-system/utils"
       ],
       "dependencies": [
         "class-variance-authority",
@@ -394,7 +418,7 @@
       "name": "card",
       "type": "registry:ui",
       "registryDependencies": [
-        "utils"
+        "deanjstone/design-system/utils"
       ],
       "files": [
         {
@@ -407,7 +431,7 @@
       "name": "label",
       "type": "registry:ui",
       "registryDependencies": [
-        "utils"
+        "deanjstone/design-system/utils"
       ],
       "files": [
         {
@@ -420,7 +444,7 @@
       "name": "input",
       "type": "registry:ui",
       "registryDependencies": [
-        "utils"
+        "deanjstone/design-system/utils"
       ],
       "files": [
         {
@@ -436,8 +460,8 @@
       "name": "dialog",
       "type": "registry:ui",
       "registryDependencies": [
-        "utils",
-        "button"
+        "deanjstone/design-system/utils",
+        "deanjstone/design-system/button"
       ],
       "dependencies": [
         "@base-ui/react",
@@ -454,7 +478,7 @@
       "name": "tabs",
       "type": "registry:ui",
       "registryDependencies": [
-        "utils"
+        "deanjstone/design-system/utils"
       ],
       "dependencies": [
         "class-variance-authority",
@@ -471,7 +495,7 @@
       "name": "badge",
       "type": "registry:ui",
       "registryDependencies": [
-        "utils"
+        "deanjstone/design-system/utils"
       ],
       "dependencies": [
         "class-variance-authority",
@@ -488,8 +512,8 @@
       "name": "alert-dialog",
       "type": "registry:ui",
       "registryDependencies": [
-        "button",
-        "utils"
+        "deanjstone/design-system/button",
+        "deanjstone/design-system/utils"
       ],
       "dependencies": [
         "@base-ui/react"
@@ -505,7 +529,7 @@
       "name": "avatar",
       "type": "registry:ui",
       "registryDependencies": [
-        "utils"
+        "deanjstone/design-system/utils"
       ],
       "dependencies": [
         "@base-ui/react"
@@ -521,7 +545,7 @@
       "name": "checkbox",
       "type": "registry:ui",
       "registryDependencies": [
-        "utils"
+        "deanjstone/design-system/utils"
       ],
       "dependencies": [
         "@base-ui/react",
@@ -538,7 +562,7 @@
       "name": "collapsible",
       "type": "registry:ui",
       "registryDependencies": [
-        "utils"
+        "deanjstone/design-system/utils"
       ],
       "dependencies": [
         "@base-ui/react"
@@ -554,7 +578,7 @@
       "name": "drawer",
       "type": "registry:ui",
       "registryDependencies": [
-        "utils"
+        "deanjstone/design-system/utils"
       ],
       "dependencies": [
         "@base-ui/react"
@@ -570,7 +594,7 @@
       "name": "dropdown-menu",
       "type": "registry:ui",
       "registryDependencies": [
-        "utils"
+        "deanjstone/design-system/utils"
       ],
       "dependencies": [
         "@base-ui/react",
@@ -587,7 +611,7 @@
       "name": "popover",
       "type": "registry:ui",
       "registryDependencies": [
-        "utils"
+        "deanjstone/design-system/utils"
       ],
       "dependencies": [
         "@base-ui/react"
@@ -603,7 +627,7 @@
       "name": "progress",
       "type": "registry:ui",
       "registryDependencies": [
-        "utils"
+        "deanjstone/design-system/utils"
       ],
       "dependencies": [
         "@base-ui/react"
@@ -619,7 +643,7 @@
       "name": "scroll-area",
       "type": "registry:ui",
       "registryDependencies": [
-        "utils"
+        "deanjstone/design-system/utils"
       ],
       "dependencies": [
         "@base-ui/react"
@@ -635,7 +659,7 @@
       "name": "select",
       "type": "registry:ui",
       "registryDependencies": [
-        "utils"
+        "deanjstone/design-system/utils"
       ],
       "dependencies": [
         "@base-ui/react",
@@ -652,7 +676,7 @@
       "name": "separator",
       "type": "registry:ui",
       "registryDependencies": [
-        "utils"
+        "deanjstone/design-system/utils"
       ],
       "dependencies": [
         "@base-ui/react"
@@ -668,8 +692,8 @@
       "name": "sheet",
       "type": "registry:ui",
       "registryDependencies": [
-        "button",
-        "utils"
+        "deanjstone/design-system/button",
+        "deanjstone/design-system/utils"
       ],
       "dependencies": [
         "@base-ui/react",
@@ -686,7 +710,7 @@
       "name": "skeleton",
       "type": "registry:ui",
       "registryDependencies": [
-        "utils"
+        "deanjstone/design-system/utils"
       ],
       "files": [
         {
@@ -699,7 +723,7 @@
       "name": "slider",
       "type": "registry:ui",
       "registryDependencies": [
-        "utils"
+        "deanjstone/design-system/utils"
       ],
       "dependencies": [
         "@base-ui/react"
@@ -715,7 +739,7 @@
       "name": "sonner",
       "type": "registry:ui",
       "registryDependencies": [
-        "utils"
+        "deanjstone/design-system/utils"
       ],
       "dependencies": [
         "next-themes",
@@ -733,7 +757,7 @@
       "name": "switch",
       "type": "registry:ui",
       "registryDependencies": [
-        "utils"
+        "deanjstone/design-system/utils"
       ],
       "dependencies": [
         "@base-ui/react"
@@ -749,11 +773,285 @@
       "name": "textarea",
       "type": "registry:ui",
       "registryDependencies": [
-        "utils"
+        "deanjstone/design-system/utils"
       ],
       "files": [
         {
           "path": "registry/base-nova/ui/textarea.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "message",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "deanjstone/design-system/utils"
+      ],
+      "files": [
+        {
+          "path": "registry/base-nova/ui/message.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "bubble",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "deanjstone/design-system/utils"
+      ],
+      "dependencies": [
+        "@base-ui/react",
+        "class-variance-authority"
+      ],
+      "files": [
+        {
+          "path": "registry/base-nova/ui/bubble.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "marker",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "deanjstone/design-system/utils"
+      ],
+      "dependencies": [
+        "@base-ui/react",
+        "class-variance-authority"
+      ],
+      "files": [
+        {
+          "path": "registry/base-nova/ui/marker.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "attachment",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "deanjstone/design-system/utils",
+        "deanjstone/design-system/button"
+      ],
+      "dependencies": [
+        "@base-ui/react",
+        "class-variance-authority"
+      ],
+      "files": [
+        {
+          "path": "registry/base-nova/ui/attachment.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "message-scroller",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "deanjstone/design-system/utils",
+        "deanjstone/design-system/button"
+      ],
+      "dependencies": [
+        "@shadcn/react@^0.3.1",
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "registry/base-nova/ui/message-scroller.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "tooltip",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "deanjstone/design-system/utils"
+      ],
+      "dependencies": [
+        "@base-ui/react"
+      ],
+      "files": [
+        {
+          "path": "registry/base-nova/ui/tooltip.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "use-mobile",
+      "type": "registry:hook",
+      "files": [
+        {
+          "path": "registry/base-nova/hooks/use-mobile.ts",
+          "type": "registry:hook"
+        }
+      ]
+    },
+    {
+      "name": "item",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "deanjstone/design-system/utils",
+        "deanjstone/design-system/separator"
+      ],
+      "dependencies": [
+        "@base-ui/react",
+        "class-variance-authority"
+      ],
+      "files": [
+        {
+          "path": "registry/base-nova/ui/item.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "empty",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "deanjstone/design-system/utils"
+      ],
+      "dependencies": [
+        "class-variance-authority"
+      ],
+      "files": [
+        {
+          "path": "registry/base-nova/ui/empty.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "sidebar",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "deanjstone/design-system/utils",
+        "deanjstone/design-system/use-mobile",
+        "deanjstone/design-system/button",
+        "deanjstone/design-system/input",
+        "deanjstone/design-system/separator",
+        "deanjstone/design-system/sheet",
+        "deanjstone/design-system/skeleton",
+        "deanjstone/design-system/tooltip"
+      ],
+      "dependencies": [
+        "@base-ui/react",
+        "class-variance-authority",
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "registry/base-nova/ui/sidebar.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "spinner",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "deanjstone/design-system/utils"
+      ],
+      "dependencies": [
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "registry/base-nova/ui/spinner.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "field",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "deanjstone/design-system/utils",
+        "deanjstone/design-system/label",
+        "deanjstone/design-system/separator"
+      ],
+      "dependencies": [
+        "class-variance-authority"
+      ],
+      "files": [
+        {
+          "path": "registry/base-nova/ui/field.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "input-group",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "deanjstone/design-system/utils",
+        "deanjstone/design-system/button",
+        "deanjstone/design-system/input",
+        "deanjstone/design-system/textarea"
+      ],
+      "dependencies": [
+        "class-variance-authority"
+      ],
+      "files": [
+        {
+          "path": "registry/base-nova/ui/input-group.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "toggle",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "deanjstone/design-system/utils"
+      ],
+      "dependencies": [
+        "@base-ui/react",
+        "class-variance-authority"
+      ],
+      "files": [
+        {
+          "path": "registry/base-nova/ui/toggle.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "toggle-group",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "deanjstone/design-system/utils",
+        "deanjstone/design-system/toggle"
+      ],
+      "dependencies": [
+        "@base-ui/react",
+        "class-variance-authority"
+      ],
+      "files": [
+        {
+          "path": "registry/base-nova/ui/toggle-group.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "button-group",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "deanjstone/design-system/utils",
+        "deanjstone/design-system/separator"
+      ],
+      "dependencies": [
+        "@base-ui/react",
+        "class-variance-authority"
+      ],
+      "files": [
+        {
+          "path": "registry/base-nova/ui/button-group.tsx",
           "type": "registry:ui"
         }
       ]

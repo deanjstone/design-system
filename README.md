@@ -13,7 +13,8 @@ copies them into the consuming project. There's no publish step.
 registry.json              root manifest — one entry per distributable item
 registry/
   lib/utils.ts              cn() helper (clsx + tailwind-merge)
-  base-nova/ui/               24 base-nova style components (Base UI)
+  base-nova/ui/               39 base-nova style components (Base UI)
+  base-nova/hooks/            use-mobile (pulled by sidebar)
 r/                         generated per-item output — what tagged URLs resolve
 theme/tokens.css            same tokens as the "theme" item, as plain CSS
 ```
@@ -167,6 +168,14 @@ than the tag claims.
 2. Add a matching entry to `registry.json` — `name`, `type`
    (`registry:ui` / `registry:lib` / `registry:hook`), `files`, and any
    `registryDependencies` / `dependencies`.
+
+   A `registryDependencies` entry naming another item in this repo must use
+   its full address, `deanjstone/design-system/<name>`. A bare name such as
+   `button` means shadcn's built-in item, not ours, so the consumer silently
+   gets upstream's copy (design-system#57).
+
+   Pin a pre-1.0 npm dependency to its minor, e.g. `@shadcn/react@^0.3.1`,
+   so a re-run `shadcn add` cannot pull a breaking release.
 3. Commit on a feature branch, open a PR — see `.claude/SYSTEM.md`.
 
 ## Design tooling
@@ -222,15 +231,23 @@ iterates against a running app, and this repo has none.
   PWA/Electron app-shell mechanics (`pt-safe`/`pb-safe`/`pl-safe`/`pr-safe`,
   `--app-titlebar-*` topbar geometry, the `.wco` variant, `.drag-region`) —
   see [DESIGN.md](DESIGN.md#app-shell).
-- **24 components**, all `base-nova` style and Base UI-based, pulled the same
+- **39 components** and one hook, all `base-nova` style and Base UI-based, pulled the same
   way as `theme`/`button` above:
   - *Controls* — `button`, `input`, `textarea`, `select`, `checkbox`,
     `switch`, `slider`, `label`
   - *Surfaces and overlays* — `card`, `dialog`, `alert-dialog`, `sheet`,
     `drawer`, `popover`, `dropdown-menu`, `collapsible`, `scroll-area`
   - *Display and feedback* — `badge`, `avatar`, `progress`, `skeleton`,
-    `separator`, `tabs`, `sonner`
+    `separator`, `tabs`, `sonner`, `spinner`, `empty`, `tooltip`
+  - *Conversation* — `message`, `bubble`, `message-scroller`, `marker`,
+    `attachment`
+  - *Navigation and lists* — `sidebar` (with the `use-mobile` hook), `item`
+  - *Forms and grouping* — `field`, `input-group`, `toggle`, `toggle-group`,
+    `button-group`
 
-  The set is bounded to what the consuming apps actually use — 24 of shadcn's
-  63 — rather than shipping the full catalogue. Adding another is mechanical,
+  `tooltip` and `sidebar` need a `TooltipProvider` at the app root.
+  `message-scroller` adds the `@shadcn/react` package.
+
+  The set is bounded to what the consuming apps actually use — 39 of shadcn's
+  ~65 — rather than shipping the full catalogue. Adding another is mechanical,
   so ask rather than vendoring a copy locally.

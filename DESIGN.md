@@ -578,7 +578,7 @@ the label tracks the field's state rather than sitting inert beside it.
 
 ### The full set
 
-Twenty-four components ship. The sections above describe the ones that define
+Thirty-nine components ship, plus the `use-mobile` hook. The sections above describe the ones that define
 the system's behaviour; the rest follow the same rules — the shared focus
 treatment, the radius scale, the 32px control height where they are controls —
 and are listed here so the inventory is not something you have to infer from
@@ -597,12 +597,29 @@ rest stay flat and lean on borders, per the two-mechanism depth rule.
 `alert-dialog` and `sheet` compose `button`, so pulling either pulls it too.
 
 **Display and feedback** — `badge`, `avatar`, `progress`, `skeleton`,
-`separator`, `tabs`, `sonner`. Things that report rather than accept input.
+`separator`, `tabs`, `sonner`, `spinner`, `empty`, `tooltip`. Things that
+report rather than accept input.
 `skeleton` and `progress` are the two that animate at rest, so they are the
 ones the reduced-motion rules matter most for.
 
+**Conversation** — `message`, `bubble`, `message-scroller`, `marker`,
+`attachment`. A thread: messages aligned start or end, bubbles carrying the
+fill, markers splitting the timeline, attachments under a message.
+`message-scroller` holds the viewport at the newest message and declares
+`@shadcn/react@^0.3.1`, pinned to its minor because the package is pre-1.0.
+
+**Navigation and lists** — `sidebar` (with the `use-mobile` hook), `item`.
+`sidebar` reads the `--sidebar-*` tokens from the `theme` item. They are
+chroma-zero like the rest, so its primary and ring follow `--primary` and
+`--ring` rather than upstream's tinted dark primary.
+
+**Forms and grouping** — `field`, `input-group`, `toggle`, `toggle-group`,
+`button-group`. `field` and `toggle-group` take an orientation and style it
+through `data-[orientation=…]`, the same fix #54 made for `separator` and
+`tabs`.
+
 The set is deliberately bounded to what the consuming apps actually use rather
-than to shadcn's full catalogue — 24 of 63. Adding another is mechanical
+than to shadcn's full catalogue — 39 of about 65. Adding another is mechanical
 (fetch the base-nova item, add a `registry.json` entry, rebuild `r/`), so
 demand can pull components in rather than the registry pushing them out.
 
