@@ -1,3 +1,10 @@
+# [2.5.0](https://github.com/deanjstone/design-system/compare/v2.4.1...v2.5.0) (2026-10-01)
+
+
+### Features
+
+* add base-nova primitives for the notice-board PWA ([#58](https://github.com/deanjstone/design-system/issues/58)) ([876655f](https://github.com/deanjstone/design-system/commit/876655f7315c541fdeba9ef245a2a3803bec7ba6)), closes [#31](https://github.com/deanjstone/design-system/issues/31) [#57](https://github.com/deanjstone/design-system/issues/57) [#57](https://github.com/deanjstone/design-system/issues/57) [#54](https://github.com/deanjstone/design-system/issues/54) [#54](https://github.com/deanjstone/design-system/issues/54)
+
 ## [2.4.1](https://github.com/deanjstone/design-system/compare/v2.4.0...v2.4.1) (2026-09-06)
 
 
