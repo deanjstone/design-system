@@ -401,7 +401,7 @@
       "name": "button",
       "type": "registry:ui",
       "registryDependencies": [
-        "utils"
+        "deanjstone/design-system/utils"
       ],
       "dependencies": [
         "class-variance-authority",
@@ -418,7 +418,7 @@
       "name": "card",
       "type": "registry:ui",
       "registryDependencies": [
-        "utils"
+        "deanjstone/design-system/utils"
       ],
       "files": [
         {
@@ -431,7 +431,7 @@
       "name": "label",
       "type": "registry:ui",
       "registryDependencies": [
-        "utils"
+        "deanjstone/design-system/utils"
       ],
       "files": [
         {
@@ -444,7 +444,7 @@
       "name": "input",
       "type": "registry:ui",
       "registryDependencies": [
-        "utils"
+        "deanjstone/design-system/utils"
       ],
       "files": [
         {
@@ -460,8 +460,8 @@
       "name": "dialog",
       "type": "registry:ui",
       "registryDependencies": [
-        "utils",
-        "button"
+        "deanjstone/design-system/utils",
+        "deanjstone/design-system/button"
       ],
       "dependencies": [
         "@base-ui/react",
@@ -478,7 +478,7 @@
       "name": "tabs",
       "type": "registry:ui",
       "registryDependencies": [
-        "utils"
+        "deanjstone/design-system/utils"
       ],
       "dependencies": [
         "class-variance-authority",
@@ -495,7 +495,7 @@
       "name": "badge",
       "type": "registry:ui",
       "registryDependencies": [
-        "utils"
+        "deanjstone/design-system/utils"
       ],
       "dependencies": [
         "class-variance-authority",
@@ -512,8 +512,8 @@
       "name": "alert-dialog",
       "type": "registry:ui",
       "registryDependencies": [
-        "button",
-        "utils"
+        "deanjstone/design-system/button",
+        "deanjstone/design-system/utils"
       ],
       "dependencies": [
         "@base-ui/react"
@@ -529,7 +529,7 @@
       "name": "avatar",
       "type": "registry:ui",
       "registryDependencies": [
-        "utils"
+        "deanjstone/design-system/utils"
       ],
       "dependencies": [
         "@base-ui/react"
@@ -545,7 +545,7 @@
       "name": "checkbox",
       "type": "registry:ui",
       "registryDependencies": [
-        "utils"
+        "deanjstone/design-system/utils"
       ],
       "dependencies": [
         "@base-ui/react",
@@ -562,7 +562,7 @@
       "name": "collapsible",
       "type": "registry:ui",
       "registryDependencies": [
-        "utils"
+        "deanjstone/design-system/utils"
       ],
       "dependencies": [
         "@base-ui/react"
@@ -578,7 +578,7 @@
       "name": "drawer",
       "type": "registry:ui",
       "registryDependencies": [
-        "utils"
+        "deanjstone/design-system/utils"
       ],
       "dependencies": [
         "@base-ui/react"
@@ -594,7 +594,7 @@
       "name": "dropdown-menu",
       "type": "registry:ui",
       "registryDependencies": [
-        "utils"
+        "deanjstone/design-system/utils"
       ],
       "dependencies": [
         "@base-ui/react",
@@ -611,7 +611,7 @@
       "name": "popover",
       "type": "registry:ui",
       "registryDependencies": [
-        "utils"
+        "deanjstone/design-system/utils"
       ],
       "dependencies": [
         "@base-ui/react"
@@ -627,7 +627,7 @@
       "name": "progress",
       "type": "registry:ui",
       "registryDependencies": [
-        "utils"
+        "deanjstone/design-system/utils"
       ],
       "dependencies": [
         "@base-ui/react"
@@ -643,7 +643,7 @@
       "name": "scroll-area",
       "type": "registry:ui",
       "registryDependencies": [
-        "utils"
+        "deanjstone/design-system/utils"
       ],
       "dependencies": [
         "@base-ui/react"
@@ -659,7 +659,7 @@
       "name": "select",
       "type": "registry:ui",
       "registryDependencies": [
-        "utils"
+        "deanjstone/design-system/utils"
       ],
       "dependencies": [
         "@base-ui/react",
@@ -676,7 +676,7 @@
       "name": "separator",
       "type": "registry:ui",
       "registryDependencies": [
-        "utils"
+        "deanjstone/design-system/utils"
       ],
       "dependencies": [
         "@base-ui/react"
@@ -692,8 +692,8 @@
       "name": "sheet",
       "type": "registry:ui",
       "registryDependencies": [
-        "button",
-        "utils"
+        "deanjstone/design-system/button",
+        "deanjstone/design-system/utils"
       ],
       "dependencies": [
         "@base-ui/react",
@@ -710,7 +710,7 @@
       "name": "skeleton",
       "type": "registry:ui",
       "registryDependencies": [
-        "utils"
+        "deanjstone/design-system/utils"
       ],
       "files": [
         {
@@ -723,7 +723,7 @@
       "name": "slider",
       "type": "registry:ui",
       "registryDependencies": [
-        "utils"
+        "deanjstone/design-system/utils"
       ],
       "dependencies": [
         "@base-ui/react"
@@ -739,7 +739,7 @@
       "name": "sonner",
       "type": "registry:ui",
       "registryDependencies": [
-        "utils"
+        "deanjstone/design-system/utils"
       ],
       "dependencies": [
         "next-themes",
@@ -757,7 +757,7 @@
       "name": "switch",
       "type": "registry:ui",
       "registryDependencies": [
-        "utils"
+        "deanjstone/design-system/utils"
       ],
       "dependencies": [
         "@base-ui/react"
@@ -773,7 +773,7 @@
       "name": "textarea",
       "type": "registry:ui",
       "registryDependencies": [
-        "utils"
+        "deanjstone/design-system/utils"
       ],
       "files": [
         {
@@ -786,7 +786,7 @@
       "name": "message",
       "type": "registry:ui",
       "registryDependencies": [
-        "utils"
+        "deanjstone/design-system/utils"
       ],
       "files": [
         {
@@ -799,7 +799,7 @@
       "name": "bubble",
       "type": "registry:ui",
       "registryDependencies": [
-        "utils"
+        "deanjstone/design-system/utils"
       ],
       "dependencies": [
         "@base-ui/react",
@@ -816,7 +816,7 @@
       "name": "marker",
       "type": "registry:ui",
       "registryDependencies": [
-        "utils"
+        "deanjstone/design-system/utils"
       ],
       "dependencies": [
         "@base-ui/react",
@@ -833,8 +833,8 @@
       "name": "attachment",
       "type": "registry:ui",
       "registryDependencies": [
-        "utils",
-        "button"
+        "deanjstone/design-system/utils",
+        "deanjstone/design-system/button"
       ],
       "dependencies": [
         "@base-ui/react",
@@ -851,8 +851,8 @@
       "name": "message-scroller",
       "type": "registry:ui",
       "registryDependencies": [
-        "utils",
-        "button"
+        "deanjstone/design-system/utils",
+        "deanjstone/design-system/button"
       ],
       "dependencies": [
         "@shadcn/react@^0.3.1",
@@ -869,7 +869,7 @@
       "name": "tooltip",
       "type": "registry:ui",
       "registryDependencies": [
-        "utils"
+        "deanjstone/design-system/utils"
       ],
       "dependencies": [
         "@base-ui/react"
@@ -895,8 +895,8 @@
       "name": "item",
       "type": "registry:ui",
       "registryDependencies": [
-        "utils",
-        "separator"
+        "deanjstone/design-system/utils",
+        "deanjstone/design-system/separator"
       ],
       "dependencies": [
         "@base-ui/react",
@@ -913,7 +913,7 @@
       "name": "empty",
       "type": "registry:ui",
       "registryDependencies": [
-        "utils"
+        "deanjstone/design-system/utils"
       ],
       "dependencies": [
         "class-variance-authority"
@@ -929,14 +929,14 @@
       "name": "sidebar",
       "type": "registry:ui",
       "registryDependencies": [
-        "utils",
-        "use-mobile",
-        "button",
-        "input",
-        "separator",
-        "sheet",
-        "skeleton",
-        "tooltip"
+        "deanjstone/design-system/utils",
+        "deanjstone/design-system/use-mobile",
+        "deanjstone/design-system/button",
+        "deanjstone/design-system/input",
+        "deanjstone/design-system/separator",
+        "deanjstone/design-system/sheet",
+        "deanjstone/design-system/skeleton",
+        "deanjstone/design-system/tooltip"
       ],
       "dependencies": [
         "@base-ui/react",
@@ -954,7 +954,7 @@
       "name": "spinner",
       "type": "registry:ui",
       "registryDependencies": [
-        "utils"
+        "deanjstone/design-system/utils"
       ],
       "dependencies": [
         "lucide-react"
@@ -970,9 +970,9 @@
       "name": "field",
       "type": "registry:ui",
       "registryDependencies": [
-        "utils",
-        "label",
-        "separator"
+        "deanjstone/design-system/utils",
+        "deanjstone/design-system/label",
+        "deanjstone/design-system/separator"
       ],
       "dependencies": [
         "class-variance-authority"
@@ -988,10 +988,10 @@
       "name": "input-group",
       "type": "registry:ui",
       "registryDependencies": [
-        "utils",
-        "button",
-        "input",
-        "textarea"
+        "deanjstone/design-system/utils",
+        "deanjstone/design-system/button",
+        "deanjstone/design-system/input",
+        "deanjstone/design-system/textarea"
       ],
       "dependencies": [
         "class-variance-authority"
@@ -1007,7 +1007,7 @@
       "name": "toggle",
       "type": "registry:ui",
       "registryDependencies": [
-        "utils"
+        "deanjstone/design-system/utils"
       ],
       "dependencies": [
         "@base-ui/react",
@@ -1024,8 +1024,8 @@
       "name": "toggle-group",
       "type": "registry:ui",
       "registryDependencies": [
-        "utils",
-        "toggle"
+        "deanjstone/design-system/utils",
+        "deanjstone/design-system/toggle"
       ],
       "dependencies": [
         "@base-ui/react",
@@ -1042,8 +1042,8 @@
       "name": "button-group",
       "type": "registry:ui",
       "registryDependencies": [
-        "utils",
-        "separator"
+        "deanjstone/design-system/utils",
+        "deanjstone/design-system/separator"
       ],
       "dependencies": [
         "@base-ui/react",

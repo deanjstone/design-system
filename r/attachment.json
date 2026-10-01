@@ -6,8 +6,8 @@
     "class-variance-authority"
   ],
   "registryDependencies": [
-    "utils",
-    "button"
+    "deanjstone/design-system/utils",
+    "deanjstone/design-system/button"
   ],
   "files": [
     {

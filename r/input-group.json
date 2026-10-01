@@ -5,10 +5,10 @@
     "class-variance-authority"
   ],
   "registryDependencies": [
-    "utils",
-    "button",
-    "input",
-    "textarea"
+    "deanjstone/design-system/utils",
+    "deanjstone/design-system/button",
+    "deanjstone/design-system/input",
+    "deanjstone/design-system/textarea"
   ],
   "files": [
     {

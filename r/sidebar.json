@@ -7,14 +7,14 @@
     "lucide-react"
   ],
   "registryDependencies": [
-    "utils",
-    "use-mobile",
-    "button",
-    "input",
-    "separator",
-    "sheet",
-    "skeleton",
-    "tooltip"
+    "deanjstone/design-system/utils",
+    "deanjstone/design-system/use-mobile",
+    "deanjstone/design-system/button",
+    "deanjstone/design-system/input",
+    "deanjstone/design-system/separator",
+    "deanjstone/design-system/sheet",
+    "deanjstone/design-system/skeleton",
+    "deanjstone/design-system/tooltip"
   ],
   "files": [
     {

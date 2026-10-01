@@ -6,7 +6,7 @@
     "@base-ui/react"
   ],
   "registryDependencies": [
-    "utils"
+    "deanjstone/design-system/utils"
   ],
   "files": [
     {

@@ -6,8 +6,8 @@
     "class-variance-authority"
   ],
   "registryDependencies": [
-    "utils",
-    "toggle"
+    "deanjstone/design-system/utils",
+    "deanjstone/design-system/toggle"
   ],
   "files": [
     {

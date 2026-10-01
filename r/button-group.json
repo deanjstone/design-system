@@ -6,8 +6,8 @@
     "class-variance-authority"
   ],
   "registryDependencies": [
-    "utils",
-    "separator"
+    "deanjstone/design-system/utils",
+    "deanjstone/design-system/separator"
   ],
   "files": [
     {
