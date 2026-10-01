@@ -864,6 +864,91 @@
           "type": "registry:ui"
         }
       ]
+    },
+    {
+      "name": "tooltip",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "utils"
+      ],
+      "dependencies": [
+        "@base-ui/react"
+      ],
+      "files": [
+        {
+          "path": "registry/base-nova/ui/tooltip.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "use-mobile",
+      "type": "registry:hook",
+      "files": [
+        {
+          "path": "registry/base-nova/hooks/use-mobile.ts",
+          "type": "registry:hook"
+        }
+      ]
+    },
+    {
+      "name": "item",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "utils",
+        "separator"
+      ],
+      "dependencies": [
+        "@base-ui/react",
+        "class-variance-authority"
+      ],
+      "files": [
+        {
+          "path": "registry/base-nova/ui/item.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "empty",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "utils"
+      ],
+      "dependencies": [
+        "class-variance-authority"
+      ],
+      "files": [
+        {
+          "path": "registry/base-nova/ui/empty.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "sidebar",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "utils",
+        "use-mobile",
+        "button",
+        "input",
+        "separator",
+        "sheet",
+        "skeleton",
+        "tooltip"
+      ],
+      "dependencies": [
+        "@base-ui/react",
+        "class-variance-authority",
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "registry/base-nova/ui/sidebar.tsx",
+          "type": "registry:ui"
+        }
+      ]
     }
   ]
 }
