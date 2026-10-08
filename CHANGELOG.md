@@ -1,3 +1,10 @@
+## [2.5.3](https://github.com/deanjstone/design-system/compare/v2.5.2...v2.5.3) (2026-10-08)
+
+
+### Bug Fixes
+
+* scope input-group disabled styling to the control ([#68](https://github.com/deanjstone/design-system/issues/68)) ([16ced71](https://github.com/deanjstone/design-system/commit/16ced7155509e48dabea6b765ef1bf18e01aea30)), closes [#61](https://github.com/deanjstone/design-system/issues/61) [#61](https://github.com/deanjstone/design-system/issues/61)
+
 ## [2.5.2](https://github.com/deanjstone/design-system/compare/v2.5.1...v2.5.2) (2026-10-08)
 
 
