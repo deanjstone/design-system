@@ -1,4 +1,4 @@
-# CLAUDE.md
+# design-system
 
 ## Project purpose
 
@@ -27,3 +27,9 @@ Default canonical vocabulary (`needs-triage`, `needs-info`, `ready-for-agent`, `
 ### Domain docs
 
 Single-context — `CONTEXT.md` + `docs/adr/` at the repo root. See `docs/agents/domain.md`.
+
+## Status
+
+- **Repo structure standard:** Standard tier, applied 2026-10-08 (`repo-standard-rollout`,
+  [argus#448](https://github.com/deanjstone/argus/issues/448)). See the
+  [Repo Structure Standard](https://github.com/deanjstone/argus/blob/main/docs/system-specs/common/repo-structure-standard.md) in argus.
