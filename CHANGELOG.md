@@ -1,3 +1,10 @@
+## [2.5.2](https://github.com/deanjstone/design-system/compare/v2.5.1...v2.5.2) (2026-10-08)
+
+
+### Bug Fixes
+
+* declare clsx and tailwind-merge on the utils item ([#67](https://github.com/deanjstone/design-system/issues/67)) ([2535a5a](https://github.com/deanjstone/design-system/commit/2535a5aa98730498304525b75a2cd9300256cf25)), closes [#60](https://github.com/deanjstone/design-system/issues/60) [#60](https://github.com/deanjstone/design-system/issues/60)
+
 ## [2.5.1](https://github.com/deanjstone/design-system/compare/v2.5.0...v2.5.1) (2026-10-08)
 
 
