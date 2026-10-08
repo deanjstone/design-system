@@ -178,6 +178,19 @@ than the tag claims.
    so a re-run `shadcn add` cannot pull a breaking release.
 3. Commit on a feature branch, open a PR — see `.claude/SYSTEM.md`.
 
+## Tests
+
+`pnpm install && pnpm test` renders registry sources in jsdom with Vitest
+(`test/`); the `Test` workflow runs it on every PR. The dev dependencies
+exist only for this — nothing here is built or published.
+
+**Gotcha: Base UI parts with default children.** `Select.Icon`,
+`Combobox.Icon` and `NavigationMenu.Icon` default their children to `▼`
+(also `Combobox.ItemIndicator` `✔️`, `Combobox.Clear` `x`). `render` swaps
+only the element, so the glyph lands inside whatever you render — a lucide
+svg appends it as a stray text node. Give these parts an explicit child,
+`{null}` if the rendered element supplies its own (design-system#50).
+
 ## Design tooling
 
 This repo enables the [impeccable](https://impeccable.style) plugin
