@@ -47,11 +47,15 @@ function SelectTrigger({
       {...props}
     >
       {children}
+      {/* Select.Icon defaults its children to "▼", which `render` would pass
+          into the svg. An explicit null child overrides the default. */}
       <SelectPrimitive.Icon
         render={
           <ChevronDownIcon className="pointer-events-none size-4 text-muted-foreground" />
         }
-      />
+      >
+        {null}
+      </SelectPrimitive.Icon>
     </SelectPrimitive.Trigger>
   )
 }
