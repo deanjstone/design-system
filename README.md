@@ -15,7 +15,7 @@ registry/
   lib/utils.ts              cn() helper (clsx + tailwind-merge)
   base-nova/ui/               39 base-nova style components (Base UI)
   base-nova/hooks/            use-mobile (pulled by sidebar)
-r/                         generated per-item output — what tagged URLs resolve
+r/                         generated per-item output — what the r/ alias resolves
 theme/tokens.css            same tokens as the "theme" item, as plain CSS
 ```
 
@@ -111,16 +111,9 @@ patch, a `feat:` the minor, and a `feat!:` or `BREAKING CHANGE:` footer the
 major. Every release gets a `vX.Y.Z` tag, a GitHub release, and a CHANGELOG
 entry.
 
-**Consumers currently cannot pin, and should know it.** The
-`<owner>/<repo>/<item>` shorthand always resolves against the default
-branch — there is no ref in the address. Verified against the CLI: a tag in
-the address (`design-system@v2.1.0/theme`, `design-system/theme@v2.1.0`),
-a `github:` prefix, and a raw `registry.json` URL at a tag are all rejected;
-only the unpinned form resolves.
-
-So every `shadcn add` against this registry pulls whatever `main` holds at
-that moment, and an `add` re-run can pull a breaking change without warning.
-It has happened twice already: `v2.0.0` replaced Radix with Base UI
+An unpinned `shadcn add deanjstone/design-system/<item>` pulls whatever
+`main` holds at that moment, so an `add` re-run can pull a breaking change
+without warning. It has happened twice: `v2.0.0` replaced Radix with Base UI
 ([ADR-0001](docs/adr/0001-switch-component-library-to-base-ui.md)) and
 changed the component API from `asChild` to a `render` prop; `v2.1.0` took
 ownership of the typeface
@@ -129,35 +122,91 @@ how every consumer looks.
 
 ### Pinning to a release
 
-Per-item output lives in `r/`, one self-contained JSON per item with the
-source inlined. Because a tag includes `r/`, a tagged raw URL resolves to
-exactly the code that shipped in that release.
+**A pin fixes the item you name, not its dependencies.** Both pinning forms
+below install the named item from the release you choose. Every
+`registryDependencies` entry is still resolved from `main`, because this
+registry writes them as unversioned addresses
+(`deanjstone/design-system/<name>`) and shadcn does not carry a ref across
+dependencies. shadcn's docs say: "Refs are not inherited across
+dependencies. If a dependency should be pinned, include its own ref."
+([GitHub Registries](https://ui.shadcn.com/docs/registry/github), read
+2026-10-08). Only `theme`, `utils` and `use-mobile` have no registry
+dependencies. Almost every other item depends on at least `utils`.
 
-Register it once in the consumer's `components.json`:
+**Option 1: a `#ref` on the item address (preferred).** shadcn 4.x accepts
+a branch, tag or commit SHA after `#`:
+
+```bash
+npx shadcn add deanjstone/design-system/button#v2.5.1
+npx shadcn add deanjstone/design-system/button#645db462137cf60b416d8ee4fc753146c5e0b51d
+```
+
+A tag works for every release. A full 40-character SHA is the most
+reproducible ref and skips the CLI's `git ls-remote` lookup. Both work
+without a `components.json` `registries` entry.
+
+**Option 2: the `r/` alias.** `r/` holds per-item output from
+`shadcn build`, one self-contained JSON per item with the source inlined.
+A tag includes `r/`, so a tagged raw URL serves the item exactly as it
+shipped. Register the alias once in the consumer's `components.json`:
 
 ```json
 {
   "registries": {
     "@design-system": {
-      "url": "https://raw.githubusercontent.com/deanjstone/design-system/v2.1.0/r/{name}.json"
+      "url": "https://raw.githubusercontent.com/deanjstone/design-system/v2.5.1/r/{name}.json"
     }
   }
 }
 ```
 
-then add by alias, and bump the tag in that URL when you want to upgrade:
+then add by alias:
 
 ```bash
 npx shadcn add @design-system/theme @design-system/button
 ```
 
-This is the `{name}`-templated endpoint the warning above refers to — the
-thing a bare `registry.json` URL cannot be. The unpinned
-`deanjstone/design-system/<item>` shorthand still works and still tracks
-`main`; it is the convenience path, not the one to build on.
+This is the `{name}`-templated endpoint the warning above refers to, the
+thing a bare `registry.json` URL cannot be. `r/` exists from `v2.2.0`
+onward.
+
+**Which to use.** The two forms pin the same thing: the named item, at the
+tag. Their dependency behaviour is identical. Use `#ref` by default. It is
+the form shadcn documents, it needs no config, and it can name a commit
+SHA. Use the alias when a project wants one place to set the version: it
+upgrades every later `add` by bumping a single URL. Use the unpinned
+shorthand only to track `main` on purpose.
+
+**What this means in practice.** `shadcn add` copies source into the
+consumer's repo, so the code you commit is the real pin. A later `add`
+changes nothing until it runs. Review its diff the way you would review any
+dependency upgrade, including files pulled in as dependencies. Passing each
+dependency explicitly with its own `#ref` in the same command does **not**
+work around this: the dependency's `main` copy wins (see below). If an
+install must be fully reproducible today, pin and add only leaf items
+(`theme`, `utils`, `use-mobile`). For anything else, inspect the dependency
+files the CLI writes. Pinning dependencies at release time is tracked in
+design-system#65: it changes how `registryDependencies` are written, which is a
+breaking change for consumers.
+
+Verified 2026-10-08 with `shadcn@4.21.4`, in a fresh Vite app with
+`init -b base -p nova`. Every `fetch` and `git` call the CLI made was logged
+(design-system#59):
+
+| Command | Named item from | Dependencies from |
+|---|---|---|
+| `add deanjstone/design-system/sidebar#v2.5.1` | `645db46` (the `v2.5.1` tag) | `main` HEAD, all 8 |
+| `add deanjstone/design-system/button#645db46…` (full SHA) | that commit, no `ls-remote` for it | `utils` from `main` HEAD |
+| `add @design-system/sidebar` (alias at `v2.5.1`) | `v2.5.1/r/sidebar.json` | `main` HEAD, all 8 |
+| `add …/separator#v2.3.0` | `v2.3.0` | — |
+| `add …/sidebar#v2.5.1 …/separator#v2.3.0` (either order) | — | `separator` from `main` |
+
+Tags before `v2.5.0` behave worse. Their dependencies are bare names such
+as `utils`, which resolve to **upstream shadcn's** items, not this
+registry's (design-system#57).
 
 `r/` is generated. Rebuild it with `npx shadcn build --output ./r` whenever
-`registry.json` or a source file changes; CI rebuilds and fails on any
+`registry.json` or a source file changes. CI rebuilds it and fails on any
 difference, because a stale `r/` would serve a tag's consumers older code
 than the tag claims.
 
