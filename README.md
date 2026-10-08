@@ -66,6 +66,18 @@ Note the preset (`-p nova` above) also brings its own typeface and base
 stylesheet. Pulling the `theme` item overrides `--font-sans`, so Plex wins,
 but the preset's font package stays installed unless you remove it.
 
+The same goes for the preset's `cn` package. From `shadcn@4.21`, `init`
+installs `cn` instead of `clsx` and `tailwind-merge`. This registry's
+`utils` item — pulled in by every component — writes `lib/utils.ts` with
+a `cn()` built on `clsx` and `tailwind-merge`, and declares both so they
+install with it (design-system#60). Nothing in this registry imports the
+`cn` package, so remove it once you have added an item, unless your own
+code imports it:
+
+```bash
+npm uninstall cn            # or pnpm remove cn
+```
+
 (Do **not** add this repo under `components.json`'s `registries` field with
 a bare `registry.json` URL — that field requires a `{name}`-templated
 per-item endpoint, e.g. `.../{name}.json`, which this repo doesn't publish.
