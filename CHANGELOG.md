@@ -1,3 +1,10 @@
+## [2.5.1](https://github.com/deanjstone/design-system/compare/v2.5.0...v2.5.1) (2026-10-08)
+
+
+### Bug Fixes
+
+* **select:** drop Base UI's default ▼ glyph from the trigger icon ([#62](https://github.com/deanjstone/design-system/issues/62)) ([c50c8c6](https://github.com/deanjstone/design-system/commit/c50c8c63972b325af47ad999ef87cf1863b5f92b)), closes [#50](https://github.com/deanjstone/design-system/issues/50)
+
 # [2.5.0](https://github.com/deanjstone/design-system/compare/v2.4.1...v2.5.0) (2026-10-01)
 
 
