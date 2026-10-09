@@ -1,3 +1,10 @@
+# [2.6.0](https://github.com/deanjstone/design-system/compare/v2.5.3...v2.6.0) (2026-10-09)
+
+
+### Features
+
+* add table registry item ([#70](https://github.com/deanjstone/design-system/issues/70)) ([714a598](https://github.com/deanjstone/design-system/commit/714a59889b9b691a8d91d76428895b4270aa745c)), closes [#63](https://github.com/deanjstone/design-system/issues/63)
+
 ## [2.5.3](https://github.com/deanjstone/design-system/compare/v2.5.2...v2.5.3) (2026-10-08)
 
 
