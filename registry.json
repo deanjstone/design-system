@@ -496,6 +496,19 @@
       ]
     },
     {
+      "name": "table",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "deanjstone/design-system/utils"
+      ],
+      "files": [
+        {
+          "path": "registry/base-nova/ui/table.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "badge",
       "type": "registry:ui",
       "registryDependencies": [
