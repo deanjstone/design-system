@@ -305,14 +305,14 @@ iterates against a running app, and this repo has none.
   PWA/Electron app-shell mechanics (`pt-safe`/`pb-safe`/`pl-safe`/`pr-safe`,
   `--app-titlebar-*` topbar geometry, the `.wco` variant, `.drag-region`) —
   see [DESIGN.md](DESIGN.md#app-shell).
-- **39 components** and one hook, all `base-nova` style and Base UI-based, pulled the same
+- **40 components** and one hook, all `base-nova` style and Base UI-based, pulled the same
   way as `theme`/`button` above:
   - *Controls* — `button`, `input`, `textarea`, `select`, `checkbox`,
     `switch`, `slider`, `label`
   - *Surfaces and overlays* — `card`, `dialog`, `alert-dialog`, `sheet`,
     `drawer`, `popover`, `dropdown-menu`, `collapsible`, `scroll-area`
   - *Display and feedback* — `badge`, `avatar`, `progress`, `skeleton`,
-    `separator`, `tabs`, `sonner`, `spinner`, `empty`, `tooltip`
+    `separator`, `tabs`, `table`, `sonner`, `spinner`, `empty`, `tooltip`
   - *Conversation* — `message`, `bubble`, `message-scroller`, `marker`,
     `attachment`
   - *Navigation and lists* — `sidebar` (with the `use-mobile` hook), `item`
@@ -322,6 +322,6 @@ iterates against a running app, and this repo has none.
   `tooltip` and `sidebar` need a `TooltipProvider` at the app root.
   `message-scroller` adds the `@shadcn/react` package.
 
-  The set is bounded to what the consuming apps actually use — 39 of shadcn's
+  The set is bounded to what the consuming apps actually use — 40 of shadcn's
   ~65 — rather than shipping the full catalogue. Adding another is mechanical,
   so ask rather than vendoring a copy locally.
