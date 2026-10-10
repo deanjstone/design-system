@@ -57,3 +57,11 @@ _Avoid_: Generic link, external link
 **Plain Link**:
 A link whose Link Kind is None, so it renders as an ordinary link rather than a pill.
 _Avoid_: Fallback pill, unstyled link
+
+**Enrichment**:
+Optional extra detail, such as an avatar or a canonical name, that the host app adds to a Link Pill after it has already rendered. A pill is complete without it.
+_Avoid_: Resolution, hydration, lookup
+
+**Enricher**:
+The host app's source of Enrichment for Mentions. The design system defines its shape but never supplies one.
+_Avoid_: Resolver, provider, loader
