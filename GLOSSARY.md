@@ -63,5 +63,5 @@ Optional extra detail, such as an avatar or a canonical name, that the host app 
 _Avoid_: Resolution, hydration, lookup
 
 **Enricher**:
-The host app's source of Enrichment for Mentions. The design system defines its shape but never supplies one.
+The host app's source of Enrichment for Mentions and URL Links. The design system defines its shape but never supplies one.
 _Avoid_: Resolver, provider, loader
