@@ -1,7 +1,7 @@
 # design-system
 
 Shared shadcn/ui component registry and design tokens, consumed by `myargus`,
-`atto1`, `budget`, and `erto-apps` via the shadcn CLI. This repo is not a
+`atto1`, and `argus` via the shadcn CLI. This repo is not a
 buildable package — it's a plain GitHub-hosted registry: a `registry.json`
 manifest plus the source files it points to. The shadcn CLI reads
 `registry.json` directly from GitHub, resolves the referenced files, and
