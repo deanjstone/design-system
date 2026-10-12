@@ -22,6 +22,10 @@ _Avoid_: Reference, tag, @-link
 The type of thing a Mention points at: an Agent, a Session, a Note, a Memory, or a Person.
 _Avoid_: Entity, subject
 
+**Mention Id**:
+The existing natural key that names one Mention Target: an Agent's name, a Session's thread id, a Note's vault path, a Memory's name, or a Person's contact name. Agents copy it from tool output and never invent it.
+_Avoid_: Handle, reference id, UUID
+
 **Agent**:
 A named, persistent agent identity, such as Tex.
 _Avoid_: Bot, assistant
