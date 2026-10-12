@@ -2,7 +2,7 @@
 
 ## Project purpose
 
-`deanjstone/design-system` — shared shadcn/ui component registry and design tokens, consumed by `myargus`, `atto1`, `budget`, and `erto-apps` via the shadcn CLI. Not a buildable package: a plain GitHub-hosted `registry.json` manifest plus the source files it points to. See `README.md` for the consumption method and known gotchas.
+`deanjstone/design-system` — shared shadcn/ui component registry and design tokens, consumed by `myargus`, `atto1`, and `argus` via the shadcn CLI. Not a buildable package: a plain GitHub-hosted `registry.json` manifest plus the source files it points to. See `README.md` for the consumption method and known gotchas.
 
 ## Key architecture notes
 
@@ -26,7 +26,7 @@ Default canonical vocabulary (`needs-triage`, `needs-info`, `ready-for-agent`, `
 
 ### Domain docs
 
-Single-context — `CONTEXT.md` + `docs/adr/` at the repo root. See `docs/agents/domain.md`.
+Single-context — `docs/adr/` at the repo root, plus `GLOSSARY.md`. See `docs/agents/domain.md`.
 
 ## Status
 
