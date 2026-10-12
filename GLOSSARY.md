@@ -7,7 +7,7 @@ Shared component registry and design tokens for the myargus and slate-reader sur
 ### Link pills
 
 **Link Pill**:
-A link rendered inline as a compact, tinted chip that shows what kind of thing it points at.
+A link rendered so it shows what kind of thing it points at: a tinted chip in chat, and a kind glyph with a tinted underline in prose.
 _Avoid_: Chip, badge, tag, link card
 
 **Link Kind**:
@@ -65,3 +65,7 @@ _Avoid_: Resolution, hydration, lookup
 **Enricher**:
 The host app's source of Enrichment for Mentions and URL Links. The design system defines its shape but never supplies one.
 _Avoid_: Resolver, provider, loader
+
+**Kind Tag**:
+A short text prefix naming a link's kind, such as "PDF" or "Map", shown where a Link Pill can't be drawn, for example on the iPad 2.
+_Avoid_: Label, badge, prefix icon
