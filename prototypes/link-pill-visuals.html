@@ -1,0 +1,206 @@
+<!doctype html>
+<!--
+  PROTOTYPE — throwaway. Lives only on branch prototype/link-pill-visuals, never main.
+  Question (design-system#76): what does a Link Pill look like in prose, in chat, and on Safari 9?
+  Plan: three structurally different pill treatments, switchable via ?variant=A|B|C and the bottom bar,
+  each shown in an article, a streaming chat, and the iPad 2 fallback. Toggles: enrichment, dark mode.
+  Sub-shape B (standalone page): the pill spans myargus reader, myargus chat and slate-reader, so no single host page exists.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PROTOTYPE · Link Pill visuals</title>
+<style>
+  :root {
+    --bg: #ffffff; --fg: #1a1a1a; --muted: #6b6b6b; --border: #e5e5e5; --card: #fafafa; --bubble: #f2f2f5;
+    --t-mention: #6d28d9; --t-file: #0369a1; --t-location: #0e7490; --t-url: #525252;
+    --accent: #4338ca;
+  }
+  .dark {
+    --bg: #0c0c14; --fg: #ececf1; --muted: #9a9ab0; --border: #2a2a3d; --card: #13131e; --bubble: #1a1a28;
+    --t-mention: #a78bfa; --t-file: #38bdf8; --t-location: #2dd4bf; --t-url: #a3a3a3;
+    --accent: #818cf8;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--fg); font: 15px/1.6 "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif; }
+  main { max-width: 1180px; margin: 0 auto; padding: 24px 20px 120px; }
+  h1 { font-size: 18px; margin: 0 0 4px; }
+  .sub { color: var(--muted); font-size: 13px; margin: 0 0 20px; }
+  .toggles { display: flex; gap: 16px; font-size: 13px; color: var(--muted); margin-bottom: 20px; flex-wrap: wrap; }
+  .grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 20px; }
+  @media (max-width: 860px) { .grid { grid-template-columns: 1fr; } }
+  section { border: 1px solid var(--border); border-radius: 10px; background: var(--card); padding: 16px 18px; }
+  section h2 { font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin: 0 0 10px; font-weight: 600; }
+  .article p { font-size: 16px; line-height: 1.75; margin: 0 0 12px; }
+  .article a.prose { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
+  .chat .msg { background: var(--bubble); border-radius: 12px; padding: 10px 12px; margin: 0 0 10px; font-size: 14px; }
+  .chat .who { font-size: 11px; color: var(--muted); margin-bottom: 2px; }
+  .chat .narrow { max-width: 260px; }
+  .caret { display: inline-block; width: 7px; height: 15px; background: var(--fg); vertical-align: -2px; animation: blink 1s steps(1) infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+  .full { grid-column: 1 / -1; }
+  .ipad { font-family: Helvetica, Arial, sans-serif; background: #fff; color: #222; border: 8px solid #333; border-radius: 18px; padding: 14px 18px; }
+  .ipad a { color: #0645ad; }
+  .note { font-size: 12px; color: var(--muted); margin-top: 8px; }
+  svg.i { width: 1em; height: 1em; vertical-align: -0.125em; flex: none; }
+
+  /* ---------- Variant A: tinted chip ---------- */
+  .vA .pill { display: inline-flex; align-items: center; gap: .3em; padding: 0 .5em 0 .35em; border-radius: 999px;
+    font-size: .88em; line-height: 1.55; vertical-align: baseline; text-decoration: none; white-space: nowrap; max-width: 22ch;
+    color: var(--tint); background: color-mix(in srgb, var(--tint) 13%, transparent); border: 1px solid color-mix(in srgb, var(--tint) 28%, transparent); }
+  .vA .pill .lbl { overflow: hidden; text-overflow: ellipsis; }
+  .vA .pill:hover { background: color-mix(in srgb, var(--tint) 22%, transparent); }
+  .vA .pill .av { width: 1.2em; height: 1.2em; border-radius: 50%; display: inline-grid; place-items: center; font-size: .7em; font-weight: 700; color: #fff; background: var(--tint); }
+
+  /* ---------- Variant B: glyph link (no chip) ---------- */
+  .vB .pill { color: var(--fg); text-decoration: underline; text-decoration-color: var(--tint); text-decoration-thickness: 2px; text-underline-offset: 3px; }
+  .vB .pill .g { color: var(--tint); margin-right: .2em; }
+  .vB .pill .av { width: 1.05em; height: 1.05em; border-radius: 50%; display: inline-grid; place-items: center; font-size: .62em; font-weight: 700; color: #fff; background: var(--tint); margin-right: .25em; vertical-align: -0.12em; }
+  .vB .pill:hover { background: color-mix(in srgb, var(--tint) 12%, transparent); }
+
+  /* ---------- Variant C: kind-labelled token ---------- */
+  .vC .pill { display: inline-flex; align-items: stretch; border-radius: 4px; overflow: hidden; font-size: .82em; line-height: 1.6; vertical-align: baseline;
+    text-decoration: none; border: 1px solid color-mix(in srgb, var(--tint) 45%, transparent); white-space: nowrap; max-width: 26ch; }
+  .vC .pill .k { background: var(--tint); color: #fff; padding: 0 .45em; font: 600 .78em/1.95 ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .04em; text-transform: uppercase; display: inline-flex; align-items: center; gap: .3em; }
+  .vC .pill .lbl { color: var(--fg); padding: 0 .5em; overflow: hidden; text-overflow: ellipsis; }
+  .vC .pill .av { width: 1.15em; height: 1.15em; border-radius: 3px; display: inline-grid; place-items: center; font-size: .9em; color: var(--tint); background: #fff; }
+
+  .k-mention { --tint: var(--t-mention); } .k-file { --tint: var(--t-file); } .k-location { --tint: var(--t-location); } .k-url { --tint: var(--t-url); }
+
+  /* switcher */
+  .switcher { position: fixed; left: 50%; bottom: 18px; transform: translateX(-50%); display: flex; align-items: center; gap: 4px;
+    background: #111; color: #fff; border-radius: 999px; padding: 6px; box-shadow: 0 6px 24px rgba(0,0,0,.35); font: 600 13px system-ui, sans-serif; z-index: 10; }
+  .switcher button { background: #2a2a2a; color: #fff; border: 0; border-radius: 999px; width: 32px; height: 32px; cursor: pointer; font-size: 16px; }
+  .switcher span { padding: 0 12px; min-width: 210px; text-align: center; }
+</style>
+</head>
+<body>
+<main>
+  <h1>PROTOTYPE · Link Pill visuals</h1>
+  <p class="sub">design-system#76 · Flip variants with ← → or the bar. Pills render from <code>classify(href)</code> + link text; enrichment upgrades them later.</p>
+  <div class="toggles">
+    <label><input type="checkbox" id="enriched" checked> Enrichment arrived (avatars / canonical names)</label>
+    <label><input type="checkbox" id="dark"> Dark mode</label>
+  </div>
+
+  <div class="grid" id="stage">
+    <section class="article">
+      <h2>myargus reader · article prose (URL Links stay prose links)</h2>
+      <p>The survey covered 412 households, and as <a class="prose" href="#">the earlier study</a> showed, response rates fell sharply after the second wave. The full results are in <span data-pill="file" data-label="survey-results-2026.pdf"></span>, with the raw responses as <span data-pill="file" data-label="responses.csv"></span>.</p>
+      <p>Interviews were held at <span data-pill="location" data-label="Fitzroy Town Hall"></span> over three weekends. A longer write-up appears in <a class="prose" href="#">the journal version</a>, which also links the <span data-pill="file" data-label="appendix-b-methodology-and-weighting-procedures.pdf"></span>.</p>
+    </section>
+
+    <section class="chat">
+      <h2>myargus · agent chat (all classified kinds pill)</h2>
+      <div class="msg"><div class="who">Tex</div>Handed this to <span data-pill="mention" data-target="agent" data-label="scribe" data-canon="Scribe"></span> in <span data-pill="mention" data-target="session" data-label="abc123" data-canon="Inbox triage · Oct 11"></span>. It follows <span data-pill="mention" data-target="memory" data-label="preference_branch_pr"></span> and the notes in <span data-pill="mention" data-target="note" data-label="PROJECTS/Stockade"></span>.</div>
+      <div class="msg"><div class="who">Tex</div>Jane's reply is on <span data-pill="url" data-label="github.com/deanjstone/budget/pull/88"></span>. Ping <span data-pill="mention" data-target="person" data-label="jane" data-canon="Jane Okafor"></span> if it stalls.</div>
+      <div class="msg narrow"><div class="who">Tex · narrow bubble (wrapping)</div>See <span data-pill="file" data-label="quarterly-infrastructure-cost-breakdown-final-v3.xlsx"></span> and <span data-pill="mention" data-target="session" data-label="def456" data-canon="CI on homelab — runner queue investigation"></span> for context.</div>
+      <div class="msg"><div class="who">Tex · streaming</div>Next I'll open the ticket with Tex<span class="caret"></span></div>
+      <p class="note">Streaming row: the half-typed <code>[Tex](mention:age</code> renders as plain text "Tex" until the href completes (decided in #75).</p>
+    </section>
+
+    <section class="full">
+      <h2>slate-reader · iPad 2 (Safari 9.1) fallback — server HTML, no color-mix / OKLCH / grid gap</h2>
+      <div class="ipad" id="ipad"></div>
+      <p class="note">What the legacy device gets for this variant. Rendered with Safari-9-safe CSS only (hex colours, inline-block, no flex gap).</p>
+    </section>
+  </div>
+</main>
+
+<div class="switcher" id="switcher">
+  <button id="prev" aria-label="Previous variant">←</button>
+  <span id="label"></span>
+  <button id="next" aria-label="Next variant">→</button>
+</div>
+
+<script>
+  const VARIANTS = { A: 'Tinted chip', B: 'Glyph link (no chip)', C: 'Kind-labelled token' };
+  const KEYS = Object.keys(VARIANTS);
+  const ICONS = {
+    agent: '<path d="M8 1.5a2 2 0 0 1 2 2V4h1.5A1.5 1.5 0 0 1 13 5.5v6A1.5 1.5 0 0 1 11.5 13h-7A1.5 1.5 0 0 1 3 11.5v-6A1.5 1.5 0 0 1 4.5 4H6v-.5a2 2 0 0 1 2-2ZM6 7.5a1 1 0 1 0 0 2 1 1 0 0 0 0-2Zm4 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2Z"/>',
+    session: '<path d="M2 3.5A1.5 1.5 0 0 1 3.5 2h9A1.5 1.5 0 0 1 14 3.5v7a1.5 1.5 0 0 1-1.5 1.5H6l-3 2.5V12h0A1.5 1.5 0 0 1 2 10.5v-7Z"/>',
+    note: '<path d="M4 1.5h5.5L13 5v9.5H4v-13Zm5 .8V5.5h3.2"/>',
+    memory: '<path d="M8 1.5c-2.5 0-4.5 1.8-4.5 4.2 0 1.6.9 2.8 2 3.6V12h5V9.3c1.1-.8 2-2 2-3.6 0-2.4-2-4.2-4.5-4.2ZM6 13.5h4V15H6z"/>',
+    person: '<path d="M8 2a3 3 0 1 1 0 6 3 3 0 0 1 0-6Zm-5 12c0-2.8 2.2-4.5 5-4.5s5 1.7 5 4.5H3Z"/>',
+    file: '<path d="M4 1.5h5.5L13 5v9.5H4v-13Z"/>',
+    location: '<path d="M8 1.5a4.5 4.5 0 0 1 4.5 4.5c0 3.2-4.5 8.5-4.5 8.5S3.5 9.2 3.5 6A4.5 4.5 0 0 1 8 1.5Zm0 2.8a1.7 1.7 0 1 0 0 3.4 1.7 1.7 0 0 0 0-3.4Z"/>',
+    url: '<path d="M6.5 9.5l3-3M7 4.5l1-1a2.8 2.8 0 0 1 4 4l-1 1M9 11.5l-1 1a2.8 2.8 0 0 1-4-4l1-1" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>'
+  };
+  const icon = key => `<svg class="i" viewBox="0 0 16 16" fill="currentColor">${ICONS[key]}</svg>`;
+  const KIND_WORD = { mention: '@', file: 'file', location: 'map', url: 'link' };
+
+  function pillParts(element, enriched) {
+    const kind = element.dataset.pill;
+    const target = element.dataset.target;
+    const label = enriched && element.dataset.canon ? element.dataset.canon : element.dataset.label;
+    const iconKey = kind === 'mention' ? target : kind;
+    const showAvatar = enriched && kind === 'mention' && (target === 'agent' || target === 'person');
+    const ext = kind === 'file' ? (element.dataset.label.split('.').pop() || '').toUpperCase() : '';
+    const favicon = enriched && kind === 'url';
+    return { kind, target, label, iconKey, showAvatar, ext, favicon };
+  }
+
+  function renderPill(element, variant, enriched) {
+    const p = pillParts(element, enriched);
+    const avatar = `<span class="av">${p.label.charAt(0).toUpperCase()}</span>`;
+    const glyph = p.showAvatar ? avatar : p.favicon ? `<span class="av" style="background:#24292f">G</span>` : icon(p.iconKey);
+    let html;
+    if (variant === 'A') {
+      html = `${glyph}<span class="lbl">${p.label}</span>`;
+    } else if (variant === 'B') {
+      html = p.showAvatar || p.favicon ? `${glyph}${p.label}` : `<span class="g">${icon(p.iconKey)}</span>${p.label}`;
+    } else {
+      const kindText = p.kind === 'mention' ? p.target : p.kind === 'file' ? p.ext : KIND_WORD[p.kind];
+      html = `<span class="k">${p.showAvatar ? avatar : icon(p.iconKey)}${kindText}</span><span class="lbl">${p.label}</span>`;
+    }
+    element.innerHTML = `<a class="pill k-${p.kind}" href="#" title="${p.label}">${html}</a>`;
+  }
+
+  function renderIpad(variant, enriched) {
+    const sample = [
+      { kind: 'file', label: 'survey-results-2026.pdf' },
+      { kind: 'location', label: 'Fitzroy Town Hall' },
+      { kind: 'mention', target: 'note', label: 'PROJECTS/Stockade' }
+    ];
+    const prefix = { A: { file: '[PDF] ', location: '📍 ', mention: '◇ ' }, B: { file: '↓ ', location: '⌖ ', mention: '◇ ' }, C: { file: 'PDF · ', location: 'MAP · ', mention: 'NOTE · ' } }[variant];
+    const links = sample.map(item => `<a href="#">${prefix[item.kind]}${item.label}</a>`);
+    document.getElementById('ipad').innerHTML =
+      `<p style="margin:0 0 8px">The full results are in ${links[0]}. Interviews were held at ${links[1]}; see ${links[2]}.</p>` +
+      `<p style="margin:0;font-size:12px;color:#777">Plain links with a text prefix in this variant's language. No chip: Safari 9 lacks color-mix, so tinting would need per-kind hex classes.</p>`;
+  }
+
+  function render() {
+    const params = new URLSearchParams(location.search);
+    const variant = KEYS.includes(params.get('variant')) ? params.get('variant') : 'A';
+    const enriched = document.getElementById('enriched').checked;
+    const stage = document.getElementById('stage');
+    stage.className = `grid v${variant}`;
+    document.querySelectorAll('[data-pill]').forEach(element => renderPill(element, variant, enriched));
+    renderIpad(variant, enriched);
+    document.getElementById('label').textContent = `${variant} (${VARIANTS[variant]})`;
+    document.body.classList.toggle('dark', document.getElementById('dark').checked);
+  }
+
+  function step(direction) {
+    const params = new URLSearchParams(location.search);
+    const current = KEYS.indexOf(params.get('variant') ?? 'A');
+    const next = KEYS[(Math.max(current, 0) + direction + KEYS.length) % KEYS.length];
+    params.set('variant', next);
+    history.replaceState(null, '', `?${params}`);
+    render();
+  }
+
+  document.getElementById('prev').addEventListener('click', () => step(-1));
+  document.getElementById('next').addEventListener('click', () => step(1));
+  document.getElementById('enriched').addEventListener('change', render);
+  document.getElementById('dark').addEventListener('change', render);
+  document.addEventListener('keydown', event => {
+    if (event.target.closest('input, textarea, [contenteditable]')) return;
+    if (event.key === 'ArrowLeft') step(-1);
+    if (event.key === 'ArrowRight') step(1);
+  });
+  render();
+</script>
+</body>
+</html>
