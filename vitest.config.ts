@@ -10,6 +10,9 @@ export default defineConfig({
   resolve: {
     alias: {
       "@/lib/utils": fileURLToPath(new URL("./registry/lib/utils.ts", import.meta.url)),
+      "@/lib/link-pill-core": fileURLToPath(
+        new URL("./registry/lib/link-pill-core.ts", import.meta.url),
+      ),
       "@/components/ui": fileURLToPath(new URL("./registry/base-nova/ui", import.meta.url)),
     },
   },
