@@ -13,7 +13,8 @@ copies them into the consuming project. There's no publish step.
 registry.json              root manifest — one entry per distributable item
 registry/
   lib/utils.ts              cn() helper (clsx + tailwind-merge)
-  base-nova/ui/               39 base-nova style components (Base UI)
+  lib/link-pill-*.ts, .css  LinkPill core, HTML shell and styles
+  base-nova/ui/               40 base-nova style components (Base UI, plus link-pill)
   base-nova/hooks/            use-mobile (pulled by sidebar)
 r/                         generated per-item output — what the r/ alias resolves
 theme/tokens.css            same tokens as the "theme" item, as plain CSS
@@ -142,8 +143,8 @@ registry writes them as unversioned addresses
 dependencies. shadcn's docs say: "Refs are not inherited across
 dependencies. If a dependency should be pinned, include its own ref."
 ([GitHub Registries](https://ui.shadcn.com/docs/registry/github), read
-2026-10-08). Only `theme`, `utils` and `use-mobile` have no registry
-dependencies. Almost every other item depends on at least `utils`.
+2026-10-08). Only `theme`, `utils`, `use-mobile`, `link-pill-core` and `link-pill-css` have no
+registry dependencies. Almost every other item depends on at least `utils`.
 
 **Option 1: a `#ref` on the item address (preferred).** shadcn 4.x accepts
 a branch, tag or commit SHA after `#`:
@@ -221,6 +222,56 @@ registry's (design-system#57).
 `registry.json` or a source file changes. CI rebuilds it and fails on any
 difference, because a stale `r/` would serve a tag's consumers older code
 than the tag claims.
+
+## LinkPill
+
+Renders a Markdown link as a pill that shows what it points at. Four items,
+no npm dependencies (see `GLOSSARY.md` for the terms and
+[ADR-0003](docs/adr/0003-scheme-first-link-kind-detection.md) for how the
+kind is detected):
+
+| Item | Use it for |
+|---|---|
+| `link-pill-core` | `classify(href)`, per-kind attributes and the `Enricher` type. Pure and ES5-safe. |
+| `link-pill-html` | `renderLinkPill(link, options) → string` for server-side renderers. Depends on the core only. |
+| `link-pill` | The React shell: `LinkPill`, plus `LinkPillEnricherProvider`. |
+| `link-pill-css` | The one stylesheet both shells use. Installs to `link-pill.css` at the project root (move it where you like) — import it once. |
+
+```bash
+npx shadcn add deanjstone/design-system/link-pill        # React
+npx shadcn add deanjstone/design-system/link-pill-html   # HTML strings
+```
+
+```tsx
+// React: use it as the Markdown renderer's anchor component.
+<LinkPillEnricherProvider enrich={enrich}>
+  <Markdown components={{ a: (props) => <LinkPill variant="chip" {...props} /> }} />
+</LinkPillEnricherProvider>
+```
+
+```ts
+// HTML, e.g. a marked renderer; `legacy: true` for Safari 9.
+renderLinkPill({ href, label: text }, { variant: "inline", legacy: false })
+```
+
+- `variant` is `"inline"` (prose: glyph plus tinted underline, wraps) or
+  `"chip"` (chat: tinted chip, label cut at about 24ch by CSS; the full label
+  stays in the DOM as the accessible name and `title`).
+- A pill renders at once from the href and link text. The optional
+  **Enricher** (`(link) => Promise<{ label?, avatarUrl?, title? } | null>`)
+  upgrades Mentions and URL Links afterwards; results are cached per href, and
+  a `null` or a failure leaves the pill as rendered (a failure is logged with
+  `console.error`). The HTML shell is synchronous, so it takes an
+  already-resolved `enrichment` option instead.
+- A chip is followed by a word joiner (U+2060) so the punctuation after it
+  cannot be stranded on its own line.
+- Hrefs of kind None render as an ordinary `<a>`. A `javascript:`, `data:` or
+  `vbscript:` href, and the streaming placeholder `streamdown:incomplete-link`,
+  render the label as text. The HTML shell escapes every label and attribute,
+  but still sanitise its output after rendering.
+- Link kinds that need allowlisting in a sanitiser: schemes `geo:` and
+  `mention:`, plus the `link-pill*` classes, the `svg`, `path`, `img` and `span`
+  elements and their `viewBox`, `d`, `aria-hidden` and `focusable` attributes.
 
 ## Adding a new component
 

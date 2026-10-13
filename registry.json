@@ -1072,6 +1072,55 @@
           "type": "registry:ui"
         }
       ]
+    },
+    {
+      "name": "link-pill-core",
+      "type": "registry:lib",
+      "files": [
+        {
+          "path": "registry/lib/link-pill-core.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "link-pill-css",
+      "type": "registry:file",
+      "files": [
+        {
+          "path": "registry/lib/link-pill.css",
+          "type": "registry:file",
+          "target": "~/link-pill.css"
+        }
+      ]
+    },
+    {
+      "name": "link-pill-html",
+      "type": "registry:lib",
+      "registryDependencies": [
+        "deanjstone/design-system/link-pill-core",
+        "deanjstone/design-system/link-pill-css"
+      ],
+      "files": [
+        {
+          "path": "registry/lib/link-pill-html.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "link-pill",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "deanjstone/design-system/link-pill-core",
+        "deanjstone/design-system/link-pill-css"
+      ],
+      "files": [
+        {
+          "path": "registry/base-nova/ui/link-pill.tsx",
+          "type": "registry:ui"
+        }
+      ]
     }
   ]
 }
