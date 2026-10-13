@@ -1,3 +1,10 @@
+# [2.7.0](https://github.com/deanjstone/design-system/compare/v2.6.0...v2.7.0) (2026-10-13)
+
+
+### Features
+
+* add LinkPill component for markdown links ([#88](https://github.com/deanjstone/design-system/issues/88)) ([bb3c03d](https://github.com/deanjstone/design-system/commit/bb3c03d48673728d5d4fc9941ccacdf9f6064d5c)), closes [#69](https://github.com/deanjstone/design-system/issues/69)
+
 # [2.6.0](https://github.com/deanjstone/design-system/compare/v2.5.3...v2.6.0) (2026-10-09)
 
 
