@@ -3,7 +3,7 @@
   "version": "2.7.0",
   "private": true,
   "description": "Shared shadcn/ui component registry and design tokens consumed by myargus, atto1, and argus via the shadcn CLI",
-  "packageManager": "pnpm@11.9.0",
+  "packageManager": "pnpm@12.13.0",
   "scripts": {
     "test": "vitest run"
   },
