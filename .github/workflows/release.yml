@@ -12,7 +12,7 @@ permissions:
 jobs:
   release:
     name: Release
-    runs-on: ubuntu-latest
+    runs-on: ${{ fromJSON(vars.CI_RUNS_ON || '"ubuntu-latest"') }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -20,6 +20,11 @@ jobs:
           persist-credentials: false
 
       - uses: pnpm/action-setup@v4
+        if: runner.environment == 'github-hosted'
+
+      - name: Use the host pnpm (self-hosted)
+        if: runner.environment != 'github-hosted'
+        uses: ./.github/actions/host-pnpm
 
       - uses: actions/setup-node@v4
         with:
