@@ -1,3 +1,10 @@
+# [2.8.0](https://github.com/deanjstone/design-system/compare/v2.7.0...v2.8.0) (2026-10-16)
+
+
+### Features
+
+* add breadcrumb and command registry items ([#96](https://github.com/deanjstone/design-system/issues/96)) ([07abda4](https://github.com/deanjstone/design-system/commit/07abda4c329595bf27daccb57398ff26b1e956b3)), closes [#94](https://github.com/deanjstone/design-system/issues/94)
+
 # [2.7.0](https://github.com/deanjstone/design-system/compare/v2.6.0...v2.7.0) (2026-10-13)
 
 
