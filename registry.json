@@ -1121,6 +1121,42 @@
           "type": "registry:ui"
         }
       ]
+    },
+    {
+      "name": "breadcrumb",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "deanjstone/design-system/utils"
+      ],
+      "dependencies": [
+        "@base-ui/react",
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "registry/base-nova/ui/breadcrumb.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "command",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "deanjstone/design-system/utils",
+        "deanjstone/design-system/dialog",
+        "deanjstone/design-system/input-group"
+      ],
+      "dependencies": [
+        "cmdk",
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "registry/base-nova/ui/command.tsx",
+          "type": "registry:ui"
+        }
+      ]
     }
   ]
 }

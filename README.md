@@ -41,7 +41,7 @@ registry.json              root manifest — one entry per distributable item
 registry/
   lib/utils.ts              cn() helper (clsx + tailwind-merge)
   lib/link-pill-*.ts, .css  LinkPill core, HTML shell and styles
-  base-nova/ui/               40 base-nova style components (Base UI, plus link-pill)
+  base-nova/ui/               42 base-nova style components (Base UI, plus link-pill)
   base-nova/hooks/            use-mobile (pulled by sidebar)
 r/                         generated per-item output — what the r/ alias resolves
 theme/tokens.css            same tokens as the "theme" item, as plain CSS
@@ -383,7 +383,7 @@ iterates against a running app, and this repo has none.
   PWA/Electron app-shell mechanics (`pt-safe`/`pb-safe`/`pl-safe`/`pr-safe`,
   `--app-titlebar-*` topbar geometry, the `.wco` variant, `.drag-region`) —
   see [DESIGN.md](DESIGN.md#app-shell).
-- **40 components** and one hook, all `base-nova` style and Base UI-based, pulled the same
+- **42 components** and one hook, all `base-nova` style and Base UI-based, pulled the same
   way as `theme`/`button` above:
   - *Controls* — `button`, `input`, `textarea`, `select`, `checkbox`,
     `switch`, `slider`, `label`
@@ -393,13 +393,14 @@ iterates against a running app, and this repo has none.
     `separator`, `tabs`, `table`, `sonner`, `spinner`, `empty`, `tooltip`
   - *Conversation* — `message`, `bubble`, `message-scroller`, `marker`,
     `attachment`
-  - *Navigation and lists* — `sidebar` (with the `use-mobile` hook), `item`
+  - *Navigation and lists* — `sidebar` (with the `use-mobile` hook), `item`,
+    `breadcrumb`, `command`
   - *Forms and grouping* — `field`, `input-group`, `toggle`, `toggle-group`,
     `button-group`
 
   `tooltip` and `sidebar` need a `TooltipProvider` at the app root.
-  `message-scroller` adds the `@shadcn/react` package.
+  `message-scroller` adds the `@shadcn/react` package; `command` adds `cmdk`.
 
-  The set is bounded to what the consuming apps actually use — 40 of shadcn's
+  The set is bounded to what the consuming apps actually use — 42 of shadcn's
   ~65 — rather than shipping the full catalogue. Adding another is mechanical,
   so ask rather than vendoring a copy locally.
