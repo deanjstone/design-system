@@ -1,6 +1,6 @@
 ---
 name: design-system
-description: An achromatic shadcn/ui token layer four apps tint with their own identity.
+description: An achromatic shadcn/ui token layer the consuming apps tint with their own identity.
 colors:
   background: "oklch(1 0 0)"
   foreground: "oklch(0.145 0 0)"
@@ -158,10 +158,10 @@ components:
 
 This is a foundation, not a face. Every core token in the palette is
 chroma-zero — literally hueless — and that is the whole thesis. The registry
-is consumed by four separate applications (`myargus`, `atto1`, `budget`,
-`erto-apps`), and identity is something each of them adds on top, never
+is consumed by several separate applications (see the README's Consumers
+table), and identity is something each of them adds on top, never
 something this layer imposes from below. A shared system that arrived with
-opinions about brand colour would force four apps to look like each other.
+opinions about brand colour would force every app to look like the others.
 
 What it does own is rhythm and mechanics: a 32px canonical control height, a
 single radius variable everything else derives from, a consistent focus
@@ -651,7 +651,7 @@ demand can pull components in rather than the registry pushing them out.
 ### Don't:
 
 - **Don't** introduce a brand hue into the core palette. Chroma-zero is the
-  system's central commitment, and four consumers depend on supplying their
+  system's central commitment, and every consumer depends on supplying its
   own identity.
 - **Don't** treat the `surface-*` ramp as a light-mode tool. It holds the same
   values in both modes and only makes sense under an always-dark consumer.
@@ -659,7 +659,7 @@ demand can pull components in rather than the registry pushing them out.
   pick the mechanism that belongs to the mode.
 - **Don't** reach for `shadow-lg` outside an overlay.
 - **Don't** add a font-family token casually. The absence is an unresolved
-  gap affecting four applications, not a slot to fill in passing.
+  gap affecting every consuming application, not a slot to fill in passing.
 - **Don't** assume choosing a gradient accent changes anything else. The
   gradients are additive utilities and leave the flat tokens untouched.
 - **Don't** reach for a width breakpoint to solve a touch or hover problem.

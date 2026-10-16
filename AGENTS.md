@@ -2,7 +2,7 @@
 
 ## Project purpose
 
-`deanjstone/design-system` — shared shadcn/ui component registry and design tokens, consumed by `myargus`, `atto1`, and `argus` via the shadcn CLI. Not a buildable package: a plain GitHub-hosted `registry.json` manifest plus the source files it points to. See `README.md` for the consumption method and known gotchas.
+`deanjstone/design-system` — shared shadcn/ui component registry and design tokens, consumed by `myargus`, `atto1`, `argus`, `argusde` and `homelab` via the shadcn CLI (`slate-reader` vendors LinkPill; `budget` is migrating). The verified consumer list, with pins, is in `README.md` § Consumers. Not a buildable package: a plain GitHub-hosted `registry.json` manifest plus the source files it points to. See `README.md` for the consumption method and known gotchas.
 
 ## Key architecture notes
 

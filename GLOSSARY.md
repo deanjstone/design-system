@@ -1,6 +1,6 @@
 # design-system
 
-Shared component registry and design tokens for the myargus and slate-reader surfaces.
+Shared component registry and design tokens for the myargus and slate-reader surfaces; the full consumer list is in `README.md`.
 
 ## Language
 
