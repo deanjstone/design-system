@@ -1,11 +1,38 @@
 # design-system
 
 Shared shadcn/ui component registry and design tokens, consumed by `myargus`,
-`atto1`, and `argus` via the shadcn CLI. This repo is not a
+`atto1`, `argus`, `argusde` and `homelab` via the shadcn CLI (`slate-reader`
+vendors LinkPill; `budget` is migrating — see [Consumers](#consumers)). This
+repo is not a
 buildable package — it's a plain GitHub-hosted registry: a `registry.json`
 manifest plus the source files it points to. The shadcn CLI reads
 `registry.json` directly from GitHub, resolves the referenced files, and
 copies them into the consuming project. There's no publish step.
+
+## Consumers
+
+This list is how a registry change is checked for downstream breakage, so keep
+it true. Pins are the `@design-system` alias version in each repo's
+`components.json` on `main`, read on 2026-10-16. The alias is where the next
+`add` will pull from; the code already in the repo is whatever was last pulled.
+
+| Consumer | Path | Pin | Status |
+|---|---|---|---|
+| `argus` | `apps/email` | v2.5.3 | consuming |
+| `argus` | `apps/notice-board-web` | v2.5.3 | consuming |
+| `argus` | `apps/watchtower` | v2.7.0 | consuming ([argus#674](https://github.com/deanjstone/argus/issues/674)) |
+| `argusde` | repo root | v2.7.0 | consuming ([argusde#144](https://github.com/deanjstone/argusde/issues/144)) |
+| `homelab` | `services/quick-capture/web` | v2.6.0 | consuming |
+| `atto1` | repo root | v2.6.0 | consuming |
+| `myargus` | `apps/github`, `apps/knowledge`, `apps/reader` | v2.7.0 | consuming ([myargus#296](https://github.com/deanjstone/myargus/issues/296)) |
+| `myargus` | `apps/shell` | v2.4.1 | consuming |
+| `myargus` | `apps/stockade` | none yet | **pending**: no `components.json` ([myargus#295](https://github.com/deanjstone/myargus/issues/295), PR #301 open) |
+| `slate-reader` | `apps/server` | v2.7.0 (vendored) | **LinkPill only**: `link-pill-core` and `link-pill-html` are copied in; no `@design-system` alias ([slate-reader#17](https://github.com/deanjstone/slate-reader/issues/17)) |
+| `budget` | `web` | none yet | **pending**: forked `components/ui`, no `components.json` ([budget#271](https://github.com/deanjstone/budget/issues/271)) |
+
+`myargus` is partly migrated until stockade lands. Move a pending row to
+consuming only once a `components.json` with the alias is on that repo's
+`main`.
 
 ## Structure
 

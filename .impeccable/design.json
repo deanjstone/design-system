@@ -371,7 +371,7 @@
   ],
   "narrative": {
     "northStar": "The Neutral Substrate",
-    "overview": "This is a foundation, not a face. Every core token in the palette is chroma-zero - literally hueless - and that is the whole thesis. The registry is consumed by four separate applications (myargus, atto1, budget, erto-apps), and identity is something each of them adds on top, never something this layer imposes from below. A shared system that arrived with opinions about brand colour would force four apps to look like each other.\n\nWhat it does own is rhythm and mechanics: a 32px canonical control height, a single radius variable everything else derives from, a consistent 3px focus ring, and hover states that shift opacity rather than swapping colour. The restraint is not minimalism for its own sake - it is what makes the layer safe to share. Colour is a guest here, not a resident.\n\nDepth is the one place the system genuinely runs two mechanisms rather than one, and it does so deliberately: light-mode consumers get borders and hairline shadows, always-dark consumers get a six-step tonal ramp. Both express the same intent through the materials their mode actually has.",
+    "overview": "This is a foundation, not a face. Every core token in the palette is chroma-zero - literally hueless - and that is the whole thesis. The registry is consumed by several separate applications (see the README's Consumers table), and identity is something each of them adds on top, never something this layer imposes from below. A shared system that arrived with opinions about brand colour would force every app to look like the others.\n\nWhat it does own is rhythm and mechanics: a 32px canonical control height, a single radius variable everything else derives from, a consistent 3px focus ring, and hover states that shift opacity rather than swapping colour. The restraint is not minimalism for its own sake - it is what makes the layer safe to share. Colour is a guest here, not a resident.\n\nDepth is the one place the system genuinely runs two mechanisms rather than one, and it does so deliberately: light-mode consumers get borders and hairline shadows, always-dark consumers get a six-step tonal ramp. Both express the same intent through the materials their mode actually has.",
     "keyCharacteristics": [
       "Chroma-zero core; the only chromatic core token is destructive",
       "One radius variable (--radius: 0.625rem) generates the entire corner scale",
@@ -429,11 +429,11 @@
       "Don't reach for a width breakpoint to solve a touch or hover problem. Use pointer and hover capability queries; a wide screen is not a mouse.",
       "Don't apply an opacity modifier to ring, input, or any other token whose job is to make a boundary or state perceivable. Compositing halves the contrast and silently breaks WCAG 1.4.11.",
       "Don't use surface-* values in a rule that is not scoped under .dark. The ramp holds the same value in both modes, so an unscoped rule applies dark-only colours to light-mode consumers.",
-      "Don't introduce a brand hue into the core palette. Chroma-zero is the system's central commitment, and four consumers depend on supplying their own identity.",
+      "Don't introduce a brand hue into the core palette. Chroma-zero is the system's central commitment, and every consumer depends on supplying its own identity.",
       "Don't treat the surface-* ramp as a light-mode tool. It holds the same values in both modes and only makes sense under an always-dark consumer.",
       "Don't stack a tonal surface step and a shadow on the same element - pick the mechanism that belongs to the mode.",
       "Don't reach for shadow-lg outside an overlay.",
-      "Don't add a font-family token casually. The absence is an unresolved gap affecting four applications, not a slot to fill in passing.",
+      "Don't add a font-family token casually. The absence is an unresolved gap affecting every consuming application, not a slot to fill in passing.",
       "Don't assume choosing a gradient accent changes anything else. The gradients are additive utilities and leave the flat tokens untouched.",
       "Don't hardcode white or black. Two literals remain by design and no more: the gradient button's text, whose fills are fixed hues chosen so white clears AA, and the dialog overlay's bg-black/50 scrim. Neither earns a system token."
     ]
