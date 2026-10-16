@@ -613,7 +613,9 @@ fill, markers splitting the timeline, attachments under a message.
 `message-scroller` holds the viewport at the newest message and declares
 `@shadcn/react@^0.3.1`, pinned to its minor because the package is pre-1.0.
 
-**Navigation and lists** — `sidebar` (with the `use-mobile` hook), `item`.
+**Navigation and lists** — `sidebar` (with the `use-mobile` hook), `item`,
+`breadcrumb`, `command`. `command` wraps `cmdk`; `CommandDialog` puts it in
+the registry's `dialog`.
 `sidebar` reads the `--sidebar-*` tokens from the `theme` item. They are
 chroma-zero like the rest, so its primary and ring follow `--primary` and
 `--ring` rather than upstream's tinted dark primary.
@@ -624,7 +626,7 @@ through `data-[orientation=…]`, the same fix #54 made for `separator` and
 `tabs`.
 
 The set is deliberately bounded to what the consuming apps actually use rather
-than to shadcn's full catalogue — 40 of about 65. Adding another is mechanical
+than to shadcn's full catalogue — 42 of about 65. Adding another is mechanical
 (fetch the base-nova item, add a `registry.json` entry, rebuild `r/`), so
 demand can pull components in rather than the registry pushing them out.
 
