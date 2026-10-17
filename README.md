@@ -13,7 +13,7 @@ copies them into the consuming project. There's no publish step.
 
 This list is how a registry change is checked for downstream breakage, so keep
 it true. Pins are the `@design-system` alias version in each repo's
-`components.json` on `main`, read on 2026-10-16. The alias is where the next
+`components.json` on `main`, read on 2026-10-17. The alias is where the next
 `add` will pull from; the code already in the repo is whatever was last pulled.
 
 | Consumer | Path | Pin | Status |
@@ -21,18 +21,18 @@ it true. Pins are the `@design-system` alias version in each repo's
 | `argus` | `apps/email` | v2.5.3 | consuming |
 | `argus` | `apps/notice-board-web` | v2.5.3 | consuming |
 | `argus` | `apps/watchtower` | v2.7.0 | consuming ([argus#674](https://github.com/deanjstone/argus/issues/674)) |
-| `argusde` | repo root | v2.7.0 | consuming ([argusde#144](https://github.com/deanjstone/argusde/issues/144)) |
+| `argusde` | repo root | v2.8.0 | consuming ([argusde#144](https://github.com/deanjstone/argusde/issues/144)) |
 | `homelab` | `services/quick-capture/web` | v2.6.0 | consuming |
+| `homelab` | `services/scan-app/web` | v2.8.0 | consuming ([homelab#181](https://github.com/deanjstone/homelab/issues/181)) |
 | `atto1` | repo root | v2.6.0 | consuming |
 | `myargus` | `apps/github`, `apps/knowledge`, `apps/reader` | v2.7.0 | consuming ([myargus#296](https://github.com/deanjstone/myargus/issues/296)) |
 | `myargus` | `apps/shell` | v2.4.1 | consuming |
-| `myargus` | `apps/stockade` | none yet | **pending**: no `components.json` ([myargus#295](https://github.com/deanjstone/myargus/issues/295), PR #301 open) |
+| `myargus` | `apps/stockade` | v2.7.0 | consuming ([myargus#295](https://github.com/deanjstone/myargus/issues/295)) |
 | `slate-reader` | `apps/server` | v2.7.0 (vendored) | **LinkPill only**: `link-pill-core` and `link-pill-html` are copied in; no `@design-system` alias ([slate-reader#17](https://github.com/deanjstone/slate-reader/issues/17)) |
 | `budget` | `web` | none yet | **pending**: forked `components/ui`, no `components.json` ([budget#271](https://github.com/deanjstone/budget/issues/271)) |
 
-`myargus` is partly migrated until stockade lands. Move a pending row to
-consuming only once a `components.json` with the alias is on that repo's
-`main`.
+Move a pending row to consuming only once a `components.json` with the alias
+is on that repo's `main`.
 
 ## Structure
 
