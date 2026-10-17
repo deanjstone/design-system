@@ -20,6 +20,7 @@ it true. Pins are the `@design-system` alias version in each repo's
 |---|---|---|---|
 | `argus` | `apps/email` | v2.5.3 | consuming |
 | `argus` | `apps/notice-board-web` | v2.5.3 | consuming |
+| `argus` | `apps/ops-hub-web` | v2.8.0 | consuming ([argus#728](https://github.com/deanjstone/argus/issues/728)) |
 | `argus` | `apps/watchtower` | v2.7.0 | consuming ([argus#674](https://github.com/deanjstone/argus/issues/674)) |
 | `argusde` | repo root | v2.8.0 | consuming ([argusde#144](https://github.com/deanjstone/argusde/issues/144)) |
 | `homelab` | `services/quick-capture/web` | v2.6.0 | consuming |
