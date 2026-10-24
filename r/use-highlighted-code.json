@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "use-highlighted-code",
+  "registryDependencies": [
+    "deanjstone/design-system/highlighter"
+  ],
+  "files": [
+    {
+      "path": "registry/base-nova/hooks/use-highlighted-code.ts",
+      "content": "import * as React from \"react\"\n\nimport { loadHighlighter } from \"@/lib/highlighter\"\n\nexport function useHighlightedCode(value: string, language: string) {\n  // A trailing newline would render as an extra empty line.\n  const code = value.endsWith(\"\\n\") ? value.slice(0, -1) : value\n  const [loaded, setLoaded] = React.useState<{\n    language: string\n    highlighter: Awaited<ReturnType<typeof loadHighlighter>>\n  } | null>(null)\n  const highlighter = loaded?.language === language ? loaded.highlighter : null\n\n  React.useEffect(() => {\n    let cancelled = false\n\n    loadHighlighter(language)\n      .then((next) => {\n        if (!cancelled) {\n          setLoaded({ language, highlighter: next })\n        }\n      })\n      .catch(() => {})\n\n    return () => {\n      cancelled = true\n    }\n  }, [language])\n\n  // The complete lines, highlighted. While the code streams, only the new\n  // lines are tokenized, starting from the grammar state of the last one.\n  const [done, setDone] = React.useState<{\n    highlighter: typeof highlighter\n    text: string\n    lines: React.ReactNode[]\n    state?: Parameters<NonNullable<typeof highlighter>[\"highlight\"]>[1]\n  }>({ highlighter: null, text: \"\", lines: [] })\n\n  let next = done\n\n  if (next.highlighter !== highlighter || !code.startsWith(next.text)) {\n    next = { highlighter, text: \"\", lines: [] }\n  }\n\n  const end = code.lastIndexOf(\"\\n\") + 1\n\n  if (highlighter && end > next.text.length) {\n    const result = highlighter.highlight(\n      code.slice(next.text.length, end - 1),\n      next.state\n    )\n\n    next = {\n      highlighter,\n      text: code.slice(0, end),\n      lines: [...next.lines, ...result.lines],\n      state: result.state,\n    }\n  }\n\n  if (next !== done) {\n    setDone(next)\n  }\n\n  // The last line is still being written, so it is tokenized on every render.\n  const tail = code.slice(end)\n\n  return React.useMemo(() => {\n    if (!highlighter) {\n      return code.split(\"\\n\")\n    }\n\n    return [...next.lines, highlighter.highlight(tail, next.state).lines[0]]\n  }, [code, highlighter, next, tail])\n}\n",
+      "type": "registry:hook"
+    }
+  ],
+  "type": "registry:hook"
+}

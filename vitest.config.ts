@@ -13,6 +13,7 @@ export default defineConfig({
       "@/lib/link-pill-core": fileURLToPath(
         new URL("./registry/lib/link-pill-core.ts", import.meta.url),
       ),
+      "@/lib/highlighter": fileURLToPath(new URL("./registry/lib/highlighter.tsx", import.meta.url)),
       "@/components/ui": fileURLToPath(new URL("./registry/base-nova/ui", import.meta.url)),
     },
   },
