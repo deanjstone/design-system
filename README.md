@@ -40,7 +40,7 @@ is on that repo's `main`.
 ```
 registry.json              root manifest — one entry per distributable item
 registry/
-  lib/utils.ts              cn() helper (clsx + tailwind-merge)
+  lib/utils.ts              re-exports cn() from the cn package
   lib/link-pill-*.ts, .css  LinkPill core, HTML shell and styles
   lib/highlighter.tsx       Shiki loader behind use-highlighted-code
   base-nova/ui/               45 base-nova style components (Base UI, plus link-pill)
@@ -96,17 +96,26 @@ Note the preset (`-p nova` above) also brings its own typeface and base
 stylesheet. Pulling the `theme` item overrides `--font-sans`, so Plex wins,
 but the preset's font package stays installed unless you remove it.
 
-The same goes for the preset's `cn` package. From `shadcn@4.21`, `init`
-installs `cn` instead of `clsx` and `tailwind-merge`. This registry's
-`utils` item — pulled in by every component — writes `lib/utils.ts` with
-a `cn()` built on `clsx` and `tailwind-merge`, and declares both so they
-install with it (design-system#60). Nothing in this registry imports the
-`cn` package, so remove it once you have added an item, unless your own
-code imports it:
+Components import `cn` from the `cn` package (`import { cn } from "cn"`),
+which replaced `clsx` and `tailwind-merge` upstream in September 2026, and
+declare it as a dependency (`cn@^0.5.0`, pinned to its minor because the
+package is pre-1.0). Nothing in the registry depends on `clsx` or
+`tailwind-merge` any more. The `utils` item stays and writes
+`lib/utils.ts` as `export { cn } from "cn"`, so your own code that imports
+`@/lib/utils` keeps working. Components no longer pull `utils` in, so adding
+one leaves your `lib/utils.ts` alone.
+
+**Moving a consumer that pinned an earlier tag:** pull items from this release,
+then run upstream's migration, which moves the project from `clsx` and
+`tailwind-merge` to `cn`:
 
 ```bash
-npm uninstall cn            # or pnpm remove cn
+npx shadcn@latest migrate cn
 ```
+
+If your `lib/utils.ts` carries a custom `extendTailwindMerge` config, do not
+re-pull `utils` over it; port the config to `cn/config` first (see the
+[cn README](https://github.com/shadcn-ui/cn#custom-themes)).
 
 (Do **not** add this repo under `components.json`'s `registries` field with
 a bare `registry.json` URL — that field requires a `{name}`-templated
