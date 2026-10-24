@@ -42,8 +42,9 @@ registry.json              root manifest — one entry per distributable item
 registry/
   lib/utils.ts              cn() helper (clsx + tailwind-merge)
   lib/link-pill-*.ts, .css  LinkPill core, HTML shell and styles
-  base-nova/ui/               42 base-nova style components (Base UI, plus link-pill)
-  base-nova/hooks/            use-mobile (pulled by sidebar)
+  lib/highlighter.tsx       Shiki loader behind use-highlighted-code
+  base-nova/ui/               45 base-nova style components (Base UI, plus link-pill)
+  base-nova/hooks/            use-mobile (pulled by sidebar), use-highlighted-code (pulled by code-block)
 r/                         generated per-item output — what the r/ alias resolves
 theme/tokens.css            same tokens as the "theme" item, as plain CSS
 ```
@@ -171,7 +172,7 @@ registry writes them as unversioned addresses
 dependencies. shadcn's docs say: "Refs are not inherited across
 dependencies. If a dependency should be pinned, include its own ref."
 ([GitHub Registries](https://ui.shadcn.com/docs/registry/github), read
-2026-10-08). Only `theme`, `utils`, `use-mobile`, `link-pill-core` and `link-pill-css` have no
+2026-10-08). Only `theme`, `utils`, `use-mobile`, `highlighter`, `link-pill-core` and `link-pill-css` have no
 registry dependencies. Almost every other item depends on at least `utils`.
 
 **Option 1: a `#ref` on the item address (preferred).** shadcn 4.x accepts
@@ -301,6 +302,36 @@ renderLinkPill({ href, label: text }, { variant: "inline", legacy: false })
   `mention:`, plus the `link-pill*` classes, the `svg`, `path`, `img` and `span`
   elements and their `viewBox`, `d`, `aria-hidden` and `focusable` attributes.
 
+## Agent-interface items
+
+`trace`, `code-block` and `questionnaire` are shadcn's October 2026 agent-interface
+components (see the [shadcn changelog](https://ui.shadcn.com/docs/changelog)),
+in `base-nova` style with the upstream API unchanged. They complete the
+Conversation set for an agent turn:
+
+| Item | Use it for | Pulls in |
+|---|---|---|
+| `trace` | One line per agent step (reasoning, tool call, source, plan, subagent run), with `running`, `error` and `pending` states and nested, expandable detail | `collapsible`, `code-block` |
+| `code-block` | Code, terminal output, logs and diffs: line numbers, wrap, highlighted lines, and `size="sm"` for tool output inside a `trace` | `button`, `use-highlighted-code` → `highlighter` (`shiki`) |
+| `questionnaire` | Asks the person to clarify before the agent continues: single and multiple choice, freeform, skippable | `button`, `@shadcn/react@^0.3.1` |
+
+```bash
+npx shadcn add deanjstone/design-system/trace#v2.9.0
+npx shadcn add deanjstone/design-system/code-block#v2.9.0
+npx shadcn add deanjstone/design-system/questionnaire#v2.9.0
+```
+
+Syntax highlighting is optional and lives in `use-highlighted-code`; add
+languages to the `languages` map in the copied `highlighter.tsx`. `trace`
+declares `code-block` because a tool step's output belongs in one; it does not
+import it. `shimmer` (the running title) and `scroll-fade-*` come from
+`shadcn/tailwind.css`, which `shadcn init` already imports, as for
+`attachment` and `message-scroller`.
+
+**Consumers that should adopt them:** `argusde` (agent turns) and `argus`
+`apps/ops-hub-web`. Adoption is a follow-up issue per consumer, not part of
+adding the items.
+
 ## Adding a new component
 
 1. Add the source file(s) under `registry/base-nova/ui/` (or `registry/lib/`
@@ -384,7 +415,7 @@ iterates against a running app, and this repo has none.
   PWA/Electron app-shell mechanics (`pt-safe`/`pb-safe`/`pl-safe`/`pr-safe`,
   `--app-titlebar-*` topbar geometry, the `.wco` variant, `.drag-region`) —
   see [DESIGN.md](DESIGN.md#app-shell).
-- **42 components** and one hook, all `base-nova` style and Base UI-based, pulled the same
+- **45 components**, two hooks and the `highlighter` lib, all `base-nova` style and Base UI-based, pulled the same
   way as `theme`/`button` above:
   - *Controls* — `button`, `input`, `textarea`, `select`, `checkbox`,
     `switch`, `slider`, `label`
@@ -394,14 +425,17 @@ iterates against a running app, and this repo has none.
     `separator`, `tabs`, `table`, `sonner`, `spinner`, `empty`, `tooltip`
   - *Conversation* — `message`, `bubble`, `message-scroller`, `marker`,
     `attachment`
+  - *Agent turns* — `trace`, `code-block`, `questionnaire` (see
+    [Agent-interface items](#agent-interface-items))
   - *Navigation and lists* — `sidebar` (with the `use-mobile` hook), `item`,
     `breadcrumb`, `command`
   - *Forms and grouping* — `field`, `input-group`, `toggle`, `toggle-group`,
     `button-group`
 
   `tooltip` and `sidebar` need a `TooltipProvider` at the app root.
-  `message-scroller` adds the `@shadcn/react` package; `command` adds `cmdk`.
+  `message-scroller` and `questionnaire` add the `@shadcn/react` package;
+  `code-block` adds `shiki` (through `use-highlighted-code`); `command` adds `cmdk`.
 
-  The set is bounded to what the consuming apps actually use — 42 of shadcn's
+  The set is bounded to what the consuming apps actually use — 45 of shadcn's
   ~65 — rather than shipping the full catalogue. Adding another is mechanical,
   so ask rather than vendoring a copy locally.
