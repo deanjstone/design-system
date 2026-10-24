@@ -1,3 +1,10 @@
+# [2.9.0](https://github.com/deanjstone/design-system/compare/v2.8.0...v2.9.0) (2026-10-24)
+
+
+### Features
+
+* add trace, code-block and questionnaire registry items ([#104](https://github.com/deanjstone/design-system/issues/104)) ([d835711](https://github.com/deanjstone/design-system/commit/d8357114496d00b2a50088a1a59a131075ff24a6)), closes [#100](https://github.com/deanjstone/design-system/issues/100) [#100](https://github.com/deanjstone/design-system/issues/100) [#100](https://github.com/deanjstone/design-system/issues/100)
+
 # [2.8.0](https://github.com/deanjstone/design-system/compare/v2.7.0...v2.8.0) (2026-10-16)
 
 
