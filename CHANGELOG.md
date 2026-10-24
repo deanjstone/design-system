@@ -1,3 +1,10 @@
+# [2.10.0](https://github.com/deanjstone/design-system/compare/v2.9.0...v2.10.0) (2026-10-24)
+
+
+### Features
+
+* move registry items to cn, consumers run shadcn migrate cn ([#105](https://github.com/deanjstone/design-system/issues/105)) ([598b628](https://github.com/deanjstone/design-system/commit/598b6287bec6a393d751fba1c553c3a3187a6c1a)), closes [#101](https://github.com/deanjstone/design-system/issues/101)
+
 # [2.9.0](https://github.com/deanjstone/design-system/compare/v2.8.0...v2.9.0) (2026-10-24)
 
 
