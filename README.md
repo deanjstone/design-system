@@ -381,7 +381,7 @@ design-drift report. It is the check trialled in
 `registry:file` item:
 
 ```bash
-npx shadcn add deanjstone/design-system/design-check#<tag>
+npx shadcn add deanjstone/design-system/design-check#v2.11.0
 ```
 
 | Lands at | Does |
