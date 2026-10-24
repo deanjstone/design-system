@@ -578,7 +578,7 @@ the label tracks the field's state rather than sitting inert beside it.
 
 ### The full set
 
-Forty components ship, plus the `use-mobile` hook. The sections above describe the ones that define
+Forty-five components ship, plus the `use-mobile` and `use-highlighted-code` hooks. The sections above describe the ones that define
 the system's behaviour; the rest follow the same rules — the shared focus
 treatment, the radius scale, the 32px control height where they are controls —
 and are listed here so the inventory is not something you have to infer from
@@ -613,6 +613,16 @@ fill, markers splitting the timeline, attachments under a message.
 `message-scroller` holds the viewport at the newest message and declares
 `@shadcn/react@^0.3.1`, pinned to its minor because the package is pre-1.0.
 
+**Agent turns** — `trace`, `code-block`, `questionnaire`. A turn's working:
+`trace` is one muted line per step, with `running` shimmering the title,
+`error` in `destructive` and `pending` dimmed, and a collapsible nesting detail
+under a left rule. `code-block` is a bordered, `input`-edged monospace panel
+whose added, removed and highlighted lines take `muted` and `destructive`
+washes; its `sm` size sits inside a `trace`. `questionnaire` asks before the
+agent continues, built on `@shadcn/react@^0.3.1`: choices are `input`-edged
+rows that fill `muted` when checked, and its controls keep the 44px
+coarse-pointer floor. All three colour only through semantic tokens.
+
 **Navigation and lists** — `sidebar` (with the `use-mobile` hook), `item`,
 `breadcrumb`, `command`. `command` wraps `cmdk`; `CommandDialog` puts it in
 the registry's `dialog`.
@@ -626,7 +636,7 @@ through `data-[orientation=…]`, the same fix #54 made for `separator` and
 `tabs`.
 
 The set is deliberately bounded to what the consuming apps actually use rather
-than to shadcn's full catalogue — 42 of about 65. Adding another is mechanical
+than to shadcn's full catalogue — 45 of about 65. Adding another is mechanical
 (fetch the base-nova item, add a `registry.json` entry, rebuild `r/`), so
 demand can pull components in rather than the registry pushing them out.
 

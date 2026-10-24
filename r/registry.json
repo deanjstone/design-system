@@ -1157,6 +1157,87 @@
           "type": "registry:ui"
         }
       ]
+    },
+    {
+      "name": "trace",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "deanjstone/design-system/utils",
+        "deanjstone/design-system/collapsible",
+        "deanjstone/design-system/code-block"
+      ],
+      "dependencies": [
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "registry/base-nova/ui/trace.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "code-block",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "deanjstone/design-system/utils",
+        "deanjstone/design-system/button",
+        "deanjstone/design-system/use-highlighted-code"
+      ],
+      "dependencies": [
+        "class-variance-authority",
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "registry/base-nova/ui/code-block.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "use-highlighted-code",
+      "type": "registry:hook",
+      "registryDependencies": [
+        "deanjstone/design-system/highlighter"
+      ],
+      "files": [
+        {
+          "path": "registry/base-nova/hooks/use-highlighted-code.ts",
+          "type": "registry:hook"
+        }
+      ]
+    },
+    {
+      "name": "highlighter",
+      "type": "registry:lib",
+      "dependencies": [
+        "shiki"
+      ],
+      "files": [
+        {
+          "path": "registry/lib/highlighter.tsx",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "questionnaire",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "deanjstone/design-system/utils",
+        "deanjstone/design-system/button"
+      ],
+      "dependencies": [
+        "@shadcn/react@^0.3.1",
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "registry/base-nova/ui/questionnaire.tsx",
+          "type": "registry:ui"
+        }
+      ]
     }
   ]
 }
