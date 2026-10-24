@@ -1,3 +1,10 @@
+# [2.11.0](https://github.com/deanjstone/design-system/compare/v2.10.0...v2.11.0) (2026-10-24)
+
+
+### Features
+
+* pin the design-check install line to v2.11.0 ([#108](https://github.com/deanjstone/design-system/issues/108)) ([0fa17e4](https://github.com/deanjstone/design-system/commit/0fa17e4539035ecf86889bfb0bc118356613f7c3)), closes [#106](https://github.com/deanjstone/design-system/issues/106)
+
 # [2.10.0](https://github.com/deanjstone/design-system/compare/v2.9.0...v2.10.0) (2026-10-24)
 
 
