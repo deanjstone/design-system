@@ -1,0 +1,54 @@
+name: Design check
+
+# Impeccable's design detector. It runs no AI model: it flags low contrast, AI-slop
+# patterns and drift from DESIGN.md in the UI files a PR changes. Findings are written
+# to the job summary and never block a merge. Shipped by the design-system
+# `design-check` registry item.
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '**/*.tsx'
+      - '**/*.jsx'
+      - '**/*.css'
+      - '**/*.html'
+      - '**/*.vue'
+      - '**/*.svelte'
+      - 'DESIGN.md'
+      - 'components.json'
+      - '.impeccable/**'
+      - 'scripts/design-detect.sh'
+      - '.github/workflows/design-detect.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  detect:
+    name: Detect
+    runs-on: ${{ fromJSON(vars.CI_RUNS_ON || '"ubuntu-latest"') }}
+    steps:
+      # The script diffs against the base commit, so the history back to it is needed;
+      # blob:none keeps that to commits and trees.
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          filter: blob:none
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      # continue-on-error: the detector exits 2 on findings and 1 when a target could
+      # not be scanned. Either shows as a failed step here, never as a failed check.
+      # Run through bash: `shadcn add` does not set the executable bit.
+      - name: Run the detector on changed UI files
+        continue-on-error: true
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: bash scripts/design-detect.sh "$BASE_SHA"

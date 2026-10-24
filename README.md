@@ -45,6 +45,7 @@ registry/
   lib/highlighter.tsx       Shiki loader behind use-highlighted-code
   base-nova/ui/               45 base-nova style components (Base UI, plus link-pill)
   base-nova/hooks/            use-mobile (pulled by sidebar), use-highlighted-code (pulled by code-block)
+  design-check/             script and workflow of the design-check item (CI, not UI)
 r/                         generated per-item output — what the r/ alias resolves
 theme/tokens.css            same tokens as the "theme" item, as plain CSS
 ```
@@ -370,6 +371,49 @@ exist only for this — nothing here is built or published.
 only the element, so the glyph lands inside whatever you render — a lucide
 svg appends it as a stray text node. Give these parts an explicit child,
 `{null}` if the rendered element supplies its own (design-system#50).
+
+## Design check item
+
+`design-check` puts [Impeccable's](https://impeccable.style) detector in a
+consumer's CI as a non-blocking check, so every web interface gets the same
+design-drift report. It is the check trialled in
+[myargus#348](https://github.com/deanjstone/myargus/issues/348), shipped as a
+`registry:file` item:
+
+```bash
+npx shadcn add deanjstone/design-system/design-check#<tag>
+```
+
+| Lands at | Does |
+|---|---|
+| `scripts/design-detect.sh` | Runs `impeccable@4.7.0 detect` on the UI files a PR changed (`.tsx`, `.jsx`, `.css`, `.html`, `.vue`, `.svelte`) and writes counts by rule and severity to the job summary |
+| `.github/workflows/design-detect.yml` | Runs it on PRs that touch those files, `DESIGN.md`, `components.json` or `.impeccable/`. The detector step is `continue-on-error: true`, so a finding or a failed scan never blocks a merge |
+
+- **Pinned, telemetry off.** The version is one variable in the script
+  (`IMPECCABLE_VERSION`); a bump is a deliberate edit. `DO_NOT_TRACK=1` and
+  `IMPECCABLE_NO_TELEMETRY=1` are exported. Nothing installs hooks or touches
+  `~/.claude`; the detector runs from `npx`.
+- **The registry-owned `ui` directory is skipped.** The script reads
+  `aliases.ui` from every `components.json` in the repo (`@/components/ui`,
+  `~/components/ui` or a bare path) and leaves that directory out, because
+  `shadcn add` put those files there. A workspace-package alias
+  (`@workspace/ui/components`) cannot be mapped to a directory; the summary says
+  so, and the directory goes under `detector.ignoreFiles` in
+  `.impeccable/config.json`, which the detector reads itself.
+- **`DESIGN.md` is not shipped.** The detector's `design-system-color` and
+  `design-system-font-size` rules read the `DESIGN.md` at the repo root (checked
+  with 4.7.0: a copy in a subdirectory or beside the file turns them off).
+  This repo's `DESIGN.md` describes the achromatic base that each app tints, so
+  installing it would hold an app's own palette against ours and flag every
+  tint as drift. A consumer without a root `DESIGN.md` gets the generic rules
+  only; one with its own keeps it, and `shadcn add -o` cannot replace it. To
+  start one, copy this repo's `DESIGN.md` and edit it to the app's identity.
+- **Nor is `.impeccable/config.json`.** A consumer's detector ignores are its own.
+- **`shadcn add` does not set the executable bit**, so the workflow runs
+  `bash scripts/design-detect.sh`.
+
+Needs `jq` and `npx`, both on GitHub-hosted runners. Rolling it out is a
+follow-up issue per consumer.
 
 ## Design tooling
 
