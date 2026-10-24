@@ -1187,6 +1187,22 @@
           "type": "registry:ui"
         }
       ]
+    },
+    {
+      "name": "design-check",
+      "type": "registry:file",
+      "files": [
+        {
+          "path": "registry/design-check/design-detect.sh",
+          "type": "registry:file",
+          "target": "~/scripts/design-detect.sh"
+        },
+        {
+          "path": "registry/design-check/design-detect.yml",
+          "type": "registry:file",
+          "target": "~/.github/workflows/design-detect.yml"
+        }
+      ]
     }
   ]
 }
