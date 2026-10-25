@@ -164,8 +164,9 @@ be overwritten by the next `shadcn add`:
 
 Releases are cut automatically by semantic-release from Conventional
 Commits on `main` — there is no manual tagging step. A `fix:` bumps the
-patch, a `feat:` the minor, and a `feat!:` or `BREAKING CHANGE:` footer the
-major. Every release gets a `vX.Y.Z` tag, a GitHub release, and a CHANGELOG
+patch, a `feat:` the minor, and a `BREAKING CHANGE:` footer the major. The
+analyzer here (`conventional-changelog-angular` 8.3.1) does not read a `!` in
+the subject, so a `feat!:` with no footer releases nothing; write both. Every release gets a `vX.Y.Z` tag, a GitHub release, and a CHANGELOG
 entry.
 
 An unpinned `shadcn add deanjstone/design-system/<item>` pulls whatever
