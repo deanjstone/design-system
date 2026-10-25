@@ -41,6 +41,7 @@ is on that repo's `main`.
 registry.json              root manifest — one entry per distributable item
 registry/
   lib/utils.ts              re-exports cn() from the cn package
+  lib/theme-preference.ts   theme + Light/Dark/System choice: cookie, localStorage, no-flash script
   lib/link-pill-*.ts, .css  LinkPill core, HTML shell and styles
   lib/highlighter.tsx       Shiki loader behind use-highlighted-code
   base-nova/ui/               45 base-nova style components (Base UI, plus link-pill)
@@ -48,6 +49,8 @@ registry/
   design-check/             script and workflow of the design-check item (CI, not UI)
 r/                         generated per-item output — what the r/ alias resolves
 theme/tokens.css            same tokens as the "theme" item, as plain CSS
+theme/themes.json           the six T3 themes (light + dark) behind both; see DESIGN.md Themes
+scripts/theme/              extract-t3.mjs reads T3's sheet; build.mjs writes tokens.css and registry.json
 ```
 
 ## Consuming this registry from another project
@@ -358,6 +361,15 @@ adding the items.
    Pin a pre-1.0 npm dependency to its minor, e.g. `@shadcn/react@^0.3.1`,
    so a re-run `shadcn add` cannot pull a breaking release.
 3. Commit on a feature branch, open a PR — see `.claude/SYSTEM.md`.
+
+## Themes
+
+The `theme` item carries six themes (`default`, `t3-chat`, `grove`, `ocean`,
+`ember`, `iris`), each in light and dark, selected by `data-theme` plus the
+`dark` class; no attribute means Ocean. The `theme-preference` lib stores the
+visitor's choice. Token map, selection rules and the pinned T3 source are in
+[DESIGN.md](DESIGN.md#themes). After editing `theme/themes.json`, run
+`pnpm build:theme` to regenerate `theme/tokens.css`, `registry.json` and `r/`.
 
 ## Tests
 

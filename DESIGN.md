@@ -1,26 +1,26 @@
 ---
 name: design-system
-description: An achromatic shadcn/ui token layer the consuming apps tint with their own identity.
+description: A shadcn/ui token layer with six selectable T3-derived themes (Ocean by default), shared by the consuming apps.
 colors:
-  background: "oklch(1 0 0)"
-  foreground: "oklch(0.145 0 0)"
-  card: "oklch(1 0 0)"
-  card-foreground: "oklch(0.145 0 0)"
-  popover: "oklch(1 0 0)"
-  popover-foreground: "oklch(0.145 0 0)"
-  primary: "oklch(0.205 0 0)"
-  primary-foreground: "oklch(0.985 0 0)"
-  secondary: "oklch(0.97 0 0)"
-  secondary-foreground: "oklch(0.205 0 0)"
-  muted: "oklch(0.97 0 0)"
-  muted-foreground: "oklch(0.556 0 0)"
-  accent: "oklch(0.97 0 0)"
-  accent-foreground: "oklch(0.205 0 0)"
-  destructive: "oklch(0.577 0.245 27.325)"
-  destructive-foreground: "oklch(1 0 0)"
-  border: "oklch(0.922 0 0)"
-  input: "oklch(0.64 0 0)"
-  ring: "oklch(0.62 0 0)"
+  background: "#f5f7f8"
+  foreground: "#241523"
+  card: "#f5f7f8"
+  card-foreground: "#241523"
+  popover: "#f5f7f8"
+  popover-foreground: "#241523"
+  primary: "#0a6f75"
+  primary-foreground: "#fffaff"
+  secondary: "#e4ecf2"
+  secondary-foreground: "#241523"
+  muted: "#e8eff4"
+  muted-foreground: "#6f6873"
+  accent: "#d8e4ee"
+  accent-foreground: "#241523"
+  destructive: "#c10007"
+  destructive-foreground: "#f5f7f8"
+  border: "#cdd4dc"
+  input: "#8d8e9a"
+  ring: "#2672af"
   chart-1: "oklch(0.646 0.222 41.116)"
   chart-2: "oklch(0.6 0.118 184.704)"
   chart-3: "oklch(0.398 0.07 227.392)"
@@ -174,15 +174,20 @@ one, and it does so deliberately: light-mode consumers get borders and
 hairline shadows, always-dark consumers get a six-step tonal ramp. Both
 express the same intent through the materials their mode actually has.
 
+**v3 note:** colour now comes from the chosen theme (see Themes below); the
+chroma-zero palette described in this section is the v2 core.
+
 **Key Characteristics:**
 
-- Chroma-zero core; the only chromatic core token is `destructive`
+- Six selectable themes (Ocean by default); v2's chroma-zero core is superseded
 - One radius variable (`--radius: 0.625rem`) generates the entire corner scale
 - 32px is the canonical control height across button, input, and tabs
 - Colour arrives only as signal, data, or an explicit consumer opt-in
 - No build step — components are copied into consumers and edited there
 
 ## Colors
+
+*The values quoted in this section are v2's neutral core; v3's are in Themes.*
 
 Paper and void. Light mode runs paper-white through graphite in pure
 neutrals; the `surface-0..5` ramp is a near-black void that climbs toward
@@ -259,6 +264,142 @@ danger, a data series, or an accent a consumer deliberately chose.
 `primary`/`accent` tokens. The four candidates are additive utilities, not a
 brand decision made on the consumer's behalf. A consumer that picks none is
 in a fully supported state, not an unfinished one.
+
+## Themes
+
+*Added in v3 (design-system#111).* The theme item ships six palettes read from
+T3 Code's mobile app: `default`, `t3-chat`, `grove`, `ocean`, `ember`, `iris`,
+each in light and dark. They replace the chroma-zero core below: the Neutral
+Substrate thesis now describes the structure (one radius, 32px controls,
+opaque focus ring, tokens-only components), while colour comes from the chosen
+theme. The Void ramp, gradient accents and PWA tokens are unchanged.
+
+**Source.** `pingdotgg/t3code` at `3eb836664eb1a5d0102055fe1e4a7fc5c1d8a9c7`:
+`apps/mobile/generated-uniwind-themes.css` (colours) and
+`apps/mobile/global.css` (type scale). `node scripts/theme/extract-t3.mjs
+<css> <sha>` rewrites `theme/themes.json`; `node scripts/theme/build.mjs`
+writes `theme/tokens.css` and the `theme` item in `registry.json` from it.
+Edit `themes.json` or the map in `extract-t3.mjs`, never the generated region.
+
+### Selecting a theme
+
+- `data-theme="<name>"` on `<html>` (or any element, for a preview) picks the
+  palette. With no attribute the page is **Ocean**.
+- Mode is the `dark` class, as in v2, so `dark:` variants keep working. A
+  theme's dark rule is `[data-theme="x"].dark`, one part more specific than
+  the bare `.dark` rule, which is how it wins. On a nested element, the mode is
+  that element's own `dark` class.
+- Light / Dark / System and the persisted choice live in the `theme-preference`
+  registry lib: `readPreference`, `setPreference`, `watchSystemMode` and
+  `themeInitScript()`. The choice is stored per device as the `ds-theme` cookie
+  (`<theme>.<mode>`, `Path=/`, `SameSite=Lax`, 400 days) on a configurable
+  parent domain (`cookieDomain: ".myargus.cc"`), mirrored to `localStorage`,
+  which is what a host outside that domain reads. Put `themeInitScript()` in
+  `<head>` (ES5, so it runs on Safari 9; under a strict CSP serve it as a
+  same-origin file) so there is no flash of the wrong theme.
+- `--radius` stays `0.625rem`. Native controls follow via `color-scheme`.
+
+### Token map
+
+| shadcn token | T3 token | Note |
+|---|---|---|
+| `--background` | `--color-screen` | Page ground |
+| `--foreground` | `--color-foreground` | Body text |
+| `--card` | `--color-card` | Card ground |
+| `--card-foreground` | `--color-foreground` |  |
+| `--popover` | `--color-sheet-solid` | Opaque sheet ground |
+| `--popover-foreground` | `--color-foreground` |  |
+| `--primary` | `--color-primary` | Filled actions, focus accent |
+| `--primary-foreground` | `--color-primary-foreground` |  |
+| `--secondary` | `--color-secondary` |  |
+| `--secondary-foreground` | `--color-secondary-foreground` |  |
+| `--muted` | `--color-grouped-card` | Grouped / tabs ground |
+| `--muted-foreground` | `--color-foreground-muted` | Descriptions, placeholders |
+| `--accent` | `--color-row-hover` | Hover and selected fill |
+| `--accent-foreground` | `--color-foreground` |  |
+| `--destructive` | `--color-danger-foreground` | T3's red *text* colour; used as text and as a /10 fill |
+| `--destructive-foreground` | `--color-screen` | Text on a solid destructive fill |
+| `--border` | `--color-border` | Container edges |
+| `--input` | `--color-input-border` | **Adjusted** where under 3:1 (below) |
+| `--ring` | `--color-focus` | Focus ring |
+| `--chart-1` | `--color-primary` |  |
+| `--chart-2` | `--color-adaptive-emerald-600-400` | Light value / dark value |
+| `--chart-3` | `--color-adaptive-amber-700-400` |  |
+| `--chart-4` | `--color-adaptive-indigo-600-300` |  |
+| `--chart-5` | `--color-adaptive-blue-600-400` |  |
+| `--sidebar` | `--color-drawer` |  |
+| `--sidebar-foreground` | `--color-drawer-foreground` |  |
+| `--sidebar-primary` | `--color-primary` |  |
+| `--sidebar-primary-foreground` | `--color-primary-foreground` |  |
+| `--sidebar-accent` | `--color-row-hover` |  |
+| `--sidebar-accent-foreground` | `--color-foreground` |  |
+| `--sidebar-border` | `--color-drawer-border` |  |
+| `--sidebar-ring` | `--color-focus` |  |
+| `--glass-surface` | `--color-glass-surface` | Translucent bar surface |
+| `--glass-fallback` | `--color-grouped-card` | Opaque; T3's own is the same colour at 90-94% |
+
+### The themes
+
+| Theme | Light background | Light primary | Dark background | Dark primary |
+|---|---|---|---|---|
+| `default` | `#fcfcfc` | `#1b4ed8` | `#0a0a0a` | `#346bf1` |
+| `t3-chat` | `#fdf7fd` | `#db2777` | `#1f1a24` | `#a3004c` |
+| `grove` | `#f3f7f4` | `#8f6410` | `#1b2821` | `#e3b34e` |
+| `ocean` (default) | `#f5f7f8` | `#0a6f75` | `#17212b` | `#5bd0d6` |
+| `ember` | `#f9f7f5` | `#b23535` | `#291e1a` | `#f78a7a` |
+| `iris` | `#f8f7f9` | `#a82c87` | `#1d1929` | `#f099d8` |
+
+Every theme and mode is tested (`test/theme-tokens.test.ts`) for WCAG AA 4.5:1
+on foreground/background, primary-foreground/primary, card, secondary, muted
+(on both grounds) and destructive; and 3:1 for `--input` and `--ring` against
+background and card. T3's own values pass every text pair. They do not pass
+for `--input`: T3's field border is a decorative hairline (about 1.1 to 1.6:1),
+and a field's edge is its only boundary (WCAG 1.4.11), so the extractor mixes it
+toward `--foreground` until it reaches 3:1. The lifted values:
+
+| Theme | Mode | T3 `input-border` | `--input` |
+|---|---|---|---|
+| default | light | `#d4d4d8` | `#929296` |
+| default | dark | `#1e1e1e` | `#616161` |
+| t3-chat | light | `#e7c1dc` | `#ac7fa7` |
+| t3-chat | dark | `#302029` | `#766c73` |
+| grove | light | `#becbc5` | `#8b8f90` |
+| grove | dark | `#4f725f` | `#547664` |
+| ocean | light | `#c0c9d4` | `#8d8e9a` |
+| ocean | dark | `#4f677b` | `#566d80` |
+| ember | light | `#d4c6c1` | `#9a8c8d` |
+| ember | dark | `#7a5d4d` | `#816556` |
+| iris | light | `#ccc5d6` | `#958b9b` |
+| iris | dark | `#5d527b` | `#6c6187` |
+
+### Type scale
+
+T3's scale replaces Tailwind's text sizes, named as T3 names them. Values are
+in rem at the 16px root so a user's font-size setting still applies; line
+heights are T3's.
+
+| Utility | Size | Line height |
+|---|---|---|
+| `text-3xs` | 11px | 14px |
+| `text-2xs` | 12px | 16px |
+| `text-xs` | 13px | 17px |
+| `text-sm` | 14px | 19px |
+| `text-base` | 16px | 23px |
+| `text-lg` | 18px | 23px |
+| `text-xl` | 21px | 28px |
+| `text-2xl` | 26px | 32px |
+| `text-3xl` | 30px | 36px |
+
+`text-xs` was 12px/16px and is now 13px/17px; a component that wants the old
+size uses `text-2xs`. `text-xl` and `text-2xl` also move (20 to 21, 24 to 26).
+IBM Plex Sans stays; T3's DM Sans is not adopted.
+
+### Glass tokens
+
+`--glass-surface` is the theme's translucent bar surface (T3's `glass-surface`)
+and `--glass-fallback` its opaque stand-in. `surface-glass` blurs the first
+behind `--glass-blur` and, where `backdrop-filter` is unsupported, falls back
+to the second. Bars float with `radius-xl` corners.
 
 ## Typography
 
@@ -427,8 +568,9 @@ glass utility, so tuning the recipe once retunes every surface using it. Dark
 mode gets its own trio (a heavier 16px blur, a lower 1.08 saturation) rather
 than reusing the light values verbatim.
 
-- **`surface-glass`**: The generic recipe — a `--color-background` tint at
-  `--glass-opacity`, blurred and saturated.
+- **`surface-glass`**: The bar recipe — the theme's `--glass-surface`,
+  blurred and saturated, with `--glass-fallback` where `backdrop-filter` is
+  missing (v3; see Themes).
 - **`dialog-glass`** / **`dropdown-glass`**: The same recipe against
   `--color-background` / `--color-popover` respectively, each adding the
   hairline border the surface would otherwise get from its solid variant.

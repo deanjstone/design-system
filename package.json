@@ -5,7 +5,8 @@
   "description": "Shared shadcn/ui component registry and design tokens consumed by myargus, atto1, argus, argusde and homelab via the shadcn CLI",
   "packageManager": "pnpm@12.13.0",
   "scripts": {
-    "test": "vitest run"
+    "test": "vitest run",
+    "build:theme": "node scripts/theme/build.mjs && npx shadcn@4.19.1 build --output ./r"
   },
   "devDependencies": {
     "@base-ui/react": "^1.8.0",
