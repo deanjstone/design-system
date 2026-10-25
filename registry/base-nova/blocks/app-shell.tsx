@@ -37,11 +37,11 @@ type AppShellProps = Pick<AppSwitcherProps, "mode" | "onModeChange" | "currentAp
 // so every section past the fourth waits under More.
 const TAB_COUNT = 4
 
-const glassBar = "surface-glass rounded-xl border border-border/60 shadow-lg"
+const glassBar = "surface-glass border border-border/60 shadow-lg"
 
 const tabClass = (active: boolean) =>
   cn(
-    "flex min-h-14 min-w-0 flex-1 flex-col items-center justify-center gap-0.5 rounded-lg px-1 text-2xs font-medium outline-none transition-colors focus-visible:ring-3 focus-visible:ring-ring/50 [&_svg]:size-5 [&_svg]:shrink-0",
+    "flex min-h-14 min-w-0 flex-1 flex-col items-center justify-center gap-0.5 rounded-full px-1 text-2xs font-medium outline-none transition-colors focus-visible:ring-3 focus-visible:ring-ring/50 [&_svg]:size-5 [&_svg]:shrink-0",
     active ? "bg-muted text-foreground [&_svg]:text-primary" : "text-muted-foreground hover:text-foreground"
   )
 
@@ -103,10 +103,15 @@ function AppShell({
       </aside>
 
       <div data-slot="app-shell-column" className="flex min-h-dvh flex-col lg:pl-64">
-        <div className="pointer-events-none sticky top-0 z-30 px-2 pt-[max(0.5rem,env(safe-area-inset-top))] pb-2">
+        <div
+          data-slot="app-shell-status-fill"
+          aria-hidden="true"
+          className="pointer-events-none fixed inset-x-0 top-0 z-40 h-[env(safe-area-inset-top)] bg-background lg:left-64"
+        />
+        <div className="pointer-events-none sticky top-0 z-30 px-2 pt-[calc(env(safe-area-inset-top)+0.5rem)] pb-2">
           <header
             data-slot="app-shell-header"
-            className={cn(glassBar, "pointer-events-auto flex min-h-14 items-center gap-1 px-2")}
+            className={cn(glassBar, "pointer-events-auto flex min-h-14 items-center gap-1 rounded-xl px-2")}
           >
             {back
               ? renderLink({
@@ -141,7 +146,7 @@ function AppShell({
         aria-label="Sections"
         className={cn(
           glassBar,
-          "fixed inset-x-2 bottom-[max(0.5rem,env(safe-area-inset-bottom))] z-30 flex items-stretch gap-1 p-1 lg:hidden"
+          "fixed right-[max(0.75rem,env(safe-area-inset-right))] bottom-[max(0.75rem,env(safe-area-inset-bottom))] left-[max(0.75rem,env(safe-area-inset-left))] z-30 flex items-stretch gap-1 rounded-[2rem] p-1 lg:hidden"
         )}
       >
         {tabs.map((entry) => (
