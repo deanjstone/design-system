@@ -912,6 +912,7 @@
       "type": "registry:block",
       "registryDependencies": [
         "deanjstone/design-system/button",
+        "deanjstone/design-system/popover",
         "deanjstone/design-system/sheet",
         "deanjstone/design-system/toggle-group",
         "deanjstone/design-system/nav-link",

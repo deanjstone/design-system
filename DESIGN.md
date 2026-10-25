@@ -543,7 +543,7 @@ an auth client.
 | Block | What it is | Composes |
 |---|---|---|
 | `app-shell` | Glass floating header, glass bottom tab bar, and from 1024px a left sidebar | `app-switcher`, `button`, `sheet` |
-| `app-switcher` | Sheet with every app and the Light / Dark / System quick toggle | `sheet`, `toggle-group`, `button` |
+| `app-switcher` | Every app and the Light / Dark / System quick toggle: a popover from 768px, a bottom sheet below | `popover`, `sheet`, `toggle-group`, `button` |
 | `page-header` | The page's one `h1`, a description and the main actions | none |
 | `empty-page` | A whole page with nothing in it | `empty` |
 | `settings-page` | `SettingsPage`, `SettingsSection` and `AppearanceSection` (theme list, Light / Dark / System) | `page-header`, `toggle-group` |
@@ -569,16 +569,25 @@ Two helpers come with them: the `nav-link` lib (`renderAnchor`, the type of a
   governs touch targets, which follow `pointer: coarse`, not width.
 - **Glass bars.** The header and the tab bar are `surface-glass` (the theme's
   `--glass-surface`, blurred, with the opaque `--glass-fallback` where
-  `backdrop-filter` is missing), `rounded-xl` and floating: 8px off the screen
-  edge, or the safe-area inset where that is larger. Content scrolls beneath
-  both. The page leaves `6.5rem` plus the bottom safe area clear for the tab
-  bar on a phone, and releases it from 1024px. `--radius` stays `0.625rem`.
+  `backdrop-filter` is missing) and floating. Content scrolls beneath both. The
+  header is `rounded-xl`, one gutter (0.5rem) below the top safe-area inset, and
+  a solid `bg-background` fill covers the inset and that gutter, so content never
+  shows through the status-bar region and the blur has no seam against it. The tab bar
+  is `rounded-[2rem]` with `rounded-full` tabs, 0.75rem off the sides and bottom,
+  or the safe-area inset where that is larger, so its corners clear an iPhone
+  display's rounded corners (radius roughly 47 to 55pt). The page leaves `6.5rem`
+  plus the bottom safe area clear for the tab bar on a phone, and releases it
+  from 1024px. `--radius` stays `0.625rem`. An app must set `viewport-fit=cover`
+  for the insets to be non-zero; without it the browser already keeps the page
+  inside the safe area.
 - **Header.** The app name opens the app switcher. A drill-down page passes
   `back={{ href, label }}` and the header gains a back button (44px, labelled
   "Back" unless a label is given) before the name. Header actions sit at the end.
-- **App switcher.** A bottom sheet: every app with its description, the current
-  one marked with a check and `aria-current`, and the colour-mode quick toggle
-  when the app passes `onModeChange`. With no other apps the name is plain text.
+- **App switcher.** Every app with its description, the current one marked with
+  a check and `aria-current`, and the colour-mode quick toggle when the app
+  passes `onModeChange`. From `md` (768px) it is a popover anchored under the
+  trigger; below it, a bottom sheet. Both close on Escape and when an app is
+  chosen. With no other apps the name is plain text.
   The full theme list is not here; it is the settings page's job.
 - **Settings.** `AppearanceSection` is controlled, so one `useThemePreference()`
   call feeds the switcher and the settings page alike. Each theme row previews

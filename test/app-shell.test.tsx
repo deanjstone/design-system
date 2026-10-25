@@ -50,6 +50,27 @@ describe("AppShell", () => {
       expect(bar.className).toContain("rounded-xl")
     })
 
+    // The status-bar region and the gutter under it are solid, so scrolling content never shows through
+    // and the header's blur has no seam against it (#122).
+    it("sits on a solid fill over the status-bar safe area and its gutter", () => {
+      const { container } = render(<AppShell appName="Reader" sections={four}>x</AppShell>)
+
+      const fill = container.querySelector<HTMLElement>("[data-slot=app-shell-status-fill]")!
+      expect(fill).toBeTruthy()
+      expect(fill.getAttribute("aria-hidden")).toBe("true")
+      expect(fill.className).toContain("fixed")
+      expect(fill.className).toContain("top-0")
+      expect(fill.className).toContain("bg-background")
+      expect(fill.className).toContain("h-[calc(env(safe-area-inset-top)+0.5rem)]")
+      expect(fill.className).toContain("pointer-events-none")
+    })
+
+    it("keeps the header one gutter below the safe-area inset", () => {
+      const { container } = render(<AppShell appName="Reader" sections={four}>x</AppShell>)
+
+      expect(header(container).parentElement!.className).toContain("pt-[calc(env(safe-area-inset-top)+0.5rem)]")
+    })
+
     it("opens the app switcher from the app name", () => {
       const { container } = render(
         <AppShell appName="Reader" sections={four} apps={apps} currentAppId="reader">
@@ -116,14 +137,42 @@ describe("AppShell", () => {
   })
 
   describe("bottom tab bar", () => {
-    it("is a floating glass bar with xl corners, shown only below lg", () => {
+    it("is a floating glass bar, shown only below lg", () => {
       const { container } = render(<AppShell appName="Reader" sections={four}>x</AppShell>)
 
       const bar = tabBar(container)
       expect(bar.className).toContain("surface-glass")
-      expect(bar.className).toContain("rounded-xl")
       expect(bar.className).toContain("lg:hidden")
       expect(bar.className).toContain("fixed")
+    })
+
+    // An iPhone's display corners have a radius of roughly 47 to 55pt. A 12px bar
+    // sitting 8px in from the side is cut by them, so the bar takes a pill radius
+    // and a wider side gutter, and its tabs follow the radius inward (#122).
+    it("keeps its corners clear of the display corners", () => {
+      const { container } = render(<AppShell appName="Reader" sections={four}>x</AppShell>)
+
+      const bar = tabBar(container)
+      expect(bar.className).toContain("rounded-[2rem]")
+      expect(bar.className).not.toContain("rounded-xl")
+      expect(bar.className).toContain("left-[max(0.75rem,env(safe-area-inset-left))]")
+      expect(bar.className).toContain("right-[max(0.75rem,env(safe-area-inset-right))]")
+      expect(bar.className).toContain("bottom-[max(0.75rem,env(safe-area-inset-bottom))]")
+    })
+
+    it("rounds the tabs to sit inside the bar's radius", () => {
+      const { container } = render(<AppShell appName="Reader" sections={six}>x</AppShell>)
+
+      const bar = within(tabBar(container))
+      for (const control of [...bar.getAllByRole("link"), bar.getByRole("button", { name: "More" })]) {
+        expect(control.className).toContain("rounded-full")
+      }
+    })
+
+    it("leaves the page clear of the bar plus the bottom safe area", () => {
+      render(<AppShell appName="Reader" sections={four}>x</AppShell>)
+
+      expect(screen.getByRole("main").className).toContain("pb-[calc(6.5rem+env(safe-area-inset-bottom))]")
     })
 
     it("shows every section as a tab, with no More, when there are four or fewer", () => {
