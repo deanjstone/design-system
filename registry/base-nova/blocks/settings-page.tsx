@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { MonitorIcon, MoonIcon, SunIcon } from "lucide-react"
+import { CheckIcon, MonitorIcon, MoonIcon, SunIcon } from "lucide-react"
 import { cn } from "cn"
 
 import { PageHeader } from "@/components/page-header"
@@ -101,6 +101,7 @@ function AppearanceSection({ preference, onThemeChange, onModeChange }: Appearan
           aria-label="Theme"
           orientation="vertical"
           spacing={1}
+          className="w-full"
           value={[preference.theme]}
           onValueChange={(value) => {
             const next = value[0] as Theme | undefined
@@ -115,6 +116,7 @@ function AppearanceSection({ preference, onThemeChange, onModeChange }: Appearan
             >
               <ThemeSwatch theme={theme} />
               {THEME_LABELS[theme]}
+              {theme === preference.theme ? <CheckIcon aria-hidden="true" className="ml-auto text-primary" /> : null}
             </ToggleGroupItem>
           ))}
         </ToggleGroup>

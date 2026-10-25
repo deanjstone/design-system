@@ -186,6 +186,12 @@ describe("Login", () => {
     for (const button of screen.getAllByRole("button")) expect(button.className).toContain("w-full")
   })
 
+  it("paints its own page background", () => {
+    const { container } = render(<Login appName="Reader" />)
+
+    expect(container.querySelector("main")?.className).toContain("bg-background")
+  })
+
   it("renders no method controls when no handler is given", () => {
     render(<Login appName="Reader" />)
 

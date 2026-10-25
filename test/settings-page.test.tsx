@@ -78,6 +78,20 @@ describe("AppearanceSection", () => {
     expect(list.getByRole("button", { name: "Ocean" }).getAttribute("aria-pressed")).toBe("false")
   })
 
+  it("shows a check on the chosen theme only, so the choice does not rest on colour", () => {
+    render(<AppearanceSection {...props} preference={{ theme: "grove", mode: "dark" }} />)
+
+    const list = within(screen.getByRole("group", { name: "Theme" }))
+    expect(list.getByRole("button", { name: "Grove" }).querySelector("svg.lucide-check")).not.toBeNull()
+    expect(list.getByRole("button", { name: "Ocean" }).querySelector("svg.lucide-check")).toBeNull()
+  })
+
+  it("stretches the theme list across the page", () => {
+    render(<AppearanceSection {...props} />)
+
+    expect(screen.getByRole("group", { name: "Theme" }).className).toContain("w-full")
+  })
+
   it("reports a picked theme", () => {
     const onThemeChange = vi.fn()
     render(<AppearanceSection {...props} onThemeChange={onThemeChange} />)

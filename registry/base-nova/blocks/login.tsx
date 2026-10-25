@@ -77,7 +77,7 @@ function Login({ appName, description, onPasskeySignIn, onEmailLink, onPassword,
   return (
     <main
       data-slot="login"
-      className={cn("flex min-h-dvh items-center justify-center p-4 pt-safe pb-safe", className)}
+      className={cn("flex min-h-dvh items-center justify-center bg-background p-4 pt-safe pb-safe text-foreground", className)}
     >
       <Card className="w-full max-w-sm">
         <CardHeader>
