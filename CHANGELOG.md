@@ -1,3 +1,10 @@
+## [3.0.1](https://github.com/deanjstone/design-system/compare/v3.0.0...v3.0.1) (2026-10-25)
+
+
+### Bug Fixes
+
+* show app switcher as a popover on desktop and clear iPhone insets in app shell ([#123](https://github.com/deanjstone/design-system/issues/123)) ([38090e6](https://github.com/deanjstone/design-system/commit/38090e6605a2e1f52a6cdab32b92f8c2dbd36509))
+
 # [3.0.0](https://github.com/deanjstone/design-system/compare/v2.12.0...v3.0.0) (2026-10-25)
 
 
