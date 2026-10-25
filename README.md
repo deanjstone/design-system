@@ -194,7 +194,7 @@ registry dependencies. Almost every other item depends on at least `utils`.
 a branch, tag or commit SHA after `#`:
 
 ```bash
-npx shadcn add deanjstone/design-system/button#v2.5.1
+npx shadcn add deanjstone/design-system/button#v3.0.0
 npx shadcn add deanjstone/design-system/button#645db462137cf60b416d8ee4fc753146c5e0b51d
 ```
 
@@ -211,7 +211,7 @@ shipped. Register the alias once in the consumer's `components.json`:
 {
   "registries": {
     "@design-system": {
-      "url": "https://raw.githubusercontent.com/deanjstone/design-system/v2.5.1/r/{name}.json"
+      "url": "https://raw.githubusercontent.com/deanjstone/design-system/v3.0.0/r/{name}.json"
     }
   }
 }
@@ -331,9 +331,9 @@ Conversation set for an agent turn:
 | `questionnaire` | Asks the person to clarify before the agent continues: single and multiple choice, freeform, skippable | `button`, `@shadcn/react@^0.3.1` |
 
 ```bash
-npx shadcn add deanjstone/design-system/trace#v2.9.0
-npx shadcn add deanjstone/design-system/code-block#v2.9.0
-npx shadcn add deanjstone/design-system/questionnaire#v2.9.0
+npx shadcn add deanjstone/design-system/trace#v3.0.0
+npx shadcn add deanjstone/design-system/code-block#v3.0.0
+npx shadcn add deanjstone/design-system/questionnaire#v3.0.0
 ```
 
 Syntax highlighting is optional and lives in `use-highlighted-code`; add
@@ -373,6 +373,31 @@ visitor's choice. Token map, selection rules and the pinned T3 source are in
 [DESIGN.md](DESIGN.md#themes). After editing `theme/themes.json`, run
 `pnpm build:theme` to regenerate `theme/tokens.css`, `registry.json` and `r/`.
 
+## Migrating from v2 to v3
+
+v3.0.0 changes how every app looks once its `theme` item is re-added, so it is
+a major. The registry shipped most of it in v2.12.0 by accident (a `feat:`
+merge subject); v3.0.0 adds the layout blocks and marks the break. Nothing
+changes in an app until it re-runs `shadcn add` against `#v3.0.0`.
+
+```bash
+npx shadcn add deanjstone/design-system/theme#v3.0.0 -o
+npx shadcn add deanjstone/design-system/app-shell#v3.0.0
+```
+
+| Area | v2 | v3 | What to do |
+|---|---|---|---|
+| Themes | One chroma-zero palette | Six themes (`default`, `t3-chat`, `grove`, `ocean`, `ember`, `iris`), each light and dark; no `data-theme` means **Ocean** | Set `data-theme` on `<html>` to keep another palette; `-o` overwrites files the CLI wrote earlier, so diff any hand edits first |
+| Type scale | Tailwind's sizes | T3's scale: `text-xs` is 13px/17px (was 12px/16px), `text-xl` 21px, `text-2xl` 26px; `text-2xs` and `text-3xs` are new | Swap `text-xs` for `text-2xs` where the old 12px is wanted |
+| Glass tokens | none | `--glass-surface`, `--glass-fallback`, `--glass-blur`, `--glass-opacity`, `--glass-saturation`; `surface-glass`, `dialog-glass`, `dropdown-glass` utilities | Nothing, unless you want the glass recipe |
+| Theme preference | Per-app | `theme-preference` lib (cookie `ds-theme` on a configurable parent domain, `localStorage` fallback, no-flash `themeInitScript()`) and the `use-theme-preference` hook | Put `themeInitScript()` in `<head>` |
+| Layout blocks | none | `app-shell`, `app-switcher`, `page-header`, `empty-page`, `settings-page`, `login`, plus the `nav-link` lib | Optional; add the ones you want |
+| Radius | `0.625rem` | `0.625rem`, unchanged | Nothing |
+
+Rules for the blocks and the full token map are in
+[DESIGN.md](DESIGN.md#layout-blocks). A pin on a consumer's `@design-system`
+alias stays where it is until its owner moves it.
+
 ## Tests
 
 `pnpm install && pnpm test` renders registry sources in jsdom with Vitest
@@ -395,7 +420,7 @@ design-drift report. It is the check trialled in
 `registry:file` item:
 
 ```bash
-npx shadcn add deanjstone/design-system/design-check#v2.11.0
+npx shadcn add deanjstone/design-system/design-check#v3.0.0
 ```
 
 | Lands at | Does |
