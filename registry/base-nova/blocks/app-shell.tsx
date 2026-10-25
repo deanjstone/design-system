@@ -106,7 +106,7 @@ function AppShell({
         <div
           data-slot="app-shell-status-fill"
           aria-hidden="true"
-          className="pointer-events-none fixed inset-x-0 top-0 z-40 h-[env(safe-area-inset-top)] bg-background lg:left-64"
+          className="pointer-events-none fixed inset-x-0 top-0 z-40 h-[calc(env(safe-area-inset-top)+0.5rem)] bg-background lg:left-64"
         />
         <div className="pointer-events-none sticky top-0 z-30 px-2 pt-[calc(env(safe-area-inset-top)+0.5rem)] pb-2">
           <header

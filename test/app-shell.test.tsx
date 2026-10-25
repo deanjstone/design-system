@@ -50,9 +50,9 @@ describe("AppShell", () => {
       expect(bar.className).toContain("rounded-xl")
     })
 
-    // The status-bar region is solid, so scrolling content never shows through it
+    // The status-bar region and the gutter under it are solid, so scrolling content never shows through
     // and the header's blur has no seam against it (#122).
-    it("sits below a solid fill over the status-bar safe area", () => {
+    it("sits on a solid fill over the status-bar safe area and its gutter", () => {
       const { container } = render(<AppShell appName="Reader" sections={four}>x</AppShell>)
 
       const fill = container.querySelector<HTMLElement>("[data-slot=app-shell-status-fill]")!
@@ -61,7 +61,7 @@ describe("AppShell", () => {
       expect(fill.className).toContain("fixed")
       expect(fill.className).toContain("top-0")
       expect(fill.className).toContain("bg-background")
-      expect(fill.className).toContain("h-[env(safe-area-inset-top)]")
+      expect(fill.className).toContain("h-[calc(env(safe-area-inset-top)+0.5rem)]")
       expect(fill.className).toContain("pointer-events-none")
     })
 

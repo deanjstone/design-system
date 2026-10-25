@@ -571,8 +571,8 @@ Two helpers come with them: the `nav-link` lib (`renderAnchor`, the type of a
   `--glass-surface`, blurred, with the opaque `--glass-fallback` where
   `backdrop-filter` is missing) and floating. Content scrolls beneath both. The
   header is `rounded-xl`, one gutter (0.5rem) below the top safe-area inset, and
-  a solid `bg-background` fill covers the inset itself, so content never shows
-  through the status-bar region and the blur has no seam against it. The tab bar
+  a solid `bg-background` fill covers the inset and that gutter, so content never
+  shows through the status-bar region and the blur has no seam against it. The tab bar
   is `rounded-[2rem]` with `rounded-full` tabs, 0.75rem off the sides and bottom,
   or the safe-area inset where that is larger, so its corners clear an iPhone
   display's rounded corners (radius roughly 47 to 55pt). The page leaves `6.5rem`
