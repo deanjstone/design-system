@@ -1,3 +1,13 @@
+# [3.0.0](https://github.com/deanjstone/design-system/compare/v2.12.0...v3.0.0) (2026-10-25)
+
+
+* feat!: release design-system v3 ([#120](https://github.com/deanjstone/design-system/issues/120)) ([e76393b](https://github.com/deanjstone/design-system/commit/e76393b8f7f072dcd9874c3c0c6c638b4310e49a))
+
+
+### BREAKING CHANGES
+
+* v3 theme set, type scale and layout blocks; see README migration note.
+
 # [2.12.0](https://github.com/deanjstone/design-system/compare/v2.11.0...v2.12.0) (2026-10-25)
 
 
