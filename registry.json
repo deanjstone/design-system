@@ -856,6 +856,138 @@
       ]
     },
     {
+      "name": "nav-link",
+      "type": "registry:lib",
+      "files": [
+        {
+          "path": "registry/lib/nav-link.tsx",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "use-theme-preference",
+      "type": "registry:hook",
+      "registryDependencies": [
+        "deanjstone/design-system/theme-preference"
+      ],
+      "files": [
+        {
+          "path": "registry/base-nova/hooks/use-theme-preference.ts",
+          "type": "registry:hook"
+        }
+      ]
+    },
+    {
+      "name": "page-header",
+      "type": "registry:block",
+      "dependencies": [
+        "cn@^0.5.0"
+      ],
+      "files": [
+        {
+          "path": "registry/base-nova/blocks/page-header.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "empty-page",
+      "type": "registry:block",
+      "registryDependencies": [
+        "deanjstone/design-system/empty"
+      ],
+      "dependencies": [
+        "cn@^0.5.0"
+      ],
+      "files": [
+        {
+          "path": "registry/base-nova/blocks/empty-page.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "app-switcher",
+      "type": "registry:block",
+      "registryDependencies": [
+        "deanjstone/design-system/button",
+        "deanjstone/design-system/sheet",
+        "deanjstone/design-system/toggle-group",
+        "deanjstone/design-system/nav-link",
+        "deanjstone/design-system/theme-preference"
+      ],
+      "dependencies": [
+        "lucide-react",
+        "cn@^0.5.0"
+      ],
+      "files": [
+        {
+          "path": "registry/base-nova/blocks/app-switcher.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "app-shell",
+      "type": "registry:block",
+      "registryDependencies": [
+        "deanjstone/design-system/app-switcher",
+        "deanjstone/design-system/button",
+        "deanjstone/design-system/sheet",
+        "deanjstone/design-system/nav-link"
+      ],
+      "dependencies": [
+        "lucide-react",
+        "cn@^0.5.0"
+      ],
+      "files": [
+        {
+          "path": "registry/base-nova/blocks/app-shell.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "settings-page",
+      "type": "registry:block",
+      "registryDependencies": [
+        "deanjstone/design-system/page-header",
+        "deanjstone/design-system/toggle-group",
+        "deanjstone/design-system/theme-preference"
+      ],
+      "dependencies": [
+        "lucide-react",
+        "cn@^0.5.0"
+      ],
+      "files": [
+        {
+          "path": "registry/base-nova/blocks/settings-page.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "login",
+      "type": "registry:block",
+      "registryDependencies": [
+        "deanjstone/design-system/button",
+        "deanjstone/design-system/card",
+        "deanjstone/design-system/field",
+        "deanjstone/design-system/input",
+        "deanjstone/design-system/spinner"
+      ],
+      "dependencies": [
+        "cn@^0.5.0"
+      ],
+      "files": [
+        {
+          "path": "registry/base-nova/blocks/login.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
       "name": "utils",
       "type": "registry:lib",
       "dependencies": [

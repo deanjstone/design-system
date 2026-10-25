@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "empty-page",
+  "dependencies": [
+    "cn@^0.5.0"
+  ],
+  "registryDependencies": [
+    "deanjstone/design-system/empty"
+  ],
+  "files": [
+    {
+      "path": "registry/base-nova/blocks/empty-page.tsx",
+      "content": "import * as React from \"react\"\nimport { cn } from \"cn\"\n\nimport {\n  Empty,\n  EmptyContent,\n  EmptyDescription,\n  EmptyHeader,\n  EmptyMedia,\n  EmptyTitle,\n} from \"@/components/ui/empty\"\n\ntype EmptyPageProps = Omit<React.ComponentProps<typeof Empty>, \"title\"> & {\n  /** An icon element, drawn in the muted icon tile. */\n  icon?: React.ReactNode\n  title: React.ReactNode\n  description?: React.ReactNode\n  /** The next step, usually a button. */\n  action?: React.ReactNode\n}\n\n// A whole page with nothing to show: it fills the room the shell leaves and\n// centres the message. For an empty list inside a page, use `Empty` directly.\nfunction EmptyPage({ icon, title, description, action, className, ...props }: EmptyPageProps) {\n  return (\n    <Empty data-slot=\"empty\" className={cn(\"min-h-[50dvh]\", className)} {...props}>\n      <EmptyHeader>\n        {icon ? <EmptyMedia variant=\"icon\">{icon}</EmptyMedia> : null}\n        <EmptyTitle>{title}</EmptyTitle>\n        {description ? <EmptyDescription>{description}</EmptyDescription> : null}\n      </EmptyHeader>\n      {action ? <EmptyContent>{action}</EmptyContent> : null}\n    </Empty>\n  )\n}\n\nexport { EmptyPage }\nexport type { EmptyPageProps }\n",
+      "type": "registry:component"
+    }
+  ],
+  "type": "registry:block"
+}

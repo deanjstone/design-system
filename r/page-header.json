@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "page-header",
+  "dependencies": [
+    "cn@^0.5.0"
+  ],
+  "files": [
+    {
+      "path": "registry/base-nova/blocks/page-header.tsx",
+      "content": "import * as React from \"react\"\nimport { cn } from \"cn\"\n\ntype PageHeaderProps = Omit<React.ComponentProps<\"header\">, \"title\"> & {\n  title: React.ReactNode\n  description?: React.ReactNode\n  /** Buttons for the page's main actions. They sit beside the title from `sm`, under it on a phone. */\n  actions?: React.ReactNode\n}\n\n// The title block at the top of a page, below the shell's header. One h1 per page.\nfunction PageHeader({ title, description, actions, className, ...props }: PageHeaderProps) {\n  return (\n    <header\n      data-slot=\"page-header\"\n      className={cn(\"flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between\", className)}\n      {...props}\n    >\n      <div className=\"flex min-w-0 flex-col gap-1\">\n        <h1 data-slot=\"page-header-title\" className=\"font-heading text-xl font-semibold tracking-tight text-balance sm:text-2xl\">\n          {title}\n        </h1>\n        {description ? (\n          <p data-slot=\"page-header-description\" className=\"text-sm text-muted-foreground text-pretty\">\n            {description}\n          </p>\n        ) : null}\n      </div>\n      {actions ? (\n        <div data-slot=\"page-header-actions\" className=\"flex shrink-0 flex-wrap items-center gap-2\">\n          {actions}\n        </div>\n      ) : null}\n    </header>\n  )\n}\n\nexport { PageHeader }\nexport type { PageHeaderProps }\n",
+      "type": "registry:component"
+    }
+  ],
+  "type": "registry:block"
+}
