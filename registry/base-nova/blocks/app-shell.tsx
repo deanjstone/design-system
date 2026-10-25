@@ -130,7 +130,7 @@ function AppShell({
 
         <main
           data-slot="app-shell-main"
-          className="mx-auto w-full max-w-5xl flex-1 px-4 pt-2 pb-[calc(6.5rem+env(safe-area-inset-bottom))] lg:px-6 lg:pb-6"
+          className="mx-auto flex w-full max-w-5xl flex-1 flex-col px-4 pt-2 pb-[calc(6.5rem+env(safe-area-inset-bottom))] lg:px-6 lg:pb-6"
         >
           {children}
         </main>

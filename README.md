@@ -42,10 +42,12 @@ registry.json              root manifest — one entry per distributable item
 registry/
   lib/utils.ts              re-exports cn() from the cn package
   lib/theme-preference.ts   theme + Light/Dark/System choice: cookie, localStorage, no-flash script
+  lib/nav-link.tsx          renderAnchor and the renderLink type the layout blocks share
   lib/link-pill-*.ts, .css  LinkPill core, HTML shell and styles
   lib/highlighter.tsx       Shiki loader behind use-highlighted-code
   base-nova/ui/               45 base-nova style components (Base UI, plus link-pill)
-  base-nova/hooks/            use-mobile (pulled by sidebar), use-highlighted-code (pulled by code-block)
+  base-nova/hooks/            use-mobile (pulled by sidebar), use-highlighted-code (pulled by code-block), use-theme-preference
+  base-nova/blocks/           v3 layout blocks: app-shell, app-switcher, page-header, empty-page, settings-page, login
   design-check/             script and workflow of the design-check item (CI, not UI)
 r/                         generated per-item output — what the r/ alias resolves
 theme/tokens.css            same tokens as the "theme" item, as plain CSS

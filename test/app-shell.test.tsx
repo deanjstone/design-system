@@ -248,6 +248,14 @@ describe("AppShell", () => {
     })
   })
 
+  it("lays the page out as a column, so an EmptyPage can fill what is left", () => {
+    render(<AppShell appName="Reader" sections={four}>x</AppShell>)
+
+    const className = screen.getByRole("main").className
+    expect(className).toContain("flex")
+    expect(className).toContain("flex-col")
+  })
+
   it("keeps the page clear of the floating tab bar, and releases that room from lg", () => {
     render(<AppShell appName="Reader" sections={four}>x</AppShell>)
 
