@@ -846,6 +846,16 @@
       ]
     },
     {
+      "name": "theme-preference",
+      "type": "registry:lib",
+      "files": [
+        {
+          "path": "registry/lib/theme-preference.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
       "name": "utils",
       "type": "registry:lib",
       "dependencies": [
