@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "use-theme-preference",
+  "registryDependencies": [
+    "deanjstone/design-system/theme-preference"
+  ],
+  "files": [
+    {
+      "path": "registry/base-nova/hooks/use-theme-preference.ts",
+      "content": "import * as React from \"react\"\n\nimport {\n  applyPreference,\n  DEFAULT_MODE,\n  DEFAULT_THEME,\n  readPreference,\n  resolveMode,\n  setPreference,\n  systemPrefersDark,\n  watchSystemMode,\n  type ModePreference,\n  type Theme,\n  type ThemePreference,\n} from \"@/lib/theme-preference\"\n\ntype Options = {\n  /** Parent domain the cookie is shared across, e.g. \".myargus.cc\". Host-only when omitted. */\n  cookieDomain?: string\n}\n\n// The visitor's theme and Light / Dark / System choice as React state. The stored\n// choice is read after mount, so the first render matches the server's.\nexport function useThemePreference({ cookieDomain }: Options = {}) {\n  const [preference, setStored] = React.useState<ThemePreference>({ theme: DEFAULT_THEME, mode: DEFAULT_MODE })\n  const [prefersDark, setPrefersDark] = React.useState(false)\n  const latest = React.useRef(preference)\n  latest.current = preference\n\n  React.useEffect(() => {\n    setStored(readPreference())\n    setPrefersDark(systemPrefersDark())\n    return watchSystemMode((dark) => {\n      setPrefersDark(dark)\n      if (latest.current.mode === \"system\") applyPreference(latest.current, { prefersDark: dark })\n    })\n  }, [])\n\n  const update = React.useCallback(\n    (next: ThemePreference) => {\n      setStored(next)\n      setPreference(next, { cookieDomain, prefersDark: systemPrefersDark() })\n    },\n    [cookieDomain],\n  )\n\n  const setTheme = React.useCallback(\n    (theme: Theme) => update({ ...latest.current, theme }),\n    [update],\n  )\n  const setMode = React.useCallback(\n    (mode: ModePreference) => update({ ...latest.current, mode }),\n    [update],\n  )\n\n  return { preference, resolvedMode: resolveMode(preference.mode, prefersDark), setTheme, setMode }\n}\n",
+      "type": "registry:hook"
+    }
+  ],
+  "type": "registry:hook"
+}

@@ -533,6 +533,98 @@ dark values are unchanged from before the tokens existed, so an always-dark
 consumer sees no visual difference; a light-mode consumer gains a styled
 thumb it didn't have.
 
+## Layout Blocks
+
+*Added in v3 (design-system#112).* Six `registry:block` items give every app the
+same frame, built from registry `ui` items and theme tokens only, mobile first.
+Each is a plain React file the CLI copies into the app; none reads a router or
+an auth client.
+
+| Block | What it is | Composes |
+|---|---|---|
+| `app-shell` | Glass floating header, glass bottom tab bar, and from 1024px a left sidebar | `app-switcher`, `button`, `sheet` |
+| `app-switcher` | Sheet with every app and the Light / Dark / System quick toggle | `sheet`, `toggle-group`, `button` |
+| `page-header` | The page's one `h1`, a description and the main actions | none |
+| `empty-page` | A whole page with nothing in it | `empty` |
+| `settings-page` | `SettingsPage`, `SettingsSection` and `AppearanceSection` (theme list, Light / Dark / System) | `page-header`, `toggle-group` |
+| `login` | Passkey, email link and password, behind handlers the app passes | `card`, `field`, `input`, `button`, `spinner` |
+
+Two helpers come with them: the `nav-link` lib (`renderAnchor`, the type of a
+`renderLink` prop) and the `use-theme-preference` hook, which wraps
+`theme-preference` as `{ preference, resolvedMode, setTheme, setMode }`.
+
+### Rules
+
+- **Phone first.** The tab bar is the phone's navigation. At most four sections
+  are tabs. With five or more, the first four are tabs and the rest wait under a
+  fifth tab, **More**, which opens a sheet listing them. With four or fewer
+  there is no More. The More tab shows as active when the active section is in
+  it.
+- **From 1024px** (`lg`) the tab bar goes and the same sections, all of them,
+  list in a 16rem left sidebar. The content column is offset by the sidebar's
+  width. 1024px is the owner's number, not the registry `sidebar` item's 768px,
+  so the shell draws its own sidebar (links styled with the `--sidebar-*` tokens)
+  rather than using `sidebar`, which switches at 768px and turns into a sheet
+  below it. The Capability Rule above still
+  governs touch targets, which follow `pointer: coarse`, not width.
+- **Glass bars.** The header and the tab bar are `surface-glass` (the theme's
+  `--glass-surface`, blurred, with the opaque `--glass-fallback` where
+  `backdrop-filter` is missing), `rounded-xl` and floating: 8px off the screen
+  edge, or the safe-area inset where that is larger. Content scrolls beneath
+  both. The page leaves `6.5rem` plus the bottom safe area clear for the tab
+  bar on a phone, and releases it from 1024px. `--radius` stays `0.625rem`.
+- **Header.** The app name opens the app switcher. A drill-down page passes
+  `back={{ href, label }}` and the header gains a back button (44px, labelled
+  "Back" unless a label is given) before the name. Header actions sit at the end.
+- **App switcher.** A bottom sheet: every app with its description, the current
+  one marked with a check and `aria-current`, and the colour-mode quick toggle
+  when the app passes `onModeChange`. With no other apps the name is plain text.
+  The full theme list is not here; it is the settings page's job.
+- **Settings.** `AppearanceSection` is controlled, so one `useThemePreference()`
+  call feeds the switcher and the settings page alike. Each theme row previews
+  the theme's own light and dark colours by scoping `data-theme` to the
+  swatch, and the chosen row carries a check as well as a fill.
+- **Touch.** Tabs are 56px tall; every other control in a block is at least 44px
+  (`min-h-11`), whatever the pointer.
+- **Titles.** One `h1` per page, from `page-header` (or `login`). A section
+  inside a page is an `h2`. Use `empty-page` when a page has nothing to show; use
+  `empty` for an empty list inside a page.
+- **Links.** Blocks draw links through a `renderLink` prop, an `<a>` by default,
+  so an app on a client-side router keeps navigation in-app. Section `href`s,
+  app `href`s and `back.href` all go through it.
+- **Login.** The app passes only the handlers it supports; a button or field
+  appears per handler. A handler that throws shows its message in a
+  `role="alert"`; a successful email link replaces the form with a confirmation
+  naming the address. The email field carries `autocomplete="username webauthn"`
+  so the browser can offer a passkey from it.
+
+### Using them
+
+```tsx
+const { preference, resolvedMode, setTheme, setMode } = useThemePreference({ cookieDomain: ".myargus.cc" })
+
+<AppShell
+  appName="Reader"
+  sections={sections}            // { id, label, href, icon }[]
+  activeSectionId="library"
+  apps={apps}                    // { id, name, href, description?, icon? }[]
+  currentAppId="reader"
+  mode={preference.mode}
+  onModeChange={setMode}
+>
+  <PageHeader title="Library" actions={<Button>Add</Button>} />
+  ...
+</AppShell>
+```
+
+### Not covered
+
+These blocks need Tailwind v4 and oklch, so `slate-reader` (Safari 9, Tailwind
+v3) cannot take them; how it does is settled when its follow-up is filed (map
+#109). The blocks write no `style` prop of their own; `toggle-group`, which the
+switcher and the settings page use, sets `--gap` through React's `style` prop,
+which `argusde`'s CSP should be checked against when it adopts them.
+
 ## Elevation & Depth
 
 **This system runs two depth mechanisms, chosen by mode, not one ladder
@@ -720,7 +812,7 @@ the label tracks the field's state rather than sitting inert beside it.
 
 ### The full set
 
-Forty-five components ship, plus the `use-mobile` and `use-highlighted-code` hooks. The sections above describe the ones that define
+Forty-five components ship, plus the `use-mobile`, `use-highlighted-code` and `use-theme-preference` hooks, and the six layout blocks described in Layout Blocks above. The sections above describe the ones that define
 the system's behaviour; the rest follow the same rules — the shared focus
 treatment, the radius scale, the 32px control height where they are controls —
 and are listed here so the inventory is not something you have to infer from

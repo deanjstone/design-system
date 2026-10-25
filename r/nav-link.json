@@ -1,0 +1,12 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "nav-link",
+  "files": [
+    {
+      "path": "registry/lib/nav-link.tsx",
+      "content": "import * as React from \"react\"\n\n// How the layout blocks draw a link. The default is a plain anchor; an app on a\n// client-side router passes its own `renderLink` so navigation stays in-app.\n\nexport type NavLinkProps = Omit<React.ComponentProps<\"a\">, \"href\"> & { href: string }\n\nexport type RenderLink = (props: NavLinkProps) => React.ReactElement\n\nexport const renderAnchor: RenderLink = (props) => <a {...props} />\n",
+      "type": "registry:lib"
+    }
+  ],
+  "type": "registry:lib"
+}
