@@ -1,3 +1,10 @@
+# [2.12.0](https://github.com/deanjstone/design-system/compare/v2.11.0...v2.12.0) (2026-10-25)
+
+
+### Features
+
+* add v3 theme tokens, type scale and theme preference ([#118](https://github.com/deanjstone/design-system/issues/118)) ([36d0ae6](https://github.com/deanjstone/design-system/commit/36d0ae61b51a5f8fbd0b03d2b3270470c3356281))
+
 # [2.11.0](https://github.com/deanjstone/design-system/compare/v2.10.0...v2.11.0) (2026-10-24)
 
 
