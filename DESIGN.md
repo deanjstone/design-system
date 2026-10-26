@@ -596,7 +596,7 @@ Two helpers come with them: the `nav-link` lib (`renderAnchor`, the type of a
   call feeds the switcher and the settings page alike. Each theme row previews
   the theme's own light and dark colours by scoping `data-theme` to the
   swatch, and the chosen row carries a check as well as a fill.
-- **Touch.** Tabs are 56px tall; every other control in a block is at least 44px
+- **Touch.** Tabs are 50px tall (the bar is 60px with its padding and borders, as in native iOS floating tab bars); every other control in a block is at least 44px
   (`min-h-11`), whatever the pointer.
 - **Titles.** One `h1` per page, from `page-header` (or `login`). A section
   inside a page is an `h2`. Use `empty-page` when a page has nothing to show; use

@@ -24,3 +24,5 @@ footer (optional)
 `scope` is optional and free-form.
 
 Squash-merged PRs should carry a Conventional Commits–style title, since that becomes the commit message on `main`. Past commits predate this convention and are left untouched.
+
+The squash subject must keep the type prefix. A plain subject such as `Lower the app-shell tab bar (#126)` on `main` is read as no release: semantic-release only reads the subject line (and a `BREAKING CHANGE:` footer), not the `fix:` lines in the squash body, so #126 shipped to `main` with no version until a follow-up `fix:` PR released it. Pass `--subject "fix: <imperative subject> (#N)"` to `gh pr merge --squash`.
