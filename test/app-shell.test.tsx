@@ -155,9 +155,18 @@ describe("AppShell", () => {
       const bar = tabBar(container)
       expect(bar.className).toContain("rounded-[2rem]")
       expect(bar.className).not.toContain("rounded-xl")
-      expect(bar.className).toContain("left-[max(0.75rem,env(safe-area-inset-left))]")
-      expect(bar.className).toContain("right-[max(0.75rem,env(safe-area-inset-right))]")
-      expect(bar.className).toContain("bottom-[max(0.75rem,env(safe-area-inset-bottom))]")
+      expect(bar.className).toContain("left-[max(1.3rem,env(safe-area-inset-left))]")
+      expect(bar.className).toContain("right-[max(1.3rem,env(safe-area-inset-right))]")
+    })
+
+    // Native iOS floating tab bars (GitHub, WhatsApp) sit about 22pt above the screen bottom on a
+    // Face ID iPhone, so the pill overlaps the home-indicator zone instead of clearing all 34pt (#125).
+    it("sits 12px lower than the bottom safe-area inset, and 0.5rem up where there is none", () => {
+      const { container } = render(<AppShell appName="Reader" sections={four}>x</AppShell>)
+
+      const bar = tabBar(container)
+      expect(bar.className).toContain("bottom-[max(0.5rem,calc(env(safe-area-inset-bottom)-12px))]")
+      expect(bar.className).not.toContain("bottom-[max(0.75rem")
     })
 
     it("rounds the tabs to sit inside the bar's radius", () => {
@@ -169,10 +178,10 @@ describe("AppShell", () => {
       }
     })
 
-    it("leaves the page clear of the bar plus the bottom safe area", () => {
+    it("leaves the page clear of the bar plus its bottom offset", () => {
       render(<AppShell appName="Reader" sections={four}>x</AppShell>)
 
-      expect(screen.getByRole("main").className).toContain("pb-[calc(6.5rem+env(safe-area-inset-bottom))]")
+      expect(screen.getByRole("main").className).toContain("pb-[calc(6rem+max(0.5rem,calc(env(safe-area-inset-bottom)-12px)))]")
     })
 
     it("shows every section as a tab, with no More, when there are four or fewer", () => {

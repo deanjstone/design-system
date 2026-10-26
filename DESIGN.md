@@ -573,11 +573,14 @@ Two helpers come with them: the `nav-link` lib (`renderAnchor`, the type of a
   header is `rounded-xl`, one gutter (0.5rem) below the top safe-area inset, and
   a solid `bg-background` fill covers the inset and that gutter, so content never
   shows through the status-bar region and the blur has no seam against it. The tab bar
-  is `rounded-[2rem]` with `rounded-full` tabs, 0.75rem off the sides and bottom,
-  or the safe-area inset where that is larger, so its corners clear an iPhone
-  display's rounded corners (radius roughly 47 to 55pt). The page leaves `6.5rem`
-  plus the bottom safe area clear for the tab bar on a phone, and releases it
-  from 1024px. `--radius` stays `0.625rem`. An app must set `viewport-fit=cover`
+  is `rounded-[2rem]` with `rounded-full` tabs, about 21pt (`1.3rem`) off the
+  sides, or the side safe-area inset where that is larger, so its corners clear
+  an iPhone display's rounded corners (radius roughly 47 to 55pt). It sits
+  `max(0.5rem, bottom inset - 12px)` above the bottom: about 22pt on a Face ID
+  iPhone, as in native iOS floating tab bars (GitHub, WhatsApp), so it overlaps
+  the home-indicator zone, and 0.5rem where there is no inset. The page leaves
+  `6rem` plus that bottom offset clear for the tab bar on a phone, and releases
+  it from 1024px. `--radius` stays `0.625rem`. An app must set `viewport-fit=cover`
   for the insets to be non-zero; without it the browser already keeps the page
   inside the safe area.
 - **Header.** The app name opens the app switcher. A drill-down page passes
