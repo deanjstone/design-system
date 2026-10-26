@@ -243,12 +243,15 @@ describe("AppShell", () => {
       ).toBe("page")
     })
 
-    it("keeps every tab at least 44px tall", () => {
+    // Native iOS floating tab bars (GitHub, WhatsApp) are about 60pt tall; 50px tabs plus the bar's
+    // 4px padding and 1px borders make 60px, still above the 44px touch floor (#125).
+    it("keeps every tab 50px tall, above the 44px touch floor", () => {
       const { container } = render(<AppShell appName="Reader" sections={six}>x</AppShell>)
 
       const bar = within(tabBar(container))
       for (const control of [...bar.getAllByRole("link"), bar.getByRole("button", { name: "More" })]) {
-        expect(control.className).toContain("min-h-14")
+        expect(control.className).toContain("min-h-12.5")
+        expect(control.className).not.toContain("min-h-14")
       }
     })
 
