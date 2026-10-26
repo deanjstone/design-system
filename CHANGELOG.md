@@ -1,3 +1,10 @@
+## [3.0.2](https://github.com/deanjstone/design-system/compare/v3.0.1...v3.0.2) (2026-10-26)
+
+
+### Bug Fixes
+
+* match the app-shell tab bar height to native iOS ([#127](https://github.com/deanjstone/design-system/issues/127)) ([4a378c5](https://github.com/deanjstone/design-system/commit/4a378c5d5dae148522826fe25ddd6b1fb861fcb5)), closes [#126](https://github.com/deanjstone/design-system/issues/126) [#126](https://github.com/deanjstone/design-system/issues/126)
+
 ## [3.0.1](https://github.com/deanjstone/design-system/compare/v3.0.0...v3.0.1) (2026-10-25)
 
 
