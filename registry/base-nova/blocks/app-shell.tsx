@@ -135,7 +135,7 @@ function AppShell({
 
         <main
           data-slot="app-shell-main"
-          className="mx-auto flex w-full max-w-5xl flex-1 flex-col px-4 pt-2 pb-[calc(6.5rem+env(safe-area-inset-bottom))] lg:px-6 lg:pb-6"
+          className="mx-auto flex w-full max-w-5xl flex-1 flex-col px-4 pt-2 pb-[calc(6rem+max(0.5rem,calc(env(safe-area-inset-bottom)-12px)))] lg:px-6 lg:pb-6"
         >
           {children}
         </main>
@@ -146,7 +146,7 @@ function AppShell({
         aria-label="Sections"
         className={cn(
           glassBar,
-          "fixed right-[max(0.75rem,env(safe-area-inset-right))] bottom-[max(0.75rem,env(safe-area-inset-bottom))] left-[max(0.75rem,env(safe-area-inset-left))] z-30 flex items-stretch gap-1 rounded-[2rem] p-1 lg:hidden"
+          "fixed right-[max(1.3rem,env(safe-area-inset-right))] bottom-[max(0.5rem,calc(env(safe-area-inset-bottom)-12px))] left-[max(1.3rem,env(safe-area-inset-left))] z-30 flex items-stretch gap-1 rounded-[2rem] p-1 lg:hidden"
         )}
       >
         {tabs.map((entry) => (
