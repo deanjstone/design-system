@@ -6,10 +6,10 @@
 //      registry.json and rebuilds r/ from it,
 //   2. checks that nothing in either was left unpinned,
 //   3. commits that stamped tree (S), then a commit R whose tree is the
-//      release commit's again, and pushes R to the release branch, so
-//      `main` ends up exactly as it was and floats,
-//   4. detaches HEAD at S. semantic-release tags HEAD once prepare ends, so
-//      the tag lands on S.
+//      release commit's again,
+//   4. detaches HEAD at S (semantic-release tags HEAD once prepare ends, so
+//      the tag lands on S), then pushes R to the release branch, so `main`
+//      ends up with the release commit's tree and floats.
 //
 // S has to sit in main's history: semantic-release finds the last release
 // with `git tag --merged <branch>`, and a tag on an off-branch commit would
@@ -94,7 +94,10 @@ export async function prepare(pluginConfig, context) {
     "chore(release): restore floating registryDependencies on main [skip ci]",
   ])
 
-  await git(["push", options.repositoryUrl, `${restoreCommit}:refs/heads/${branch.name}`])
+  // Detach first (the working tree already holds S's content; staging it lets
+  // checkout accept that), so a failure here pushes nothing.
+  await git(["add", "--all", "--", "registry.json", "r"])
   await git(["checkout", "--detach", stampCommit])
+  await git(["push", options.repositoryUrl, `${restoreCommit}:refs/heads/${branch.name}`])
   logger.log("Pinned registryDependencies to %s on %s; main keeps %s", ref, stampCommit, restoreCommit)
 }
