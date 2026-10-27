@@ -22,6 +22,12 @@
         ],
         "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
       }
+    ],
+    [
+      "./scripts/release/semantic-release-pin.mjs",
+      {
+        "buildCommand": "npx --yes shadcn@4.19.1 build --output ./r"
+      }
     ]
   ]
 }
