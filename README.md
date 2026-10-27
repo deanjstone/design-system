@@ -180,16 +180,35 @@ how every consumer looks.
 
 ### Pinning to a release
 
-**A pin fixes the item you name, not its dependencies.** Both pinning forms
-below install the named item from the release you choose. Every
-`registryDependencies` entry is still resolved from `main`, because this
-registry writes them as unversioned addresses
-(`deanjstone/design-system/<name>`) and shadcn does not carry a ref across
-dependencies. shadcn's docs say: "Refs are not inherited across
-dependencies. If a dependency should be pinned, include its own ref."
-([GitHub Registries](https://ui.shadcn.com/docs/registry/github), read
-2026-10-08). Only `theme`, `utils`, `use-mobile`, `highlighter`, `link-pill-core` and `link-pill-css` have no
+**From the release that ships design-system#65, a tag pins its dependencies
+too.** Every in-repo `registryDependencies` entry in a tagged `registry.json`
+and `r/*.json` carries that tag's ref, for example
+`deanjstone/design-system/button#v4.0.0`, so shadcn fetches each dependency
+from the same tag as the item you named. shadcn does not carry a ref across
+dependencies on its own: "Refs are not inherited across dependencies. If a
+dependency should be pinned, include its own ref." ([GitHub
+Registries](https://ui.shadcn.com/docs/registry/github), read 2026-10-08), so
+the release writes the ref into each entry. `main` keeps the unversioned form
+(`deanjstone/design-system/<name>`), so an unpinned install still floats.
+
+**Older tags do not.** Before that release, a pin fixed only the item you
+named: every `registryDependencies` entry was an unversioned address and
+resolved from `main`. If you pin to an older tag, read the "In practice"
+paragraph below. Entries from other registries are never stamped. Only `theme`,
+`utils`, `use-mobile`, `highlighter`, `link-pill-core` and `link-pill-css` have no
 registry dependencies. Almost every other item depends on at least `utils`.
+
+**What the release does.** semantic-release's `prepare` step runs
+`scripts/release/semantic-release-pin.mjs` after the release commit. It stamps
+`#<tag>` into `registry.json`, rebuilds `r/` with `shadcn build`, fails the
+release if any in-repo entry is left without exactly that ref, and commits the
+result. The tag points at that commit. A second commit on `main` restores the
+unversioned `registry.json` and `r/`, so `main`'s tree is the release commit's
+tree. The tag stays reachable from `main`, which semantic-release needs to
+find the last release. A commit cannot contain its own SHA, so the tag name is
+the ref. Tags are immutable by convention, which is what makes that safe.
+The `Registry output current` check runs on `main` and pull requests only, so
+it never sees the stamped form.
 
 **Option 1: a `#ref` on the item address (preferred).** shadcn 4.x accepts
 a branch, tag or commit SHA after `#`:
@@ -238,17 +257,18 @@ shorthand only to track `main` on purpose.
 **What this means in practice.** `shadcn add` copies source into the
 consumer's repo, so the code you commit is the real pin. A later `add`
 changes nothing until it runs. Review its diff the way you would review any
-dependency upgrade, including files pulled in as dependencies. Passing each
-dependency explicitly with its own `#ref` in the same command does **not**
-work around this: the dependency's `main` copy wins (see below). If an
-install must be fully reproducible today, pin and add only leaf items
-(`theme`, `utils`, `use-mobile`). For anything else, inspect the dependency
-files the CLI writes. Pinning dependencies at release time is tracked in
-design-system#65: it changes how `registryDependencies` are written, which is a
-breaking change for consumers.
+dependency upgrade. On a tag from the release that ships design-system#65 or
+later, files pulled in as dependencies come from the same tag. A dependency
+added to `main` after the tag is never installed by a tagged address. On an
+older tag, dependencies come from `main`, and passing each one with its own
+`#ref` in the same command does **not** work around that: the dependency's
+`main` copy wins (see below). For a fully reproducible install from an older
+tag, pin and add only leaf items (`theme`, `utils`, `use-mobile`), or inspect
+the dependency files the CLI writes. A tooling script that reads
+`registryDependencies` from a tagged build sees the `#ref` suffix.
 
-Verified 2026-10-08 with `shadcn@4.21.4`, in a fresh Vite app with
-`init -b base -p nova`. Every `fetch` and `git` call the CLI made was logged
+Verified 2026-10-08 with `shadcn@4.21.4` against a tag from before the stamping
+above, in a fresh Vite app with `init -b base -p nova`. Every `fetch` and `git` call the CLI made was logged
 (design-system#59):
 
 | Command | Named item from | Dependencies from |
@@ -359,7 +379,8 @@ adding the items.
    A `registryDependencies` entry naming another item in this repo must use
    its full address, `deanjstone/design-system/<name>`. A bare name such as
    `button` means shadcn's built-in item, not ours, so the consumer silently
-   gets upstream's copy (design-system#57).
+   gets upstream's copy (design-system#57). Write it without a ref: the
+   release stamps `#<tag>` into tagged builds itself.
 
    Pin a pre-1.0 npm dependency to its minor, e.g. `@shadcn/react@^0.3.1`,
    so a re-run `shadcn add` cannot pull a breaking release.
