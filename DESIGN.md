@@ -242,6 +242,30 @@ flat grey.
   The only chromatic
   colour in the core palette, and the clearest statement of the system's
   position — colour means something here.
+- **Status** (`success`, `warning`, `unreachable`, `critical`): the four
+  health tiers, each paired with a `-foreground` for text on a solid fill.
+  Green, amber, orange and red, so *unreachable* (the thing is not reporting)
+  reads apart from *critical* (it reports a fault). Unlike the themed tokens
+  they hold **the same values in every theme**, light and dark each: a status
+  colour has to mean one thing across palettes. They are not read from T3
+  Code, which has none; `scripts/theme/status.mjs` owns them. Use them for
+  state, never for decoration or data series.
+
+  | Role | Light | Dark |
+  |---|---|---|
+  | `success` | `#137333` | `#4ade80` |
+  | `warning` | `#8a5300` | `#fbbf24` |
+  | `unreachable` | `#b04400` | `#fb923c` |
+  | `critical` | `#c10007` | `#ff7a7e` |
+
+  `-foreground` is `#fffaff` in light and `#241523` in dark. Every theme and
+  mode is tested for 4.5:1 of each role as text on `--background` and
+  `--card`, on its own badge tint (10% light, 15% dark), and of
+  `-foreground` on the solid role colour. Colour is never the only carrier:
+  a status badge always has a text label.
+
+  ![Status badges on every theme, light](docs/assets/status-badges-light.png)
+  ![Status badges on every theme, dark](docs/assets/status-badges-dark.png)
 - **Chart 1–5**: The one place a full hue range is sanctioned, because data
   series need to be told apart. Light and dark ship different values.
 
@@ -783,6 +807,10 @@ the indicator. Applied on `focus-visible`, so pointer users never see it.
 - **Shape:** Full pill (`rounded-4xl`), 20px tall, 0.75rem medium text.
 - **Behaviour:** Composes through `render`, so a badge can become a link
   without a wrapper.
+- **Status variants:** `success`, `warning`, `unreachable` and `critical`, the
+  same tinted treatment as destructive: the role's text colour on a 10% wash
+  (15% in dark), with a 20% wash on hover when the badge is a link. They need
+  the status tokens, so refresh `theme` before using them.
 
 ### Cards
 

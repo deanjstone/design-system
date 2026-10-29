@@ -513,7 +513,9 @@ iterates against a running app, and this repo has none.
   Switched from `new-york`/Radix in [ADR-0001](docs/adr/0001-switch-component-library-to-base-ui.md).
 - The `theme` item ships the full token set: core colors (background,
   foreground, primary/secondary/accent/muted, destructive, border/input/
-  ring), plus `--radius`, `--card`, `--popover`, `--chart-1..5`, and
+  ring), plus `--radius`, `--card`, `--popover`, `--chart-1..5`, the status
+  tokens `--success`/`--warning`/`--unreachable`/`--critical` (each with a
+  `-foreground`; `badge` has a variant per role), and
   `--font-sans` (IBM Plex Sans — typeface is mechanics here, not identity;
   see [ADR-0002](docs/adr/0002-registry-owns-the-font-token.md)).
 - Opt-in additions to the `theme` item (no effect unless a consumer uses
