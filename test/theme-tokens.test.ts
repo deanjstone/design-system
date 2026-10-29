@@ -6,6 +6,7 @@ import { describe, expect, it } from "vitest"
 
 import { MODES, THEME_NAMES, TOKEN_MAP, contrastRatio } from "../scripts/theme/extract-t3.mjs"
 import { applyToRegistry, applyToTokensCss } from "../scripts/theme/build.mjs"
+import { STATUS_ROLES, STATUS_TOKENS, STATUS_WASH } from "../scripts/theme/status.mjs"
 
 const read = (path: string) => readFileSync(fileURLToPath(new URL(path, import.meta.url)), "utf8")
 
@@ -140,6 +141,69 @@ describe("theme tokens", () => {
   it("records the pinned T3 commit", () => {
     expect(themeSource.source.repository).toBe("pingdotgg/t3code")
     expect(themeSource.source.sha).toMatch(/^[0-9a-f]{40}$/)
+  })
+})
+
+describe("status tokens", () => {
+  const roles = ["success", "warning", "unreachable", "critical"]
+  const names = roles.flatMap((role) => [role, `${role}-foreground`])
+
+  // A badge's tint: the status colour at the wash opacity over the ground.
+  const hex = (color: string) => [0, 2, 4].map((i) => Number.parseInt(color.slice(1 + i, 3 + i), 16))
+  const wash = (color: string, ground: string, opacity: number) =>
+    `#${hex(color)
+      .map((value, i) => Math.round(value * opacity + hex(ground)[i] * (1 - opacity)).toString(16).padStart(2, "0"))
+      .join("")}`
+
+  it("names the four roles, success to critical", () => {
+    expect(STATUS_ROLES).toEqual(roles)
+  })
+
+  describe.each(THEME_NAMES)("%s", (theme: string) => {
+    it.each(MODES)("defines every status token in %s mode, in tokens.css and registry.json", (mode: string) => {
+      for (const rules of [cssRules, registryRules]) {
+        const resolved = resolveTokens(rules, theme, mode === "dark")
+        for (const name of names) {
+          expect(resolved[`--${name}`], `--${name}`).toBe(STATUS_TOKENS[mode][name])
+        }
+      }
+    })
+
+    it.each(MODES)("meets WCAG AA for status text in %s mode", (mode: string) => {
+      const t = resolveTokens(cssRules, theme, mode === "dark")
+      for (const role of roles) {
+        for (const ground of ["--background", "--card"]) {
+          expect(contrastRatio(t[`--${role}`], t[ground]), `${role} on ${ground}`).toBeGreaterThanOrEqual(4.5)
+          const tinted = wash(t[`--${role}`], t[ground], STATUS_WASH[mode])
+          expect(contrastRatio(t[`--${role}`], tinted), `${role} on its ${ground} wash`).toBeGreaterThanOrEqual(4.5)
+        }
+        expect(contrastRatio(t[`--${role}-foreground`], t[`--${role}`]), `${role}-foreground`).toBeGreaterThanOrEqual(4.5)
+      }
+    })
+  })
+
+  it("maps each token to a Tailwind colour utility in tokens.css and the registry", () => {
+    const declared = parseDeclarations(tokensCss.match(/@theme inline \{([^}]*)\}/)![1])
+    for (const name of names) {
+      expect(declared[`--color-${name}`]).toBe(`var(--${name})`)
+      expect(registryTheme.cssVars.theme[`color-${name}`]).toBe(`var(--${name})`)
+    }
+  })
+
+  it("keeps the orange tier between warning and critical", () => {
+    const hue = (color: string) => {
+      const [r, g, b] = hex(color).map((v) => v / 255)
+      const max = Math.max(r, g, b)
+      const delta = max - Math.min(r, g, b)
+      const degrees = max === r ? ((g - b) / delta) % 6 : max === g ? (b - r) / delta + 2 : (r - g) / delta + 4
+      const wrapped = (degrees * 60 + 360) % 360
+      return wrapped > 180 ? wrapped - 360 : wrapped
+    }
+    for (const mode of MODES) {
+      const t = STATUS_TOKENS[mode]
+      expect(hue(t.warning)).toBeGreaterThan(hue(t.unreachable))
+      expect(hue(t.unreachable)).toBeGreaterThan(hue(t.critical) + 15)
+    }
   })
 })
 

@@ -61,7 +61,15 @@
       "color-accent-garnet-1-dark": "var(--accent-garnet-1-dark)",
       "animate-pulse-slow": "pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite",
       "animate-fade-in": "fadeIn 0.3s ease-out",
-      "animate-slide-up": "slideUp 0.3s ease-out"
+      "animate-slide-up": "slideUp 0.3s ease-out",
+      "color-success": "var(--success)",
+      "color-success-foreground": "var(--success-foreground)",
+      "color-warning": "var(--warning)",
+      "color-warning-foreground": "var(--warning-foreground)",
+      "color-unreachable": "var(--unreachable)",
+      "color-unreachable-foreground": "var(--unreachable-foreground)",
+      "color-critical": "var(--critical)",
+      "color-critical-foreground": "var(--critical-foreground)"
     },
     "light": {
       "radius": "0.625rem",
@@ -131,7 +139,15 @@
       "surface-grain": "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E\")",
       "surface-grain-size": "256px 256px",
       "glass-surface": "rgba(232, 233, 235, 0.74)",
-      "glass-fallback": "#e8eff4"
+      "glass-fallback": "#e8eff4",
+      "success": "#137333",
+      "success-foreground": "#fffaff",
+      "warning": "#8a5300",
+      "warning-foreground": "#fffaff",
+      "unreachable": "#b04400",
+      "unreachable-foreground": "#fffaff",
+      "critical": "#c10007",
+      "critical-foreground": "#fffaff"
     },
     "dark": {
       "background": "#17212b",
@@ -179,7 +195,15 @@
       "app-scrollbar-thumb": "var(--color-surface-4)",
       "app-scrollbar-thumb-hover": "var(--color-surface-5)",
       "glass-surface": "rgba(65, 72, 81, 0.74)",
-      "glass-fallback": "#233544"
+      "glass-fallback": "#233544",
+      "success": "#4ade80",
+      "success-foreground": "#241523",
+      "warning": "#fbbf24",
+      "warning-foreground": "#241523",
+      "unreachable": "#fb923c",
+      "unreachable-foreground": "#241523",
+      "critical": "#ff7a7e",
+      "critical-foreground": "#241523"
     }
   },
   "css": {

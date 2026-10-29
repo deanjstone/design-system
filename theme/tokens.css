@@ -57,6 +57,14 @@
   --color-chart-3: var(--chart-3);
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-unreachable: var(--unreachable);
+  --color-unreachable-foreground: var(--unreachable-foreground);
+  --color-critical: var(--critical);
+  --color-critical-foreground: var(--critical-foreground);
   --color-sidebar: var(--sidebar);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar-primary: var(--sidebar-primary);
@@ -244,6 +252,14 @@
   --sidebar-ring: #2672af;
   --glass-surface: rgba(232, 233, 235, 0.74);
   --glass-fallback: #e8eff4;
+  --success: #137333;
+  --success-foreground: #fffaff;
+  --warning: #8a5300;
+  --warning-foreground: #fffaff;
+  --unreachable: #b04400;
+  --unreachable-foreground: #fffaff;
+  --critical: #c10007;
+  --critical-foreground: #fffaff;
 }
 
 .dark,
@@ -282,6 +298,14 @@
   --sidebar-ring: #70b9ee;
   --glass-surface: rgba(65, 72, 81, 0.74);
   --glass-fallback: #233544;
+  --success: #4ade80;
+  --success-foreground: #241523;
+  --warning: #fbbf24;
+  --warning-foreground: #241523;
+  --unreachable: #fb923c;
+  --unreachable-foreground: #241523;
+  --critical: #ff7a7e;
+  --critical-foreground: #241523;
 }
 
 [data-theme="default"] {

@@ -15,6 +15,7 @@ import { readFileSync, writeFileSync } from "node:fs"
 import { fileURLToPath } from "node:url"
 
 import { MODES, THEME_NAMES, TOKEN_MAP } from "./extract-t3.mjs"
+import { STATUS_TOKENS } from "./status.mjs"
 
 export const DEFAULT_THEME = "ocean"
 const BEGIN = "/* theme:begin"
@@ -24,11 +25,18 @@ const darkSelector = (theme) => `[data-theme="${theme}"].dark`
 const lightSelector = (theme) => `[data-theme="${theme}"]`
 
 // Rules in cascade order: Ocean's bare :root/.dark first, then each theme's own pair.
+// The status tokens ride on the bare rules only; every theme inherits them.
 function themeRules(themes) {
   const rules = []
   const tokensOf = (theme, mode) => themes[theme][mode]
-  rules.push({ selectors: [":root", lightSelector(DEFAULT_THEME)], tokens: tokensOf(DEFAULT_THEME, "light") })
-  rules.push({ selectors: [".dark", darkSelector(DEFAULT_THEME)], tokens: tokensOf(DEFAULT_THEME, "dark") })
+  rules.push({
+    selectors: [":root", lightSelector(DEFAULT_THEME)],
+    tokens: { ...tokensOf(DEFAULT_THEME, "light"), ...STATUS_TOKENS.light },
+  })
+  rules.push({
+    selectors: [".dark", darkSelector(DEFAULT_THEME)],
+    tokens: { ...tokensOf(DEFAULT_THEME, "dark"), ...STATUS_TOKENS.dark },
+  })
   for (const theme of THEME_NAMES.filter((name) => name !== DEFAULT_THEME)) {
     rules.push({ selectors: [lightSelector(theme)], tokens: tokensOf(theme, "light") })
     rules.push({ selectors: [darkSelector(theme)], tokens: tokensOf(theme, "dark") })
@@ -36,10 +44,12 @@ function themeRules(themes) {
   return rules
 }
 
-const cssBlock = ({ selectors, tokens }) =>
-  `${selectors.join(",\n")} {\n${Object.keys(TOKEN_MAP)
-    .map((token) => `  --${token}: ${tokens[token]};`)
-    .join("\n")}\n}\n`
+const STATUS_NAMES = Object.keys(STATUS_TOKENS.light)
+
+const cssBlock = ({ selectors, tokens }) => {
+  const names = [...Object.keys(TOKEN_MAP), ...STATUS_NAMES.filter((token) => token in tokens)]
+  return `${selectors.join(",\n")} {\n${names.map((token) => `  --${token}: ${tokens[token]};`).join("\n")}\n}\n`
+}
 
 export function renderThemeCss(themes) {
   return themeRules(themes).map(cssBlock).join("\n")
@@ -58,17 +68,20 @@ export function applyToTokensCss(css, themes, sha = readSha()) {
 export function applyToRegistry(registry, themes) {
   const next = structuredClone(registry)
   const item = next.items.find((entry) => entry.name === "theme")
-  const light = themes[DEFAULT_THEME].light
-  const dark = themes[DEFAULT_THEME].dark
+  const light = { ...themes[DEFAULT_THEME].light, ...STATUS_TOKENS.light }
+  const dark = { ...themes[DEFAULT_THEME].dark, ...STATUS_TOKENS.dark }
 
   const replaceTokens = (existing, tokens) => {
     const merged = {}
-    for (const [key, value] of Object.entries(existing)) merged[key] = key in TOKEN_MAP ? tokens[key] : value
-    for (const token of Object.keys(TOKEN_MAP)) merged[token] ??= tokens[token]
+    for (const [key, value] of Object.entries(existing)) merged[key] = key in tokens ? tokens[key] : value
+    for (const token of [...Object.keys(TOKEN_MAP), ...STATUS_NAMES]) merged[token] ??= tokens[token]
     return merged
   }
   item.cssVars.light = replaceTokens(item.cssVars.light, light)
   item.cssVars.dark = replaceTokens(item.cssVars.dark, dark)
+  for (const token of STATUS_NAMES) {
+    item.cssVars.theme[`color-${token}`] = `var(--${token})`
+  }
 
   const declarations = (tokens) =>
     Object.fromEntries(Object.keys(TOKEN_MAP).map((token) => [`--${token}`, tokens[token]]))
