@@ -1,3 +1,10 @@
+# [3.1.0](https://github.com/deanjstone/design-system/compare/v3.0.2...v3.1.0) (2026-10-29)
+
+
+### Features
+
+* add status colour tokens and Badge variants ([#132](https://github.com/deanjstone/design-system/issues/132)) ([88ea708](https://github.com/deanjstone/design-system/commit/88ea708f3ea6aeca6b1c9cb4c8f6ee830f6e536b))
+
 ## [3.0.2](https://github.com/deanjstone/design-system/compare/v3.0.1...v3.0.2) (2026-10-26)
 
 
