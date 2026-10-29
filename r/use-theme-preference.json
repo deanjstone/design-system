@@ -2,7 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "use-theme-preference",
   "registryDependencies": [
-    "deanjstone/design-system/theme-preference"
+    "deanjstone/design-system/theme-preference#v3.1.0"
   ],
   "files": [
     {

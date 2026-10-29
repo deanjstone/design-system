@@ -2,8 +2,8 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "link-pill",
   "registryDependencies": [
-    "deanjstone/design-system/link-pill-core",
-    "deanjstone/design-system/link-pill-css"
+    "deanjstone/design-system/link-pill-core#v3.1.0",
+    "deanjstone/design-system/link-pill-css#v3.1.0"
   ],
   "files": [
     {
