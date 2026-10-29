@@ -6,10 +6,10 @@
     "cn@^0.5.0"
   ],
   "registryDependencies": [
-    "deanjstone/design-system/app-switcher#v3.1.0",
-    "deanjstone/design-system/button#v3.1.0",
-    "deanjstone/design-system/sheet#v3.1.0",
-    "deanjstone/design-system/nav-link#v3.1.0"
+    "deanjstone/design-system/app-switcher",
+    "deanjstone/design-system/button",
+    "deanjstone/design-system/sheet",
+    "deanjstone/design-system/nav-link"
   ],
   "files": [
     {

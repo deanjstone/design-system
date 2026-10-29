@@ -7,8 +7,8 @@
     "cn@^0.5.0"
   ],
   "registryDependencies": [
-    "deanjstone/design-system/dialog#v3.1.0",
-    "deanjstone/design-system/input-group#v3.1.0"
+    "deanjstone/design-system/dialog",
+    "deanjstone/design-system/input-group"
   ],
   "files": [
     {

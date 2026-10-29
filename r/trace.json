@@ -6,8 +6,8 @@
     "cn@^0.5.0"
   ],
   "registryDependencies": [
-    "deanjstone/design-system/collapsible#v3.1.0",
-    "deanjstone/design-system/code-block#v3.1.0"
+    "deanjstone/design-system/collapsible",
+    "deanjstone/design-system/code-block"
   ],
   "files": [
     {

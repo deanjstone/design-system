@@ -8,13 +8,13 @@
     "cn@^0.5.0"
   ],
   "registryDependencies": [
-    "deanjstone/design-system/use-mobile#v3.1.0",
-    "deanjstone/design-system/button#v3.1.0",
-    "deanjstone/design-system/input#v3.1.0",
-    "deanjstone/design-system/separator#v3.1.0",
-    "deanjstone/design-system/sheet#v3.1.0",
-    "deanjstone/design-system/skeleton#v3.1.0",
-    "deanjstone/design-system/tooltip#v3.1.0"
+    "deanjstone/design-system/use-mobile",
+    "deanjstone/design-system/button",
+    "deanjstone/design-system/input",
+    "deanjstone/design-system/separator",
+    "deanjstone/design-system/sheet",
+    "deanjstone/design-system/skeleton",
+    "deanjstone/design-system/tooltip"
   ],
   "files": [
     {
