@@ -2,7 +2,7 @@
   "name": "design-system",
   "version": "3.0.2",
   "private": true,
-  "description": "Shared shadcn/ui component registry and design tokens consumed by myargus, atto1, argus, argusde and homelab via the shadcn CLI",
+  "description": "Shared shadcn/ui component registry and design tokens consumed by myargus, atto1, argus, homelab and quick-capture via the shadcn CLI",
   "packageManager": "pnpm@12.13.0",
   "scripts": {
     "test": "vitest run",

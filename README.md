@@ -1,7 +1,7 @@
 # design-system
 
 Shared shadcn/ui component registry and design tokens, consumed by `myargus`,
-`atto1`, `argus`, `argusde` and `homelab` via the shadcn CLI (`slate-reader`
+`atto1`, `argus`, `homelab` and `quick-capture` via the shadcn CLI (`slate-reader`
 vendors LinkPill; `budget` is migrating — see [Consumers](#consumers)). This
 repo is not a
 buildable package — it's a plain GitHub-hosted registry: a `registry.json`
@@ -13,23 +13,22 @@ copies them into the consuming project. There's no publish step.
 
 This list is how a registry change is checked for downstream breakage, so keep
 it true. Pins are the `@design-system` alias version in each repo's
-`components.json` on `main`, read on 2026-10-17. The alias is where the next
+`components.json` on `main`, read on 2026-10-29. The alias is where the next
 `add` will pull from; the code already in the repo is whatever was last pulled.
 
 | Consumer | Path | Pin | Status |
 |---|---|---|---|
 | `argus` | `apps/email` | v2.5.3 | consuming |
-| `argus` | `apps/notice-board-web` | v2.5.3 | consuming |
 | `argus` | `apps/ops-hub-web` | v2.8.0 | consuming ([argus#728](https://github.com/deanjstone/argus/issues/728)) |
 | `argus` | `apps/watchtower` | v2.7.0 | consuming ([argus#674](https://github.com/deanjstone/argus/issues/674)) |
-| `argusde` | repo root | v2.8.0 | consuming ([argusde#144](https://github.com/deanjstone/argusde/issues/144)) |
-| `homelab` | `services/quick-capture/web` | v2.6.0 | consuming |
 | `homelab` | `services/scan-app/web` | v2.8.0 | consuming ([homelab#181](https://github.com/deanjstone/homelab/issues/181)) |
 | `atto1` | repo root | v2.6.0 | consuming |
-| `myargus` | `apps/github`, `apps/knowledge`, `apps/reader` | v2.7.0 | consuming ([myargus#296](https://github.com/deanjstone/myargus/issues/296)) |
-| `myargus` | `apps/shell` | v2.4.1 | consuming |
+| `quick-capture` | `web` | v2.6.0 | consuming (split out of `homelab` `services/quick-capture/web` in [homelab#228](https://github.com/deanjstone/homelab/issues/228)) |
+| `myargus` | `apps/knowledge`, `apps/reader` | v2.7.0 | consuming ([myargus#296](https://github.com/deanjstone/myargus/issues/296)) |
+| `myargus` | `apps/briefings` | v2.4.1 | consuming |
+| `myargus` | `apps/shell` | v3.0.2 | consuming |
 | `myargus` | `apps/stockade` | v2.7.0 | consuming ([myargus#295](https://github.com/deanjstone/myargus/issues/295)) |
-| `slate-reader` | `apps/server` | v2.7.0 (vendored) | **LinkPill only**: `link-pill-core` and `link-pill-html` are copied in; no `@design-system` alias ([slate-reader#17](https://github.com/deanjstone/slate-reader/issues/17)) |
+| `slate-reader` | `apps/server` | v2.7.0 (vendored) | **LinkPill only**: `link-pill-core` and `link-pill-html` are copied in; no `@design-system` alias. The web UI is `apps/client` (Preact, no registry) ([slate-reader#17](https://github.com/deanjstone/slate-reader/issues/17)) |
 | `budget` | `web` | none yet | **pending**: forked `components/ui`, no `components.json` ([budget#271](https://github.com/deanjstone/budget/issues/271)) |
 
 Move a pending row to consuming only once a `components.json` with the alias
@@ -364,8 +363,7 @@ import it. `shimmer` (the running title) and `scroll-fade-*` come from
 `shadcn/tailwind.css`, which `shadcn init` already imports, as for
 `attachment` and `message-scroller`.
 
-**Consumers that should adopt them:** `argusde` (agent turns) and `argus`
-`apps/ops-hub-web`. Adoption is a follow-up issue per consumer, not part of
+**Consumers that should adopt them:** `argus` `apps/ops-hub-web`. Adoption is a follow-up issue per consumer, not part of
 adding the items.
 
 ## Adding a new component
