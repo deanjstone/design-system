@@ -1,8 +1,13 @@
 name: Release
 
+# Release starts only when the Test workflow has finished (design-system#159).
+# It used to start on the same push, in parallel, so a red Test could not stop
+# it: v3.6.3 was published from a head whose Test run failed. Test's conclusion
+# is the result of every job in test.yml, the curve geometry gate included.
 on:
-  push:
-    branches: [main]
+  workflow_run:
+    workflows: [Test]
+    types: [completed]
 
 # One Release at a time, queued rather than cancelled. Every run releases from
 # the tip of main (see the checkout below), so when GitHub drops an older pending
@@ -20,6 +25,9 @@ permissions:
 jobs:
   release:
     name: Release
+    # Only a green Test run of a push to main. A pull request's Test run also
+    # fires this trigger, and so does a red one; both skip here.
+    if: github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'push' && github.event.workflow_run.head_branch == 'main'
     runs-on: ${{ fromJSON(vars.CI_RUNS_ON || '"ubuntu-latest"') }}
     steps:
       - uses: actions/checkout@v4
@@ -30,23 +38,35 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
 
+      # The checkout above is the tip of main, which may be newer than the SHA
+      # Test went green on. Release only if that SHA is still the newest real
+      # commit; a newer push gets its own Test run and its own Release.
+      - name: Check the tested SHA is the head of main
+        id: gate
+        run: bash scripts/release/tested-head.sh "${TESTED_SHA}" >> "${GITHUB_OUTPUT}"
+        env:
+          TESTED_SHA: ${{ github.event.workflow_run.head_sha }}
+
       - uses: pnpm/action-setup@v4
-        if: runner.environment == 'github-hosted'
+        if: steps.gate.outputs.release == 'true' && runner.environment == 'github-hosted'
 
       - name: Use the host pnpm (self-hosted)
-        if: runner.environment != 'github-hosted'
+        if: steps.gate.outputs.release == 'true' && runner.environment != 'github-hosted'
         uses: ./.github/actions/host-pnpm
 
       - uses: actions/setup-node@v4
+        if: steps.gate.outputs.release == 'true'
         with:
           node-version: 22
           cache: pnpm
 
       - name: Install dependencies
+        if: steps.gate.outputs.release == 'true'
         run: pnpm install --frozen-lockfile
 
       # Up to 3 attempts, each from the remote tip of main; see the script.
       - name: Release
+        if: steps.gate.outputs.release == 'true'
         run: bash scripts/release/release-with-retry.sh
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
