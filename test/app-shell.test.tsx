@@ -1119,6 +1119,16 @@ describe("AppShell", () => {
       expect(container.querySelector("a[aria-label=Back]")!.className).toContain("min-h-[clamp(44px,2.75rem,66px)]")
     })
 
+    it("stops the back control and icon-button actions at 66px, so the header fits at any size", () => {
+      const { container } = render(<AppShell appName="Reader" sections={four} back={{ href: "/" }} headerActions={<button>Go</button>}>x</AppShell>)
+
+      const back = container.querySelector<HTMLElement>("a[aria-label=Back]")!
+      expect(back.className).toContain("max-h-[66px]")
+      expect(back.className).toContain("max-w-[66px]")
+      const actions = within(header(container)).getByText("Go").parentElement!
+      expect(actions.className).toContain("[&_.size-8]:max-w-[66px]")
+    })
+
     it("keeps header actions from being squeezed out by a long app name", () => {
       const { container } = render(<AppShell appName="Reader" sections={four} headerActions={<button>Go</button>}>x</AppShell>)
 

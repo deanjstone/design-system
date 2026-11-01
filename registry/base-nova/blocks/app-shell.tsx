@@ -314,7 +314,7 @@ function AppShell({
                 ? renderLink({
                     href: back.href,
                     "aria-label": back.label ?? "Back",
-                    className: cn(buttonVariants({ variant: "ghost", size: "icon" }), "min-h-[clamp(44px,2.75rem,66px)] min-w-[clamp(44px,2.75rem,66px)] shrink-0"),
+                    className: cn(buttonVariants({ variant: "ghost", size: "icon" }), "max-h-[66px] max-w-[66px] min-h-[clamp(44px,2.75rem,66px)] min-w-[clamp(44px,2.75rem,66px)] shrink-0"),
                     children: <ChevronLeftIcon aria-hidden="true" />,
                   })
                 : null}
@@ -326,7 +326,7 @@ function AppShell({
                 onModeChange={onModeChange}
                 renderLink={renderLink}
               />
-              {headerActions ? <div className="ml-auto flex shrink-0 items-center gap-1">{headerActions}</div> : null}
+              {headerActions ? <div className="ml-auto flex shrink-0 items-center gap-1 [&_.size-8]:max-h-[66px] [&_.size-8]:max-w-[66px] [&_.size-9]:max-h-[66px] [&_.size-9]:max-w-[66px]">{headerActions}</div> : null}
             </header>
           </div>
         )}

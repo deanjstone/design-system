@@ -80,7 +80,7 @@ function AppSwitcher({
   const trigger = (
     <Button
       variant="ghost"
-      className={cn("min-h-[clamp(44px,2.75rem,66px)] min-w-0 gap-1 px-2 font-heading text-[min(1rem,24px)] font-semibold", className)}
+      className={cn("max-h-[66px] min-h-[clamp(44px,2.75rem,66px)] min-w-0 shrink gap-1 px-2 font-heading text-[min(1rem,24px)] font-semibold [&_svg]:size-[min(1rem,24px)]", className)}
     />
   )
   const triggerContent = (
