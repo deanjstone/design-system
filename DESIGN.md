@@ -531,6 +531,37 @@ still a finger. The hover-only reveal on `sidebar-menu-action` follows the
 same rule, and `useIsMobile` treats a coarse pointer on a viewport under 500px
 tall as mobile, so a phone in landscape gets the sheet sidebar.
 
+### Text size
+
+*Policy: [#150](https://github.com/deanjstone/design-system/issues/150); hardening: [#162](https://github.com/deanjstone/design-system/issues/162).*
+
+The registry follows iOS Larger Text: the root font is meant to derive from
+`-apple-system-body`, so every rem size and space scales (an installed PWA has
+no aA menu, so without it its text never scales). That root rule is enabled
+last, in [#163](https://github.com/deanjstone/design-system/issues/163), after
+the layout below holds. Until then browser text zoom is the only thing that
+scales it, and nothing changes at 100%.
+
+- **Guaranteed range: 200% at a 320px-wide viewport** (WCAG 1.4.4, 1.4.10). No
+  sideways scroll, no clipped label or control, on the shell and every block.
+  Beyond 200% (iOS goes to about 310%) text keeps scaling and the page may
+  scroll vertically, but never sideways.
+- **The chrome is capped at about 150%.** The AppShell's header, tab bar and
+  app switcher state their text, icon and height as `min(<rem>, <150% in px>)`;
+  content keeps scaling and reflows. The 44px touch target is a floor under
+  every size (`clamp(44px, <rem>, 66px)`).
+- **Past what fits, tabs are icon-only.** The tab bar is a container, and when
+  its width is under 16 root-em the labels go `sr-only`: still in the
+  accessibility tree for VoiceOver, gone from the screen, and the tabs shrink to
+  44px. The header stays one line; the app name truncates.
+- **Text fields are 16px at every size.** `input`, `textarea` and
+  `command-input` use `max(1rem, 16px)`, so a root below 100% (the smallest
+  Larger Text sizes) cannot take a field under what iOS zooms into.
+- **The gate proves it.** The geometry gate's 320px / 200% context fails on
+  sideways scroll, a clipped tab label or control, a header plus tab bar over
+  25% of the viewport, and `--shell-top` / `--shell-bottom` / `--shell-workspace`
+  out of step with the chrome; a 75% root context holds the 16px field minimum.
+
 Both rules are deliberately **unlayered**. Tailwind utilities live in a
 cascade layer, and unlayered styles win over layered ones regardless of
 specificity — which is how the 44px touch floor outranks a `min-w-0` shrink

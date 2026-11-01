@@ -459,6 +459,18 @@ only the element, so the glyph lands inside whatever you render — a lucide
 svg appends it as a stray text node. Give these parts an explicit child,
 `{null}` if the rendered element supplies its own (design-system#50).
 
+## Text size
+
+The registry follows iOS Larger Text ([#150](https://github.com/deanjstone/design-system/issues/150)):
+the root font derives from `-apple-system-body`, so rem text and spacing scale. A
+consumer can rely on **200% at a 320px viewport with no sideways scroll and no
+clipped control**; past that, text keeps scaling and the page scrolls vertically.
+The AppShell's chrome stops growing at about 150%, then its tabs go icon-only
+(labels stay `sr-only`), and text fields stay at 16px at every size. The root
+rule itself is switched on last ([#163](https://github.com/deanjstone/design-system/issues/163)),
+so nothing changes at 100% yet. The rules and the checks that hold them are in
+`DESIGN.md` § Text size and the curve-geometry gate below.
+
 ## Safe areas (iPhone)
 
 The theme carries the safe-area foundation, so an app never hand-rolls an inset
@@ -587,7 +599,9 @@ first); WCAG 2.5.8 target size (24px, hit area counted) at 402×874 and 874×402
 inputs at 16px or more; reduced motion (a `reducedMotion: "reduce"` context, then
 `document.getAnimations()` for movement); glass-bar contrast (every theme and mode: each label on the AppShell header and tab bar is measured against the bar as painted, with the labels hidden and the pixels under them sampled, 4.5:1 for text and 3:1 for icons); an aria snapshot per block against
 `scripts/geometry-gate/aria/`; a Tab loop whose focused control must not be under
-something else; a 320px / 200% text reflow context; and axe `target-size` and
+something else; a 320px / 200% text context (sideways scroll, clipped tab labels and controls,
+header plus tab bar under 25% of the viewport, the published `--shell-*`
+heights); a 75% root context for the 16px input minimum; and axe `target-size` and
 `scrollable-region-focusable`. A finding the #144 audit already filed sits in
 `KNOWN` in `scripts/geometry-gate/checks.mjs`: it is reported with its issue and
 does not fail the gate, and a `KNOWN` entry that stops firing fails it until the
