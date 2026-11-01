@@ -6,7 +6,8 @@
   "packageManager": "pnpm@12.13.0",
   "scripts": {
     "test": "vitest run",
-    "build:theme": "node scripts/theme/build.mjs && npx shadcn@4.19.1 build --output ./r"
+    "build:theme": "node scripts/theme/build.mjs && npx shadcn@4.19.1 build --output ./r",
+    "check": "bash scripts/check.sh"
   },
   "devDependencies": {
     "@base-ui/react": "^1.8.0",
