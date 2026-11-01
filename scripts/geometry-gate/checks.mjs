@@ -7,7 +7,7 @@ import fs from "node:fs"
 import path from "node:path"
 
 import { MODES, THEME_NAMES, contrastRatio } from "../theme/extract-t3.mjs"
-import { CHROME_CEILING, GLASS_BARS, LOGIN_GUTTER, TOUCH_TARGET, focusObscured, glassLabels, inputFontSize, largeText, loginEdges, motion, reflow, rootFont, sampleBackdrop, targetSize } from "./page-checks.mjs"
+import { CHROME_CEILING, GLASS_BARS, LOGIN_GUTTER, TOUCH_TARGET, focusObscured, glassLabels, inputFontSize, largeText, loginEdges, motion, reflow, rootFont, sampleBackdrop, sidewaysScroll, targetSize } from "./page-checks.mjs"
 import { openScenario } from "./session.mjs"
 
 const require = createRequire(import.meta.url)
@@ -17,7 +17,9 @@ export const CHECK_SCENARIOS = ["iphone-17-portrait", "iphone-17-landscape-top-0
 // Findings the #144 audit already filed. A listed finding is reported, not failed, so
 // the gate can land green; a listed entry that no longer fires fails the gate until
 // it is deleted, so the list only shrinks (the same rule as test/theme-contrast.test.ts).
-export const KNOWN = []
+export const KNOWN = ["shell", "shell-focus"].flatMap((view) =>
+  ["document", "div{card-title}", "div{card-description}", 'a{badge} "Link badge"'].map((label) => ({ check: "sideways-scroll", view, label, issue: 164 })),
+)
 
 const matches = (known, finding) =>
   known.check === finding.check &&
@@ -102,6 +104,9 @@ if (!DYNAMIC_TYPE_RULE) throw new Error("theme/tokens.css has no guarded Dynamic
 
 const REFLOW_VIEWPORT = { width: 320, height: 568 }
 const SMALL_ROOT = "75%"
+// The top of iOS Larger Text: past the guaranteed 200%, text keeps scaling and the page may scroll
+// down but never sideways (design-system#150, #164).
+const LARGEST_ROOT = "310%"
 
 const axeFindings = async (page) => {
   await page.addScriptTag({ path: AXE_SOURCE })
@@ -179,6 +184,11 @@ export const runChecks = async ({ browser, urlFor, scenarios, views, out, ariaDi
     findings.push(...tag(await reflowContext.page.evaluate(largeText, { height: REFLOW_VIEWPORT.height, ceiling: CHROME_CEILING }), { name: "320px-200pct" }, view))
     findings.push(...tag(await reflowContext.page.evaluate(inputFontSize), { name: "320px-200pct" }, view))
     await reflowContext.context.close()
+    const largest = await openScenario(browser, portrait, urlFor(view), { viewport: REFLOW_VIEWPORT })
+    await largest.page.addStyleTag({ content: `html { font-size: ${LARGEST_ROOT} !important }` })
+    await largest.page.waitForTimeout(300)
+    findings.push(...tag(await largest.page.evaluate(sidewaysScroll, { width: REFLOW_VIEWPORT.width }), { name: "320px-310pct" }, view))
+    await largest.context.close()
     // iOS zooms on focus into a field under 16px, and a root below 100% (the smallest Larger Text
     // sizes) pulls a rem font under it: the minimum is held at every size (design-system#145, #162).
     const small = await openScenario(browser, portrait, urlFor(view))

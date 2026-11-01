@@ -171,6 +171,32 @@ export const reflow = ({ width = innerWidth } = {}) => {
   return findings
 }
 
+// Sideways scroll past the guaranteed 200% (design-system#150, #164): at 310% on 320px the page
+// may grow taller but not wider. Two findings: the document scrolls sideways, or an element
+// reaches past the viewport's right edge. The second also catches content that a card or badge
+// clips with overflow-hidden, which scrolls nothing but is cut off. A horizontal scroller owns
+// what it holds, and a fixed element follows the viewport, so neither counts.
+export const sidewaysScroll = ({ width = innerWidth } = {}) => {
+  const findings = []
+  const overflow = document.documentElement.scrollWidth - width
+  if (overflow > 1) findings.push({ check: "sideways-scroll", label: "document", detail: `scrolls sideways by ${overflow}px` })
+  const inScroller = (element) => {
+    for (let parent = element.parentElement; parent && parent !== document.body; parent = parent.parentElement) {
+      if (/auto|scroll/.test(getComputedStyle(parent).overflowX) && parent.scrollWidth > parent.clientWidth) return true
+    }
+    return false
+  }
+  for (const element of document.body.querySelectorAll("*")) {
+    const rect = element.getBoundingClientRect()
+    if (rect.width < 2 || rect.height < 2 || rect.right <= width + 1) continue
+    if (getComputedStyle(element).position === "fixed" || element.closest('[style*="position: fixed"]') || inScroller(element)) continue
+    const slot = element.dataset.slot ? `{${element.dataset.slot}}` : ""
+    const name = element.getAttribute("aria-label") || element.textContent.trim().replace(/\s+/g, " ").slice(0, 32) || element.tagName.toLowerCase()
+    findings.push({ check: "sideways-scroll", label: `${element.tagName.toLowerCase()}${slot} "${name}"`, detail: `right edge at ${rect.right.toFixed(0)}px in a ${width}px viewport` })
+  }
+  return findings
+}
+
 // What the AppShell's chrome may take of a tall-enough screen at large text (design-system#150,
 // #162): the header and the tab bar together, as a share of the viewport height. The #144
 // probe measured 34% at 200%; the cap and icon-only tabs bring it under this.
