@@ -507,11 +507,15 @@ bar, and a light and a dark `theme-color` matching Ocean.
 - `apple-mobile-web-app-capable` is included. iOS 26 opens every Home Screen site
   as a web app, so it matters only on older iOS; the status-bar style decides the
   top inset either way, and `default` keeps the bar opaque.
-- The tap highlight (`-webkit-tap-highlight-color`) and `overscroll-behavior` keep
-  the browser defaults. Components have no uniform `:active` style, so removing
-  the highlight would leave a tap with no feedback; the shell overscroll policy
-  belongs to [#148](https://github.com/deanjstone/design-system/issues/148), and the
-  tap highlight is a check on the owner's iPhone ([#141](https://github.com/deanjstone/design-system/issues/141)).
+- The tap highlight (`-webkit-tap-highlight-color`) keeps the browser default.
+  Components have no uniform `:active` style, so removing the highlight would
+  leave a tap with no feedback; it is a check on the owner's iPhone
+  ([#141](https://github.com/deanjstone/design-system/issues/141)).
+- The shell keeps `overscroll-behavior: auto`, so the iOS rubber-band and
+  pull-to-refresh still work in every consumer ([#148](https://github.com/deanjstone/design-system/issues/148),
+  owner decision 1 Nov 2026). Only inner scrollers opt out with `overscroll-contain`
+  (drawer, message-scroller). A consumer that wants a native-app feel sets
+  `overscroll-behavior` on its own `html`.
 
 ### Overlays
 
