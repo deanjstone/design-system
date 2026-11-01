@@ -1,9 +1,15 @@
 name: Design check
 
-# Impeccable's design detector. It runs no AI model: it flags low contrast, AI-slop
-# patterns and drift from DESIGN.md in the UI files a PR changes. Findings are written
-# to the job summary and never block a merge. Shipped by the design-system
+# Two checks on the UI files a PR changes. Shipped by the design-system
 # `design-check` registry item.
+#   - Impeccable's design detector. It runs no AI model: it flags low contrast,
+#     AI-slop patterns and drift from DESIGN.md. Findings are written to the job
+#     summary and never block a merge.
+#   - The design rules (scripts/design-rules.mjs): iPhone safe-area and touch rules,
+#     such as min-h-screen, a missing viewport-fit=cover, fixed elements with no
+#     safe edge, a bare env(safe-area-inset-left|right), and form text under 16px.
+#     A finding fails the job. A line that is right for a reason the rule cannot
+#     see takes a `design-rules-ignore` comment.
 
 on:
   pull_request:
@@ -19,6 +25,7 @@ on:
       - 'components.json'
       - '.impeccable/**'
       - 'scripts/design-detect.sh'
+      - 'scripts/design-rules.mjs'
       - '.github/workflows/design-detect.yml'
 
 permissions:
@@ -52,3 +59,9 @@ jobs:
         env:
           BASE_SHA: ${{ github.event.pull_request.base.sha }}
         run: bash scripts/design-detect.sh "$BASE_SHA"
+
+      # No continue-on-error: this one blocks. It reads only the files the PR changed.
+      - name: Check the design rules
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: node scripts/design-rules.mjs "$BASE_SHA"

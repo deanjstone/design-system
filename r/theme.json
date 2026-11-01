@@ -136,6 +136,17 @@
       "app-titlebar-inset-left": "calc(env(safe-area-inset-left, 0px) + 0.75rem)",
       "app-titlebar-inset-right": "calc(env(safe-area-inset-right, 0px) + 0.75rem)",
       "app-titlebar-native-controls-inset": "0px",
+      "safe-t": "env(safe-area-inset-top, 0px)",
+      "safe-r": "env(safe-area-inset-right, 0px)",
+      "safe-b": "env(safe-area-inset-bottom, 0px)",
+      "safe-l": "env(safe-area-inset-left, 0px)",
+      "gutter": "1rem",
+      "corner-clear": "1.3rem",
+      "edge-x": "max(var(--gutter), var(--safe-l))",
+      "edge-x-end": "max(var(--gutter), var(--safe-r))",
+      "edge-b": "max(0.5rem, calc(var(--safe-b) - 12px))",
+      "scroll-pad-top": "0px",
+      "scroll-pad-bottom": "0px",
       "surface-grain": "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E\")",
       "surface-grain-size": "256px 256px",
       "glass-surface": "rgba(232, 233, 235, 0.74)",
@@ -830,6 +841,27 @@
     },
     "@utility pr-safe": {
       "padding-right": "max(env(safe-area-inset-right), 0px)"
+    },
+    "@utility px-edge": {
+      "padding-left": "var(--edge-x)",
+      "padding-right": "var(--edge-x-end)"
+    },
+    "@utility pb-edge": {
+      "padding-bottom": "var(--edge-b)"
+    },
+    "@utility inset-corner-br": {
+      "right": "max(var(--corner-clear), var(--safe-r))",
+      "bottom": "var(--edge-b)"
+    },
+    "@utility min-h-app": {
+      "min-height": "100dvh",
+      "@supports not (min-height: 100dvh)": {
+        "min-height": "100vh"
+      }
+    },
+    "html": {
+      "scroll-padding-top": "var(--scroll-pad-top)",
+      "scroll-padding-bottom": "var(--scroll-pad-bottom)"
     },
     "@utility surface-glass": {
       "background": "var(--glass-surface)",

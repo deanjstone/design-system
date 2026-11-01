@@ -43,6 +43,7 @@ describe("design-check registry item", () => {
     const targets = Object.fromEntries(item!.files!.map((file) => [file.path, file.target]))
     expect(targets).toEqual({
       "registry/design-check/design-detect.sh": "~/scripts/design-detect.sh",
+      "registry/design-check/design-rules.mjs": "~/scripts/design-rules.mjs",
       "registry/design-check/design-detect.yml": "~/.github/workflows/design-detect.yml",
     })
   })
@@ -72,6 +73,15 @@ describe("design-detect.yml", () => {
   // shadcn writes files without the executable bit.
   it("runs the script through bash", () => {
     expect(workflow()).not.toMatch(/run: scripts\/design-detect\.sh/)
+  })
+
+  // The safe-area rules (design-system#137) are the one blocking step: a finding must fail the job.
+  it("runs the design rules as a step that can fail the job", () => {
+    const text = workflow()
+    expect(text).toMatch(/- name: Check the design rules\n(?:(?!\n      - ).*\n)*?\s+run: node scripts\/design-rules\.mjs "\$BASE_SHA"/)
+    const step = text.slice(text.indexOf("- name: Check the design rules"))
+    expect(step).not.toContain("continue-on-error")
+    expect(text).toContain("'scripts/design-rules.mjs'")
   })
 
   it("is read-only and scoped to UI files, DESIGN.md and detector config", () => {

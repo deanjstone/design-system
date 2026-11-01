@@ -47,7 +47,8 @@ registry/
   base-nova/ui/               45 base-nova style components (Base UI, plus link-pill)
   base-nova/hooks/            use-mobile (pulled by sidebar), use-highlighted-code (pulled by code-block), use-theme-preference
   base-nova/blocks/           v3 layout blocks: app-shell, app-switcher, page-header, empty-page, settings-page, login
-  design-check/             script and workflow of the design-check item (CI, not UI)
+  design-check/             scripts and workflow of the design-check item (CI, not UI)
+  app-html-head/            iPhone <head> tags snippet (app-html-head item)
 r/                         generated per-item output — what the r/ alias resolves
 theme/tokens.css            same tokens as the "theme" item, as plain CSS
 theme/themes.json           the six T3 themes (light + dark) behind both; see DESIGN.md Themes
@@ -452,6 +453,63 @@ only the element, so the glyph lands inside whatever you render — a lucide
 svg appends it as a stray text node. Give these parts an explicit child,
 `{null}` if the rendered element supplies its own (design-system#50).
 
+## Safe areas (iPhone)
+
+The theme carries the safe-area foundation, so an app never hand-rolls an inset
+([design-system#137](https://github.com/deanjstone/design-system/issues/137),
+map [#136](https://github.com/deanjstone/design-system/issues/136)).
+
+**The curve rule: backgrounds bleed, content never does.** A background, scrim
+or image may run into the display's rounded corners, the Dynamic Island and the
+home-indicator zone. Text and controls may not. Edge padding is
+`max(<minimum>, env(safe-area-inset-*))`, and a control that hugs a corner gets
+the extra `--corner-clear`.
+
+| Token | Value | Use |
+|---|---|---|
+| `--safe-t` `--safe-r` `--safe-b` `--safe-l` | `env(safe-area-inset-*, 0px)` | The four device insets |
+| `--gutter` | `1rem` | Edge padding every page wants |
+| `--corner-clear` | `1.3rem` | Clearance for a control in a rounded corner |
+| `--edge-x` / `--edge-x-end` | `max(var(--gutter), var(--safe-l \| --safe-r))` | Left and right edge padding |
+| `--edge-b` | `max(0.5rem, calc(var(--safe-b) - 12px))` | Bottom edge: the home indicator sits about 12px below where content looks right |
+| `--scroll-pad-top` `--scroll-pad-bottom` | `0px` | Set to the sticky header and fixed tab-bar heights; `html` uses them as `scroll-padding` so a focused control is not hidden (WCAG 2.4.11) |
+
+| Utility | Does |
+|---|---|
+| `px-edge` | Left and right padding from `--edge-x` / `--edge-x-end`, so content clears the curves in landscape |
+| `pb-edge` | Bottom padding clear of the home indicator |
+| `inset-corner-br` | `right` and `bottom` for a fixed bottom-right control (a FAB): `max(--corner-clear, safe-r)` and `--edge-b`. Add `fixed` yourself |
+| `min-h-app` | `min-height: 100dvh`, with `100vh` under `@supports not (min-height: 100dvh)`. Use it instead of `min-h-screen`, which is taller than the visible area on iOS Safari |
+| `pt-safe` `pb-safe` | Unchanged. Right for a bar that must clear the status bar or home indicator |
+| `pl-safe` `pr-safe` | Unchanged, but **not enough for content**: they resolve to `0` in Safari and in landscape on a device with no side inset, which is exactly where a display curve still clips text. Use `px-edge`. `design-check` fails them |
+
+```tsx
+<main className="min-h-app px-edge pb-edge">...</main>
+<button className="fixed inset-corner-br size-14 rounded-full">+</button>
+```
+
+**`app-html-head`** puts the iPhone `<head>` tags in one place so apps stop
+copying them by hand and drifting:
+
+```bash
+npx shadcn add deanjstone/design-system/app-html-head
+```
+
+It lands `app-html-head.html` at the project root; copy its tags into your
+`index.html`. It sets `viewport-fit=cover` (without it every `env(safe-area-inset-*)`
+is `0`), no zoom limit, the `apple-mobile-web-app-*` set with the `default` status
+bar, and a light and a dark `theme-color` matching Ocean.
+
+**Decisions recorded here:**
+- `apple-mobile-web-app-capable` is included. iOS 26 opens every Home Screen site
+  as a web app, so it matters only on older iOS; the status-bar style decides the
+  top inset either way, and `default` keeps the bar opaque.
+- The tap highlight (`-webkit-tap-highlight-color`) and `overscroll-behavior` keep
+  the browser defaults. Components have no uniform `:active` style, so removing
+  the highlight would leave a tap with no feedback; the shell overscroll policy
+  belongs to [#148](https://github.com/deanjstone/design-system/issues/148), and the
+  tap highlight is a check on the owner's iPhone ([#141](https://github.com/deanjstone/design-system/issues/141)).
+
 ## Design check item
 
 `design-check` puts [Impeccable's](https://impeccable.style) detector in a
@@ -467,7 +525,25 @@ npx shadcn add deanjstone/design-system/design-check#v3.0.0
 | Lands at | Does |
 |---|---|
 | `scripts/design-detect.sh` | Runs `impeccable@4.7.0 detect` on the UI files a PR changed (`.tsx`, `.jsx`, `.css`, `.html`, `.vue`, `.svelte`) and writes counts by rule and severity to the job summary |
-| `.github/workflows/design-detect.yml` | Runs it on PRs that touch those files, `DESIGN.md`, `components.json` or `.impeccable/`. The detector step is `continue-on-error: true`, so a finding or a failed scan never blocks a merge |
+| `scripts/design-rules.mjs` | The iPhone safe-area and touch rules below, on the same changed files. **A finding fails the job** |
+| `.github/workflows/design-detect.yml` | Runs both on PRs that touch those files, `DESIGN.md`, `components.json` or `.impeccable/`. The detector step is `continue-on-error: true`, so a detector finding or a failed scan never blocks a merge; the rules step has no such flag |
+
+**The design rules** (`design-rules.mjs`, [design-system#137](https://github.com/deanjstone/design-system/issues/137)):
+
+| Rule | Fails |
+|---|---|
+| `viewport-height-unit` | `min-h-screen`, `h-screen`, `100vh` (the `100vh` fallback inside `@supports not (min-height: 100dvh)` passes) |
+| `viewport-fit-cover` | a `<meta name="viewport">` without `viewport-fit=cover` |
+| `fixed-without-safe-edge` | `fixed` / `position: fixed` with no `max(…env…)` edge, `inset-corner-*`, `*-edge` or `*-safe` utility. A full-bleed `inset-0` passes |
+| `side-inset-without-floor` | `env(safe-area-inset-left\|right)` with no non-zero `max()` floor, and the `pl-safe`, `pr-safe` and `px-safe` utilities. A custom property that defines a token (`--safe-l: env(…)`) passes |
+| `form-text-under-16` | an `input`, `textarea`, `select` (or the registry components of those names) with `text-sm`, `text-xs` or a pixel size under 16 at any breakpoint, such as `md:text-sm`: iOS zooms the page on focus |
+| `focus-ring-alpha-only` | a focus indicator that is only `ring-ring/50` (under 3:1, WCAG 1.4.11); add a solid `outline` or `border-ring` |
+
+The checks are textual (class strings and CSS declarations), so they catch the
+common slips, not every case. A line that is right for a reason a rule cannot see
+takes a `design-rules-ignore` comment on that line or the line above. Only files
+the PR changed are scanned, so an old finding in an untouched file never fails a
+PR.
 
 - **Pinned, telemetry off.** The version is one variable in the script
   (`IMPECCABLE_VERSION`); a bump is a deliberate edit. `DO_NOT_TRACK=1` and
@@ -492,7 +568,7 @@ npx shadcn add deanjstone/design-system/design-check#v3.0.0
 - **`shadcn add` does not set the executable bit**, so the workflow runs
   `bash scripts/design-detect.sh`.
 
-Needs `jq` and `npx`, both on GitHub-hosted runners. Rolling it out is a
+Needs `jq`, `npx` and `node`, all on GitHub-hosted runners. Rolling it out is a
 follow-up issue per consumer.
 
 ## Design tooling

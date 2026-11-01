@@ -1,0 +1,13 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "app-html-head",
+  "files": [
+    {
+      "path": "registry/app-html-head/app-html-head.html",
+      "content": "<!--\n  The <head> tags every myargus.cc front end needs for an iPhone (design-system#137).\n  Copy the tags below into your index.html <head>. Apps that hand-copy these drift.\n\n  viewport-fit=cover   Lets the page draw to the display edge, and is what makes\n                       env(safe-area-inset-*) non-zero at all. Without it the\n                       --safe-* tokens are always 0. Pair it with px-edge, pb-edge\n                       and pt-safe so content stays out of the curves and notch.\n                       The tag sets no zoom limit, so pinch zoom stays on (WCAG 1.4.4).\n                       Do not add one.\n  apple-mobile-web-app-* The Home Screen web app set. \"default\" status bar keeps the\n                       bar opaque, so the top inset is the system's to manage;\n                       the translucent style would make every app clear it itself. iOS 26 opens\n                       every Home Screen site as a web app, so -capable matters only\n                       on older iOS; the status-bar style decides the top inset\n                       either way.\n  theme-color          One per colour scheme; they match the default (Ocean) theme's\n                       --background. Change them if the app sets another theme.\n-->\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1, viewport-fit=cover\" />\n<meta name=\"mobile-web-app-capable\" content=\"yes\" />\n<meta name=\"apple-mobile-web-app-capable\" content=\"yes\" />\n<meta name=\"apple-mobile-web-app-status-bar-style\" content=\"default\" />\n<meta name=\"apple-mobile-web-app-title\" content=\"App name\" />\n<meta name=\"theme-color\" media=\"(prefers-color-scheme: light)\" content=\"#f5f7f8\" />\n<meta name=\"theme-color\" media=\"(prefers-color-scheme: dark)\" content=\"#17212b\" />\n",
+      "type": "registry:file",
+      "target": "~/app-html-head.html"
+    }
+  ],
+  "type": "registry:file"
+}

@@ -59,6 +59,8 @@ describe("registry item dependencies", () => {
       const imported = item.files!.flatMap((file) => importsOf(file.path))
       const packages = imported
         .filter((specifier) => !specifier.startsWith(".") && !specifier.startsWith("@/"))
+        // Node built-ins (design-rules.mjs) are not packages to declare.
+        .filter((specifier) => !specifier.startsWith("node:"))
         .map(packageName)
         .filter((name) => !providedByConsumer.has(name))
 
