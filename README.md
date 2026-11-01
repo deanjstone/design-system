@@ -464,7 +464,8 @@ svg appends it as a stray text node. Give these parts an explicit child,
 The registry follows iOS Larger Text ([#150](https://github.com/deanjstone/design-system/issues/150)):
 the root font derives from `-apple-system-body`, so rem text and spacing scale. A
 consumer can rely on **200% at a 320px viewport with no sideways scroll and no
-clipped control**; past that, text keeps scaling and the page scrolls vertically.
+clipped control**; past that, up to the top of iOS Larger Text (310%), text keeps scaling and
+the page scrolls vertically, never sideways.
 The AppShell's chrome stops growing at about 150%, then its tabs go icon-only
 (labels stay `sr-only`), and text fields stay at 16px at every size. The rules and
 the checks that hold them are in `DESIGN.md` § Text size and the curve-geometry
@@ -623,7 +624,8 @@ inputs at 16px or more; reduced motion (a `reducedMotion: "reduce"` context, the
 `scripts/geometry-gate/aria/`; a Tab loop whose focused control must not be under
 something else; a 320px / 200% text context (sideways scroll, clipped tab labels and controls,
 header plus tab bar under 25% of the viewport, the published `--shell-*`
-heights); a 75% root context for the 16px input minimum; and axe `target-size` and
+heights); a 320px / 310% context (sideways scroll, and any element reaching past the right edge);
+a 75% root context for the 16px input minimum; and axe `target-size` and
 `scrollable-region-focusable`. A finding the #144 audit already filed sits in
 `KNOWN` in `scripts/geometry-gate/checks.mjs`: it is reported with its issue and
 does not fail the gate, and a `KNOWN` entry that stops firing fails it until the

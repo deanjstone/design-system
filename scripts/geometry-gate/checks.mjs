@@ -17,9 +17,7 @@ export const CHECK_SCENARIOS = ["iphone-17-portrait", "iphone-17-landscape-top-0
 // Findings the #144 audit already filed. A listed finding is reported, not failed, so
 // the gate can land green; a listed entry that no longer fires fails the gate until
 // it is deleted, so the list only shrinks (the same rule as test/theme-contrast.test.ts).
-export const KNOWN = ["shell", "shell-focus"].flatMap((view) =>
-  ["document", 'a{badge} "Link badge"'].map((label) => ({ check: "sideways-scroll", view, label, issue: 164 })),
-)
+export const KNOWN = []
 
 const matches = (known, finding) =>
   known.check === finding.check &&

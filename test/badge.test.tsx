@@ -27,3 +27,20 @@ describe("Badge status variants", () => {
     expect(badgeVariants({ variant: "destructive" })).toContain("text-destructive")
   })
 })
+
+// Past 200% text (design-system#150, #164): a badge wider than its container wraps instead of
+// pushing the page sideways. It can never be wider than its container, and its one-line height
+// is a floor, so the default 20px badge is unchanged.
+describe("Badge at large text", () => {
+  it("is held to its container and wraps rather than overflow", () => {
+    const classes = badgeVariants()
+    expect(classes).toContain("max-w-full")
+    expect(classes).not.toContain("whitespace-nowrap")
+  })
+
+  it("keeps the 20px one-line height as a minimum", () => {
+    const classes = badgeVariants()
+    expect(classes).toContain("min-h-5")
+    expect(classes).not.toMatch(/(^| )h-5( |$)/)
+  })
+})

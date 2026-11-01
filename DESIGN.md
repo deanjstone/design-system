@@ -562,13 +562,19 @@ below held. At the default Larger Text size nothing changes: the body font is
   its width is under 16 root-em the labels go `sr-only`: still in the
   accessibility tree for VoiceOver, gone from the screen, and the tabs shrink to
   44px. The header stays one line; the app name truncates.
+- **Past 200%, text breaks before the page scrolls sideways.** `CardTitle` and
+  `CardDescription` use `wrap-anywhere`, so a word wider than the card's text
+  column (at 310% on 320px, "description" is) breaks mid-word. `Badge` is held to
+  `max-w-full`, wraps instead of `nowrap`, and keeps 20px as `min-h-5`. At 100%
+  no word or badge is wider than its container, so nothing changes there.
 - **Text fields are 16px at every size.** `input`, `textarea` and
   `command-input` use `max(1rem, 16px)`, so a root below 100% (the smallest
   Larger Text sizes) cannot take a field under what iOS zooms into.
 - **The gate proves it.** The geometry gate's 320px / 200% context fails on
   sideways scroll, a clipped tab label or control, a header plus tab bar over
   25% of the viewport, and `--shell-top` / `--shell-bottom` / `--shell-workspace`
-  out of step with the chrome; a 75% root context holds the 16px field minimum.
+  out of step with the chrome; a 320px / 310% context fails on sideways scroll or any element reaching past
+  the right edge; a 75% root context holds the 16px field minimum.
 
 Both rules are deliberately **unlayered**. Tailwind utilities live in a
 cascade layer, and unlayered styles win over layered ones regardless of
