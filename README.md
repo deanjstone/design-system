@@ -446,6 +446,9 @@ result, never by hand-merging. No git hook runs it: it is a step you run, and CI
 is the backstop. Its pins live in `scripts/check.sh`; `test/check-script.test.ts`
 fails if they drift from `.github/workflows/design.yml` or `package.json`.
 
+The browser-side geometry check is separate: `pnpm gate:geometry` (see
+[Curve-geometry gate](#curve-geometry-gate)).
+
 **Gotcha: Base UI parts with default children.** `Select.Icon`,
 `Combobox.Icon` and `NavigationMenu.Icon` default their children to `▼`
 (also `Combobox.ItemIndicator` `✔️`, `Combobox.Clear` `x`). `render` swaps
@@ -541,6 +544,70 @@ VoiceOver, so turn it on for any drawer without another close control.
 - Sheet and drawer slides becoming fades under Reduce Motion is
   [#147](https://github.com/deanjstone/design-system/issues/147). Keyboard overlap
   for overlays is a device check in [#141](https://github.com/deanjstone/design-system/issues/141).
+
+### Curve-geometry gate
+
+`pnpm gate:geometry` proves, without an iPhone, that a UI change keeps text and
+controls clear of the display curves, the Dynamic Island and the home-indicator
+band ([design-system#143](https://github.com/deanjstone/design-system/issues/143)).
+It builds a harness page of the registry blocks (AppShell, login, sheet on four
+sides, dialog, alert dialog, drawer, toast), opens each in Playwright Chromium and
+sets the insets with the CDP method `Emulation.setSafeAreaInsetsOverride`, so
+`env(safe-area-inset-*)` resolves to the device values. Chromium draws no curves;
+the gate measures instead.
+
+| Scenario | Viewport | Insets T/B/L/R |
+|---|---|---|
+| all insets 0 (Safari tab) | 402×874 | 0/0/0/0 |
+| iPhone 17 portrait | 402×874 | 62/34/0/0 |
+| iPhone 17 portrait, status bar default | 402×812 | 0/34/0/0 (top curves out of view) |
+| iPhone 17 landscape | 874×402 | 0/20/62/62 and 20/20/62/62 |
+| iPhone Air portrait / landscape | 420×912 / 912×420 | 68/34/0/0 / 20/29/68/68 |
+
+**What fails the gate.** Every control's rect and every text line's rect
+(`Range.getClientRects`) must lie inside the display's rounded rect (radius 62,
+which also satisfies the 55 of older phones), clear of the island box (125×37pt,
+14pt from the top; both short edges in landscape) and above the home-indicator
+band, and must not spill sideways. Backgrounds, borders and shadows are exempt, as
+are text hidden for screen readers and anything a fixed bar covers. A page that
+scrolls is measured at its top and at its end; each position holds the half of the
+page at rest at that edge, and fixed or sticky chrome at both. The band starts
+12px below the bottom inset line, because `--edge-b` is the inset less 12px by
+design (the indicator sits about 12px below where content looks right).
+
+**Also checked, in the same contexts.** Token contrast (the two vitest files, run
+first); WCAG 2.5.8 target size (24px, hit area counted) at 402×874 and 874×402;
+inputs at 16px or more; reduced motion (a `reducedMotion: "reduce"` context, then
+`document.getAnimations()` for movement); an aria snapshot per block against
+`scripts/geometry-gate/aria/`; a Tab loop whose focused control must not be under
+something else; a 320px / 200% text reflow context; and axe `target-size` and
+`scrollable-region-focusable`. A finding the #144 audit already filed sits in
+`KNOWN` in `scripts/geometry-gate/checks.mjs`: it is reported with its issue and
+does not fail the gate, and a `KNOWN` entry that stops firing fails it until the
+entry is deleted, so the list only shrinks.
+
+**Running it.**
+
+```bash
+pnpm gate:geometry                          # everything; exit 1 on a new finding
+pnpm gate:geometry --scenario iphone-17-landscape-top-0 --view shell
+pnpm gate:geometry --url http://localhost:5173/some/page   # a consumer's dev URL
+pnpm gate:geometry --update-aria            # after an intended markup change
+```
+
+`--url` runs the geometry, target-size, font-size, axe and Tab checks on that one
+page. It needs Chromium (`GATE_CHROMIUM=/path/to/chrome` if Playwright's is not
+installed). Screenshots with the curve mask (red), island (black), band (amber) and
+each offender outlined (magenta) are written to `geometry-gate-out/curves/`; a
+failing run's files end in `__FAIL`. Attach them to the PR.
+
+**What a pass does not prove.** Geometry only: no WebKit layout or rendering, no
+real standalone status-bar style, no keyboard overlap and no dynamic viewport. The
+corner radius is a circle standing in for the real curve, from community data. Those
+are owner checks on the iPhone ([#141](https://github.com/deanjstone/design-system/issues/141)).
+It is not part of `pnpm check` or CI, which have no browser: run it before a change
+to a block's edges, and `GATE_REGISTRY=<other checkout>/registry` points it at
+another tree.
 
 ## Design check item
 
