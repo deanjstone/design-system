@@ -641,6 +641,25 @@ Two helpers come with them: the `nav-link` lib (`renderAnchor`, the type of a
   and controls never sit nearer an edge than `max(floor, inset)`: the header
   wrapper pads `max(0.5rem, --safe-l | --safe-r)` and `main` uses `px-edge`. A
   test fails any side inset read in `app-shell.tsx` without a `max()` floor.
+- **Focus mode.** `chrome="none"` is for an immersive view (mail thread,
+  article reader, knowledge graph, barcode scanner): no header, tab bar or
+  sidebar, so the page gets the whole screen (about 213px back on a phone). The
+  one thing left is the `back` control, 44px, pinned at
+  `top: max(1rem, --safe-t)`, `left: max(1rem, --safe-l)`; the page starts below
+  it, and `--scroll-pad-top` keeps a focused control clear of it. With no `back`
+  there is no control. `chrome="full"` is the default.
+- **Auto-hide header.** `autoHideHeader` slides the header away on scroll down
+  (once past its own height, after 8px of travel) and back on scroll up, at the
+  top of the page, or when focus arrives in it: about 64px back. It never hides
+  while a control inside it has focus (WCAG 2.4.11), and it is off under
+  `prefers-reduced-motion`. Off unless asked for.
+- **Landscape phone rail.** At `(orientation: landscape) and (max-height: 500px)`
+  the tab bar becomes a left icon rail (the same `nav`, so there is still one
+  Sections landmark): `w-14` at `left: --edge-x`, labels kept for the accessible
+  name, each control at least 44px, scrolling inside itself on a short screen.
+  The header stops sticking and scrolls away (about 141px back), and the page and
+  header move right to clear the rail. The shell then publishes no bottom
+  chrome and no top scroll padding, since nothing is pinned over the page.
 - **Workspace variables.** The shell measures its header zone and tab bar and
   sets `--shell-top`, `--shell-bottom` and `--shell-workspace`
   (`100dvh - top - bottom`) on its root, so a full-height pane writes

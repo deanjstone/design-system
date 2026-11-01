@@ -59,8 +59,14 @@ const workspaceFallback = (showTabBar: boolean, focus: boolean) =>
     ? "[--shell-top:0px] [--shell-bottom:var(--edge-b)] [--shell-workspace:calc(100dvh_-_var(--shell-top)_-_var(--shell-bottom))]"
     : cn(
         "[--shell-top:calc(var(--safe-t)_+_4rem)] [--shell-workspace:calc(100dvh_-_var(--shell-top)_-_var(--shell-bottom))] lg:[--shell-bottom:0px]",
-        showTabBar ? "[--shell-bottom:calc(var(--edge-b)_+_3.75rem)]" : "[--shell-bottom:var(--edge-b)]"
+        showTabBar
+          ? "[--shell-bottom:calc(var(--edge-b)_+_3.75rem)] [@media(orientation:landscape)_and_(max-height:500px)]:[--shell-bottom:var(--edge-b)]"
+          : "[--shell-bottom:var(--edge-b)]"
       )
+
+// A phone turned on its side: short enough that a bottom bar and a sticky header cost too much of it.
+// The rail classes below spell this query out in full (Tailwind needs whole class names).
+const RAIL_QUERY = "(orientation: landscape) and (max-height: 500px)"
 
 // In focus mode the only thing over the page is the back control; a focused control scrolls clear of it.
 const BACK_CLEARANCE = 8
@@ -76,7 +82,8 @@ const useShellMetrics = (
   barRef: React.RefObject<HTMLElement | null>,
   backRef: React.RefObject<HTMLElement | null>,
   showTabBar: boolean,
-  focus: boolean
+  focus: boolean,
+  rail: boolean
 ) => {
   React.useLayoutEffect(() => {
     const root = rootRef.current
@@ -97,9 +104,13 @@ const useShellMetrics = (
         return
       }
       const bar = barRef.current
-      publish("--shell-top", "--scroll-pad-top", top ? top.offsetHeight : 0)
-      // A bar hidden from lg has no height; the CSS fallback (0 there) applies.
-      const barHeight = bar ? bar.offsetHeight : 0
+      const topHeight = top ? top.offsetHeight : 0
+      setPixels(root, "--shell-top", topHeight)
+      // In the rail the header scrolls away, so nothing sticks over the page to scroll clear of.
+      setPixels(page, "--scroll-pad-top", rail ? 0 : topHeight)
+      // A bar hidden from lg has no height; the CSS fallback (0 there) applies. The rail runs up the
+      // side, so it has no bottom height either; the fallback (the bottom edge alone) applies.
+      const barHeight = bar && !rail ? bar.offsetHeight : 0
       const barOffset = bar && barHeight > 0 ? Number.parseFloat(getComputedStyle(bar).bottom) || 0 : 0
       publish("--shell-bottom", "--scroll-pad-bottom", barHeight > 0 ? barHeight + barOffset : 0)
     }
@@ -118,7 +129,7 @@ const useShellMetrics = (
       observer.disconnect()
       release()
     }
-  }, [rootRef, topRef, barRef, backRef, showTabBar, focus])
+  }, [rootRef, topRef, barRef, backRef, showTabBar, focus, rail])
 }
 
 // The scroll that must build up in one direction before the header moves, so a finger's jitter doesn't.
@@ -181,7 +192,7 @@ const glassBar = "surface-glass border border-border/60 shadow-lg"
 
 const tabClass = (active: boolean) =>
   cn(
-    "flex min-h-12.5 min-w-0 flex-1 flex-col items-center justify-center gap-0.5 rounded-full px-1 text-2xs font-medium outline-none transition-colors focus-visible:ring-3 focus-visible:ring-ring max-[15rem]:[&>span]:sr-only [&_svg]:size-5 [&_svg]:shrink-0",
+    "flex min-h-12.5 min-w-0 flex-1 flex-col items-center justify-center gap-0.5 rounded-full px-1 text-2xs font-medium outline-none transition-colors focus-visible:ring-3 focus-visible:ring-ring max-[15rem]:[&>span]:sr-only [@media(orientation:landscape)_and_(max-height:500px)]:min-h-11 [@media(orientation:landscape)_and_(max-height:500px)]:min-w-11 [@media(orientation:landscape)_and_(max-height:500px)]:flex-none [@media(orientation:landscape)_and_(max-height:500px)]:[&>span]:sr-only [&_svg]:size-5 [&_svg]:shrink-0",
     active ? "bg-muted text-foreground" : "text-foreground/80 hover:text-foreground"
   )
 
@@ -221,8 +232,10 @@ function AppShell({
   const barRef = React.useRef<HTMLElement>(null)
   const backRef = React.useRef<HTMLElement>(null)
   const focus = chrome === "none"
-  useShellMetrics(rootRef, topRef, barRef, backRef, showTabBar, focus)
-  const headerHidden = useAutoHideHeader(topRef, autoHideHeader && !focus)
+  const rail = useMediaQuery(RAIL_QUERY)
+  useShellMetrics(rootRef, topRef, barRef, backRef, showTabBar, focus, rail)
+  // In the rail the header is not sticky: it scrolls away by itself.
+  const headerHidden = useAutoHideHeader(topRef, autoHideHeader && !focus && !rail)
   const overflowActive = overflow.some((entry) => entry.id === activeSectionId)
 
   const link = (entry: ShellSection, className: (active: boolean) => string) => {
@@ -291,7 +304,7 @@ function AppShell({
             ref={topRef}
             data-slot="app-shell-top"
             data-hidden={headerHidden ? "true" : undefined}
-            className="pointer-events-none sticky top-0 z-30 transition-transform duration-200 data-[hidden=true]:-translate-y-full focus-within:translate-y-0 motion-reduce:transition-none pr-[max(0.5rem,var(--safe-r))] pl-[max(0.5rem,var(--safe-l))] pt-[calc(env(safe-area-inset-top)+0.5rem)] pb-2"
+            className="pointer-events-none sticky top-0 z-30 [@media(orientation:landscape)_and_(max-height:500px)]:static [@media(orientation:landscape)_and_(max-height:500px)]:pl-[calc(var(--edge-x)+4rem)] transition-transform duration-200 data-[hidden=true]:-translate-y-full focus-within:translate-y-0 motion-reduce:transition-none pr-[max(0.5rem,var(--safe-r))] pl-[max(0.5rem,var(--safe-l))] pt-[calc(env(safe-area-inset-top)+0.5rem)] pb-2"
           >
             <header
               data-slot="app-shell-header"
@@ -324,7 +337,7 @@ function AppShell({
             "mx-auto flex w-full max-w-5xl flex-1 flex-col px-edge lg:px-6",
             focus
               ? cn("pb-edge", back ? "pt-[calc(max(1rem,var(--safe-t))+3.25rem)]" : "pt-[max(1rem,var(--safe-t))]")
-              : cn("pt-2 lg:pb-6", showTabBar ? "pb-[calc(6rem+var(--edge-b))]" : "pb-edge")
+              : cn("pt-2 lg:pb-6 [@media(orientation:landscape)_and_(max-height:500px)]:pl-[calc(var(--edge-x)+4.5rem)] [@media(orientation:landscape)_and_(max-height:500px)]:pb-edge", showTabBar ? "pb-[calc(6rem+var(--edge-b))]" : "pb-edge")
           )}
         >
           {children}
@@ -345,7 +358,7 @@ function AppShell({
           aria-label="Sections"
           className={cn(
             glassBar,
-            "fixed right-[max(1.3rem,env(safe-area-inset-right))] bottom-[max(0.5rem,calc(env(safe-area-inset-bottom)-12px))] left-[max(1.3rem,env(safe-area-inset-left))] z-30 flex items-stretch gap-1 rounded-[2rem] p-1 lg:hidden"
+            "fixed right-[max(1.3rem,env(safe-area-inset-right))] bottom-[max(0.5rem,calc(env(safe-area-inset-bottom)-12px))] left-[max(1.3rem,env(safe-area-inset-left))] z-30 flex items-stretch gap-1 rounded-[2rem] p-1 lg:hidden [@media(orientation:landscape)_and_(max-height:500px)]:top-[max(0.5rem,var(--safe-t))] [@media(orientation:landscape)_and_(max-height:500px)]:right-auto [@media(orientation:landscape)_and_(max-height:500px)]:bottom-[var(--edge-b)] [@media(orientation:landscape)_and_(max-height:500px)]:left-[var(--edge-x)] [@media(orientation:landscape)_and_(max-height:500px)]:w-14 [@media(orientation:landscape)_and_(max-height:500px)]:flex-col [@media(orientation:landscape)_and_(max-height:500px)]:overflow-y-auto [@media(orientation:landscape)_and_(max-height:500px)]:rounded-2xl"
           )}
         >
           {tabs.map((entry) => (
@@ -359,7 +372,7 @@ function AppShell({
                 className={tabClass(overflowActive)}
               >
                 <EllipsisIcon aria-hidden="true" />
-                More
+                <span className="truncate">More</span>
               </SheetTrigger>
               <SheetContent side="bottom" className="rounded-t-xl">
                 <SheetHeader>

@@ -899,6 +899,174 @@ describe("AppShell", () => {
     })
   })
 
+  // Landscape phone rail (#139): in landscape the bottom bar costs a third of a 402px screen, so from
+  // (orientation: landscape) and (max-height: 500px) the same nav becomes a left icon rail, and the
+  // header scrolls away instead of sticking.
+  describe("landscape phone rail", () => {
+    const R = "[@media(orientation:landscape)_and_(max-height:500px)]:"
+    const rail = (container: HTMLElement) => tabBar(container)
+
+    it("turns the one tab bar into a left rail, so there is still one Sections nav", () => {
+      const { container } = render(<AppShell appName="Reader" sections={six}>x</AppShell>)
+
+      const className = rail(container).className
+      for (const token of [`${R}flex-col`, `${R}right-auto`, `${R}left-[var(--edge-x)]`, `${R}w-14`]) {
+        expect(className, token).toContain(token)
+      }
+      expect(screen.getAllByRole("navigation", { name: "Sections" })).toHaveLength(2)
+    })
+
+    it("sits at the edge padding, which clears the inset and the curve", () => {
+      const { container } = render(<AppShell appName="Reader" sections={four}>x</AppShell>)
+
+      const className = rail(container).className
+      expect(className).toContain(`${R}left-[var(--edge-x)]`)
+      expect(className).toContain(`${R}top-[max(0.5rem,var(--safe-t))]`)
+      expect(className).toContain(`${R}bottom-[var(--edge-b)]`)
+    })
+
+    it("shows icons only, and keeps each label for the tab's name", () => {
+      const { container } = render(<AppShell appName="Reader" sections={six}>x</AppShell>)
+
+      const bar = within(rail(container))
+      for (const control of [...bar.getAllByRole("link"), bar.getByRole("button", { name: "More" })]) {
+        expect(control.className).toContain(`${R}[&>span]:sr-only`)
+      }
+      expect(bar.getByRole("link", { name: "Home" })).toBeTruthy()
+    })
+
+    it("keeps every control at least 44px and the focus ring solid", () => {
+      const { container } = render(<AppShell appName="Reader" sections={six}>x</AppShell>)
+
+      const bar = within(rail(container))
+      for (const control of [...bar.getAllByRole("link"), bar.getByRole("button", { name: "More" })]) {
+        expect(control.className).toContain(`${R}min-w-11`)
+        expect(control.className).toContain(`${R}min-h-11`)
+        expect(control.className).toContain(`${R}flex-none`)
+        expect(control.className).toContain("focus-visible:ring-ring")
+        expect(control.className).not.toContain("ring-ring/50")
+      }
+    })
+
+    it("puts the More label in a span, so the icon-only rules reach it like the other tabs", () => {
+      const { container } = render(<AppShell appName="Reader" sections={six}>x</AppShell>)
+
+      const more = within(rail(container)).getByRole("button", { name: "More" })
+      expect(more.querySelector(":scope > span")?.textContent).toBe("More")
+    })
+
+    it("scrolls inside itself rather than running off a short screen", () => {
+      const { container } = render(<AppShell appName="Reader" sections={six}>x</AppShell>)
+
+      expect(rail(container).className).toContain(`${R}overflow-y-auto`)
+    })
+
+    it("makes the header non-sticky, and moves it clear of the rail", () => {
+      const { container } = render(<AppShell appName="Reader" sections={four}>x</AppShell>)
+
+      const className = header(container).parentElement!.className
+      expect(className).toContain("sticky")
+      expect(className).toContain(`${R}static`)
+      expect(className).toContain(`${R}pl-[calc(var(--edge-x)+4rem)]`)
+    })
+
+    it("moves the page clear of the rail", () => {
+      render(<AppShell appName="Reader" sections={four}>x</AppShell>)
+
+      const className = screen.getByRole("main").className
+      expect(className).toContain(`${R}pl-[calc(var(--edge-x)+4.5rem)]`)
+      expect(className).toContain(`${R}pb-edge`)
+    })
+
+    it("gives the page no room for a bottom bar in landscape", () => {
+      const { container } = render(<AppShell appName="Reader" sections={four}>x</AppShell>)
+
+      expect(container.querySelector<HTMLElement>("[data-slot=app-shell]")!.className).toContain(
+        `${R}[--shell-bottom:var(--edge-b)]`
+      )
+    })
+
+    it("draws no rail in focus mode", () => {
+      const { container } = render(<AppShell appName="Reader" sections={four} chrome="none">x</AppShell>)
+
+      expect(container.querySelector("[data-slot=app-shell-tabbar]")).toBeNull()
+    })
+
+    describe("workspace variables", () => {
+      const railMatches = (matches: boolean) =>
+        vi.stubGlobal("matchMedia", (query: string) => ({
+          matches: matches && query.includes("max-height: 500px"),
+          media: query,
+          addEventListener: () => {},
+          removeEventListener: () => {},
+        }))
+      afterEach(() => {
+        vi.unstubAllGlobals()
+        if (offsetHeight) Object.defineProperty(HTMLElement.prototype, "offsetHeight", offsetHeight)
+        document.documentElement.removeAttribute("style")
+        observed.length = 0
+      })
+      const layout = () => {
+        vi.stubGlobal("ResizeObserver", FakeResizeObserver)
+        Object.defineProperty(HTMLElement.prototype, "offsetHeight", {
+          configurable: true,
+          get() {
+            const slot = (this as HTMLElement).dataset.slot
+            if (slot === "app-shell-tabbar") return 320
+            return slot === "app-shell-top" ? 64 : 0
+          },
+        })
+      }
+
+      it("does not count the rail's height as bottom chrome", () => {
+        layout()
+        railMatches(true)
+        const { container } = render(<AppShell appName="Reader" sections={four}>x</AppShell>)
+
+        expect(container.querySelector<HTMLElement>("[data-slot=app-shell]")!.style.getPropertyValue("--shell-bottom")).toBe("")
+        expect(document.documentElement.style.getPropertyValue("--scroll-pad-bottom")).toBe("")
+      })
+
+      it("does not pad scrolling for the header, which no longer sticks", () => {
+        layout()
+        railMatches(true)
+        render(<AppShell appName="Reader" sections={four}>x</AppShell>)
+
+        expect(document.documentElement.style.getPropertyValue("--scroll-pad-top")).toBe("")
+      })
+
+      it("keeps the portrait measurements outside the rail", () => {
+        layout()
+        railMatches(false)
+        render(<AppShell appName="Reader" sections={four}>x</AppShell>)
+
+        expect(document.documentElement.style.getPropertyValue("--scroll-pad-top")).toBe("64px")
+        expect(document.documentElement.style.getPropertyValue("--scroll-pad-bottom")).toBe("320px")
+      })
+
+      it("leaves the header alone on scroll, because it scrolls away by itself", () => {
+        layout()
+        railMatches(true)
+        const { container } = render(<AppShell appName="Reader" sections={four} autoHideHeader>x</AppShell>)
+        Object.defineProperty(window, "scrollY", { configurable: true, value: 300 })
+
+        fireEvent.scroll(window)
+
+        expect(container.querySelector("[data-slot=app-shell-top]")!.getAttribute("data-hidden")).toBeNull()
+        Reflect.deleteProperty(window, "scrollY")
+      })
+    })
+
+    it("reads no side inset in the rail without a max() floor", () => {
+      const use = /(env\(safe-area-inset-(?:left|right)\)|var\(--safe-[lr]\))/g
+      for (const line of shellSource.split("\n").filter((entry) => entry.includes("max-height:500px"))) {
+        for (const [, inset] of line.matchAll(use)) {
+          expect(line.slice(0, line.indexOf(inset)), inset).toMatch(/max\([^()]*$/)
+        }
+      }
+    })
+  })
+
   it("lays the page out as a column, so an EmptyPage can fill what is left", () => {
     render(<AppShell appName="Reader" sections={four}>x</AppShell>)
 
