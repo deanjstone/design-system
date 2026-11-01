@@ -304,7 +304,10 @@ function AppShell({
             ref={topRef}
             data-slot="app-shell-top"
             data-hidden={headerHidden ? "true" : undefined}
-            className="pointer-events-none sticky top-0 z-30 [@media(orientation:landscape)_and_(max-height:500px)]:static [@media(orientation:landscape)_and_(max-height:500px)]:pl-[calc(var(--edge-x)+4rem)] transition-transform duration-200 data-[hidden=true]:-translate-y-full focus-within:translate-y-0 motion-reduce:transition-none pr-[max(0.5rem,var(--safe-r))] pl-[max(0.5rem,var(--safe-l))] pt-[calc(env(safe-area-inset-top)+0.5rem)] pb-2"
+            className={cn(
+              "pointer-events-none sticky top-0 z-30 [@media(orientation:landscape)_and_(max-height:500px)]:static transition-transform duration-200 data-[hidden=true]:-translate-y-full focus-within:translate-y-0 motion-reduce:transition-none pr-[max(0.5rem,var(--safe-r))] pl-[max(0.5rem,var(--safe-l))] pt-[calc(env(safe-area-inset-top)+0.5rem)] pb-2",
+              showTabBar && "[@media(orientation:landscape)_and_(max-height:500px)]:pl-[calc(var(--edge-x)+4rem)]"
+            )}
           >
             <header
               data-slot="app-shell-header"
@@ -337,7 +340,7 @@ function AppShell({
             "mx-auto flex w-full max-w-5xl flex-1 flex-col px-edge lg:px-6",
             focus
               ? cn("pb-edge", back ? "pt-[calc(max(1rem,var(--safe-t))+min(3.25rem,78px))]" : "pt-[max(1rem,var(--safe-t))]")
-              : cn("pt-2 lg:pb-6 [@media(orientation:landscape)_and_(max-height:500px)]:pl-[calc(var(--edge-x)+4.5rem)] [@media(orientation:landscape)_and_(max-height:500px)]:pb-edge", showTabBar ? "pb-[calc(6rem+var(--edge-b))]" : "pb-edge")
+              : cn("pt-2 lg:pb-6 [@media(orientation:landscape)_and_(max-height:500px)]:pb-edge", showTabBar ? "pb-[calc(6rem+var(--edge-b))] [@media(orientation:landscape)_and_(max-height:500px)]:pl-[calc(var(--edge-x)+4.5rem)]" : "pb-edge")
           )}
         >
           {children}
