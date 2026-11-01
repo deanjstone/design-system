@@ -1,0 +1,462 @@
+// link-check:vendored
+// GENERATED from links.json by design-system scripts/links/generate.mjs. Do not edit.
+// The myargus.cc and tailnet URL builders: every URL in code comes from here.
+import { createLinks } from "@/lib/links-core"
+
+export const REGISTRY = {
+  "revision": 1,
+  "domain": "myargus.cc",
+  "cookieDomain": ".myargus.cc",
+  "tailnetHost": "homelab.tail00500e.ts.net",
+  "entries": [
+    {
+      "id": "shell",
+      "name": "myargus",
+      "description": "Portal, plans and the system map",
+      "bucket": "internal",
+      "status": "live",
+      "host": "myargus.cc",
+      "path": "/",
+      "hosting": "pages",
+      "access": false,
+      "switcher": true,
+      "routes": [
+        "/plans",
+        "/plans/:slug"
+      ],
+      "probe": {
+        "status": 200
+      }
+    },
+    {
+      "id": "reader",
+      "name": "Read",
+      "description": "Read-later & article library",
+      "bucket": "internal",
+      "status": "live",
+      "host": "myargus.cc",
+      "path": "/reader/",
+      "hosting": "pages",
+      "access": false,
+      "switcher": true,
+      "routes": [],
+      "probe": {
+        "status": 200
+      }
+    },
+    {
+      "id": "knowledge",
+      "name": "Knowledge",
+      "description": "Semantic AI knowledge graph",
+      "bucket": "internal",
+      "status": "live",
+      "host": "myargus.cc",
+      "path": "/knowledge/",
+      "hosting": "pages",
+      "access": false,
+      "switcher": true,
+      "routes": [],
+      "probe": {
+        "status": 200
+      }
+    },
+    {
+      "id": "briefings",
+      "name": "Briefings",
+      "description": "Daily ops briefing and memory review",
+      "bucket": "internal",
+      "status": "live",
+      "host": "myargus.cc",
+      "path": "/briefings/",
+      "hosting": "pages",
+      "access": false,
+      "switcher": true,
+      "routes": [],
+      "probe": {
+        "status": 302
+      }
+    },
+    {
+      "id": "jobs",
+      "name": "Jobs",
+      "description": "APS roles open for review",
+      "bucket": "internal",
+      "status": "live",
+      "host": "myargus.cc",
+      "path": "/jobs/",
+      "hosting": "pages",
+      "access": false,
+      "switcher": true,
+      "routes": [],
+      "probe": {
+        "status": 200
+      }
+    },
+    {
+      "id": "budget",
+      "name": "Budget",
+      "description": "Personal finance",
+      "bucket": "external",
+      "status": "live",
+      "host": "budget.myargus.cc",
+      "path": "/",
+      "hosting": "tunnel",
+      "access": false,
+      "switcher": true,
+      "routes": [],
+      "probe": {
+        "status": 200
+      }
+    },
+    {
+      "id": "stockade",
+      "name": "Stockade",
+      "description": "Household inventory",
+      "bucket": "external",
+      "status": "live",
+      "host": "stockade.myargus.cc",
+      "path": "/",
+      "hosting": "pages",
+      "access": false,
+      "switcher": true,
+      "routes": [],
+      "probe": {
+        "status": 200
+      }
+    },
+    {
+      "id": "ops",
+      "name": "Ops hub",
+      "description": "Issues, PRs, waves and the notice board",
+      "bucket": "external",
+      "status": "live",
+      "host": "ops.myargus.cc",
+      "path": "/",
+      "hosting": "tunnel",
+      "access": true,
+      "switcher": true,
+      "routes": [
+        "/promotions/:owner/:repo"
+      ],
+      "probe": {
+        "status": 302
+      }
+    },
+    {
+      "id": "mail",
+      "name": "Mail",
+      "description": "The shared agent inbox",
+      "bucket": "external",
+      "status": "live",
+      "host": "mail.myargus.cc",
+      "path": "/",
+      "hosting": "worker",
+      "access": true,
+      "switcher": true,
+      "routes": [],
+      "probe": {
+        "status": 302
+      }
+    },
+    {
+      "id": "watchtower",
+      "name": "Watchtower",
+      "description": "Infra health, live from the collector",
+      "bucket": "external",
+      "status": "live",
+      "host": "watchtower.myargus.cc",
+      "path": "/",
+      "hosting": "pages",
+      "access": false,
+      "switcher": true,
+      "routes": [],
+      "probe": {
+        "status": 200
+      }
+    },
+    {
+      "id": "capture",
+      "name": "Quick Capture",
+      "description": "Phone-first capture into the vault inbox",
+      "bucket": "external",
+      "status": "live",
+      "host": "capture.myargus.cc",
+      "path": "/",
+      "hosting": "tunnel",
+      "access": true,
+      "switcher": false,
+      "routes": [],
+      "probe": {
+        "status": 302
+      }
+    },
+    {
+      "id": "taskview",
+      "name": "TaskView",
+      "description": "Third-party task manager, internals out of scope",
+      "bucket": "external",
+      "status": "live",
+      "host": "taskview.myargus.cc",
+      "path": "/",
+      "hosting": "tunnel",
+      "access": true,
+      "switcher": false,
+      "routes": [],
+      "probe": {
+        "status": 302
+      }
+    },
+    {
+      "id": "atto1",
+      "name": "atto1",
+      "description": "EV charging, range and maintenance log",
+      "bucket": "external",
+      "status": "planned",
+      "host": "atto1.myargus.cc",
+      "path": "/",
+      "hosting": "pages",
+      "access": false,
+      "switcher": false,
+      "routes": [],
+      "probe": null,
+      "note": "atto1#47"
+    },
+    {
+      "id": "t3",
+      "name": "T3 Code",
+      "description": "T3 Code behind Cloudflare, replaced by the tailnet route",
+      "bucket": "external",
+      "status": "planned",
+      "host": "t3.myargus.cc",
+      "path": "/",
+      "hosting": "tunnel",
+      "access": true,
+      "switcher": false,
+      "routes": [],
+      "probe": null,
+      "note": "homelab#292"
+    },
+    {
+      "id": "board",
+      "name": "Notice board",
+      "description": "Moved into the ops hub",
+      "bucket": "external",
+      "status": "redirect",
+      "host": "board.myargus.cc",
+      "path": "/",
+      "hosting": "pages",
+      "access": false,
+      "switcher": false,
+      "redirect": "ops",
+      "routes": [],
+      "probe": {
+        "status": 301
+      }
+    },
+    {
+      "id": "knowledge-host",
+      "name": "Knowledge (old host)",
+      "description": "Subdomain the knowledge app left for myargus.cc/knowledge/",
+      "bucket": "external",
+      "status": "redirect",
+      "host": "knowledge.myargus.cc",
+      "path": "/",
+      "hosting": "pages",
+      "access": false,
+      "switcher": false,
+      "redirect": "knowledge",
+      "routes": [],
+      "probe": {
+        "status": 200
+      },
+      "note": "Still answers 200 until myargus#221 lands; then 301."
+    },
+    {
+      "id": "read",
+      "name": "Read (old host)",
+      "description": "Retired subdomain, the reader lives at myargus.cc/reader/",
+      "bucket": "external",
+      "status": "retired",
+      "host": "read.myargus.cc",
+      "path": "/",
+      "hosting": "pages",
+      "access": false,
+      "switcher": false,
+      "routes": [],
+      "probe": null
+    },
+    {
+      "id": "edms",
+      "name": "EDMS",
+      "description": "Public host retired, EDMS is tailnet-only",
+      "bucket": "external",
+      "status": "retired",
+      "host": "edms.myargus.cc",
+      "path": "/",
+      "hosting": "tunnel",
+      "access": false,
+      "switcher": false,
+      "routes": [],
+      "probe": null
+    },
+    {
+      "id": "watchtower-api",
+      "name": "Watchtower API",
+      "description": "Worker API behind the watchtower dashboard",
+      "bucket": "api",
+      "status": "live",
+      "host": "api.myargus.cc",
+      "path": "/watchtower",
+      "hosting": "worker",
+      "access": false,
+      "switcher": false,
+      "routes": [],
+      "probe": {
+        "status": 404
+      },
+      "note": "No route at the base; anonymous probes see 404."
+    },
+    {
+      "id": "reader-api",
+      "name": "Reader API",
+      "description": "Worker API behind the reader",
+      "bucket": "api",
+      "status": "planned",
+      "host": "api.myargus.cc",
+      "path": "/reader",
+      "hosting": "worker",
+      "access": false,
+      "switcher": false,
+      "routes": [],
+      "probe": null,
+      "note": "ADR-008 target. argus still names the retired api.read host for this Worker."
+    },
+    {
+      "id": "reader-api-host",
+      "name": "Reader API (old host)",
+      "description": "Retired per-app API subdomain",
+      "bucket": "api",
+      "status": "retired",
+      "host": "api.read.myargus.cc",
+      "path": "",
+      "hosting": "worker",
+      "access": false,
+      "switcher": false,
+      "routes": [],
+      "probe": null
+    },
+    {
+      "id": "email-mcp",
+      "name": "Email MCP",
+      "description": "MCP tools for the shared agent inbox",
+      "bucket": "mcp",
+      "status": "live",
+      "host": "mcp.myargus.cc",
+      "path": "/email",
+      "hosting": "worker",
+      "access": false,
+      "switcher": false,
+      "routes": [],
+      "probe": null
+    },
+    {
+      "id": "memory",
+      "name": "Memory MCP",
+      "description": "Persistent memory for agents",
+      "bucket": "mcp",
+      "status": "live",
+      "host": "memory.myargus.cc",
+      "path": "/mcp",
+      "hosting": "worker",
+      "access": false,
+      "switcher": false,
+      "routes": [],
+      "probe": {
+        "status": 401
+      },
+      "moveTo": {
+        "host": "mcp.myargus.cc",
+        "path": "/memory"
+      },
+      "note": "Decision 7: moves to mcp.myargus.cc/memory; the old host stays as an alias for a window."
+    },
+    {
+      "id": "vault",
+      "name": "Vault MCP",
+      "description": "The CONTEXT vault agent, relayed",
+      "bucket": "mcp",
+      "status": "live",
+      "host": "vault.myargus.cc",
+      "path": "/mcp",
+      "hosting": "worker",
+      "access": false,
+      "switcher": false,
+      "routes": [],
+      "probe": {
+        "status": 401
+      },
+      "moveTo": {
+        "host": "mcp.myargus.cc",
+        "path": "/vault"
+      },
+      "note": "Decision 7: moves to mcp.myargus.cc/vault; the old host stays as an alias for a window."
+    },
+    {
+      "id": "t3-tailnet",
+      "name": "T3 Code (tailnet)",
+      "description": "T3 Code over Tailscale Serve",
+      "bucket": "tailnet",
+      "status": "live",
+      "port": 3773,
+      "hosting": "tailnet",
+      "access": false,
+      "switcher": false,
+      "routes": [],
+      "probe": null
+    },
+    {
+      "id": "vaultwarden",
+      "name": "Vaultwarden",
+      "description": "Self-hosted password manager, tailnet only",
+      "bucket": "tailnet",
+      "status": "planned",
+      "port": 8222,
+      "hosting": "tailnet",
+      "access": false,
+      "switcher": false,
+      "routes": [],
+      "probe": null,
+      "note": "Not deployed yet (homelab docs/services.md)."
+    },
+    {
+      "id": "taskview-tailnet",
+      "name": "TaskView (tailnet)",
+      "description": "TaskView over Tailscale Serve, the route MCP clients use",
+      "bucket": "tailnet",
+      "status": "live",
+      "port": 3870,
+      "hosting": "tailnet",
+      "access": false,
+      "switcher": false,
+      "routes": [],
+      "probe": null
+    },
+    {
+      "id": "loop-state",
+      "name": "Loop-state MCP",
+      "description": "The AFK loop's shared state, over Tailscale Serve",
+      "bucket": "tailnet",
+      "status": "live",
+      "port": 3791,
+      "hosting": "tailnet",
+      "access": false,
+      "switcher": false,
+      "routes": [],
+      "probe": null
+    }
+  ]
+} as const
+
+export const { appUrl, routeUrl, apiUrl, mcpUrl, tailnetUrl, switcherApps, COOKIE_DOMAIN } = createLinks(REGISTRY)
+
+export type LinkId = (typeof REGISTRY.entries)[number]["id"]
