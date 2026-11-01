@@ -1,3 +1,10 @@
+## [3.6.4](https://github.com/deanjstone/design-system/compare/v3.6.3...v3.6.4) (2026-11-01)
+
+
+### Reverts
+
+* Revert "fix: stop spinner and skeleton loops and fade sheet and drawer under reduced motion" ([e19782b](https://github.com/deanjstone/design-system/commit/e19782be926a400be5fe0230cbf59c29b92ed7b1)), closes [#147](https://github.com/deanjstone/design-system/issues/147)
+
 ## [3.6.3](https://github.com/deanjstone/design-system/compare/v3.6.2...v3.6.3) (2026-11-01)
 
 
