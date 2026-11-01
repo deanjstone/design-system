@@ -58,9 +58,9 @@ const workspaceFallback = (showTabBar: boolean, focus: boolean) =>
   focus
     ? "[--shell-top:0px] [--shell-bottom:var(--edge-b)] [--shell-workspace:calc(100dvh_-_var(--shell-top)_-_var(--shell-bottom))]"
     : cn(
-        "[--shell-top:calc(var(--safe-t)_+_4rem)] [--shell-workspace:calc(100dvh_-_var(--shell-top)_-_var(--shell-bottom))] lg:[--shell-bottom:0px]",
+        "[--shell-top:calc(var(--safe-t)_+_min(4rem,96px))] [--shell-workspace:calc(100dvh_-_var(--shell-top)_-_var(--shell-bottom))] lg:[--shell-bottom:0px]",
         showTabBar
-          ? "[--shell-bottom:calc(var(--edge-b)_+_3.75rem)] [@media(orientation:landscape)_and_(max-height:500px)]:[--shell-bottom:var(--edge-b)]"
+          ? "[--shell-bottom:calc(var(--edge-b)_+_min(3.75rem,90px))] [@media(orientation:landscape)_and_(max-height:500px)]:[--shell-bottom:var(--edge-b)]"
           : "[--shell-bottom:var(--edge-b)]"
       )
 
@@ -192,7 +192,7 @@ const glassBar = "surface-glass border border-border/60 shadow-lg"
 
 const tabClass = (active: boolean) =>
   cn(
-    "flex min-h-12.5 min-w-0 flex-1 flex-col items-center justify-center gap-0.5 rounded-full px-1 text-2xs font-medium outline-none transition-colors focus-visible:ring-3 focus-visible:ring-ring max-[15rem]:[&>span]:sr-only [@media(orientation:landscape)_and_(max-height:500px)]:min-h-11 [@media(orientation:landscape)_and_(max-height:500px)]:min-w-11 [@media(orientation:landscape)_and_(max-height:500px)]:flex-none [@media(orientation:landscape)_and_(max-height:500px)]:[&>span]:sr-only [&_svg]:size-5 [&_svg]:shrink-0",
+    "flex min-h-[clamp(44px,3.125rem,75px)] min-w-0 flex-1 flex-col items-center justify-center gap-0.5 rounded-full px-1 text-[min(0.75rem,18px)] leading-[min(1rem,24px)] font-medium outline-none transition-colors focus-visible:ring-3 focus-visible:ring-ring max-[15rem]:[&>span]:sr-only @max-[16rem]/tabbar:[&>span]:sr-only @max-[16rem]/tabbar:min-h-[44px] [@media(orientation:landscape)_and_(max-height:500px)]:min-h-11 [@media(orientation:landscape)_and_(max-height:500px)]:min-w-11 [@media(orientation:landscape)_and_(max-height:500px)]:flex-none [@media(orientation:landscape)_and_(max-height:500px)]:[&>span]:sr-only [&_svg]:size-[min(1.25rem,30px)] [&_svg]:shrink-0",
     active ? "bg-muted text-foreground" : "text-foreground/80 hover:text-foreground"
   )
 
@@ -247,7 +247,7 @@ function AppShell({
       children: (
         <>
           {entry.icon}
-          <span className="truncate">{entry.label}</span>
+          <span className="max-w-full truncate">{entry.label}</span>
         </>
       ),
     })
@@ -293,7 +293,7 @@ function AppShell({
                 "aria-label": back.label ?? "Back",
                 className: cn(
                   glassBar,
-                  "flex min-h-11 min-w-11 items-center justify-center rounded-full text-foreground outline-none transition-colors hover:bg-muted focus-visible:ring-3 focus-visible:ring-ring [&_svg]:size-5 [&_svg]:shrink-0"
+                  "flex min-h-[clamp(44px,2.75rem,66px)] min-w-[clamp(44px,2.75rem,66px)] items-center justify-center rounded-full text-foreground outline-none transition-colors hover:bg-muted focus-visible:ring-3 focus-visible:ring-ring [&_svg]:size-5 [&_svg]:shrink-0"
                 ),
                 children: <ChevronLeftIcon aria-hidden="true" />,
               })}
@@ -308,13 +308,13 @@ function AppShell({
           >
             <header
               data-slot="app-shell-header"
-              className={cn(glassBar, "pointer-events-auto flex min-h-12 items-center gap-1 rounded-xl px-2")}
+              className={cn(glassBar, "pointer-events-auto flex min-h-[min(3rem,72px)] items-center gap-1 rounded-xl px-2")}
             >
               {back
                 ? renderLink({
                     href: back.href,
                     "aria-label": back.label ?? "Back",
-                    className: cn(buttonVariants({ variant: "ghost", size: "icon" }), "min-h-11 min-w-11"),
+                    className: cn(buttonVariants({ variant: "ghost", size: "icon" }), "min-h-[clamp(44px,2.75rem,66px)] min-w-[clamp(44px,2.75rem,66px)] shrink-0"),
                     children: <ChevronLeftIcon aria-hidden="true" />,
                   })
                 : null}
@@ -326,7 +326,7 @@ function AppShell({
                 onModeChange={onModeChange}
                 renderLink={renderLink}
               />
-              {headerActions ? <div className="ml-auto flex items-center gap-1">{headerActions}</div> : null}
+              {headerActions ? <div className="ml-auto flex shrink-0 items-center gap-1">{headerActions}</div> : null}
             </header>
           </div>
         )}
@@ -336,7 +336,7 @@ function AppShell({
           className={cn(
             "mx-auto flex w-full max-w-5xl flex-1 flex-col px-edge lg:px-6",
             focus
-              ? cn("pb-edge", back ? "pt-[calc(max(1rem,var(--safe-t))+3.25rem)]" : "pt-[max(1rem,var(--safe-t))]")
+              ? cn("pb-edge", back ? "pt-[calc(max(1rem,var(--safe-t))+min(3.25rem,78px))]" : "pt-[max(1rem,var(--safe-t))]")
               : cn("pt-2 lg:pb-6 [@media(orientation:landscape)_and_(max-height:500px)]:pl-[calc(var(--edge-x)+4.5rem)] [@media(orientation:landscape)_and_(max-height:500px)]:pb-edge", showTabBar ? "pb-[calc(6rem+var(--edge-b))]" : "pb-edge")
           )}
         >
@@ -358,7 +358,7 @@ function AppShell({
           aria-label="Sections"
           className={cn(
             glassBar,
-            "fixed right-[max(1.3rem,env(safe-area-inset-right))] bottom-[max(0.5rem,calc(env(safe-area-inset-bottom)-12px))] left-[max(1.3rem,env(safe-area-inset-left))] z-30 flex items-stretch gap-1 rounded-[2rem] p-1 lg:hidden [@media(orientation:landscape)_and_(max-height:500px)]:top-[max(0.5rem,var(--safe-t))] [@media(orientation:landscape)_and_(max-height:500px)]:right-auto [@media(orientation:landscape)_and_(max-height:500px)]:bottom-[var(--edge-b)] [@media(orientation:landscape)_and_(max-height:500px)]:left-[var(--edge-x)] [@media(orientation:landscape)_and_(max-height:500px)]:w-14 [@media(orientation:landscape)_and_(max-height:500px)]:flex-col [@media(orientation:landscape)_and_(max-height:500px)]:overflow-y-auto [@media(orientation:landscape)_and_(max-height:500px)]:rounded-2xl"
+            "@container/tabbar fixed right-[max(1.3rem,env(safe-area-inset-right))] bottom-[max(0.5rem,calc(env(safe-area-inset-bottom)-12px))] left-[max(1.3rem,env(safe-area-inset-left))] z-30 flex items-stretch gap-1 rounded-[2rem] p-1 lg:hidden [@media(orientation:landscape)_and_(max-height:500px)]:top-[max(0.5rem,var(--safe-t))] [@media(orientation:landscape)_and_(max-height:500px)]:right-auto [@media(orientation:landscape)_and_(max-height:500px)]:bottom-[var(--edge-b)] [@media(orientation:landscape)_and_(max-height:500px)]:left-[var(--edge-x)] [@media(orientation:landscape)_and_(max-height:500px)]:w-14 [@media(orientation:landscape)_and_(max-height:500px)]:flex-col [@media(orientation:landscape)_and_(max-height:500px)]:overflow-y-auto [@media(orientation:landscape)_and_(max-height:500px)]:rounded-2xl"
           )}
         >
           {tabs.map((entry) => (

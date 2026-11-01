@@ -71,7 +71,7 @@ function AppSwitcher({
 
   if (apps.length === 0) {
     return (
-      <span data-slot="app-switcher-name" className={cn("font-heading text-base font-semibold", className)}>
+      <span data-slot="app-switcher-name" className={cn("min-w-0 truncate font-heading text-[min(1rem,24px)] font-semibold", className)}>
         {appName}
       </span>
     )
@@ -80,12 +80,12 @@ function AppSwitcher({
   const trigger = (
     <Button
       variant="ghost"
-      className={cn("min-h-11 gap-1 px-2 font-heading text-base font-semibold", className)}
+      className={cn("min-h-[clamp(44px,2.75rem,66px)] min-w-0 gap-1 px-2 font-heading text-[min(1rem,24px)] font-semibold", className)}
     />
   )
   const triggerContent = (
     <>
-      {appName}
+      <span className="min-w-0 truncate">{appName}</span>
       <ChevronDownIcon aria-hidden="true" />
     </>
   )

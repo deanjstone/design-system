@@ -123,7 +123,7 @@ describe("AppSwitcher", () => {
 
   it("keeps the 44px touch floor on the rows and the trigger", () => {
     render(<AppSwitcher appName="Reader" apps={apps} currentAppId="reader" />)
-    expect(screen.getByRole("button", { name: /Reader/ }).className).toContain("min-h-11")
+    expect(screen.getByRole("button", { name: /Reader/ }).className).toContain("min-h-[clamp(44px,2.75rem,66px)]")
     open()
 
     expect(within(screen.getByRole("dialog")).getAllByRole("link")[0].className).toContain("min-h-11")

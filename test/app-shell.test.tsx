@@ -111,7 +111,7 @@ describe("AppShell", () => {
     it("is 48px tall, with the 44px back button inside it", () => {
       const { container } = render(<AppShell appName="Reader" sections={four} back={{ href: "/inbox" }}>x</AppShell>)
 
-      expect(header(container).className).toContain("min-h-12")
+      expect(header(container).className).toContain("min-h-[min(3rem,72px)]")
       expect(header(container).className).not.toContain("min-h-14")
     })
 
@@ -175,7 +175,7 @@ describe("AppShell", () => {
 
       const back = within(header(container)).getByRole("link", { name: "Back" })
       expect(back.getAttribute("href")).toBe("/inbox")
-      expect(back.className).toContain("min-h-11")
+      expect(back.className).toContain("min-h-[clamp(44px,2.75rem,66px)]")
     })
 
     it("names the back button after the parent when given a label", () => {
@@ -258,8 +258,8 @@ describe("AppShell", () => {
       const { container } = render(<AppShell appName="Reader" sections={four}>x</AppShell>)
 
       const className = root(container).className
-      expect(className).toContain("[--shell-top:calc(var(--safe-t)_+_4rem)]")
-      expect(className).toContain("[--shell-bottom:calc(var(--edge-b)_+_3.75rem)]")
+      expect(className).toContain("[--shell-top:calc(var(--safe-t)_+_min(4rem,96px))]")
+      expect(className).toContain("[--shell-bottom:calc(var(--edge-b)_+_min(3.75rem,90px))]")
       expect(root(container).style.getPropertyValue("--shell-top")).toBe("")
     })
 
@@ -479,7 +479,7 @@ describe("AppShell", () => {
 
       const bar = within(tabBar(container))
       for (const control of [...bar.getAllByRole("link"), bar.getByRole("button", { name: "More" })]) {
-        expect(control.className).toContain("min-h-12.5")
+        expect(control.className).toContain("min-h-[clamp(44px,3.125rem,75px)]")
         expect(control.className).not.toContain("min-h-14")
       }
     })
@@ -619,8 +619,8 @@ describe("AppShell", () => {
       const back = screen.getByRole("link", { name: "Back to Inbox" })
       expect(back.getAttribute("href")).toBe("/inbox")
       expect(back.parentElement!.getAttribute("data-slot")).toBe("app-shell-focus-back")
-      expect(back.className).toContain("min-h-11")
-      expect(back.className).toContain("min-w-11")
+      expect(back.className).toContain("min-h-[clamp(44px,2.75rem,66px)]")
+      expect(back.className).toContain("min-w-[clamp(44px,2.75rem,66px)]")
     })
 
     it("pins the back control a gutter in from the corner, clear of the curve and the inset", () => {
@@ -665,7 +665,7 @@ describe("AppShell", () => {
     // back control, so the main column does (the geometry gate caught this, #143).
     it("starts the page below the inset, and below the back control when there is one", () => {
       focus({ back: { href: "/inbox" } })
-      expect(screen.getByRole("main").className).toContain("pt-[calc(max(1rem,var(--safe-t))+3.25rem)]")
+      expect(screen.getByRole("main").className).toContain("pt-[calc(max(1rem,var(--safe-t))+min(3.25rem,78px))]")
       cleanup()
 
       focus()
@@ -1081,5 +1081,55 @@ describe("AppShell", () => {
     const className = screen.getByRole("main").className
     expect(className).toMatch(/pb-\[/)
     expect(className).toContain("lg:pb-6")
+  })
+  // Large text (#150, #162): the chrome's text and heights stop growing at about 150%, then the tab bar
+  // drops to icon-only. The 44px touch target is a floor under every size.
+  describe("large text", () => {
+    const capped = /(?:min|clamp)\(/
+
+    it("caps the tab label and icon at 150% of their size", () => {
+      const { container } = render(<AppShell appName="Reader" sections={four}>x</AppShell>)
+
+      const tab = tabBar(container).querySelector("a")!
+      expect(tab.className).toContain("text-[min(0.75rem,18px)]")
+      expect(tab.className).toContain("[&_svg]:size-[min(1.25rem,30px)]")
+      expect(tab.className).not.toMatch(/(?:^|\s)text-2xs(?:\s|$)/)
+    })
+
+    it("keeps a tab at least 44px tall at every root size, and stops it at 150%", () => {
+      const { container } = render(<AppShell appName="Reader" sections={four}>x</AppShell>)
+
+      expect(tabBar(container).querySelector("a")!.className).toContain("min-h-[clamp(44px,3.125rem,75px)]")
+    })
+
+    it("turns the labels sr-only, not hidden, when the bar is too narrow for them", () => {
+      const { container } = render(<AppShell appName="Reader" sections={four}>x</AppShell>)
+
+      expect(tabBar(container).className).toContain("@container/tabbar")
+      const tab = tabBar(container).querySelector("a")!
+      expect(tab.className).toContain("@max-[16rem]/tabbar:[&>span]:sr-only")
+      expect(tab.className).toContain("@max-[16rem]/tabbar:min-h-[44px]")
+      expect(tab.textContent).toContain("Home")
+    })
+
+    it("caps the header row and its back control, with a 44px floor", () => {
+      const { container } = render(<AppShell appName="Reader" sections={four} back={{ href: "/" }}>x</AppShell>)
+
+      expect(header(container).className).toContain("min-h-[min(3rem,72px)]")
+      expect(container.querySelector("a[aria-label=Back]")!.className).toContain("min-h-[clamp(44px,2.75rem,66px)]")
+    })
+
+    it("keeps header actions from being squeezed out by a long app name", () => {
+      const { container } = render(<AppShell appName="Reader" sections={four} headerActions={<button>Go</button>}>x</AppShell>)
+
+      expect(within(header(container)).getByText("Go").parentElement!.className).toContain("shrink-0")
+    })
+
+    it("never states a chrome height in bare rem", () => {
+      const bare = shellSource
+        .split("\n")
+        .filter((line) => /(?:min-h|--shell-top|--shell-bottom)[^"\s]*\d(?:\.\d+)?rem/.test(line) && !capped.test(line))
+      expect(bare).toEqual([])
+    })
   })
 })

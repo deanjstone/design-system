@@ -216,7 +216,14 @@ export const largeText = ({ height = innerHeight, ceiling }) => {
 
   for (const label of document.querySelectorAll('[data-slot="app-shell-tabbar"] a > span, [data-slot="app-shell-more"] > span')) {
     if (!shown(label)) continue
-    if (label.scrollWidth > label.clientWidth + 1) findings.push({ check: "clipped-label", label: describe(label.parentElement), detail: `label "${label.textContent.trim()}" needs ${label.scrollWidth}px, has ${label.clientWidth}px` })
+    // A label is cut when it is truncated, or when it sticks out of its own tab: a flex item stays at
+    // its longest word's width, so a tab too narrow for it overflows into the next one without any ellipsis.
+    const labelBox = label.getBoundingClientRect()
+    const tab = label.parentElement.getBoundingClientRect()
+    const truncated = label.scrollWidth > label.clientWidth + 1
+    if (truncated || labelBox.left < tab.left - 1 || labelBox.right > tab.right + 1) {
+      findings.push({ check: "clipped-label", label: describe(label.parentElement), detail: `label "${label.textContent.trim()}" is ${labelBox.width.toFixed(1)}px wide in a ${tab.width.toFixed(1)}px tab` })
+    }
   }
 
   const headerless = (element) => !element.closest('[data-slot="app-shell-header"]')
