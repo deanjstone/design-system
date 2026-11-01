@@ -4,7 +4,7 @@
 import { createLinks } from "@/lib/links-core"
 
 export const REGISTRY = {
-  "revision": 1,
+  "revision": 2,
   "domain": "myargus.cc",
   "cookieDomain": ".myargus.cc",
   "tailnetHost": "homelab.tail00500e.ts.net",
@@ -321,15 +321,51 @@ export const REGISTRY = {
       "name": "Reader API",
       "description": "Worker API behind the reader",
       "bucket": "api",
-      "status": "planned",
+      "status": "live",
       "host": "api.myargus.cc",
       "path": "/reader",
       "hosting": "worker",
       "access": false,
       "switcher": false,
       "routes": [],
-      "probe": null,
-      "note": "ADR-008 target. argus still names the retired api.read host for this Worker."
+      "probe": {
+        "status": 404
+      },
+      "note": "No route at the base; anonymous probes see 404. argus still names the retired api.read host for this Worker."
+    },
+    {
+      "id": "jobs-api",
+      "name": "Jobs API",
+      "description": "Worker API behind the jobs app",
+      "bucket": "api",
+      "status": "live",
+      "host": "api.myargus.cc",
+      "path": "/jobs",
+      "hosting": "worker",
+      "access": false,
+      "switcher": false,
+      "routes": [],
+      "probe": {
+        "status": 404
+      },
+      "note": "myargus workers/jobs-api/wrangler.toml."
+    },
+    {
+      "id": "budget-api",
+      "name": "Budget API",
+      "description": "Budget's API on the homelab, reached through the tunnel",
+      "bucket": "api",
+      "status": "live",
+      "host": "api.myargus.cc",
+      "path": "/budget",
+      "hosting": "tunnel",
+      "access": false,
+      "switcher": false,
+      "routes": [],
+      "probe": {
+        "status": 404
+      },
+      "note": "Tunnel ingress path rule to localhost:3860 (budget deploy.sh)."
     },
     {
       "id": "reader-api-host",

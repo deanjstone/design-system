@@ -139,6 +139,7 @@ describe("retired hosts", () => {
 })
 
 describe("vendored registry drift", () => {
+  const current = JSON.parse(readFileSync(linksJson, "utf8")).revision as number
   const bump = (dir: string, revision: number, extra: Record<string, unknown> = {}) => {
     const data = JSON.parse(readFileSync(join(dir, "links.json"), "utf8"))
     writeFileSync(join(dir, "links.json"), JSON.stringify({ ...data, revision, ...extra }))
@@ -149,20 +150,20 @@ describe("vendored registry drift", () => {
   })
 
   it("fails when the vendored copy is behind", () => {
-    bump(upstream, 2)
+    bump(upstream, current + 1)
     const run = check()
     expect(run.counts.drift).toBe(1)
-    expect(run.out).toMatch(/link-check: drift .*revision 1.*revision 2/)
+    expect(run.out).toMatch(new RegExp(`link-check: drift .*revision ${current}.*revision ${current + 1}`))
     expect(check(["--mode", "block"]).code).toBe(1)
   })
 
   it("fails when the same revision holds different content", () => {
-    bump(upstream, 1, { domain: "example.org" })
+    bump(upstream, current, { domain: "example.org" })
     expect(check().counts.drift).toBe(1)
   })
 
   it("passes when the vendored copy is ahead", () => {
-    bump(repo, 3)
+    bump(repo, current + 2)
     expect(check().counts.drift).toBe(0)
   })
 
