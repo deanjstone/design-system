@@ -118,7 +118,7 @@ function AppSwitcher({
                         <span className="truncate text-xs text-muted-foreground">{app.description}</span>
                       ) : null}
                     </span>
-                    {current ? <CheckIcon aria-hidden="true" className="size-4 shrink-0 text-primary" /> : null}
+                    {current ? <CheckIcon aria-hidden="true" className="size-4 shrink-0 text-primary-text" /> : null}
                   </>
                 ),
               })}

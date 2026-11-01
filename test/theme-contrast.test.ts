@@ -1,6 +1,6 @@
 // @vitest-environment node
 
-import { readFileSync } from "node:fs"
+import { readdirSync, readFileSync } from "node:fs"
 import { fileURLToPath } from "node:url"
 import { describe, expect, it } from "vitest"
 
@@ -39,9 +39,10 @@ const TEXT = 4.5
 type Pair = { name: string; minimum: number; ratio: (tokens: Tokens, mode: string) => number }
 
 const PAIRS: Pair[] = [
-  // button.tsx, app-shell.tsx, app-switcher.tsx draw --primary as text or an icon.
-  { name: "primary text on background", minimum: TEXT, ratio: (t) => contrastRatio(t.primary, t.background) },
-  { name: "primary text on card", minimum: TEXT, ratio: (t) => contrastRatio(t.primary, t.card) },
+  // button.tsx, app-switcher.tsx, settings-page.tsx draw --primary-text where the primary colour is text or an icon.
+  { name: "primary text on background", minimum: TEXT, ratio: (t) => contrastRatio(t["primary-text"], t.background) },
+  { name: "primary text on card", minimum: TEXT, ratio: (t) => contrastRatio(t["primary-text"], t.card) },
+  { name: "primary text on popover", minimum: TEXT, ratio: (t) => contrastRatio(t["primary-text"], t.popover) },
   // tabs.tsx: inactive trigger is text-foreground/60 in light, muted-foreground in dark, on --muted.
   {
     name: "inactive tab label on muted",
@@ -67,12 +68,6 @@ const PAIRS: Pair[] = [
 ]
 
 const KNOWN_BELOW = new Set([
-  "primary text on background|default|dark",
-  "primary text on background|t3-chat|light",
-  "primary text on background|t3-chat|dark",
-  "primary text on card|default|dark",
-  "primary text on card|t3-chat|light",
-  "primary text on card|t3-chat|dark",
   "inactive tab label on muted|default|light",
   "inactive tab label on muted|t3-chat|light",
   "inactive tab label on muted|grove|light",
@@ -111,5 +106,22 @@ describe("composed text pairs", () => {
       expect(THEME_NAMES, key).toContain(theme)
       expect(MODES, key).toContain(mode)
     }
+  })
+})
+
+// The classes that draw those pairs. A pair above is only as good as the component that uses it.
+const source = (file: string) =>
+  readFileSync(fileURLToPath(new URL(`../registry/base-nova/${file}`, import.meta.url)), "utf8")
+
+describe("component classes draw the pairs above", () => {
+  const TEXT_PRIMARY = /(?:^|[\s"'`:\]])text-primary(?![-\w])/
+  const registryFiles = ["ui", "blocks"].flatMap((dir) =>
+    readdirSync(fileURLToPath(new URL(`../registry/base-nova/${dir}`, import.meta.url)))
+      .filter((name) => name.endsWith(".tsx"))
+      .map((name) => `${dir}/${name}`),
+  )
+
+  it.each(registryFiles)("%s draws the primary colour as text with text-primary-text, not text-primary", (file) => {
+    expect(source(file)).not.toMatch(TEXT_PRIMARY)
   })
 })

@@ -116,7 +116,7 @@ function AppearanceSection({ preference, onThemeChange, onModeChange }: Appearan
             >
               <ThemeSwatch theme={theme} />
               {THEME_LABELS[theme]}
-              {theme === preference.theme ? <CheckIcon aria-hidden="true" className="ml-auto text-primary" /> : null}
+              {theme === preference.theme ? <CheckIcon aria-hidden="true" className="ml-auto text-primary-text" /> : null}
             </ToggleGroupItem>
           ))}
         </ToggleGroup>

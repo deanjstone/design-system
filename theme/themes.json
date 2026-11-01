@@ -25,6 +25,14 @@
       "reason": "WCAG 1.4.11 3:1"
     },
     {
+      "theme": "default",
+      "mode": "dark",
+      "token": "primary-text",
+      "from": "#346bf1",
+      "to": "#4275f1",
+      "reason": "WCAG 1.4.3 4.5:1"
+    },
+    {
       "theme": "t3-chat",
       "mode": "light",
       "token": "input",
@@ -34,11 +42,27 @@
     },
     {
       "theme": "t3-chat",
+      "mode": "light",
+      "token": "primary-text",
+      "from": "#db2777",
+      "to": "#d12675",
+      "reason": "WCAG 1.4.3 4.5:1"
+    },
+    {
+      "theme": "t3-chat",
       "mode": "dark",
       "token": "input",
       "from": "#302029",
       "to": "#766c73",
       "reason": "WCAG 1.4.11 3:1"
+    },
+    {
+      "theme": "t3-chat",
+      "mode": "dark",
+      "token": "primary-text",
+      "from": "#a3004c",
+      "to": "#ca709b",
+      "reason": "WCAG 1.4.3 4.5:1"
     },
     {
       "theme": "grove",
@@ -141,7 +165,8 @@
         "sidebar-border": "#e4e4e7",
         "sidebar-ring": "#1b4ed8",
         "glass-surface": "rgba(255, 255, 255, 0.74)",
-        "glass-fallback": "#f4f4f5"
+        "glass-fallback": "#f4f4f5",
+        "primary-text": "#1b4ed8"
       },
       "dark": {
         "background": "#0a0a0a",
@@ -177,7 +202,8 @@
         "sidebar-border": "#141414",
         "sidebar-ring": "#346bf1",
         "glass-surface": "rgba(17, 17, 17, 0.74)",
-        "glass-fallback": "#1a1b1b"
+        "glass-fallback": "#1a1b1b",
+        "primary-text": "#4275f1"
       }
     },
     "t3-chat": {
@@ -215,7 +241,8 @@
         "sidebar-border": "#eceae9",
         "sidebar-ring": "#db2777",
         "glass-surface": "rgba(255, 255, 255, 0.74)",
-        "glass-fallback": "#f3e6f5"
+        "glass-fallback": "#f3e6f5",
+        "primary-text": "#d12675"
       },
       "dark": {
         "background": "#1f1a24",
@@ -251,7 +278,8 @@
         "sidebar-border": "#322028",
         "sidebar-ring": "#db2777",
         "glass-surface": "rgba(16, 10, 14, 0.74)",
-        "glass-fallback": "#29232d"
+        "glass-fallback": "#29232d",
+        "primary-text": "#ca709b"
       }
     },
     "grove": {
@@ -289,7 +317,8 @@
         "sidebar-border": "#cbd3d0",
         "sidebar-ring": "#1b7d50",
         "glass-surface": "rgba(231, 233, 232, 0.74)",
-        "glass-fallback": "#e6f0ea"
+        "glass-fallback": "#e6f0ea",
+        "primary-text": "#8f6410"
       },
       "dark": {
         "background": "#1b2821",
@@ -325,7 +354,8 @@
         "sidebar-border": "#6f7a75",
         "sidebar-ring": "#69d69a",
         "glass-surface": "rgba(68, 77, 73, 0.74)",
-        "glass-fallback": "#253e31"
+        "glass-fallback": "#253e31",
+        "primary-text": "#e3b34e"
       }
     },
     "ocean": {
@@ -363,7 +393,8 @@
         "sidebar-border": "#cdd2d9",
         "sidebar-ring": "#2672af",
         "glass-surface": "rgba(232, 233, 235, 0.74)",
-        "glass-fallback": "#e8eff4"
+        "glass-fallback": "#e8eff4",
+        "primary-text": "#0a6f75"
       },
       "dark": {
         "background": "#17212b",
@@ -399,7 +430,8 @@
         "sidebar-border": "#6d757f",
         "sidebar-ring": "#70b9ee",
         "glass-surface": "rgba(65, 72, 81, 0.74)",
-        "glass-fallback": "#233544"
+        "glass-fallback": "#233544",
+        "primary-text": "#5bd0d6"
       }
     },
     "ember": {
@@ -437,7 +469,8 @@
         "sidebar-border": "#dad0ce",
         "sidebar-ring": "#ae552a",
         "glass-surface": "rgba(236, 233, 233, 0.74)",
-        "glass-fallback": "#f4ede9"
+        "glass-fallback": "#f4ede9",
+        "primary-text": "#b23535"
       },
       "dark": {
         "background": "#291e1a",
@@ -473,7 +506,8 @@
         "sidebar-border": "#7e716e",
         "sidebar-ring": "#f09a64",
         "glass-surface": "rgba(79, 69, 67, 0.74)",
-        "glass-fallback": "#432e23"
+        "glass-fallback": "#432e23",
+        "primary-text": "#f78a7a"
       }
     },
     "iris": {
@@ -511,7 +545,8 @@
         "sidebar-border": "#d5d0db",
         "sidebar-ring": "#7253b9",
         "glass-surface": "rgba(235, 233, 237, 0.74)",
-        "glass-fallback": "#f0edf6"
+        "glass-fallback": "#f0edf6",
+        "primary-text": "#a82c87"
       },
       "dark": {
         "background": "#1d1929",
@@ -547,7 +582,8 @@
         "sidebar-border": "#736d7e",
         "sidebar-ring": "#9d7df2",
         "glass-surface": "rgba(69, 66, 80, 0.74)",
-        "glass-fallback": "#2d2643"
+        "glass-fallback": "#2d2643",
+        "primary-text": "#f099d8"
       }
     }
   }

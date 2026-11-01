@@ -14,7 +14,7 @@
 import { readFileSync, writeFileSync } from "node:fs"
 import { fileURLToPath } from "node:url"
 
-import { MODES, THEME_NAMES, TOKEN_MAP } from "./extract-t3.mjs"
+import { DERIVED_TOKENS, MODES, THEME_NAMES, TOKEN_MAP } from "./extract-t3.mjs"
 import { STATUS_TOKENS } from "./status.mjs"
 
 export const DEFAULT_THEME = "ocean"
@@ -47,7 +47,7 @@ function themeRules(themes) {
 const STATUS_NAMES = Object.keys(STATUS_TOKENS.light)
 
 const cssBlock = ({ selectors, tokens }) => {
-  const names = [...Object.keys(TOKEN_MAP), ...STATUS_NAMES.filter((token) => token in tokens)]
+  const names = [...Object.keys(TOKEN_MAP), ...DERIVED_TOKENS, ...STATUS_NAMES.filter((token) => token in tokens)]
   return `${selectors.join(",\n")} {\n${names.map((token) => `  --${token}: ${tokens[token]};`).join("\n")}\n}\n`
 }
 
@@ -74,17 +74,17 @@ export function applyToRegistry(registry, themes) {
   const replaceTokens = (existing, tokens) => {
     const merged = {}
     for (const [key, value] of Object.entries(existing)) merged[key] = key in tokens ? tokens[key] : value
-    for (const token of [...Object.keys(TOKEN_MAP), ...STATUS_NAMES]) merged[token] ??= tokens[token]
+    for (const token of [...Object.keys(TOKEN_MAP), ...DERIVED_TOKENS, ...STATUS_NAMES]) merged[token] ??= tokens[token]
     return merged
   }
   item.cssVars.light = replaceTokens(item.cssVars.light, light)
   item.cssVars.dark = replaceTokens(item.cssVars.dark, dark)
-  for (const token of STATUS_NAMES) {
+  for (const token of [...DERIVED_TOKENS, ...STATUS_NAMES]) {
     item.cssVars.theme[`color-${token}`] = `var(--${token})`
   }
 
   const declarations = (tokens) =>
-    Object.fromEntries(Object.keys(TOKEN_MAP).map((token) => [`--${token}`, tokens[token]]))
+    Object.fromEntries([...Object.keys(TOKEN_MAP), ...DERIVED_TOKENS].map((token) => [`--${token}`, tokens[token]]))
   const generated = {}
   for (const theme of THEME_NAMES) {
     generated[lightSelector(theme)] = declarations(themes[theme].light)

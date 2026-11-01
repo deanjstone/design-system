@@ -50,6 +50,15 @@ export const TOKEN_MAP = {
   "glass-fallback": "grouped-card",
 }
 
+// Tokens derived from the mapped ones rather than read from T3. `primary-text` is the
+// primary colour where it is text or an icon (a link button, a check mark): the primary
+// itself is a fill that white or dark text sits on, so it cannot also be lifted to 4.5:1
+// against the page without breaking its own label. It equals `primary` wherever
+// `primary` already clears 4.5:1 on the page surfaces, and is lifted toward the
+// foreground where it does not (design-system#146, #144 C2).
+export const DERIVED_TOKENS = ["primary-text"]
+const TEXT_CONTRAST = 4.5
+
 // WCAG 1.4.11: a field's edge and the focus ring are the only boundary a control has.
 const NON_TEXT_CONTRAST = 3
 const CLAMPED_TOKENS = ["input", "ring", "sidebar-ring"]
@@ -127,6 +136,18 @@ export function extractThemes(css) {
         const from = tokens[token]
         tokens[token] = liftContrast(from, tokens.foreground, against, NON_TEXT_CONTRAST)
         adjustments.push({ theme, mode, token, from, to: tokens[token], reason: "WCAG 1.4.11 3:1" })
+      }
+      const textAgainst = [tokens.background, tokens.card, tokens.popover]
+      tokens["primary-text"] = liftContrast(tokens.primary, tokens.foreground, textAgainst, TEXT_CONTRAST)
+      if (tokens["primary-text"] !== tokens.primary) {
+        adjustments.push({
+          theme,
+          mode,
+          token: "primary-text",
+          from: tokens.primary,
+          to: tokens["primary-text"],
+          reason: "WCAG 1.4.3 4.5:1",
+        })
       }
       themes[theme][mode] = tokens
     }
