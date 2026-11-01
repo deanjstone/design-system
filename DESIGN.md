@@ -505,6 +505,31 @@ finger, and a narrow desktop window is still a mouse.
   touch device can leave; without the guard, tapping a `.card-hover` element
   leaves it stuck in its hover fill until something else is tapped.
 
+Which controls get the floor, and how:
+
+| Control | How it reaches 44px on a coarse pointer |
+| --- | --- |
+| `button`, `toggle`, `dialog-close` | `min-height` and `min-width` 44px |
+| `input`, `command-input`, `select-trigger` | `min-height` 44px |
+| `tabs-trigger` | 44px each way, inside a `tabs-list` of 50px |
+| `checkbox`, `switch` | drawn size unchanged; the `::after` tap region is centred and at least 44px each way |
+| link or button `badge` | the same `::after` tap region, and `overflow: visible` so it is not clipped. A plain badge is not a control and is left alone |
+
+Exempt: inline links in running text (the WCAG 2.5.8 inline exception), menu
+and select items (36px rows in a popup that is open when they are tapped), and
+the rows inside `questionnaire`, which already apply their own 44px rule. A
+widened tap region reaches past the control, so rows of checkboxes or switches
+need a 44px pitch (`min-h-11`) or their tap regions overlap and the later one
+wins.
+
+Text fields stay at **16px on any coarse pointer**, because iOS Safari zooms
+the page when a field under 16px takes focus. `input`, `textarea` and
+`command-input` step down to `text-sm` only when the primary pointer is fine
+(`pointer-fine:`), not at a width: an iPhone in landscape is 874px wide and
+still a finger. The hover-only reveal on `sidebar-menu-action` follows the
+same rule, and `useIsMobile` treats a coarse pointer on a viewport under 500px
+tall as mobile, so a phone in landscape gets the sheet sidebar.
+
 Both rules are deliberately **unlayered**. Tailwind utilities live in a
 cascade layer, and unlayered styles win over layered ones regardless of
 specificity — which is how the 44px touch floor outranks a `min-w-0` shrink
@@ -850,6 +875,22 @@ the indicator. Applied on `focus-visible`, so pointer users never see it.
   every other focusable component.
 - **Invalid:** `aria-invalid` drives a destructive border and ring; the
   attribute is the trigger, not a class.
+
+### Field input hints
+
+The registry does not set these; the screen that knows what the field is for
+does. Set all three on every text field, because the on-screen keyboard
+follows them:
+
+- **`inputMode`** picks the keyboard: `numeric` for digits only (PINs, codes),
+  `decimal` for amounts, `email`, `tel`, `url`, `search`. Prefer it to
+  `type="number"`, which adds spinners and drops leading zeros.
+- **`enterKeyHint`** labels the return key: `go` or `done` to submit, `next`
+  to move to the following field, `search` in a search box, `send` in a
+  message composer.
+- **`autoComplete`** names the field for autofill and password managers:
+  `username`, `current-password`, `new-password`, `one-time-code`, `email`,
+  `given-name`. Never `off` on a login field.
 
 ### Tabs
 

@@ -281,7 +281,7 @@
       {
         "name": "md",
         "value": "768px",
-        "note": "Input font-size steps down from 1rem to 0.875rem."
+        "note": "Input font-size steps down from 1rem to 0.875rem, and only for a fine pointer (pointer-fine:), so a coarse pointer stays at 16px."
       },
       {
         "name": "pointer: coarse",
