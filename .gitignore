@@ -9,3 +9,6 @@ dist/
 # .git/info/exclude, which is not shared — every other clone saw it as
 # untracked noise. The design.json sidecar beside it IS tracked.
 .impeccable/hook.cache.json
+
+# Curve-geometry gate evidence (design-system#143)
+geometry-gate-out/

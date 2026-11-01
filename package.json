@@ -7,7 +7,8 @@
   "scripts": {
     "test": "vitest run",
     "build:theme": "node scripts/theme/build.mjs && npx shadcn@4.19.1 build --output ./r",
-    "check": "bash scripts/check.sh"
+    "check": "bash scripts/check.sh",
+    "gate:geometry": "node scripts/geometry-gate/run.mjs"
   },
   "devDependencies": {
     "@base-ui/react": "^1.8.0",
