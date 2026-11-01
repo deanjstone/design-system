@@ -1,3 +1,10 @@
+# [3.4.0](https://github.com/deanjstone/design-system/compare/v3.3.0...v3.4.0) (2026-11-01)
+
+
+### Features
+
+* add the safe-area foundation, head snippet and design rules ([#157](https://github.com/deanjstone/design-system/issues/157)) ([0171f78](https://github.com/deanjstone/design-system/commit/0171f78dc998991176cb148d2dbba86c3fe31dee)), closes [#146](https://github.com/deanjstone/design-system/issues/146) [#137](https://github.com/deanjstone/design-system/issues/137)
+
 # [3.3.0](https://github.com/deanjstone/design-system/compare/v3.2.0...v3.3.0) (2026-11-01)
 
 
