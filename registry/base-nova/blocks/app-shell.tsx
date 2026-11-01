@@ -37,6 +37,60 @@ type AppShellProps = Pick<AppSwitcherProps, "mode" | "onModeChange" | "currentAp
 // so every section past the fourth waits under More.
 const TAB_COUNT = 4
 
+// The shell's chrome is fixed or sticky, so a page can't know its height. The shell measures the
+// header zone and the tab bar and publishes them as --shell-top, --shell-bottom and --shell-workspace
+// (the viewport between the two), plus the page's scroll padding so a focused control is never hidden
+// behind either (WCAG 2.4.11). The class fallbacks below hold until the first measurement, on the
+// server, and where ResizeObserver is missing; they are the same heights the chrome is built to.
+const workspaceFallback = (showTabBar: boolean) =>
+  cn(
+    "[--shell-top:calc(var(--safe-t)_+_4.5rem)] [--shell-workspace:calc(100dvh_-_var(--shell-top)_-_var(--shell-bottom))] lg:[--shell-bottom:0px]",
+    showTabBar ? "[--shell-bottom:calc(var(--edge-b)_+_3.75rem)]" : "[--shell-bottom:var(--edge-b)]"
+  )
+
+const useShellMetrics = (
+  rootRef: React.RefObject<HTMLElement | null>,
+  topRef: React.RefObject<HTMLElement | null>,
+  barRef: React.RefObject<HTMLElement | null>,
+  showTabBar: boolean
+) => {
+  React.useLayoutEffect(() => {
+    const root = rootRef.current
+    const top = topRef.current
+    if (!root || !top) return
+    const page = document.documentElement
+
+    const publish = (name: string, scrollPadName: string, pixels: number) => {
+      if (pixels > 0) {
+        root.style.setProperty(name, `${pixels}px`)
+        page.style.setProperty(scrollPadName, `${pixels}px`)
+      } else {
+        root.style.removeProperty(name)
+        page.style.removeProperty(scrollPadName)
+      }
+    }
+    const measure = () => {
+      const bar = barRef.current
+      publish("--shell-top", "--scroll-pad-top", top.offsetHeight)
+      // A bar hidden from lg has no height; the CSS fallback (0 there) applies.
+      const barHeight = bar ? bar.offsetHeight : 0
+      const barOffset = bar && barHeight > 0 ? Number.parseFloat(getComputedStyle(bar).bottom) || 0 : 0
+      publish("--shell-bottom", "--scroll-pad-bottom", barHeight > 0 ? barHeight + barOffset : 0)
+    }
+
+    measure()
+    if (typeof ResizeObserver === "undefined") return undefined
+    const observer = new ResizeObserver(measure)
+    observer.observe(top)
+    if (barRef.current) observer.observe(barRef.current)
+    return () => {
+      observer.disconnect()
+      publish("--shell-top", "--scroll-pad-top", 0)
+      publish("--shell-bottom", "--scroll-pad-bottom", 0)
+    }
+  }, [rootRef, topRef, barRef, showTabBar])
+}
+
 const glassBar = "surface-glass border border-border/60 shadow-lg"
 
 const tabClass = (active: boolean) =>
@@ -74,6 +128,10 @@ function AppShell({
   const overflow = sections.slice(tabs.length)
   // One section has nothing to switch to, so the bar would cost its height for a single tab.
   const showTabBar = sections.length >= 2
+  const rootRef = React.useRef<HTMLDivElement>(null)
+  const topRef = React.useRef<HTMLDivElement>(null)
+  const barRef = React.useRef<HTMLElement>(null)
+  useShellMetrics(rootRef, topRef, barRef, showTabBar)
   const overflowActive = overflow.some((entry) => entry.id === activeSectionId)
 
   const link = (entry: ShellSection, className: (active: boolean) => string) => {
@@ -92,7 +150,11 @@ function AppShell({
   }
 
   return (
-    <div data-slot="app-shell" className={cn("min-h-dvh bg-background text-foreground", className)}>
+    <div
+      ref={rootRef}
+      data-slot="app-shell"
+      className={cn("min-h-dvh bg-background text-foreground", workspaceFallback(showTabBar), className)}
+    >
       <aside
         data-slot="app-shell-sidebar"
         className="fixed inset-y-0 left-0 z-20 hidden w-64 flex-col gap-1 border-r border-sidebar-border bg-sidebar p-3 pt-safe lg:flex"
@@ -110,7 +172,11 @@ function AppShell({
           aria-hidden="true"
           className="pointer-events-none fixed inset-x-0 top-0 z-40 h-[calc(env(safe-area-inset-top)+0.5rem)] bg-background lg:left-64"
         />
-        <div className="pointer-events-none sticky top-0 z-30 pr-[max(0.5rem,var(--safe-r))] pl-[max(0.5rem,var(--safe-l))] pt-[calc(env(safe-area-inset-top)+0.5rem)] pb-2">
+        <div
+          ref={topRef}
+          data-slot="app-shell-top"
+          className="pointer-events-none sticky top-0 z-30 pr-[max(0.5rem,var(--safe-r))] pl-[max(0.5rem,var(--safe-l))] pt-[calc(env(safe-area-inset-top)+0.5rem)] pb-2"
+        >
           <header
             data-slot="app-shell-header"
             className={cn(glassBar, "pointer-events-auto flex min-h-14 items-center gap-1 rounded-xl px-2")}
@@ -152,6 +218,7 @@ function AppShell({
       ) : null}
       {showTabBar ? (
         <nav
+          ref={barRef}
           data-slot="app-shell-tabbar"
           aria-label="Sections"
           className={cn(

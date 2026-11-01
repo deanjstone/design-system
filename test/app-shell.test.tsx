@@ -7,6 +7,23 @@ import { AppShell, type ShellSection } from "../registry/base-nova/blocks/app-sh
 
 afterEach(cleanup)
 
+// jsdom does no layout, so a test stands in for it: the header wrapper is 72px tall, the tab bar 60px.
+const observed: Element[] = []
+let observerCallback: (() => void) | undefined
+class FakeResizeObserver {
+  constructor(callback: () => void) {
+    observerCallback = callback
+  }
+  observe(element: Element) {
+    observed.push(element)
+  }
+  unobserve() {}
+  disconnect() {
+    observed.length = 0
+  }
+}
+const offsetHeight = Object.getOwnPropertyDescriptor(HTMLElement.prototype, "offsetHeight")
+
 const section = (id: string, label: string, icon: React.ReactNode): ShellSection => ({
   id,
   label,
@@ -170,6 +187,105 @@ describe("AppShell", () => {
       )
 
       expect(within(header(container)).getByRole("button", { name: "Sync" })).toBeTruthy()
+    })
+  })
+
+  describe("workspace variables", () => {
+    const withLayout = (sizes: { top: number; bar: number }) => {
+      vi.stubGlobal("ResizeObserver", FakeResizeObserver)
+      Object.defineProperty(HTMLElement.prototype, "offsetHeight", {
+        configurable: true,
+        get() {
+          const slot = (this as HTMLElement).dataset.slot
+          if (slot === "app-shell-tabbar") return sizes.bar
+          return slot === "app-shell-top" ? sizes.top : 0
+        },
+      })
+    }
+    afterEach(() => {
+      vi.unstubAllGlobals()
+      if (offsetHeight) Object.defineProperty(HTMLElement.prototype, "offsetHeight", offsetHeight)
+      document.documentElement.removeAttribute("style")
+      observed.length = 0
+    })
+
+    const root = (container: HTMLElement) => container.querySelector<HTMLElement>("[data-slot=app-shell]")!
+
+    it("measures --shell-top from the sticky header wrapper", () => {
+      withLayout({ top: 72, bar: 60 })
+      const { container } = render(<AppShell appName="Reader" sections={four}>x</AppShell>)
+
+      expect(root(container).style.getPropertyValue("--shell-top")).toBe("72px")
+    })
+
+    it("measures --shell-bottom from the tab bar", () => {
+      withLayout({ top: 72, bar: 60 })
+      const { container } = render(<AppShell appName="Reader" sections={four}>x</AppShell>)
+
+      expect(root(container).style.getPropertyValue("--shell-bottom")).toBe("60px")
+    })
+
+    it("re-measures when the header or the bar changes size", () => {
+      withLayout({ top: 72, bar: 60 })
+      const { container } = render(<AppShell appName="Reader" sections={four}>x</AppShell>)
+      expect(observed).toHaveLength(2)
+
+      withLayout({ top: 96, bar: 84 })
+      observerCallback?.()
+
+      expect(root(container).style.getPropertyValue("--shell-top")).toBe("96px")
+      expect(root(container).style.getPropertyValue("--shell-bottom")).toBe("84px")
+    })
+
+    it("leaves the CSS fallback in place when the bar is not drawn (hidden from lg, or one section)", () => {
+      withLayout({ top: 72, bar: 0 })
+      const { container } = render(<AppShell appName="Reader" sections={four}>x</AppShell>)
+
+      expect(root(container).style.getPropertyValue("--shell-bottom")).toBe("")
+      expect(root(container).className).toContain("lg:[--shell-bottom:0px]")
+    })
+
+    it("falls back to CSS values before it has measured, and with no ResizeObserver", () => {
+      const { container } = render(<AppShell appName="Reader" sections={four}>x</AppShell>)
+
+      const className = root(container).className
+      expect(className).toContain("[--shell-top:calc(var(--safe-t)_+_4.5rem)]")
+      expect(className).toContain("[--shell-bottom:calc(var(--edge-b)_+_3.75rem)]")
+      expect(root(container).style.getPropertyValue("--shell-top")).toBe("")
+    })
+
+    it("falls back to the bottom edge alone with one section", () => {
+      const { container } = render(<AppShell appName="Reader" sections={four.slice(0, 1)}>x</AppShell>)
+
+      expect(root(container).className).toContain("[--shell-bottom:var(--edge-b)]")
+    })
+
+    it("defines --shell-workspace as the viewport between the two", () => {
+      const { container } = render(<AppShell appName="Reader" sections={four}>x</AppShell>)
+
+      expect(root(container).className).toContain(
+        "[--shell-workspace:calc(100dvh_-_var(--shell-top)_-_var(--shell-bottom))]"
+      )
+    })
+
+    // The page scrolls, so scroll-padding lives on <html>: a focused control stays clear of the
+    // sticky header and the fixed bar (WCAG 2.4.11, #144 F2).
+    it("sets the page's scroll padding from the same measurements", () => {
+      withLayout({ top: 72, bar: 60 })
+      render(<AppShell appName="Reader" sections={four}>x</AppShell>)
+
+      expect(document.documentElement.style.getPropertyValue("--scroll-pad-top")).toBe("72px")
+      expect(document.documentElement.style.getPropertyValue("--scroll-pad-bottom")).toBe("60px")
+    })
+
+    it("hands the scroll padding back on unmount", () => {
+      withLayout({ top: 72, bar: 60 })
+      render(<AppShell appName="Reader" sections={four}>x</AppShell>)
+
+      cleanup()
+
+      expect(document.documentElement.style.getPropertyValue("--scroll-pad-top")).toBe("")
+      expect(document.documentElement.style.getPropertyValue("--scroll-pad-bottom")).toBe("")
     })
   })
 
