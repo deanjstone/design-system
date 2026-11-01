@@ -1,3 +1,10 @@
+# [3.8.0](https://github.com/deanjstone/design-system/compare/v3.7.1...v3.8.0) (2026-11-01)
+
+
+### Features
+
+* turn AppShell's tab bar into a left rail on a landscape phone ([de9d9ea](https://github.com/deanjstone/design-system/commit/de9d9ea12b43040ba1539aa299943f413d344b40)), closes [#139](https://github.com/deanjstone/design-system/issues/139) [#139](https://github.com/deanjstone/design-system/issues/139)
+
 ## [3.7.1](https://github.com/deanjstone/design-system/compare/v3.7.0...v3.7.1) (2026-11-01)
 
 
