@@ -72,6 +72,8 @@ function AppShell({
 }: AppShellProps) {
   const tabs = sections.length > TAB_COUNT ? sections.slice(0, TAB_COUNT) : sections
   const overflow = sections.slice(tabs.length)
+  // One section has nothing to switch to, so the bar would cost its height for a single tab.
+  const showTabBar = sections.length >= 2
   const overflowActive = overflow.some((entry) => entry.id === activeSectionId)
 
   const link = (entry: ShellSection, className: (active: boolean) => string) => {
@@ -135,54 +137,63 @@ function AppShell({
 
         <main
           data-slot="app-shell-main"
-          className="mx-auto flex w-full max-w-5xl flex-1 flex-col px-edge pt-2 pb-[calc(6rem+max(0.5rem,calc(env(safe-area-inset-bottom)-12px)))] lg:px-6 lg:pb-6"
+          className={cn("mx-auto flex w-full max-w-5xl flex-1 flex-col px-edge pt-2 lg:px-6 lg:pb-6", showTabBar ? "pb-[calc(6rem+var(--edge-b))]" : "pb-edge")}
         >
           {children}
         </main>
       </div>
 
-      <nav
-        data-slot="app-shell-tabbar"
-        aria-label="Sections"
-        className={cn(
-          glassBar,
-          "fixed right-[max(1.3rem,env(safe-area-inset-right))] bottom-[max(0.5rem,calc(env(safe-area-inset-bottom)-12px))] left-[max(1.3rem,env(safe-area-inset-left))] z-30 flex items-stretch gap-1 rounded-[2rem] p-1 lg:hidden"
-        )}
-      >
-        {tabs.map((entry) => (
-          <React.Fragment key={entry.id}>{link(entry, tabClass)}</React.Fragment>
-        ))}
-        {overflow.length > 0 ? (
-          <Sheet>
-            <SheetTrigger
-              data-slot="app-shell-more"
-              data-active={overflowActive ? "true" : undefined}
-              className={tabClass(overflowActive)}
-            >
-              <EllipsisIcon aria-hidden="true" />
-              More
-            </SheetTrigger>
-            <SheetContent side="bottom" className="rounded-t-xl pb-safe">
-              <SheetHeader>
-                <SheetTitle>More</SheetTitle>
-                <SheetDescription className="sr-only">The rest of this app&apos;s sections.</SheetDescription>
-              </SheetHeader>
-              <ul className="flex flex-col gap-1 px-2 pb-2">
-                {overflow.map((entry) => (
-                  <li key={entry.id}>
-                    {link(entry, (active) =>
-                      cn(
-                        "flex min-h-11 items-center gap-3 rounded-lg px-3 text-sm font-medium outline-none hover:bg-muted focus-visible:ring-3 focus-visible:ring-ring/50 [&_svg]:size-4 [&_svg]:shrink-0",
-                        active && "bg-muted"
-                      )
-                    )}
-                  </li>
-                ))}
-              </ul>
-            </SheetContent>
-          </Sheet>
-        ) : null}
-      </nav>
+      {showTabBar ? (
+        <div
+          data-slot="app-shell-bottom-fill"
+          aria-hidden="true"
+          className="pointer-events-none fixed inset-x-0 bottom-0 z-20 h-(--edge-b) bg-background lg:hidden"
+        />
+      ) : null}
+      {showTabBar ? (
+        <nav
+          data-slot="app-shell-tabbar"
+          aria-label="Sections"
+          className={cn(
+            glassBar,
+            "fixed right-[max(1.3rem,env(safe-area-inset-right))] bottom-[max(0.5rem,calc(env(safe-area-inset-bottom)-12px))] left-[max(1.3rem,env(safe-area-inset-left))] z-30 flex items-stretch gap-1 rounded-[2rem] p-1 lg:hidden"
+          )}
+        >
+          {tabs.map((entry) => (
+            <React.Fragment key={entry.id}>{link(entry, tabClass)}</React.Fragment>
+          ))}
+          {overflow.length > 0 ? (
+            <Sheet>
+              <SheetTrigger
+                data-slot="app-shell-more"
+                data-active={overflowActive ? "true" : undefined}
+                className={tabClass(overflowActive)}
+              >
+                <EllipsisIcon aria-hidden="true" />
+                More
+              </SheetTrigger>
+              <SheetContent side="bottom" className="rounded-t-xl pb-safe">
+                <SheetHeader>
+                  <SheetTitle>More</SheetTitle>
+                  <SheetDescription className="sr-only">The rest of this app&apos;s sections.</SheetDescription>
+                </SheetHeader>
+                <ul className="flex flex-col gap-1 px-2 pb-2">
+                  {overflow.map((entry) => (
+                    <li key={entry.id}>
+                      {link(entry, (active) =>
+                        cn(
+                          "flex min-h-11 items-center gap-3 rounded-lg px-3 text-sm font-medium outline-none hover:bg-muted focus-visible:ring-3 focus-visible:ring-ring/50 [&_svg]:size-4 [&_svg]:shrink-0",
+                          active && "bg-muted"
+                        )
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              </SheetContent>
+            </Sheet>
+          ) : null}
+        </nav>
+      ) : null}
     </div>
   )
 }

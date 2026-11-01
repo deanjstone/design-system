@@ -173,6 +173,73 @@ describe("AppShell", () => {
     })
   })
 
+  describe("bottom scrim", () => {
+    // The strip under the floating bar is where the display curve clips; without a fill, scrolling text
+    // shows in it. It mirrors the top status fill (#138).
+    it("fills the strip under the tab bar with a solid, non-interactive background", () => {
+      const { container } = render(<AppShell appName="Reader" sections={four}>x</AppShell>)
+
+      const scrim = container.querySelector<HTMLElement>("[data-slot=app-shell-bottom-fill]")!
+      expect(scrim).toBeTruthy()
+      expect(scrim.getAttribute("aria-hidden")).toBe("true")
+      expect(scrim.className).toContain("fixed")
+      expect(scrim.className).toContain("bottom-0")
+      expect(scrim.className).toContain("bg-background")
+      expect(scrim.className).toContain("h-(--edge-b)")
+      expect(scrim.className).toContain("pointer-events-none")
+      expect(scrim.className).toContain("lg:hidden")
+    })
+
+    it("sits under the tab bar and over the page", () => {
+      const { container } = render(<AppShell appName="Reader" sections={four}>x</AppShell>)
+
+      const scrim = container.querySelector<HTMLElement>("[data-slot=app-shell-bottom-fill]")!
+      expect(scrim.className).toContain("z-20")
+      expect(tabBar(container).className).toContain("z-30")
+    })
+
+    it("is absent when there is no tab bar", () => {
+      const { container } = render(<AppShell appName="Reader" sections={four.slice(0, 1)}>x</AppShell>)
+
+      expect(container.querySelector("[data-slot=app-shell-bottom-fill]")).toBeNull()
+    })
+  })
+
+  describe("with fewer than two sections", () => {
+    // A single section has nothing to switch to: the bar costs about 82px for one tab (watchtower, jobs).
+    it("draws no tab bar for one section", () => {
+      const { container } = render(<AppShell appName="Watchtower" sections={four.slice(0, 1)}>x</AppShell>)
+
+      expect(container.querySelector("[data-slot=app-shell-tabbar]")).toBeNull()
+    })
+
+    it("draws no tab bar for none", () => {
+      const { container } = render(<AppShell appName="Watchtower" sections={[]}>x</AppShell>)
+
+      expect(container.querySelector("[data-slot=app-shell-tabbar]")).toBeNull()
+    })
+
+    it("draws a tab bar from two sections", () => {
+      const { container } = render(<AppShell appName="Reader" sections={four.slice(0, 2)}>x</AppShell>)
+
+      expect(tabBar(container)).toBeTruthy()
+    })
+
+    it("hands the room back: main clears only the bottom edge", () => {
+      render(<AppShell appName="Watchtower" sections={four.slice(0, 1)}>x</AppShell>)
+
+      const className = screen.getByRole("main").className
+      expect(className).toMatch(/(^|\s)pb-edge(\s|$)/)
+      expect(className).not.toContain("6rem")
+    })
+
+    it("keeps the sidebar, so the section is still named from lg", () => {
+      const { container } = render(<AppShell appName="Watchtower" sections={four.slice(0, 1)}>x</AppShell>)
+
+      expect(within(sidebar(container)).getAllByRole("link")).toHaveLength(1)
+    })
+  })
+
   describe("bottom tab bar", () => {
     it("is a floating glass bar, shown only below lg", () => {
       const { container } = render(<AppShell appName="Reader" sections={four}>x</AppShell>)
@@ -218,7 +285,7 @@ describe("AppShell", () => {
     it("leaves the page clear of the bar plus its bottom offset", () => {
       render(<AppShell appName="Reader" sections={four}>x</AppShell>)
 
-      expect(screen.getByRole("main").className).toContain("pb-[calc(6rem+max(0.5rem,calc(env(safe-area-inset-bottom)-12px)))]")
+      expect(screen.getByRole("main").className).toContain("pb-[calc(6rem+var(--edge-b))]")
     })
 
     it("shows every section as a tab, with no More, when there are four or fewer", () => {
