@@ -68,13 +68,13 @@ describe("16px text on a coarse pointer", () => {
 
   // The 16px floor is in px, not rem: a root font under 100% (the smallest Larger Text sizes) would
   // otherwise pull text-base under it and iOS would zoom into the field on focus (#162).
-  it.each(["input", "textarea"])("%s sizes its text as max(1rem, 16px), not text-base", (name) => {
+  it.each(["input", "textarea", "command"])("%s sizes its text as max(1rem, 16px), not text-base", (name) => {
     expect(source(name)).toContain("text-[max(1rem,16px)]")
     expect(source(name)).not.toMatch(/(?<![\w-])text-base(?![\w-])/)
   })
 
   it("command input is 16px unless the pointer is fine", () => {
-    expect(source("command")).toContain("text-base outline-hidden pointer-fine:text-sm")
+    expect(source("command")).toContain("text-[max(1rem,16px)] outline-hidden pointer-fine:text-sm")
   })
 
   it("sidebar hides a menu action until hover only where hover exists", () => {

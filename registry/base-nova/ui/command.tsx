@@ -76,7 +76,7 @@ function CommandInput({
         <CommandPrimitive.Input
           data-slot="command-input"
           className={cn(
-            "w-full text-base outline-hidden pointer-fine:text-sm disabled:cursor-not-allowed disabled:opacity-50",
+            "w-full text-[max(1rem,16px)] outline-hidden pointer-fine:text-sm disabled:cursor-not-allowed disabled:opacity-50",
             className
           )}
           {...props}
