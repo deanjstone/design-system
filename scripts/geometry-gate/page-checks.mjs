@@ -61,6 +61,18 @@ export const inputFontSize = () => {
   return findings
 }
 
+// At the default size the root font is the browser's 16px and the Dynamic Type scale is
+// unset (design-system#163): Chromium has no -apple-system-body, so nothing in the theme
+// may move the root here, and a view that does is a text-size change at 100%.
+export const rootFont = ({ expected = 16 } = {}) => {
+  const findings = []
+  const size = parseFloat(getComputedStyle(document.documentElement).fontSize)
+  if (size !== expected) findings.push({ check: "root-font", label: "html", detail: `root font-size ${size}px, expected ${expected}px at the default size` })
+  const scale = document.documentElement.style.getPropertyValue("--dt-scale").trim()
+  if (scale) findings.push({ check: "root-font", label: "html", detail: `--dt-scale is set to ${scale} outside iOS` })
+  return findings
+}
+
 // With prefers-reduced-motion: reduce, nothing may keep moving. Colour and shadow
 // transitions are not motion; slides, spins, pulses and fades are. Entrance
 // animations are short, so the page is sampled for 800ms rather than once.

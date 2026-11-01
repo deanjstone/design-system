@@ -7,7 +7,7 @@ import fs from "node:fs"
 import path from "node:path"
 
 import { MODES, THEME_NAMES, contrastRatio } from "../theme/extract-t3.mjs"
-import { CHROME_CEILING, GLASS_BARS, LOGIN_GUTTER, TOUCH_TARGET, focusObscured, glassLabels, inputFontSize, largeText, loginEdges, motion, reflow, sampleBackdrop, targetSize } from "./page-checks.mjs"
+import { CHROME_CEILING, GLASS_BARS, LOGIN_GUTTER, TOUCH_TARGET, focusObscured, glassLabels, inputFontSize, largeText, loginEdges, motion, reflow, rootFont, sampleBackdrop, targetSize } from "./page-checks.mjs"
 import { openScenario } from "./session.mjs"
 
 const require = createRequire(import.meta.url)
@@ -133,6 +133,7 @@ export const runChecks = async ({ browser, urlFor, scenarios, views, out, ariaDi
       findings.push(...tag(await page.evaluate(targetSize), scenario, view))
       findings.push(...tag(await page.evaluate(targetSize, TOUCH_TARGET), scenario, view))
       findings.push(...tag(await page.evaluate(inputFontSize), scenario, view))
+      findings.push(...tag(await page.evaluate(rootFont), scenario, view))
       findings.push(...tag(await axeFindings(page), scenario, view))
       findings.push(...tag(await tabLoop(page), scenario, view))
       if (aria && scenario.name === CHECK_SCENARIOS[0]) {
