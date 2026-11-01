@@ -43,15 +43,8 @@ const PAIRS: Pair[] = [
   { name: "primary text on background", minimum: TEXT, ratio: (t) => contrastRatio(t["primary-text"], t.background) },
   { name: "primary text on card", minimum: TEXT, ratio: (t) => contrastRatio(t["primary-text"], t.card) },
   { name: "primary text on popover", minimum: TEXT, ratio: (t) => contrastRatio(t["primary-text"], t.popover) },
-  // tabs.tsx: inactive trigger is text-foreground/60 in light, muted-foreground in dark, on --muted.
-  {
-    name: "inactive tab label on muted",
-    minimum: TEXT,
-    ratio: (t, mode) =>
-      mode === "dark"
-        ? contrastRatio(t["muted-foreground"], t.muted)
-        : contrastRatio(over(t.foreground, 0.6, t.muted), t.muted),
-  },
+  // tabs.tsx: the inactive trigger is text-muted-foreground in both modes, on --muted.
+  { name: "inactive tab label on muted", minimum: TEXT, ratio: (t) => contrastRatio(t["muted-foreground"], t.muted) },
   // app-shell.tsx: the focus ring is a solid --ring (--sidebar-ring on the sidebar), no longer ring/50,
   // against what it is drawn over. WCAG 1.4.11 asks 3:1 for a focus indicator (#144 F1).
   { name: "focus ring on background", minimum: 3, ratio: (t) => contrastRatio(t.ring, t.background) },
@@ -68,12 +61,6 @@ const PAIRS: Pair[] = [
 ]
 
 const KNOWN_BELOW = new Set([
-  "inactive tab label on muted|default|light",
-  "inactive tab label on muted|t3-chat|light",
-  "inactive tab label on muted|grove|light",
-  "inactive tab label on muted|ocean|light",
-  "inactive tab label on muted|ember|light",
-  "inactive tab label on muted|iris|light",
   "destructive badge label|grove|dark",
   "destructive badge label|ocean|dark",
   "destructive badge label|ember|dark",
@@ -123,5 +110,11 @@ describe("component classes draw the pairs above", () => {
 
   it.each(registryFiles)("%s draws the primary colour as text with text-primary-text, not text-primary", (file) => {
     expect(source(file)).not.toMatch(TEXT_PRIMARY)
+  })
+
+  it("tabs.tsx draws the inactive label in muted-foreground, not foreground/60", () => {
+    const tabs = source("ui/tabs.tsx")
+    expect(tabs).not.toContain("text-foreground/60")
+    expect(tabs).toContain("text-muted-foreground")
   })
 })
