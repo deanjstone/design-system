@@ -1,3 +1,10 @@
+## [3.6.6](https://github.com/deanjstone/design-system/compare/v3.6.5...v3.6.6) (2026-11-01)
+
+
+### Bug Fixes
+
+* add a prefers-contrast layer that raises borders, inputs and muted text ([db3fd8c](https://github.com/deanjstone/design-system/commit/db3fd8c60405b48d75aa8ba9854669a6259df348)), closes [#147](https://github.com/deanjstone/design-system/issues/147)
+
 ## [3.6.5](https://github.com/deanjstone/design-system/compare/v3.6.4...v3.6.5) (2026-11-01)
 
 
