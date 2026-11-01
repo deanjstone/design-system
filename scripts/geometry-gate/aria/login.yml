@@ -1,0 +1,14 @@
+- main:
+  - heading "Sign in to App" [level=1]
+  - text: Sign in
+  - button "Sign in with a passkey"
+  - separator
+  - text: or
+  - group:
+    - text: Email
+    - textbox "Email"
+  - group:
+    - text: Password
+    - textbox "Password"
+  - button "Sign in"
+  - button "Email me a link instead"

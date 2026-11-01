@@ -3,11 +3,13 @@
 // consumer's dev URL, through the inset matrix in Playwright Chromium and fails
 // when text or a control reaches into a display curve, the Dynamic Island or the
 // home-indicator band. See docs/geometry-gate.md.
+import { spawnSync } from "node:child_process"
 import fs from "node:fs"
 import path from "node:path"
 import { fileURLToPath } from "node:url"
 import { chromium } from "playwright-core"
 
+import { CHECK_SCENARIOS, classify, runChecks } from "./checks.mjs"
 import { collectGeometry, drawOverlay } from "./collect.mjs"
 import { HARNESS_DIST, VIEWS, buildHarness, openScenario, serve } from "./session.mjs"
 import { DISPLAY_RADIUS, SCENARIOS, findViolations, islandBoxes, protectedBandTop } from "./geometry.mjs"
@@ -16,7 +18,7 @@ const here = path.dirname(fileURLToPath(import.meta.url))
 const repo = path.resolve(here, "../..")
 
 const parseArgs = (argv) => {
-  const args = { scenario: [], view: [], out: path.join(repo, "geometry-gate-out"), url: null, build: true, list: false, screenshots: true }
+  const args = { scenario: [], view: [], out: path.join(repo, "geometry-gate-out"), url: null, build: true, list: false, screenshots: true, checks: true, contrast: true, updateAria: false }
   for (let index = 0; index < argv.length; index++) {
     const flag = argv[index]
     if (flag === "--scenario") args.scenario.push(argv[++index])
@@ -25,6 +27,9 @@ const parseArgs = (argv) => {
     else if (flag === "--url") args.url = argv[++index]
     else if (flag === "--no-build") args.build = false
     else if (flag === "--no-screenshots") args.screenshots = false
+    else if (flag === "--no-checks") args.checks = false
+    else if (flag === "--no-contrast") args.contrast = false
+    else if (flag === "--update-aria") args.updateAria = true
     else if (flag === "--list") args.list = true
     else throw new Error(`unknown argument ${flag}`)
   }
@@ -63,13 +68,12 @@ const screenshot = async (page, scenario, violations, file) => {
   await page.screenshot({ path: file })
 }
 
-export const runGeometry = async ({ browser, origin, scenarios, views, out, screenshots, path: pagePath = "/" }) => {
+export const runGeometry = async ({ browser, urlFor, scenarios, views, out, screenshots }) => {
   const failures = []
   let runs = 0
   for (const scenario of scenarios) {
     for (const view of views) {
-      const url = `${origin}${pagePath}${view.query ? `?${view.query}` : ""}`
-      const { context, page } = await openScenario(browser, scenario, url)
+      const { context, page } = await openScenario(browser, scenario, urlFor(view))
       const violations = await measure(page, scenario)
       if (screenshots) await screenshot(page, scenario, violations, path.join(out, "curves", `${scenario.name}__${view.name}${violations.length ? "__FAIL" : ""}.png`))
       await context.close()
@@ -83,6 +87,18 @@ export const runGeometry = async ({ browser, origin, scenarios, views, out, scre
 const formatFailure = ({ scenario, view, rule, kind, label, rect, detail, scroll }) =>
   `  [${rule}] ${scenario} / ${view} (scrolled ${scroll}): ${kind} ${label} at ${rect.left.toFixed(1)},${rect.top.toFixed(1)}..${rect.right.toFixed(1)},${rect.bottom.toFixed(1)} ${detail}`
 
+const formatFinding = ({ check, scenario, view, label, detail }) => `  [${check}] ${scenario} / ${view}: ${label} ${detail}`
+
+// Token contrast is pure Node, so it runs first and fails fast: the same vitest files
+// CI runs, rather than a second copy of the maths.
+const runContrast = () => {
+  const result = spawnSync("pnpm", ["vitest", "run", "test/theme-contrast.test.ts", "test/theme-tokens.test.ts"], { cwd: repo, encoding: "utf8" })
+  const summary = /Tests\s+.*$/m.exec(result.stdout)?.[0] ?? "no test summary"
+  console.log(`token contrast: ${result.status === 0 ? "pass" : "FAIL"} (${summary})`)
+  if (result.status !== 0) console.log(result.stdout + result.stderr)
+  return result.status === 0
+}
+
 const main = async () => {
   const args = parseArgs(process.argv.slice(2))
   const scenarios = args.scenario.length ? SCENARIOS.filter((scenario) => args.scenario.includes(scenario.name)) : SCENARIOS
@@ -93,25 +109,51 @@ const main = async () => {
   }
   if (!scenarios.length || !views.length) throw new Error("no scenario or view matched")
 
+  let ok = true
+  if (args.contrast && !args.url) ok = runContrast()
+  if (!ok) return 1
+
   let server
-  let origin
-  let pagePath = "/"
+  let urlFor
   if (args.url) {
-    const target = new URL(args.url)
-    origin = target.origin
-    pagePath = `${target.pathname}${target.search}`
-    views[0].query = ""
+    urlFor = () => args.url
   } else {
-    const dist = args.build ? buildHarness() : (HARNESS_DIST)
+    const dist = args.build ? buildHarness() : HARNESS_DIST
+    let origin
     ;({ server, origin } = await serve(dist))
+    urlFor = (view) => `${origin}/?${view.query}`
   }
   const browser = await chromium.launch({ headless: true, executablePath: process.env.GATE_CHROMIUM || undefined })
   try {
-    const { runs, failures } = await runGeometry({ browser, origin, scenarios, views, out: args.out, screenshots: args.screenshots, path: pagePath })
+    const { runs, failures } = await runGeometry({ browser, urlFor, scenarios, views, out: args.out, screenshots: args.screenshots })
     console.log(`geometry gate: chromium ${browser.version()}, ${runs} page runs (${scenarios.length} scenarios x ${views.length} views)`)
     for (const failure of failures) console.log(formatFailure(failure))
-    console.log(failures.length ? `geometry gate: FAIL ${failures.length} violation(s); screenshots in ${args.out}` : "geometry gate: pass")
-    return failures.length ? 1 : 0
+    console.log(failures.length ? `curve geometry: FAIL ${failures.length} violation(s); screenshots in ${args.out}` : "curve geometry: pass")
+    ok = failures.length === 0
+
+    if (args.checks) {
+      const checkScenarios = scenarios.filter((scenario) => CHECK_SCENARIOS.includes(scenario.name))
+      const findings = await runChecks({
+        browser,
+        urlFor,
+        scenarios: checkScenarios,
+        views,
+        out: args.out,
+        ariaDir: path.join(here, "aria"),
+        updateAria: args.updateAria,
+        aria: !args.url,
+      })
+      const covered = (entry) => checkScenarios.some((scenario) => !entry.scenario || entry.scenario === scenario.name) && views.some((view) => !entry.view || entry.view === view.name)
+      const { fresh, known, stale } = classify(findings, args.url ? () => false : covered)
+      for (const finding of known) console.log(`${formatFinding(finding)} (known, #${finding.issue})`)
+      for (const finding of fresh) console.log(formatFinding(finding))
+      for (const entry of stale) console.log(`  [stale] KNOWN entry no longer fires (${entry.check} ${entry.view ?? "any"} ${entry.label}, #${entry.issue}): delete it from scripts/geometry-gate/checks.mjs`)
+      const clean = fresh.length === 0 && stale.length === 0
+      console.log(clean ? `page checks: pass (${known.length} known)` : `page checks: FAIL ${fresh.length} new, ${stale.length} stale`)
+      ok = ok && clean
+    }
+    console.log(ok ? "geometry gate: pass" : "geometry gate: FAIL")
+    return ok ? 0 : 1
   } finally {
     await browser.close()
     server?.close()

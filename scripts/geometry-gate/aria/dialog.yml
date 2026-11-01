@@ -1,0 +1,6 @@
+- dialog "Dialog title that is long enough to run towards the close button":
+  - heading "Dialog title that is long enough to run towards the close button" [level=2]
+  - paragraph: Dialog description
+  - textbox "Field"
+  - button "OK"
+  - button "Close"

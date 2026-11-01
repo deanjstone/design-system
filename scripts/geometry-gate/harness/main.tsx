@@ -18,6 +18,8 @@ import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "@/components/ui/sheet"
 import { Toaster } from "@/components/ui/sonner"
+import { Skeleton } from "@/components/ui/skeleton"
+import { Spinner } from "@/components/ui/spinner"
 import { Switch } from "@/components/ui/switch"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -171,6 +173,14 @@ const App = () => {
     )
   }
   if (view === "toast") return <Toast />
+  if (view === "states") {
+    return (
+      <div className="flex flex-col gap-4 p-4">
+        <div className="flex items-center gap-2"><Spinner /><span>Loading</span></div>
+        <Skeleton className="h-4 w-40" />
+      </div>
+    )
+  }
   return (
     <AppShell
       appName="Shell"

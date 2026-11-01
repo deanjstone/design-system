@@ -1,0 +1,5 @@
+- dialog "Sheet title":
+  - heading "Sheet title" [level=2]
+  - paragraph: Sheet description
+  - text: Sheet body
+  - button "Close"

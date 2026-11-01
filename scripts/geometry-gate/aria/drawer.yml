@@ -1,0 +1,6 @@
+- dialog "Drawer title":
+  - heading "Drawer title" [level=2]
+  - paragraph: Drawer description
+  - text: Drawer body
+  - button "Done"
+  - button "Close"
