@@ -1,3 +1,10 @@
+## [3.9.2](https://github.com/deanjstone/design-system/compare/v3.9.1...v3.9.2) (2026-11-01)
+
+
+### Bug Fixes
+
+* Badge wraps instead of scrolling the page sideways at 310% on 320px ([fed5260](https://github.com/deanjstone/design-system/commit/fed52603e9d3f8933ede461689af95af7bf6e6f8)), closes [#164](https://github.com/deanjstone/design-system/issues/164)
+
 ## [3.9.1](https://github.com/deanjstone/design-system/compare/v3.9.0...v3.9.1) (2026-11-01)
 
 
