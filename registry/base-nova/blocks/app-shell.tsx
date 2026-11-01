@@ -239,7 +239,7 @@ function AppShell({
                 <EllipsisIcon aria-hidden="true" />
                 More
               </SheetTrigger>
-              <SheetContent side="bottom" className="rounded-t-xl pb-safe">
+              <SheetContent side="bottom" className="rounded-t-xl">
                 <SheetHeader>
                   <SheetTitle>More</SheetTitle>
                   <SheetDescription className="sr-only">The rest of this app&apos;s sections.</SheetDescription>

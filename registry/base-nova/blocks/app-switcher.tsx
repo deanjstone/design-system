@@ -174,7 +174,7 @@ function AppSwitcher({
       <SheetTrigger data-slot="app-switcher-trigger" render={trigger}>
         {triggerContent}
       </SheetTrigger>
-      <SheetContent side="bottom" className="rounded-t-xl pb-safe">
+      <SheetContent side="bottom" className="rounded-t-xl">
         <SheetHeader>
           <SheetTitle>Switch app</SheetTitle>
           <SheetDescription className="sr-only">Open another app, or change the colour mode.</SheetDescription>

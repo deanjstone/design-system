@@ -4,6 +4,13 @@ import { useTheme } from "next-themes"
 import { Toaster as Sonner, type ToasterProps } from "sonner"
 import { CircleCheckIcon, InfoIcon, Loader2Icon, OctagonXIcon, TriangleAlertIcon } from "lucide-react"
 
+// sonner has no safe-area handling, so a top toast lands under the Dynamic Island in a
+// standalone PWA. A consumer's own offset or mobileOffset replaces the default.
+const safeAreaOffset = {
+  top: "calc(var(--safe-t) + 8px)",
+  bottom: "calc(var(--safe-b) + 8px)",
+}
+
 const Toaster = ({ ...props }: ToasterProps) => {
   const { theme = "system" } = useTheme()
 
@@ -11,6 +18,8 @@ const Toaster = ({ ...props }: ToasterProps) => {
     <Sonner
       theme={theme as ToasterProps["theme"]}
       className="toaster group"
+      offset={safeAreaOffset}
+      mobileOffset={safeAreaOffset}
       icons={{
         success: (
           <CircleCheckIcon className="size-4" />
