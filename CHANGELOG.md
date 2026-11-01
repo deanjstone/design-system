@@ -1,3 +1,10 @@
+## [3.6.7](https://github.com/deanjstone/design-system/compare/v3.6.6...v3.6.7) (2026-11-01)
+
+
+### Bug Fixes
+
+* make an overflowing table a focusable, captioned scroll region ([64ace26](https://github.com/deanjstone/design-system/commit/64ace2645bec75088dce433f359b5b25178b148f)), closes [#144](https://github.com/deanjstone/design-system/issues/144) [#148](https://github.com/deanjstone/design-system/issues/148)
+
 ## [3.6.6](https://github.com/deanjstone/design-system/compare/v3.6.5...v3.6.6) (2026-11-01)
 
 
