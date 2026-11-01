@@ -104,6 +104,37 @@ export const focusObscured = () => {
   return { label: describe(element), obscured, detail: onScreen ? `covered by ${hit ? describe(hit) : "nothing"}` : "scrolled off screen" }
 }
 
+// The login card is a background, so the curve check exempts it, but a card pushed
+// against a screen edge reads as clipped by the curve and cannot be scrolled clear of
+// the island or the home indicator (design-system#149, #144 S5). The card keeps
+// max(1rem, inset) from each side, and from the top and the bottom at the matching end
+// of the scroll. Run with the scenario's CDP insets; a page that does not scroll is held
+// to both ends at once.
+export const LOGIN_GUTTER = 16
+
+export const loginEdges = ({ insets, gutter }) => {
+  const card = document.querySelector('[data-slot="login"] [data-slot="card"]')
+  if (!card) return [{ check: "login-edges", label: "card", detail: "no card inside [data-slot=login]" }]
+  const findings = []
+  const need = (inset) => Math.max(gutter, inset)
+  const scrollMax = Math.max(0, document.documentElement.scrollHeight - innerHeight)
+  const measureAt = (y) => {
+    scrollTo(0, y)
+    return card.getBoundingClientRect()
+  }
+  const top = measureAt(0)
+  const bottom = measureAt(scrollMax)
+  scrollTo(0, 0)
+  const verdict = (edge, gap, inset) => {
+    if (gap < need(inset) - 0.5) findings.push({ check: "login-edges", label: `card ${edge}`, detail: `${gap.toFixed(1)}px from the ${edge} edge, needs ${need(inset)}px (max(${gutter}px, inset ${inset}px))` })
+  }
+  verdict("top", top.top, insets.top)
+  verdict("left", top.left, insets.left)
+  verdict("right", innerWidth - top.right, insets.right)
+  verdict("bottom", innerHeight - bottom.bottom, insets.bottom)
+  return findings
+}
+
 // 320 CSS px wide at 200% text (WCAG 1.4.4 and 1.4.10): nothing scrolls sideways and
 // no control or text line ends past the right edge.
 export const reflow = () => {

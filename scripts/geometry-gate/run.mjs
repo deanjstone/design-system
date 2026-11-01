@@ -9,7 +9,7 @@ import path from "node:path"
 import { fileURLToPath } from "node:url"
 import { chromium } from "playwright-core"
 
-import { CHECK_SCENARIOS, classify, runChecks } from "./checks.mjs"
+import { CHECK_SCENARIOS, classify, runChecks, runLoginEdges } from "./checks.mjs"
 import { collectGeometry, drawOverlay } from "./collect.mjs"
 import { HARNESS_DIST, VIEWS, buildHarness, openScenario, serve } from "./session.mjs"
 import { DISPLAY_RADIUS, SCENARIOS, findViolations, islandBoxes, protectedBandTop } from "./geometry.mjs"
@@ -144,6 +144,7 @@ const main = async () => {
         aria: !args.url,
         glass: !args.url,
       })
+      if (!args.url) findings.push(...(await runLoginEdges({ browser, urlFor, scenarios, views })))
       const covered = (entry) => checkScenarios.some((scenario) => !entry.scenario || entry.scenario === scenario.name) && views.some((view) => !entry.view || entry.view === view.name)
       const { fresh, known, stale } = classify(findings, args.url ? () => false : covered)
       for (const finding of known) console.log(`${formatFinding(finding)} (known, #${finding.issue})`)

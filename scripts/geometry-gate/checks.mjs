@@ -7,7 +7,7 @@ import fs from "node:fs"
 import path from "node:path"
 
 import { MODES, THEME_NAMES, contrastRatio } from "../theme/extract-t3.mjs"
-import { GLASS_BARS, TOUCH_TARGET, focusObscured, glassLabels, inputFontSize, motion, reflow, sampleBackdrop, targetSize } from "./page-checks.mjs"
+import { GLASS_BARS, LOGIN_GUTTER, TOUCH_TARGET, focusObscured, glassLabels, inputFontSize, loginEdges, motion, reflow, sampleBackdrop, targetSize } from "./page-checks.mjs"
 import { openScenario } from "./session.mjs"
 
 const require = createRequire(import.meta.url)
@@ -75,6 +75,22 @@ export const glassContrast = async (page, scenario, theme, mode) => {
         findings.push({ check: "glass-contrast", label: `${theme}/${mode} ${label.bar} ${label.kind} "${label.text}" (scrolled ${position})`, detail: `${worst.toFixed(2)}:1 over the painted bar, under ${minimum}:1` })
       }
     })
+  }
+  return findings
+}
+
+// The login card's clearance from each screen edge, in every scenario of the matrix
+// (design-system#149): the page checks above only run in two scenarios, and this one
+// is about the insets, so it needs all of them.
+export const runLoginEdges = async ({ browser, urlFor, scenarios, views }) => {
+  const login = views.find((view) => view.name === "login")
+  if (!login) return []
+  const findings = []
+  for (const scenario of scenarios) {
+    const { context, page } = await openScenario(browser, scenario, urlFor(login))
+    const found = await page.evaluate(loginEdges, { insets: scenario.insets, gutter: LOGIN_GUTTER })
+    findings.push(...found.map((finding) => ({ scenario: scenario.name, view: login.name, ...finding })))
+    await context.close()
   }
   return findings
 }
