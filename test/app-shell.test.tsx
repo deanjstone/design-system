@@ -986,6 +986,44 @@ describe("AppShell", () => {
       )
     })
 
+    // #161: the side padding is room for the rail, so it is only taken when a rail is drawn.
+    describe("with one section (no tab bar, so no rail)", () => {
+      const railPadding = /max-height:500px\)\]:pl-\[/
+
+      it("takes no rail padding on the header wrapper or the page", () => {
+        const { container } = render(<AppShell appName="Reader" sections={[four[0]]}>x</AppShell>)
+
+        expect(tabBar(container)).toBeNull()
+        expect(header(container).parentElement!.className).not.toMatch(railPadding)
+        expect(screen.getByRole("main").className).not.toMatch(railPadding)
+      })
+
+      it("still lets the header scroll away in landscape and keeps the page's bottom edge", () => {
+        const { container } = render(<AppShell appName="Reader" sections={[four[0]]}>x</AppShell>)
+
+        expect(header(container).parentElement!.className).toContain(`${R}static`)
+        expect(screen.getByRole("main").className).toContain(`${R}pb-edge`)
+      })
+
+      it("takes the padding as soon as a second section brings the rail", () => {
+        const { container } = render(<AppShell appName="Reader" sections={four.slice(0, 2)}>x</AppShell>)
+
+        expect(header(container).parentElement!.className).toContain(`${R}pl-[calc(var(--edge-x)+4rem)]`)
+        expect(screen.getByRole("main").className).toContain(`${R}pl-[calc(var(--edge-x)+4.5rem)]`)
+      })
+    })
+
+    it("leaves focus mode's page without rail padding, with or without a back control", () => {
+      for (const back of [undefined, { href: "/up" }]) {
+        const { unmount } = render(<AppShell appName="Reader" sections={four} chrome="none" back={back}>x</AppShell>)
+
+        const className = screen.getByRole("main").className
+        expect(className).not.toMatch(/max-height:500px\)\]:pl-\[/)
+        expect(className).toContain("pb-edge")
+        unmount()
+      }
+    })
+
     it("draws no rail in focus mode", () => {
       const { container } = render(<AppShell appName="Reader" sections={four} chrome="none">x</AppShell>)
 
