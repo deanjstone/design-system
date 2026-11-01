@@ -21,6 +21,17 @@ describe("registry/lib/links.ts is generated from links.json", () => {
   })
 })
 
+describe("the vendored marker", () => {
+  it("is code, because shadcn strips comments from an installed file", () => {
+    const code = read("registry/lib/links.ts")
+      .split("\n")
+      .filter((line) => !line.trimStart().startsWith("//"))
+      .slice(0, 10)
+      .join("\n")
+    expect(code).toContain("link-check:vendored")
+  })
+})
+
 describe("appUrl", () => {
   it("ends an external app's root in a slash", () => {
     expect(appUrl("ops")).toBe("https://ops.myargus.cc/")
