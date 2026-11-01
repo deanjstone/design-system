@@ -1,3 +1,10 @@
+# [3.3.0](https://github.com/deanjstone/design-system/compare/v3.2.0...v3.3.0) (2026-11-01)
+
+
+### Features
+
+* retry the release from the remote tip when main moves ([#156](https://github.com/deanjstone/design-system/issues/156)) ([aacaf4f](https://github.com/deanjstone/design-system/commit/aacaf4fc3d5634881f68ad8b6ba2c2d7e35615e3)), closes [deanjstone/argus-config#1016](https://github.com/deanjstone/argus-config/issues/1016)
+
 # [3.2.0](https://github.com/deanjstone/design-system/compare/v3.1.0...v3.2.0) (2026-11-01)
 
 
