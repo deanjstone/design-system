@@ -26,3 +26,7 @@ footer (optional)
 Squash-merged PRs should carry a Conventional Commits–style title, since that becomes the commit message on `main`. Past commits predate this convention and are left untouched.
 
 The squash subject must keep the type prefix. A plain subject such as `Lower the app-shell tab bar (#126)` on `main` is read as no release: semantic-release only reads the subject line (and a `BREAKING CHANGE:` footer), not the `fix:` lines in the squash body, so #126 shipped to `main` with no version until a follow-up `fix:` PR released it. Pass `--subject "fix: <imperative subject> (#N)"` to `gh pr merge --squash`.
+
+## When a release happens
+
+`Release` never runs from a red head (design-system#159). It starts when the `Test` workflow finishes, and only for a successful run of a push to `main`; that covers the component tests and the curve geometry gate. It then publishes only if the SHA `Test` went green on is still the newest commit on `main` that is not a `chore(release):` commit. If a newer push has landed, this run does nothing and the newer push's own `Release` follows its own `Test`. A real commit that skipped CI blocks the release the same way, until a later push goes green. The `Design` workflow is separate and does not gate a release.
