@@ -1,3 +1,10 @@
+# [3.6.0](https://github.com/deanjstone/design-system/compare/v3.5.0...v3.6.0) (2026-11-01)
+
+
+### Features
+
+* add an opt-in close button to DrawerContent and document curve-safe overlays ([7d8f2ad](https://github.com/deanjstone/design-system/commit/7d8f2ad80aad5a00bf71c75594342437c4a193fe)), closes [#140](https://github.com/deanjstone/design-system/issues/140)
+
 # [3.5.0](https://github.com/deanjstone/design-system/compare/v3.4.0...v3.5.0) (2026-11-01)
 
 
