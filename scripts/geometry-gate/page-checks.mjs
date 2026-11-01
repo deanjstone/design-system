@@ -5,16 +5,17 @@
 
 // WCAG 2.5.8: a target is at least 24x24 CSS px. The hit area counts, so a control
 // whose ::after widens the tap region is measured by probing outwards from its rect
-// until a point no longer lands on it.
-export const targetSize = () => {
+// until a point no longer lands on it. The touch-target check (design-system#145)
+// reuses it with 44 and the form-control selector, because Playwright serialises each
+// probe on its own and so cannot share a helper.
+export const targetSize = ({ minimum = 24, selector = 'a[href], button, input:not([type=hidden]), textarea, select, summary, [role=button], [role=link], [role=tab], [role=checkbox], [role=switch], [role=combobox]', check = "target-size" } = {}) => {
   const describe = (element) => {
     const name = element.getAttribute("aria-label") || element.textContent.trim().replace(/\s+/g, " ").slice(0, 32) || element.getAttribute("placeholder") || element.id || element.tagName.toLowerCase()
     const slot = element.dataset.slot ? `{${element.dataset.slot}}` : ""
     return `${element.tagName.toLowerCase()}${slot} "${name}"`
   }
-  const minimum = 24
   const findings = []
-  for (const element of document.querySelectorAll('a[href], button, input:not([type=hidden]), textarea, select, summary, [role=button], [role=link], [role=tab], [role=checkbox], [role=switch], [role=combobox]')) {
+  for (const element of document.querySelectorAll(selector)) {
     const style = getComputedStyle(element)
     if (style.visibility === "hidden" || style.display === "none" || style.pointerEvents === "none") continue
     const rect = element.getBoundingClientRect()
@@ -33,7 +34,7 @@ export const targetSize = () => {
     const width = rect.width + reach(-1, 0) + reach(1, 0)
     const height = rect.height + reach(0, -1) + reach(0, 1)
     if (width < minimum || height < minimum) {
-      findings.push({ check: "target-size", label: describe(element), detail: `hit area ${width.toFixed(1)}x${height.toFixed(1)}, under ${minimum}x${minimum}` })
+      findings.push({ check, label: describe(element), detail: `hit area ${width.toFixed(1)}x${height.toFixed(1)}, under ${minimum}x${minimum}` })
     }
   }
   return findings
@@ -120,4 +121,28 @@ export const reflow = () => {
     if (rect.right > innerWidth + 0.5 || rect.left < -0.5) findings.push({ check: "reflow", label: describe(element), detail: `spans ${rect.left.toFixed(1)}..${rect.right.toFixed(1)} in a ${innerWidth}px viewport` })
   }
   return findings
+}
+
+// The form controls the #145 audit held to 44pt on a coarse pointer (iOS HIG). Each
+// is matched by its data-slot; a link or button badge is a control, a plain one is
+// not. Exempt, and so absent from this list: inline links inside running text
+// (WCAG 2.5.8 inline exception), the radio and checkbox rows inside `questionnaire`
+// (already 44 by their own rule), and menu / select items, which are 36px rows
+// inside a popup that scrolls and are tapped with the popup open.
+export const TOUCH_TARGET = {
+  minimum: 44,
+  check: "touch-target",
+  selector: [
+    '[data-slot="input"]',
+    '[data-slot="textarea"]',
+    '[data-slot="command-input"]',
+    '[data-slot="toggle"]',
+    '[data-slot="select-trigger"]',
+    '[data-slot="tabs-trigger"]',
+    'a[data-slot="badge"]',
+    'button[data-slot="badge"]',
+    '[data-slot="checkbox"]',
+    '[data-slot="switch"]',
+    '[data-slot="button"]',
+  ].join(", "),
 }

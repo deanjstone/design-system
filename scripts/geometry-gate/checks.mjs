@@ -6,7 +6,7 @@ import { createRequire } from "node:module"
 import fs from "node:fs"
 import path from "node:path"
 
-import { focusObscured, inputFontSize, motion, reflow, targetSize } from "./page-checks.mjs"
+import { TOUCH_TARGET, focusObscured, inputFontSize, motion, reflow, targetSize } from "./page-checks.mjs"
 import { openScenario } from "./session.mjs"
 
 const require = createRequire(import.meta.url)
@@ -22,6 +22,10 @@ export const KNOWN = [
   { check: "input-font-size", scenario: "iphone-17-landscape-top-0", view: "shell", label: "textarea", issue: 145 },
   { check: "input-font-size", scenario: "iphone-17-landscape-top-0", view: "login", label: "input", issue: 145 },
   { check: "input-font-size", scenario: "iphone-17-landscape-top-0", view: "dialog", label: "input", issue: 145 },
+  { check: "input-font-size", view: "shell", label: "{command-input}", issue: 145 },
+  { check: "target-size", view: "shell", label: "{badge}", issue: 145 },
+  { check: "target-size", view: "shell", label: "{command-input}", issue: 145 },
+  ...["{badge}", "{toggle}", "{checkbox}", "{switch}", "{command-input}", "{select-trigger}", "{tabs-trigger}"].map((label) => ({ check: "touch-target", view: "shell", label, issue: 145 })),
   { check: "reduced-motion", view: "states", label: "[spinner]", issue: 147 },
   { check: "reduced-motion", view: "states", label: "[skeleton]", issue: 147 },
 ]
@@ -76,6 +80,7 @@ export const runChecks = async ({ browser, urlFor, scenarios, views, out, ariaDi
     for (const view of views) {
       const { context, page } = await openScenario(browser, scenario, urlFor(view))
       findings.push(...tag(await page.evaluate(targetSize), scenario, view))
+      findings.push(...tag(await page.evaluate(targetSize, TOUCH_TARGET), scenario, view))
       findings.push(...tag(await page.evaluate(inputFontSize), scenario, view))
       findings.push(...tag(await axeFindings(page), scenario, view))
       findings.push(...tag(await tabLoop(page), scenario, view))

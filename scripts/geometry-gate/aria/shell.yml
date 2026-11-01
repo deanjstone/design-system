@@ -11,7 +11,11 @@
   - button "Small"
   - button "Outline"
   - button "Link"
-  - text: Badge Name
+  - text: Badge
+  - link "Link badge":
+    - /url: "#badge"
+  - button "Bold": B
+  - text: Name
   - textbox "Name":
     - /placeholder: name
   - textbox "Notes":
@@ -20,6 +24,10 @@
   - text: Check
   - switch "Switch"
   - text: Switch
+  - group:
+    - combobox [expanded]
+    - group
+  - listbox "Suggestions"
   - combobox "Choice": a
   - tablist:
     - tab "One" [selected]

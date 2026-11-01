@@ -11,6 +11,7 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Checkbox } from "@/components/ui/checkbox"
+import { Command, CommandInput, CommandList } from "@/components/ui/command"
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { Drawer, DrawerContent, DrawerDescription, DrawerFooter, DrawerHeader, DrawerTitle } from "@/components/ui/drawer"
 import { Input } from "@/components/ui/input"
@@ -24,6 +25,7 @@ import { Switch } from "@/components/ui/switch"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Textarea } from "@/components/ui/textarea"
+import { Toggle } from "@/components/ui/toggle"
 
 // One page, one block per `?v=` value, so the gate drives each registry block in
 // its own context. The shell view is the AppShell with a representative page in it.
@@ -53,6 +55,8 @@ const Page = () => (
       <Button variant="outline">Outline</Button>
       <Button variant="link">Link</Button>
       <Badge>Badge</Badge>
+      <Badge render={<a href="#badge" />} variant="outline">Link badge</Badge>
+      <Toggle aria-label="Bold" variant="outline">B</Toggle>
     </div>
     <div className="flex flex-col gap-2">
       <Label htmlFor="name">Name</Label>
@@ -66,6 +70,10 @@ const Page = () => (
         <Switch id="switch" />
         <Label htmlFor="switch">Switch</Label>
       </div>
+      <Command className="rounded-lg border">
+        <CommandInput placeholder="Search" />
+        <CommandList />
+      </Command>
       <Select defaultValue="a">
         <SelectTrigger aria-label="Choice"><SelectValue /></SelectTrigger>
         <SelectContent>
