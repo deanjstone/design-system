@@ -1,3 +1,10 @@
+## [3.7.1](https://github.com/deanjstone/design-system/compare/v3.7.0...v3.7.1) (2026-11-01)
+
+
+### Bug Fixes
+
+* mark the installed links module in code, not a comment ([5002851](https://github.com/deanjstone/design-system/commit/5002851fb02e85946f5eb70be6b42a7005c7b3d7)), closes [#152](https://github.com/deanjstone/design-system/issues/152)
+
 # [3.7.0](https://github.com/deanjstone/design-system/compare/v3.6.8...v3.7.0) (2026-11-01)
 
 
