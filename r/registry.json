@@ -968,7 +968,7 @@
       "name": "use-theme-preference",
       "type": "registry:hook",
       "registryDependencies": [
-        "deanjstone/design-system/theme-preference"
+        "deanjstone/design-system/theme-preference#v3.7.1"
       ],
       "files": [
         {
@@ -994,7 +994,7 @@
       "name": "empty-page",
       "type": "registry:block",
       "registryDependencies": [
-        "deanjstone/design-system/empty"
+        "deanjstone/design-system/empty#v3.7.1"
       ],
       "dependencies": [
         "cn@^0.5.0"
@@ -1010,12 +1010,12 @@
       "name": "app-switcher",
       "type": "registry:block",
       "registryDependencies": [
-        "deanjstone/design-system/button",
-        "deanjstone/design-system/popover",
-        "deanjstone/design-system/sheet",
-        "deanjstone/design-system/toggle-group",
-        "deanjstone/design-system/nav-link",
-        "deanjstone/design-system/theme-preference"
+        "deanjstone/design-system/button#v3.7.1",
+        "deanjstone/design-system/popover#v3.7.1",
+        "deanjstone/design-system/sheet#v3.7.1",
+        "deanjstone/design-system/toggle-group#v3.7.1",
+        "deanjstone/design-system/nav-link#v3.7.1",
+        "deanjstone/design-system/theme-preference#v3.7.1"
       ],
       "dependencies": [
         "lucide-react",
@@ -1032,10 +1032,10 @@
       "name": "app-shell",
       "type": "registry:block",
       "registryDependencies": [
-        "deanjstone/design-system/app-switcher",
-        "deanjstone/design-system/button",
-        "deanjstone/design-system/sheet",
-        "deanjstone/design-system/nav-link"
+        "deanjstone/design-system/app-switcher#v3.7.1",
+        "deanjstone/design-system/button#v3.7.1",
+        "deanjstone/design-system/sheet#v3.7.1",
+        "deanjstone/design-system/nav-link#v3.7.1"
       ],
       "dependencies": [
         "lucide-react",
@@ -1052,9 +1052,9 @@
       "name": "settings-page",
       "type": "registry:block",
       "registryDependencies": [
-        "deanjstone/design-system/page-header",
-        "deanjstone/design-system/toggle-group",
-        "deanjstone/design-system/theme-preference"
+        "deanjstone/design-system/page-header#v3.7.1",
+        "deanjstone/design-system/toggle-group#v3.7.1",
+        "deanjstone/design-system/theme-preference#v3.7.1"
       ],
       "dependencies": [
         "lucide-react",
@@ -1071,11 +1071,11 @@
       "name": "login",
       "type": "registry:block",
       "registryDependencies": [
-        "deanjstone/design-system/button",
-        "deanjstone/design-system/card",
-        "deanjstone/design-system/field",
-        "deanjstone/design-system/input",
-        "deanjstone/design-system/spinner"
+        "deanjstone/design-system/button#v3.7.1",
+        "deanjstone/design-system/card#v3.7.1",
+        "deanjstone/design-system/field#v3.7.1",
+        "deanjstone/design-system/input#v3.7.1",
+        "deanjstone/design-system/spinner#v3.7.1"
       ],
       "dependencies": [
         "cn@^0.5.0"
@@ -1159,7 +1159,7 @@
       "name": "dialog",
       "type": "registry:ui",
       "registryDependencies": [
-        "deanjstone/design-system/button"
+        "deanjstone/design-system/button#v3.7.1"
       ],
       "dependencies": [
         "@base-ui/react",
@@ -1220,7 +1220,7 @@
       "name": "alert-dialog",
       "type": "registry:ui",
       "registryDependencies": [
-        "deanjstone/design-system/button"
+        "deanjstone/design-system/button#v3.7.1"
       ],
       "dependencies": [
         "@base-ui/react",
@@ -1279,7 +1279,7 @@
       "name": "drawer",
       "type": "registry:ui",
       "registryDependencies": [
-        "deanjstone/design-system/button"
+        "deanjstone/design-system/button#v3.7.1"
       ],
       "dependencies": [
         "@base-ui/react",
@@ -1383,7 +1383,7 @@
       "name": "sheet",
       "type": "registry:ui",
       "registryDependencies": [
-        "deanjstone/design-system/button"
+        "deanjstone/design-system/button#v3.7.1"
       ],
       "dependencies": [
         "@base-ui/react",
@@ -1513,7 +1513,7 @@
       "name": "attachment",
       "type": "registry:ui",
       "registryDependencies": [
-        "deanjstone/design-system/button"
+        "deanjstone/design-system/button#v3.7.1"
       ],
       "dependencies": [
         "@base-ui/react",
@@ -1531,7 +1531,7 @@
       "name": "message-scroller",
       "type": "registry:ui",
       "registryDependencies": [
-        "deanjstone/design-system/button"
+        "deanjstone/design-system/button#v3.7.1"
       ],
       "dependencies": [
         "@shadcn/react@^0.3.1",
@@ -1573,7 +1573,7 @@
       "name": "item",
       "type": "registry:ui",
       "registryDependencies": [
-        "deanjstone/design-system/separator"
+        "deanjstone/design-system/separator#v3.7.1"
       ],
       "dependencies": [
         "@base-ui/react",
@@ -1605,13 +1605,13 @@
       "name": "sidebar",
       "type": "registry:ui",
       "registryDependencies": [
-        "deanjstone/design-system/use-mobile",
-        "deanjstone/design-system/button",
-        "deanjstone/design-system/input",
-        "deanjstone/design-system/separator",
-        "deanjstone/design-system/sheet",
-        "deanjstone/design-system/skeleton",
-        "deanjstone/design-system/tooltip"
+        "deanjstone/design-system/use-mobile#v3.7.1",
+        "deanjstone/design-system/button#v3.7.1",
+        "deanjstone/design-system/input#v3.7.1",
+        "deanjstone/design-system/separator#v3.7.1",
+        "deanjstone/design-system/sheet#v3.7.1",
+        "deanjstone/design-system/skeleton#v3.7.1",
+        "deanjstone/design-system/tooltip#v3.7.1"
       ],
       "dependencies": [
         "@base-ui/react",
@@ -1644,8 +1644,8 @@
       "name": "field",
       "type": "registry:ui",
       "registryDependencies": [
-        "deanjstone/design-system/label",
-        "deanjstone/design-system/separator"
+        "deanjstone/design-system/label#v3.7.1",
+        "deanjstone/design-system/separator#v3.7.1"
       ],
       "dependencies": [
         "class-variance-authority",
@@ -1662,9 +1662,9 @@
       "name": "input-group",
       "type": "registry:ui",
       "registryDependencies": [
-        "deanjstone/design-system/button",
-        "deanjstone/design-system/input",
-        "deanjstone/design-system/textarea"
+        "deanjstone/design-system/button#v3.7.1",
+        "deanjstone/design-system/input#v3.7.1",
+        "deanjstone/design-system/textarea#v3.7.1"
       ],
       "dependencies": [
         "class-variance-authority",
@@ -1696,7 +1696,7 @@
       "name": "toggle-group",
       "type": "registry:ui",
       "registryDependencies": [
-        "deanjstone/design-system/toggle"
+        "deanjstone/design-system/toggle#v3.7.1"
       ],
       "dependencies": [
         "@base-ui/react",
@@ -1714,7 +1714,7 @@
       "name": "button-group",
       "type": "registry:ui",
       "registryDependencies": [
-        "deanjstone/design-system/separator"
+        "deanjstone/design-system/separator#v3.7.1"
       ],
       "dependencies": [
         "@base-ui/react",
@@ -1753,8 +1753,8 @@
       "name": "link-pill-html",
       "type": "registry:lib",
       "registryDependencies": [
-        "deanjstone/design-system/link-pill-core",
-        "deanjstone/design-system/link-pill-css"
+        "deanjstone/design-system/link-pill-core#v3.7.1",
+        "deanjstone/design-system/link-pill-css#v3.7.1"
       ],
       "files": [
         {
@@ -1767,8 +1767,8 @@
       "name": "link-pill",
       "type": "registry:ui",
       "registryDependencies": [
-        "deanjstone/design-system/link-pill-core",
-        "deanjstone/design-system/link-pill-css"
+        "deanjstone/design-system/link-pill-core#v3.7.1",
+        "deanjstone/design-system/link-pill-css#v3.7.1"
       ],
       "files": [
         {
@@ -1796,8 +1796,8 @@
       "name": "command",
       "type": "registry:ui",
       "registryDependencies": [
-        "deanjstone/design-system/dialog",
-        "deanjstone/design-system/input-group"
+        "deanjstone/design-system/dialog#v3.7.1",
+        "deanjstone/design-system/input-group#v3.7.1"
       ],
       "dependencies": [
         "cmdk",
@@ -1815,8 +1815,8 @@
       "name": "trace",
       "type": "registry:ui",
       "registryDependencies": [
-        "deanjstone/design-system/collapsible",
-        "deanjstone/design-system/code-block"
+        "deanjstone/design-system/collapsible#v3.7.1",
+        "deanjstone/design-system/code-block#v3.7.1"
       ],
       "dependencies": [
         "lucide-react",
@@ -1833,8 +1833,8 @@
       "name": "code-block",
       "type": "registry:ui",
       "registryDependencies": [
-        "deanjstone/design-system/button",
-        "deanjstone/design-system/use-highlighted-code"
+        "deanjstone/design-system/button#v3.7.1",
+        "deanjstone/design-system/use-highlighted-code#v3.7.1"
       ],
       "dependencies": [
         "class-variance-authority",
@@ -1852,7 +1852,7 @@
       "name": "use-highlighted-code",
       "type": "registry:hook",
       "registryDependencies": [
-        "deanjstone/design-system/highlighter"
+        "deanjstone/design-system/highlighter#v3.7.1"
       ],
       "files": [
         {
@@ -1878,7 +1878,7 @@
       "name": "questionnaire",
       "type": "registry:ui",
       "registryDependencies": [
-        "deanjstone/design-system/button"
+        "deanjstone/design-system/button#v3.7.1"
       ],
       "dependencies": [
         "@shadcn/react@^0.3.1",
@@ -1955,7 +1955,7 @@
       "title": "myargus links",
       "description": "appUrl, routeUrl, apiUrl, mcpUrl, tailnetUrl, switcherApps and COOKIE_DOMAIN, generated from links.json (ADR-0004).",
       "registryDependencies": [
-        "deanjstone/design-system/links-core"
+        "deanjstone/design-system/links-core#v3.7.1"
       ],
       "files": [
         {
@@ -1970,7 +1970,7 @@
       "title": "links bash helper",
       "description": "scripts/links.sh: build a URL from links.json with jq, for deploy scripts and hooks.",
       "registryDependencies": [
-        "deanjstone/design-system/links-data"
+        "deanjstone/design-system/links-data#v3.7.1"
       ],
       "files": [
         {
@@ -1986,7 +1986,7 @@
       "title": "link-check",
       "description": "Bans myargus.cc and tailnet host literals in code, fails on retired hosts, and checks config and the vendored registry against links.json. Report mode first, then block.",
       "registryDependencies": [
-        "deanjstone/design-system/links-data"
+        "deanjstone/design-system/links-data#v3.7.1"
       ],
       "files": [
         {
