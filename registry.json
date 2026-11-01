@@ -828,6 +828,13 @@
             "--tw-exit-scale": "1"
           }
         },
+        "@media (prefers-contrast: more)": {
+          ":root:root:root, [data-theme][data-theme][data-theme], .dark.dark.dark": {
+            "--border": "color-mix(in srgb, var(--foreground) 70%, var(--background))",
+            "--input": "color-mix(in srgb, var(--foreground) 70%, var(--background))",
+            "--muted-foreground": "color-mix(in srgb, var(--foreground) 90%, var(--background))"
+          }
+        },
         "@media (pointer: coarse)": {
           "[data-slot=\"button\"]": {
             "min-height": "44px",

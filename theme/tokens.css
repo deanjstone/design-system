@@ -957,6 +957,27 @@
 }
 
 /*
+ * Increased contrast. Under `prefers-contrast: more` the hairline borders, the
+ * input outlines and the muted text are pulled toward the foreground, so they
+ * clear 3:1 (borders, WCAG 1.4.11) and 4.5:1 (text) in every theme and mode.
+ * Mixing from --foreground and --background rather than redefining each hex
+ * keeps all 12 theme/mode blocks covered by one rule.
+ *
+ * Each selector is tripled so it outranks `[data-theme="x"].dark` (two parts)
+ * wherever the theme and dark attributes sit, and unlayered so it also wins the
+ * cascade against the layered Tailwind utilities that read these variables.
+ */
+@media (prefers-contrast: more) {
+  :root:root:root,
+  [data-theme][data-theme][data-theme],
+  .dark.dark.dark {
+    --border: color-mix(in srgb, var(--foreground) 70%, var(--background));
+    --input: color-mix(in srgb, var(--foreground) 70%, var(--background));
+    --muted-foreground: color-mix(in srgb, var(--foreground) 90%, var(--background));
+  }
+}
+
+/*
  * Coarse-pointer sizing. The system's canonical control height is 36px, which
  * clears WCAG 2.5.8 (24px) but sits under the 44px iOS HIG / 48px Material
  * recommendation. Rather than inflating every control everywhere — which would

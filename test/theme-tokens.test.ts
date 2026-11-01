@@ -75,7 +75,9 @@ const resolveTokens = (rules: Rule[], theme: string | null, dark: boolean) => {
   return Object.fromEntries(Object.entries(resolved).map(([name, { value }]) => [name, value]))
 }
 
-const cssRules = rulesFromCss(tokensCss)
+// The resolver models the default cascade. The prefers-contrast: more layer only applies
+// under that preference and is covered by prefers-contrast.test.ts.
+const cssRules = rulesFromCss(tokensCss.replace(/@media \(prefers-contrast: more\) \{[\s\S]*?\n\}\n/, ""))
 const registryRules = rulesFromRegistry(registryTheme)
 
 describe("theme tokens", () => {
