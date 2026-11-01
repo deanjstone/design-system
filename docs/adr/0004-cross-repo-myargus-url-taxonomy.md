@@ -133,7 +133,7 @@ boundary; links inside one app's own router stay in that app.
 
 **Tailnet services not yet in the registry.** Ports 3850 (quick-capture) and
 3747 (agent-engine) are tailnet-only per the project registry, but no `https`
-tailnet reference to them exists in any repo today, so they are not listed. A
+tailnet reference to them exists in homelab or argus today, so they are not listed. A
 migration ticket that finds one adds it.
 
 **The baseline is a count, not a blocker.** Report mode exits 0 everywhere;

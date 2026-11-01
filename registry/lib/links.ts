@@ -1,6 +1,6 @@
 // link-check:vendored
 // GENERATED from links.json by design-system scripts/links/generate.mjs. Do not edit.
-// The myargus.cc and tailnet URL builders: every URL in code comes from here.
+// The URL builders for every Argus host and tailnet service: every URL in code comes from here.
 import { createLinks } from "@/lib/links-core"
 
 export const REGISTRY = {

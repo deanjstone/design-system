@@ -15,7 +15,7 @@ import {
 } from "@/lib/theme-preference"
 
 type Options = {
-  /** Parent domain the cookie is shared across, e.g. ".myargus.cc". Host-only when omitted. */
+  /** Parent domain the cookie is shared across: pass COOKIE_DOMAIN from the links registry. Host-only when omitted. */
   cookieDomain?: string
 }
 

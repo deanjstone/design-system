@@ -31,7 +31,7 @@ export type PreferenceEnvironment = {
 }
 
 export type WriteOptions = PreferenceEnvironment & {
-  /** Parent domain the cookie is shared across, e.g. ".myargus.cc". Host-only when omitted. */
+  /** Parent domain the cookie is shared across: pass COOKIE_DOMAIN from the links registry. Host-only when omitted. */
   cookieDomain?: string
   /** Defaults to whether the page is on https. */
   secure?: boolean
