@@ -18,7 +18,6 @@ export const CHECK_SCENARIOS = ["iphone-17-portrait", "iphone-17-landscape-top-0
 // the gate can land green; a listed entry that no longer fires fails the gate until
 // it is deleted, so the list only shrinks (the same rule as test/theme-contrast.test.ts).
 export const KNOWN = [
-  { check: "input-font-size", scenario: "root-font-small", label: "input{input}", issue: 162 },
   { check: "input-font-size", scenario: "root-font-small", label: "textarea{textarea}", issue: 162 },
   { check: "input-font-size", scenario: "root-font-small", label: "input{command-input}", issue: 162 },
 ]
