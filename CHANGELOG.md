@@ -1,3 +1,10 @@
+## [3.6.3](https://github.com/deanjstone/design-system/compare/v3.6.2...v3.6.3) (2026-11-01)
+
+
+### Bug Fixes
+
+* stop spinner and skeleton loops and fade sheet and drawer under reduced motion ([6a55c30](https://github.com/deanjstone/design-system/commit/6a55c309f2ad6e711fdd2b71fe2755c47c3df565)), closes [#147](https://github.com/deanjstone/design-system/issues/147)
+
 ## [3.6.2](https://github.com/deanjstone/design-system/compare/v3.6.1...v3.6.2) (2026-11-01)
 
 
