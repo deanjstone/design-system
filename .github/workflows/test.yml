@@ -29,3 +29,57 @@ jobs:
 
       - name: Run tests
         run: pnpm test
+
+  geometry:
+    name: Curve geometry gate
+    runs-on: ${{ fromJSON(vars.CI_RUNS_ON || '"ubuntu-latest"') }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        if: runner.environment == 'github-hosted'
+
+      - name: Use the host pnpm (self-hosted)
+        if: runner.environment != 'github-hosted'
+        uses: ./.github/actions/host-pnpm
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      # Chromium is downloaded once and reused by every later run (design-system#158).
+      # The browsers live outside the job workspace so checkout cleanup cannot
+      # remove them. A self-hosted runner keeps the directory on its host; a
+      # GitHub-hosted one restores it from actions/cache. Either way the install
+      # below only downloads when this playwright-core revision is missing. It
+      # never asks Playwright to install OS packages: that needs root, and those
+      # are not CI's to install.
+      - name: Point Playwright at a persistent browser directory
+        run: |
+          echo "PLAYWRIGHT_BROWSERS_PATH=$HOME/.cache/ms-playwright" >> "$GITHUB_ENV"
+          echo "PLAYWRIGHT_CORE_VERSION=$(node -p "require('playwright-core/package.json').version")" >> "$GITHUB_ENV"
+
+      - name: Restore Chromium
+        if: runner.environment == 'github-hosted'
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-chromium-${{ runner.os }}-${{ runner.arch }}-playwright-core-${{ env.PLAYWRIGHT_CORE_VERSION }}
+
+      - name: Install Chromium
+        run: pnpm exec playwright-core install chromium
+
+      - name: Run the geometry gate
+        run: pnpm gate:geometry
+
+      - name: Upload curve screenshots
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: geometry-gate-curves
+          path: geometry-gate-out/curves/
+          if-no-files-found: ignore
