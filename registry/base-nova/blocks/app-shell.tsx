@@ -30,6 +30,12 @@ type AppShellProps = Pick<AppSwitcherProps, "mode" | "onModeChange" | "currentAp
    * control (if `back` is set) in the top-left corner, clear of the display curve.
    */
   chrome?: "full" | "none"
+  /**
+   * Slide the header away on scroll down and back on scroll up, to give the page the room (about 64px).
+   * Off by default, and always off under `prefers-reduced-motion`. A control inside the header that has
+   * focus keeps it in place (WCAG 2.4.11).
+   */
+  autoHideHeader?: boolean
   /** Set on a drill-down page: the header gets a back button to the parent (in focus mode, a floating one). */
   back?: { href: string; label?: string }
   /** Controls at the end of the header. */
@@ -115,6 +121,62 @@ const useShellMetrics = (
   }, [rootRef, topRef, barRef, backRef, showTabBar, focus])
 }
 
+// The scroll that must build up in one direction before the header moves, so a finger's jitter doesn't.
+const HIDE_THRESHOLD = 8
+
+const useMediaQuery = (query: string) =>
+  React.useSyncExternalStore(
+    (notify) => {
+      if (typeof window.matchMedia !== "function") return () => {}
+      const list = window.matchMedia(query)
+      list.addEventListener("change", notify)
+      return () => list.removeEventListener("change", notify)
+    },
+    () => typeof window.matchMedia === "function" && window.matchMedia(query).matches,
+    () => false
+  )
+
+// True while the header is slid away: scrolled down past its own height. Scrolling up, reaching the top
+// of the page, or focus arriving in the header brings it back, and focus already inside it stops it
+// leaving. Off under reduced motion.
+const useAutoHideHeader = (topRef: React.RefObject<HTMLElement | null>, enabled: boolean) => {
+  const [hidden, setHidden] = React.useState(false)
+  const reducedMotion = useMediaQuery("(prefers-reduced-motion: reduce)")
+  const active = enabled && !reducedMotion
+
+  React.useEffect(() => {
+    const top = topRef.current
+    if (!active || !top) {
+      setHidden(false)
+      return undefined
+    }
+    let last = Math.max(window.scrollY, 0)
+    const onScroll = () => {
+      const y = Math.max(window.scrollY, 0)
+      if (y <= 0) {
+        last = y
+        setHidden(false)
+        return
+      }
+      const delta = y - last
+      if (Math.abs(delta) < HIDE_THRESHOLD) return
+      last = y
+      if (delta < 0) setHidden(false)
+      else if (y > top.offsetHeight && !top.contains(document.activeElement)) setHidden(true)
+    }
+    const onFocusIn = () => setHidden(false)
+    window.addEventListener("scroll", onScroll, { passive: true })
+    top.addEventListener("focusin", onFocusIn)
+    return () => {
+      window.removeEventListener("scroll", onScroll)
+      top.removeEventListener("focusin", onFocusIn)
+      setHidden(false)
+    }
+  }, [topRef, active])
+
+  return active && hidden
+}
+
 const glassBar = "surface-glass border border-border/60 shadow-lg"
 
 const tabClass = (active: boolean) =>
@@ -143,6 +205,7 @@ function AppShell({
   mode,
   onModeChange,
   chrome = "full",
+  autoHideHeader = false,
   back,
   headerActions,
   renderLink = renderAnchor,
@@ -159,6 +222,7 @@ function AppShell({
   const backRef = React.useRef<HTMLElement>(null)
   const focus = chrome === "none"
   useShellMetrics(rootRef, topRef, barRef, backRef, showTabBar, focus)
+  const headerHidden = useAutoHideHeader(topRef, autoHideHeader && !focus)
   const overflowActive = overflow.some((entry) => entry.id === activeSectionId)
 
   const link = (entry: ShellSection, className: (active: boolean) => string) => {
@@ -226,7 +290,8 @@ function AppShell({
           <div
             ref={topRef}
             data-slot="app-shell-top"
-            className="pointer-events-none sticky top-0 z-30 pr-[max(0.5rem,var(--safe-r))] pl-[max(0.5rem,var(--safe-l))] pt-[calc(env(safe-area-inset-top)+0.5rem)] pb-2"
+            data-hidden={headerHidden ? "true" : undefined}
+            className="pointer-events-none sticky top-0 z-30 transition-transform duration-200 data-[hidden=true]:-translate-y-full focus-within:translate-y-0 motion-reduce:transition-none pr-[max(0.5rem,var(--safe-r))] pl-[max(0.5rem,var(--safe-l))] pt-[calc(env(safe-area-inset-top)+0.5rem)] pb-2"
           >
             <header
               data-slot="app-shell-header"

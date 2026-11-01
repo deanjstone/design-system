@@ -753,6 +753,152 @@ describe("AppShell", () => {
     })
   })
 
+  // Auto-hide (#139): the header slides away on scroll down and back on scroll up, to give the page the
+  // room. It is opt-in, off under reduced motion, and never hides a control that has focus (WCAG 2.4.11).
+  describe("autoHideHeader", () => {
+    const top = (container: HTMLElement) => container.querySelector<HTMLElement>("[data-slot=app-shell-top]")!
+    const scrollTo = (y: number) => {
+      Object.defineProperty(window, "scrollY", { configurable: true, value: y })
+      fireEvent.scroll(window)
+    }
+    const prefersReducedMotion = (matches: boolean) =>
+      vi.stubGlobal("matchMedia", (query: string) => ({
+        matches: matches && query.includes("prefers-reduced-motion"),
+        media: query,
+        addEventListener: () => {},
+        removeEventListener: () => {},
+      }))
+    const withHeader = (props: Partial<React.ComponentProps<typeof AppShell>> = {}) => {
+      Object.defineProperty(HTMLElement.prototype, "offsetHeight", {
+        configurable: true,
+        get() {
+          return (this as HTMLElement).dataset.slot === "app-shell-top" ? 64 : 0
+        },
+      })
+      return render(
+        <AppShell appName="Reader" sections={four} autoHideHeader {...props}>
+          x
+        </AppShell>
+      )
+    }
+    afterEach(() => {
+      vi.unstubAllGlobals()
+      if (offsetHeight) Object.defineProperty(HTMLElement.prototype, "offsetHeight", offsetHeight)
+      Reflect.deleteProperty(window, "scrollY")
+    })
+
+    it("is off unless asked for: scrolling never hides the header", () => {
+      const { container } = render(<AppShell appName="Reader" sections={four}>x</AppShell>)
+
+      scrollTo(400)
+
+      expect(top(container).getAttribute("data-hidden")).toBeNull()
+    })
+
+    it("starts shown", () => {
+      const { container } = withHeader()
+
+      expect(top(container).getAttribute("data-hidden")).toBeNull()
+    })
+
+    it("hides on scroll down once past the header", () => {
+      const { container } = withHeader()
+
+      scrollTo(200)
+
+      expect(top(container).getAttribute("data-hidden")).toBe("true")
+      expect(top(container).className).toContain("data-[hidden=true]:-translate-y-full")
+    })
+
+    it("shows again on scroll up", () => {
+      const { container } = withHeader()
+      scrollTo(300)
+
+      scrollTo(260)
+
+      expect(top(container).getAttribute("data-hidden")).toBeNull()
+    })
+
+    it("stays shown while the page is still under the header's own height", () => {
+      const { container } = withHeader()
+
+      scrollTo(40)
+
+      expect(top(container).getAttribute("data-hidden")).toBeNull()
+    })
+
+    it("ignores a small jitter of scroll", () => {
+      const { container } = withHeader()
+      scrollTo(120)
+      scrollTo(70)
+      expect(top(container).getAttribute("data-hidden")).toBeNull()
+
+      scrollTo(74)
+
+      expect(top(container).getAttribute("data-hidden")).toBeNull()
+    })
+
+    it("shows at the top of the page", () => {
+      const { container } = withHeader()
+      scrollTo(300)
+
+      scrollTo(0)
+
+      expect(top(container).getAttribute("data-hidden")).toBeNull()
+    })
+
+    it("never hides while a control inside it has focus", () => {
+      const { container } = withHeader({ headerActions: <button type="button">Sync</button> })
+      screen.getByRole("button", { name: "Sync" }).focus()
+
+      scrollTo(300)
+
+      expect(top(container).getAttribute("data-hidden")).toBeNull()
+    })
+
+    it("shows when focus moves into the hidden header", () => {
+      const { container } = withHeader({ headerActions: <button type="button">Sync</button> })
+      scrollTo(300)
+      expect(top(container).getAttribute("data-hidden")).toBe("true")
+
+      fireEvent.focusIn(screen.getByRole("button", { name: "Sync" }))
+
+      expect(top(container).getAttribute("data-hidden")).toBeNull()
+    })
+
+    it("keeps the header in place whenever focus is inside it, even before React has re-rendered", () => {
+      const { container } = withHeader()
+
+      expect(top(container).className).toContain("focus-within:translate-y-0")
+    })
+
+    it("is off under prefers-reduced-motion: the header never hides", () => {
+      prefersReducedMotion(true)
+      const { container } = withHeader()
+
+      scrollTo(400)
+
+      expect(top(container).getAttribute("data-hidden")).toBeNull()
+    })
+
+    it("slides rather than jumps, and not at all under reduced motion", () => {
+      const { container } = withHeader()
+
+      expect(top(container).className).toContain("transition-transform")
+      expect(top(container).className).toContain("motion-reduce:transition-none")
+    })
+
+    it("takes its scroll listener off on unmount", () => {
+      const remove = vi.spyOn(window, "removeEventListener")
+      withHeader()
+
+      cleanup()
+
+      expect(remove).toHaveBeenCalledWith("scroll", expect.any(Function))
+      remove.mockRestore()
+    })
+  })
+
   it("lays the page out as a column, so an EmptyPage can fill what is left", () => {
     render(<AppShell appName="Reader" sections={four}>x</AppShell>)
 
