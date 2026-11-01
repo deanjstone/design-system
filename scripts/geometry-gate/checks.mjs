@@ -7,7 +7,7 @@ import fs from "node:fs"
 import path from "node:path"
 
 import { MODES, THEME_NAMES, contrastRatio } from "../theme/extract-t3.mjs"
-import { GLASS_BARS, LOGIN_GUTTER, TOUCH_TARGET, focusObscured, glassLabels, inputFontSize, loginEdges, motion, reflow, sampleBackdrop, targetSize } from "./page-checks.mjs"
+import { CHROME_CEILING, GLASS_BARS, LOGIN_GUTTER, TOUCH_TARGET, focusObscured, glassLabels, inputFontSize, largeText, loginEdges, motion, reflow, sampleBackdrop, targetSize } from "./page-checks.mjs"
 import { openScenario } from "./session.mjs"
 
 const require = createRequire(import.meta.url)
@@ -17,7 +17,12 @@ export const CHECK_SCENARIOS = ["iphone-17-portrait", "iphone-17-landscape-top-0
 // Findings the #144 audit already filed. A listed finding is reported, not failed, so
 // the gate can land green; a listed entry that no longer fires fails the gate until
 // it is deleted, so the list only shrinks (the same rule as test/theme-contrast.test.ts).
-export const KNOWN = []
+export const KNOWN = [
+  { check: "reflow", view: "shell", label: "document", issue: 162 },
+  { check: "reflow", view: "shell", label: '"Alerts"', issue: 162 },
+  { check: "chrome-share", view: "shell", label: "header + tab bar", issue: 162 },
+  { check: "shell-metrics", view: "shell", label: "--shell-bottom", issue: 162 },
+]
 
 const matches = (known, finding) =>
   known.check === finding.check &&
@@ -168,7 +173,9 @@ export const runChecks = async ({ browser, urlFor, scenarios, views, out, ariaDi
     const reflowContext = await openScenario(browser, portrait, urlFor(view), { viewport: REFLOW_VIEWPORT })
     await reflowContext.page.addStyleTag({ content: "html { font-size: 200% !important }" })
     await reflowContext.page.waitForTimeout(300)
-    findings.push(...tag(await reflowContext.page.evaluate(reflow), { name: "320px-200pct" }, view))
+    findings.push(...tag(await reflowContext.page.evaluate(reflow, { width: REFLOW_VIEWPORT.width }), { name: "320px-200pct" }, view))
+    findings.push(...tag(await reflowContext.page.evaluate(largeText, { height: REFLOW_VIEWPORT.height, ceiling: CHROME_CEILING }), { name: "320px-200pct" }, view))
+    findings.push(...tag(await reflowContext.page.evaluate(inputFontSize), { name: "320px-200pct" }, view))
     await reflowContext.context.close()
     const reduced = await openScenario(browser, portrait, urlFor(view), { reducedMotion: "reduce", settled: false })
     findings.push(...tag(await reduced.page.evaluate(motion), { name: "reduced-motion" }, view))

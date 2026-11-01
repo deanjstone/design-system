@@ -136,8 +136,10 @@ export const loginEdges = ({ insets, gutter }) => {
 }
 
 // 320 CSS px wide at 200% text (WCAG 1.4.4 and 1.4.10): nothing scrolls sideways and
-// no control or text line ends past the right edge.
-export const reflow = () => {
+// no control or text line ends past the right edge. `width` is the width the context
+// was asked for: a mobile-emulated page widens its layout viewport to fit overflowing
+// content, so innerWidth would always agree with the overflow it should be measured against.
+export const reflow = ({ width = innerWidth } = {}) => {
   const describe = (element) => {
     const name = element.getAttribute("aria-label") || element.textContent.trim().replace(/\s+/g, " ").slice(0, 32) || element.getAttribute("placeholder") || element.id || element.tagName.toLowerCase()
     const slot = element.dataset.slot ? `{${element.dataset.slot}}` : ""
@@ -145,14 +147,97 @@ export const reflow = () => {
   }
   const interactive = 'a[href], button, input:not([type=hidden]), textarea, select, summary, [role=button], [role=link], [role=tab], [role=checkbox], [role=switch], [role=combobox]'
   const findings = []
-  const overflow = document.documentElement.scrollWidth - innerWidth
+  const overflow = document.documentElement.scrollWidth - width
   if (overflow > 1) findings.push({ check: "reflow", label: "document", detail: `scrolls sideways by ${overflow}px` })
   for (const element of document.querySelectorAll(interactive)) {
     const style = getComputedStyle(element)
     if (style.visibility === "hidden" || style.display === "none") continue
     const rect = element.getBoundingClientRect()
     if (rect.width < 2 || rect.height < 2) continue
-    if (rect.right > innerWidth + 0.5 || rect.left < -0.5) findings.push({ check: "reflow", label: describe(element), detail: `spans ${rect.left.toFixed(1)}..${rect.right.toFixed(1)} in a ${innerWidth}px viewport` })
+    if (rect.right > width + 0.5 || rect.left < -0.5) findings.push({ check: "reflow", label: describe(element), detail: `spans ${rect.left.toFixed(1)}..${rect.right.toFixed(1)} in a ${width}px viewport` })
+  }
+  return findings
+}
+
+// What the AppShell's chrome may take of a tall-enough screen at large text (design-system#150,
+// #162): the header and the tab bar together, as a share of the viewport height. The #144
+// probe measured 34% at 200%; the cap and icon-only tabs bring it under this.
+export const CHROME_CEILING = 0.25
+
+// Large text, on the chrome and the controls (WCAG 1.4.4, 1.4.10): a tab label that is
+// truncated is clipped, a control whose text is cut by overflow is clipped, the header and
+// tab bar stay under CHROME_CEILING of the viewport, and the shell publishes the heights it
+// really has. `height` is the viewport height the context was asked for.
+export const largeText = ({ height = innerHeight, ceiling }) => {
+  const describe = (element) => {
+    const name = element.getAttribute("aria-label") || element.textContent.trim().replace(/\s+/g, " ").slice(0, 32) || element.getAttribute("placeholder") || element.id || element.tagName.toLowerCase()
+    const slot = element.dataset.slot ? `{${element.dataset.slot}}` : ""
+    return `${element.tagName.toLowerCase()}${slot} "${name}"`
+  }
+  const interactive = 'a[href], button, input:not([type=hidden]), textarea, select, summary, [role=button], [role=link], [role=tab], [role=checkbox], [role=switch], [role=combobox]'
+  const shown = (element) => {
+    const style = getComputedStyle(element)
+    const rect = element.getBoundingClientRect()
+    return style.visibility !== "hidden" && style.display !== "none" && rect.width >= 2 && rect.height >= 2
+  }
+  const findings = []
+
+  const header = document.querySelector('[data-slot="app-shell-header"]')
+  const bar = document.querySelector('[data-slot="app-shell-tabbar"]')
+  if (header && bar && shown(header) && shown(bar)) {
+    const used = header.getBoundingClientRect().height + bar.getBoundingClientRect().height
+    if (used / height > ceiling) {
+      findings.push({ check: "chrome-share", label: "app-shell header + tab bar", detail: `${used.toFixed(0)}px is ${(used / height * 100).toFixed(1)}% of a ${height}px viewport, over ${(ceiling * 100).toFixed(0)}%` })
+    }
+  }
+
+  const root = document.querySelector('[data-slot="app-shell"]')
+  const top = document.querySelector('[data-slot="app-shell-top"]')
+  if (root && top && bar && shown(bar)) {
+    const published = (name) => Number.parseFloat(getComputedStyle(root).getPropertyValue(name))
+    const bottom = bar.getBoundingClientRect()
+    const wanted = [
+      ["--shell-top", top.getBoundingClientRect().bottom],
+      ["--shell-bottom", height - bottom.top],
+    ]
+    for (const [name, pixels] of wanted) {
+      if (!(Math.abs(published(name) - pixels) <= 1.5)) findings.push({ check: "shell-metrics", label: name, detail: `published ${getComputedStyle(root).getPropertyValue(name) || "nothing"}, the chrome measures ${pixels.toFixed(1)}px` })
+    }
+    // --shell-workspace is a calc() of the other two and a viewport unit, so it is read as the
+    // height of an element that takes it.
+    const probe = document.createElement("div")
+    probe.style.cssText = "position:absolute;visibility:hidden;width:1px;height:var(--shell-workspace)"
+    root.append(probe)
+    const workspace = probe.getBoundingClientRect().height
+    probe.remove()
+    const expected = height - published("--shell-top") - published("--shell-bottom")
+    if (!(Math.abs(workspace - expected) <= 1.5)) findings.push({ check: "shell-metrics", label: "--shell-workspace", detail: `published ${workspace}px, the viewport less both is ${expected.toFixed(1)}px` })
+  }
+
+  for (const label of document.querySelectorAll('[data-slot="app-shell-tabbar"] a > span, [data-slot="app-shell-more"] > span')) {
+    if (!shown(label)) continue
+    if (label.scrollWidth > label.clientWidth + 1) findings.push({ check: "clipped-label", label: describe(label.parentElement), detail: `label "${label.textContent.trim()}" needs ${label.scrollWidth}px, has ${label.clientWidth}px` })
+  }
+
+  const headerless = (element) => !element.closest('[data-slot="app-shell-header"]')
+  for (const element of document.querySelectorAll(interactive)) {
+    if (!shown(element) || !headerless(element)) continue
+    const style = getComputedStyle(element)
+    const cuts = style.overflowX === "hidden" || style.overflowX === "clip"
+    if (cuts && style.textOverflow !== "ellipsis" && element.scrollWidth > element.clientWidth + 1) {
+      findings.push({ check: "clipped-control", label: describe(element), detail: `content needs ${element.scrollWidth}px, has ${element.clientWidth}px` })
+      continue
+    }
+    const rect = element.getBoundingClientRect()
+    for (let ancestor = element.parentElement; ancestor && ancestor !== document.body; ancestor = ancestor.parentElement) {
+      const clip = getComputedStyle(ancestor)
+      if (clip.overflowX !== "hidden" && clip.overflowX !== "clip") continue
+      const box = ancestor.getBoundingClientRect()
+      if (rect.right > box.right + 1 || rect.left < box.left - 1) {
+        findings.push({ check: "clipped-control", label: describe(element), detail: `reaches ${rect.left.toFixed(1)}..${rect.right.toFixed(1)}, cut by ${describe(ancestor)} at ${box.left.toFixed(1)}..${box.right.toFixed(1)}` })
+        break
+      }
+    }
   }
   return findings
 }

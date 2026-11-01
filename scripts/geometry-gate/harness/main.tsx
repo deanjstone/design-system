@@ -198,7 +198,7 @@ const App = () => {
     return (
       <div className="flex flex-col gap-4 p-4">
         <div className="flex items-center gap-2"><Spinner /><span>Loading</span></div>
-        <Skeleton className="h-4 w-40" />
+        <Skeleton className="h-4 w-40 max-w-full" />
       </div>
     )
   }
