@@ -49,10 +49,13 @@ registry/
   base-nova/blocks/           v3 layout blocks: app-shell, app-switcher, page-header, empty-page, settings-page, login
   design-check/             scripts and workflow of the design-check item (CI, not UI)
   app-html-head/            iPhone <head> tags snippet (app-html-head item)
+  links/                    links.json, its schema, links.sh and the link-check script and workflow (ADR-0004)
+  lib/links-core.ts, links.ts  URL builders, and the module generated from links.json
 r/                         generated per-item output — what the r/ alias resolves
 theme/tokens.css            same tokens as the "theme" item, as plain CSS
 theme/themes.json           the six T3 themes (light + dark) behind both; see DESIGN.md Themes
 scripts/theme/              extract-t3.mjs reads T3's sheet; build.mjs writes tokens.css and registry.json
+scripts/links/              registry.mjs validates links.json, generate.mjs writes lib/links.ts, cf-drift.mjs diffs Cloudflare
 ```
 
 ## Consuming this registry from another project
@@ -623,6 +626,73 @@ that directory on its host; a GitHub-hosted one restores it with `actions/cache`
 keyed on the `playwright-core` version. Only a version bump downloads again. The job
 never installs OS packages (no `--with-deps`, no sudo): a runner missing Chromium's
 system libraries is an owner change.
+
+## Links registry
+
+Every myargus.cc and tailnet URL comes from one registry
+([ADR-0004](docs/adr/0004-cross-repo-myargus-url-taxonomy.md),
+[map #151](https://github.com/deanjstone/design-system/issues/151)). Five items:
+
+| Item | Lands at | Is |
+|---|---|---|
+| `links-data` | `links.json` | Every host and app: bucket, status, host, path, routes, expected anonymous probe status, hosting, Access gating, the shared cookie domain. Edit it **here only**; bump `revision` on every change |
+| `links` (+ `links-core`) | `@/lib/links.ts`, `@/lib/links-core.ts` | `appUrl(id)`, `routeUrl(id, path, params?)`, `apiUrl(id)`, `mcpUrl(id)`, `tailnetUrl(id)`, `switcherApps(currentId)`, `COOKIE_DOMAIN`. `links.ts` is **generated** from `links.json` |
+| `links-sh` | `scripts/links.sh` | The same builders in bash with `jq`, for deploy scripts and hooks |
+| `link-check` | `scripts/link-check.sh`, `scripts/link-check-config.mjs`, `.github/workflows/link-check.yml` | The literal ban, the config check and the drift check |
+
+```bash
+npx shadcn add deanjstone/design-system/links#v3.7.0
+```
+
+```ts
+import { appUrl, routeUrl, apiUrl, COOKIE_DOMAIN } from "@/lib/links"
+
+appUrl("reader")                                   // https://myargus.cc/reader/
+routeUrl("shell", "/plans/:slug", { slug: "x" })   // https://myargus.cc/plans/x
+apiUrl("watchtower-api")                           // https://api.myargus.cc/watchtower
+appUrl("ops", { origin: process.env.OPS_ORIGIN })  // only the origin is overridable
+```
+
+```bash
+bash scripts/links.sh url ops                      # https://ops.myargus.cc/
+bash scripts/links.sh route shell /plans/:slug x   # https://myargus.cc/plans/x
+bash scripts/links.sh --origin http://localhost:8787 api watchtower-api
+```
+
+Canonical forms: https only; app roots end in `/`; in-app routes and API/MCP
+bases have none; builders join with one `/`. A retired entry throws, a redirect
+entry builds its target, a planned entry builds. `routeUrl` throws for a route
+`links.json` does not list: list a route there when another app links to it.
+An MCP entry on a legacy host holds its live location and names the target in
+`moveTo`, so one registry edit moves every consumer.
+
+**link-check** runs from `scripts/link-check.sh [--mode report|block]` (default
+`report`, or `LINK_CHECK_MODE`). Report mode prints each finding and one
+`link-check: summary <repo> literals=N retired=M config=K drift=D` line and
+exits 0: the baseline. Block mode exits 1 on any count above 0; flip the
+workflow's `LINK_CHECK_MODE` to `block` when a repo reads 0. Counts are lines.
+
+| Finding | Meaning |
+|---|---|
+| `literal` | A tracked line names the domain or the tailnet host. Exempt: markdown, test files and fixtures, lockfiles, changelogs, wrangler config, `_redirects`/`_headers`, files carrying the `link-check:vendored` marker in their first 10 lines, and globs in `.link-check-ignore` |
+| `retired` | A literal that names a retired host (a subset of `literal`) |
+| `config` | Vite `base`, router `basename`, manifest `start_url`/`scope`, a wrangler route or `_redirects` target that `links.json` does not hold. Textual, so it catches the common slips only |
+| `drift` | The vendored `links.json` is behind design-system's, or differs at the same revision. An unreachable upstream is reported and passes |
+
+**Cloudflare drift** (`scripts/links/cf-drift.mjs`, not a registry item) diffs
+live DNS, tunnel ingress and Access apps against `links.json`. It makes GET
+requests only:
+
+```bash
+CLOUDFLARE_API_TOKEN=... CLOUDFLARE_ACCOUNT_ID=... node scripts/links/cf-drift.mjs
+```
+
+The token needs Zone > DNS > Read, Zone > Zone > Read, Cloudflare Tunnel > Read
+and Access: Apps and Policies > Read. Exit 0: no drift; 1: drift printed; 2:
+could not run.
+
+To change the registry: edit `registry/links/links.json`, bump `revision`, run
+`node scripts/links/generate.mjs`, then `pnpm check`.
 
 ## Design check item
 
