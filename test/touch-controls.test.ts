@@ -68,7 +68,7 @@ describe("16px text on a coarse pointer", () => {
 
   // The 16px floor is in px, not rem: a root font under 100% (the smallest Larger Text sizes) would
   // otherwise pull text-base under it and iOS would zoom into the field on focus (#162).
-  it.each(["input"])("%s sizes its text as max(1rem, 16px), not text-base", (name) => {
+  it.each(["input", "textarea"])("%s sizes its text as max(1rem, 16px), not text-base", (name) => {
     expect(source(name)).toContain("text-[max(1rem,16px)]")
     expect(source(name)).not.toMatch(/(?<![\w-])text-base(?![\w-])/)
   })
