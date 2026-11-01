@@ -77,7 +77,10 @@ function Login({ appName, description, onPasskeySignIn, onEmailLink, onPassword,
   return (
     <main
       data-slot="login"
-      className={cn("flex min-h-dvh items-center justify-center bg-background p-4 pt-safe pb-safe text-foreground", className)}
+      className={cn(
+        "flex min-h-dvh items-center justify-center bg-background pt-[max(1rem,env(safe-area-inset-top))] pr-[max(1rem,env(safe-area-inset-right))] pb-[max(1rem,env(safe-area-inset-bottom))] pl-[max(1rem,env(safe-area-inset-left))] text-foreground",
+        className
+      )}
     >
       <Card className="w-full max-w-sm">
         <CardHeader>
@@ -122,6 +125,7 @@ function Login({ appName, description, onPasskeySignIn, onEmailLink, onPassword,
                     type="email"
                     required
                     autoComplete="username webauthn"
+                    enterKeyHint={onPassword ? "next" : "send"}
                     value={email}
                     onChange={(event) => setEmail(event.target.value)}
                     disabled={busy}
@@ -135,6 +139,7 @@ function Login({ appName, description, onPasskeySignIn, onEmailLink, onPassword,
                       type="password"
                       required
                       autoComplete="current-password"
+                      enterKeyHint="go"
                       value={password}
                       onChange={(event) => setPassword(event.target.value)}
                       disabled={busy}

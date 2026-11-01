@@ -198,4 +198,29 @@ describe("Login", () => {
     expect(screen.queryAllByRole("button")).toHaveLength(0)
     expect(screen.queryByLabelText("Email")).toBeNull()
   })
+
+  describe("keyboard and edges", () => {
+    it("labels the return key 'next' when a password follows the email", () => {
+      render(<Login appName="Reader" onPassword={vi.fn()} onEmailLink={vi.fn()} />)
+
+      expect(screen.getByLabelText("Email").getAttribute("enterkeyhint")).toBe("next")
+      expect(screen.getByLabelText("Password").getAttribute("enterkeyhint")).toBe("go")
+    })
+
+    it("labels the return key 'send' when the email alone submits a link", () => {
+      render(<Login appName="Reader" onEmailLink={vi.fn()} />)
+
+      expect(screen.getByLabelText("Email").getAttribute("enterkeyhint")).toBe("send")
+    })
+
+    it("floors every edge with max(1rem, inset) instead of a bare inset utility", () => {
+      const { container } = render(<Login appName="Reader" onEmailLink={vi.fn()} />)
+      const root = container.querySelector('[data-slot="login"]') as HTMLElement
+
+      expect(root.className).not.toMatch(/(^|\s)p[tbxy]?-safe(\s|$)/)
+      for (const edge of ["top", "right", "bottom", "left"]) {
+        expect(root.className).toContain(`max(1rem,env(safe-area-inset-${edge}))`)
+      }
+    })
+  })
 })
