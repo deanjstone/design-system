@@ -6,17 +6,19 @@ type PageHeaderProps = Omit<React.ComponentProps<"header">, "title"> & {
   description?: React.ReactNode
   /** Buttons for the page's main actions. They sit beside the title from `sm`, under it on a phone. */
   actions?: React.ReactNode
+  /** Hide the title and description on a phone, where the shell header already names the page. The h1 stays for screen readers. */
+  hideOnPhone?: boolean
 }
 
 // The title block at the top of a page, below the shell's header. One h1 per page.
-function PageHeader({ title, description, actions, className, ...props }: PageHeaderProps) {
+function PageHeader({ title, description, actions, hideOnPhone = false, className, ...props }: PageHeaderProps) {
   return (
     <header
       data-slot="page-header"
       className={cn("flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between", className)}
       {...props}
     >
-      <div className="flex min-w-0 flex-col gap-1">
+      <div className={cn("flex min-w-0 flex-col gap-1", hideOnPhone && "max-sm:sr-only")}>
         <h1 data-slot="page-header-title" className="font-heading text-xl font-semibold tracking-tight text-balance sm:text-2xl">
           {title}
         </h1>

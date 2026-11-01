@@ -95,13 +95,13 @@ const glassBar = "surface-glass border border-border/60 shadow-lg"
 
 const tabClass = (active: boolean) =>
   cn(
-    "flex min-h-12.5 min-w-0 flex-1 flex-col items-center justify-center gap-0.5 rounded-full px-1 text-2xs font-medium outline-none transition-colors focus-visible:ring-3 focus-visible:ring-ring/50 [&_svg]:size-5 [&_svg]:shrink-0",
-    active ? "bg-muted text-foreground [&_svg]:text-primary" : "text-muted-foreground hover:text-foreground"
+    "flex min-h-12.5 min-w-0 flex-1 flex-col items-center justify-center gap-0.5 rounded-full px-1 text-2xs font-medium outline-none transition-colors focus-visible:ring-3 focus-visible:ring-ring max-[15rem]:[&>span]:sr-only [&_svg]:size-5 [&_svg]:shrink-0",
+    active ? "bg-muted text-foreground" : "text-muted-foreground hover:text-foreground"
   )
 
 const sidebarLinkClass = (active: boolean) =>
   cn(
-    "flex min-h-10 items-center gap-3 rounded-lg px-3 text-sm font-medium outline-none transition-colors focus-visible:ring-3 focus-visible:ring-ring/50 [&_svg]:size-4 [&_svg]:shrink-0",
+    "flex min-h-10 items-center gap-3 rounded-lg px-3 text-sm font-medium outline-none transition-colors focus-visible:ring-3 focus-visible:ring-sidebar-ring [&_svg]:size-4 [&_svg]:shrink-0",
     active
       ? "bg-sidebar-accent text-sidebar-accent-foreground"
       : "text-sidebar-foreground/80 hover:bg-sidebar-accent/60 hover:text-sidebar-accent-foreground"
@@ -249,7 +249,7 @@ function AppShell({
                     <li key={entry.id}>
                       {link(entry, (active) =>
                         cn(
-                          "flex min-h-11 items-center gap-3 rounded-lg px-3 text-sm font-medium outline-none hover:bg-muted focus-visible:ring-3 focus-visible:ring-ring/50 [&_svg]:size-4 [&_svg]:shrink-0",
+                          "flex min-h-11 items-center gap-3 rounded-lg px-3 text-sm font-medium outline-none hover:bg-muted focus-visible:ring-3 focus-visible:ring-ring [&_svg]:size-4 [&_svg]:shrink-0",
                           active && "bg-muted"
                         )
                       )}

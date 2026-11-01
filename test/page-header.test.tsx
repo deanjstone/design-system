@@ -39,6 +39,43 @@ describe("PageHeader", () => {
     expect(container.querySelector("header")?.className).toMatch(/flex-col.*sm:flex-row/)
   })
 
+  describe("hideOnPhone", () => {
+    // The shell header already names the page on a phone, so a repeated h1 costs a line for nothing.
+    // The h1 stays in the DOM, so the page keeps its heading for a screen reader (#138).
+    it("hides the title and description on a phone, and shows them from sm", () => {
+      const { container } = render(<PageHeader title="Inbox" description="Unread first" hideOnPhone />)
+
+      const block = container.querySelector("[data-slot=page-header-title]")!.parentElement!
+      expect(block.className).toContain("max-sm:sr-only")
+    })
+
+    it("keeps the h1 in the accessibility tree", () => {
+      render(<PageHeader title="Inbox" hideOnPhone />)
+
+      expect(screen.getByRole("heading", { level: 1, name: "Inbox" })).toBeTruthy()
+    })
+
+    it("leaves the actions visible on a phone", () => {
+      render(<PageHeader title="Inbox" hideOnPhone actions={<button type="button">Compose</button>} />)
+
+      const actions = screen.getByRole("button", { name: "Compose" }).closest("[data-slot=page-header-actions]")!
+      expect(actions.className).not.toContain("sr-only")
+      expect(actions.parentElement!.className).not.toContain("sr-only")
+    })
+
+    it("shows the title on a phone by default", () => {
+      const { container } = render(<PageHeader title="Inbox" />)
+
+      expect(container.querySelector("[data-slot=page-header-title]")!.parentElement!.className).not.toContain("sr-only")
+    })
+
+    it("does not pass the prop to the DOM", () => {
+      const { container } = render(<PageHeader title="Inbox" hideOnPhone />)
+
+      expect(container.querySelector("header")!.hasAttribute("hideonphone")).toBe(false)
+    })
+  })
+
   it("passes className through", () => {
     const { container } = render(<PageHeader title="Inbox" className="custom" />)
 

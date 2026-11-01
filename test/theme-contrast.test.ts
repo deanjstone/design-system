@@ -51,6 +51,13 @@ const PAIRS: Pair[] = [
         ? contrastRatio(t["muted-foreground"], t.muted)
         : contrastRatio(over(t.foreground, 0.6, t.muted), t.muted),
   },
+  // app-shell.tsx: the focus ring is a solid --ring (--sidebar-ring on the sidebar), no longer ring/50,
+  // against what it is drawn over. WCAG 1.4.11 asks 3:1 for a focus indicator (#144 F1).
+  { name: "focus ring on background", minimum: 3, ratio: (t) => contrastRatio(t.ring, t.background) },
+  { name: "focus ring on muted", minimum: 3, ratio: (t) => contrastRatio(t.ring, t.muted) },
+  { name: "sidebar focus ring on sidebar", minimum: 3, ratio: (t) => contrastRatio(t["sidebar-ring"], t.sidebar) },
+  // app-shell.tsx: the active tab is text-foreground on --muted, its icon included (#144 C2).
+  { name: "active tab on muted", minimum: TEXT, ratio: (t) => contrastRatio(t.foreground, t.muted) },
   // badge.tsx destructive: text-destructive on destructive/10 (light) or /20 (dark).
   {
     name: "destructive badge label",

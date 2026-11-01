@@ -492,6 +492,57 @@ describe("AppShell", () => {
     })
   })
 
+  describe("focus and large text", () => {
+    it("draws a solid focus ring on every tab, the More tab and sidebar link, never ring/50", () => {
+      const { container } = render(<AppShell appName="Reader" sections={six}>x</AppShell>)
+
+      const bar = within(tabBar(container))
+      for (const control of [...bar.getAllByRole("link"), bar.getByRole("button", { name: "More" })]) {
+        expect(control.className).toContain("focus-visible:ring-ring")
+        expect(control.className).not.toContain("ring-ring/50")
+      }
+      for (const link of within(sidebar(container)).getAllByRole("link")) {
+        expect(link.className).toContain("focus-visible:ring-sidebar-ring")
+        expect(link.className).not.toContain("/50")
+      }
+    })
+
+    it("draws a solid focus ring on the links in the More sheet", () => {
+      const { container } = render(<AppShell appName="Reader" sections={six}>x</AppShell>)
+
+      fireEvent.click(within(tabBar(container)).getByRole("button", { name: "More" }))
+
+      for (const link of within(screen.getByRole("dialog", { name: "More" })).getAllByRole("link")) {
+        expect(link.className).toContain("focus-visible:ring-ring")
+        expect(link.className).not.toContain("ring-ring/50")
+      }
+    })
+
+    it("has no translucent focus ring anywhere in the source", () => {
+      expect(shellSource).not.toMatch(/ring-(?:ring|sidebar-ring)\/\d/)
+    })
+
+    it("keeps the active tab's icon in the foreground colour, not the primary", () => {
+      const { container } = render(<AppShell appName="Reader" sections={four} activeSectionId="home">x</AppShell>)
+
+      const active = within(tabBar(container)).getByRole("link", { name: "Home" })
+      expect(active.className).toContain("text-foreground")
+      expect(active.className).not.toContain("text-primary")
+    })
+
+    // At 200% text a 320px screen is 10rem wide. A rem-based query matches only then, never at 100%.
+    // The label stays in the DOM, so the tab keeps its name.
+    it("drops the tab labels to icons only on a screen under 15rem wide", () => {
+      const { container } = render(<AppShell appName="Reader" sections={six}>x</AppShell>)
+
+      const bar = within(tabBar(container))
+      for (const control of [...bar.getAllByRole("link"), bar.getByRole("button", { name: "More" })]) {
+        expect(control.className).toContain("max-[15rem]:[&>span]:sr-only")
+      }
+      expect(bar.getByRole("link", { name: "Home" })).toBeTruthy()
+    })
+  })
+
   describe("sidebar", () => {
     it("is shown from lg", () => {
       const { container } = render(<AppShell appName="Reader" sections={four}>x</AppShell>)
