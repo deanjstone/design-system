@@ -1,3 +1,10 @@
+# [3.9.0](https://github.com/deanjstone/design-system/compare/v3.8.1...v3.9.0) (2026-11-01)
+
+
+### Features
+
+* follow iOS Larger Text through a guarded root font and a measured scale ([dd13b7e](https://github.com/deanjstone/design-system/commit/dd13b7e3c936d3850c690eb6e739dd8ae2f3e520)), closes [#150](https://github.com/deanjstone/design-system/issues/150)
+
 ## [3.8.1](https://github.com/deanjstone/design-system/compare/v3.8.0...v3.8.1) (2026-11-01)
 
 
