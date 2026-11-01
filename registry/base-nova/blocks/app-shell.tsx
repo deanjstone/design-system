@@ -230,7 +230,7 @@ function AppShell({
   const rootRef = React.useRef<HTMLDivElement>(null)
   const topRef = React.useRef<HTMLDivElement>(null)
   const barRef = React.useRef<HTMLElement>(null)
-  const backRef = React.useRef<HTMLElement>(null)
+  const backRef = React.useRef<HTMLDivElement>(null)
   const focus = chrome === "none"
   const rail = useMediaQuery(RAIL_QUERY)
   useShellMetrics(rootRef, topRef, barRef, backRef, showTabBar, focus, rail)
