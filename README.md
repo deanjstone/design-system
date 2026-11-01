@@ -424,6 +424,17 @@ alias stays where it is until its owner moves it.
 (`test/`); the `Test` workflow runs it on every PR. The dev dependencies
 exist only for this — nothing here is built or published.
 
+**Before a push: `pnpm check`.** It runs the three CI checks locally, in order:
+`pnpm test`, the pinned impeccable detector over `registry/` and `theme/`, and
+a `shadcn build` that fails if `r/` changed (or gained an untracked file).
+Commit first, so `r/` is judged as it will be pushed. A pass prints one line,
+`check: pass <short sha>`; paste it into the issue. A failure names the step
+(`FAIL at step 3/3 ...`) and exits non-zero. A stale `r/` is fixed by
+regenerating it (`npx shadcn@4.19.1 build --output ./r`) and committing the
+result, never by hand-merging. No git hook runs it: it is a step you run, and CI
+is the backstop. Its pins live in `scripts/check.sh`; `test/check-script.test.ts`
+fails if they drift from `.github/workflows/design.yml` or `package.json`.
+
 **Gotcha: Base UI parts with default children.** `Select.Icon`,
 `Combobox.Icon` and `NavigationMenu.Icon` default their children to `▼`
 (also `Combobox.ItemIndicator` `✔️`, `Combobox.Clear` `x`). `render` swaps
