@@ -186,6 +186,28 @@
   --app-titlebar-inset-left: calc(env(safe-area-inset-left, 0px) + 0.75rem);
   --app-titlebar-inset-right: calc(env(safe-area-inset-right, 0px) + 0.75rem);
   --app-titlebar-native-controls-inset: 0px;
+  /* Safe-area foundation (design-system#137). --safe-* are the four device
+     insets, 0 where the browser already keeps the layout inside the safe area.
+     --gutter is the edge padding every page wants; --edge-x / --edge-x-end are
+     the left and right edge padding that never fall under the gutter or into a
+     display curve (see px-edge below). --corner-clear is the extra clearance a
+     control that hugs a rounded display corner needs (FAB, end tab-bar item).
+     --edge-b is the bottom edge: the home indicator sits about 12px below where
+     content looks right, so it is subtracted, with a 0.5rem floor. */
+  --safe-t: env(safe-area-inset-top, 0px);
+  --safe-r: env(safe-area-inset-right, 0px);
+  --safe-b: env(safe-area-inset-bottom, 0px);
+  --safe-l: env(safe-area-inset-left, 0px);
+  --gutter: 1rem;
+  --corner-clear: 1.3rem;
+  --edge-x: max(var(--gutter), var(--safe-l));
+  --edge-x-end: max(var(--gutter), var(--safe-r));
+  --edge-b: max(0.5rem, calc(var(--safe-b) - 12px));
+  /* Space a focused control is scrolled clear of. An app with a sticky header or
+     a fixed tab bar sets these to those heights (WCAG 2.4.11 Focus Not Obscured);
+     0 until it does. */
+  --scroll-pad-top: 0px;
+  --scroll-pad-bottom: 0px;
   /* Grain texture (see the .surface-grain utility below) for chrome surfaces
      that float above the body. A 256px feTurbulence tile kept cheap enough
      to bake into a surface's own background rather than a full-viewport
@@ -964,6 +986,13 @@
  * Safe-area inset utilities (design-system#51) for surfaces that opt into
  * edge-to-edge rendering. Each resolves to 0 when the browser already
  * constrains the layout viewport to the safe area.
+ *
+ * pt-safe and pb-safe are right for a bar that must clear the status bar or
+ * the home indicator. pl-safe and pr-safe are NOT enough for content: they
+ * resolve to 0 in Safari and in landscape on a device with no side inset, and
+ * that is exactly where a rounded display corner still clips text. Content
+ * needs a floor, max(<minimum>, env(…)): use px-edge. design-check fails
+ * pl-safe, pr-safe and a bare env(safe-area-inset-left|right).
  */
 @utility pt-safe {
   padding-top: max(env(safe-area-inset-top), 0px);
@@ -979,6 +1008,45 @@
 
 @utility pr-safe {
   padding-right: max(env(safe-area-inset-right), 0px);
+}
+
+/*
+ * Edge utilities (design-system#137). The curve rule: a background may bleed
+ * into the display's rounded corners, but text and controls never do.
+ *   px-edge          left and right edge padding: max(--gutter, inset), both sides
+ *   pb-edge          bottom edge padding clear of the home indicator
+ *   inset-corner-br  places a fixed corner control (FAB) bottom-right: it takes
+ *                    position:fixed from the caller and sets right and bottom
+ *   min-h-app        full-height page: 100dvh, 100vh where dvh is missing; use
+ *                    it instead of min-h-screen, which is taller than the
+ *                    visible area on iOS Safari
+ */
+@utility px-edge {
+  padding-left: var(--edge-x);
+  padding-right: var(--edge-x-end);
+}
+
+@utility pb-edge {
+  padding-bottom: var(--edge-b);
+}
+
+@utility inset-corner-br {
+  right: max(var(--corner-clear), var(--safe-r));
+  bottom: var(--edge-b);
+}
+
+@utility min-h-app {
+  min-height: 100dvh;
+
+  @supports not (min-height: 100dvh) {
+    min-height: 100vh;
+  }
+}
+
+/* Scroll a focused control clear of a sticky header or fixed tab bar. */
+html {
+  scroll-padding-top: var(--scroll-pad-top);
+  scroll-padding-bottom: var(--scroll-pad-bottom);
 }
 
 /*

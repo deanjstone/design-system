@@ -1,0 +1,26 @@
+<!--
+  The <head> tags every myargus.cc front end needs for an iPhone (design-system#137).
+  Copy the tags below into your index.html <head>. Apps that hand-copy these drift.
+
+  viewport-fit=cover   Lets the page draw to the display edge, and is what makes
+                       env(safe-area-inset-*) non-zero at all. Without it the
+                       --safe-* tokens are always 0. Pair it with px-edge, pb-edge
+                       and pt-safe so content stays out of the curves and notch.
+                       The tag sets no zoom limit, so pinch zoom stays on (WCAG 1.4.4).
+                       Do not add one.
+  apple-mobile-web-app-* The Home Screen web app set. "default" status bar keeps the
+                       bar opaque, so the top inset is the system's to manage;
+                       the translucent style would make every app clear it itself. iOS 26 opens
+                       every Home Screen site as a web app, so -capable matters only
+                       on older iOS; the status-bar style decides the top inset
+                       either way.
+  theme-color          One per colour scheme; they match the default (Ocean) theme's
+                       --background. Change them if the app sets another theme.
+-->
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="default" />
+<meta name="apple-mobile-web-app-title" content="App name" />
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#f5f7f8" />
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#17212b" />
