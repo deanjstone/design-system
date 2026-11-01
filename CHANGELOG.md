@@ -1,3 +1,10 @@
+# [3.2.0](https://github.com/deanjstone/design-system/compare/v3.1.0...v3.2.0) (2026-11-01)
+
+
+### Features
+
+* add pnpm check, a local run of the three CI checks ([#155](https://github.com/deanjstone/design-system/issues/155)) ([f27bd81](https://github.com/deanjstone/design-system/commit/f27bd812be904c1676846a61af5743479b07ba1a)), closes [deanjstone/argus-config#1015](https://github.com/deanjstone/argus-config/issues/1015)
+
 # [3.1.0](https://github.com/deanjstone/design-system/compare/v3.0.2...v3.1.0) (2026-10-29)
 
 
