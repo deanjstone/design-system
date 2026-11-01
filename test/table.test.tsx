@@ -1,5 +1,5 @@
-import { cleanup, render, screen, within } from "@testing-library/react"
-import { afterEach, describe, expect, it } from "vitest"
+import { act, cleanup, render, screen, within } from "@testing-library/react"
+import { afterEach, describe, expect, it, vi } from "vitest"
 
 import {
   Table,
@@ -12,7 +12,32 @@ import {
   TableRow,
 } from "../registry/base-nova/ui/table"
 
-afterEach(cleanup)
+afterEach(() => {
+  cleanup()
+  vi.unstubAllGlobals()
+})
+
+// jsdom has no layout, so a test sets the scroller's size by hand and fires the
+// ResizeObserver callback the component registered.
+function stubLayout() {
+  const callbacks: Array<() => void> = []
+  vi.stubGlobal(
+    "ResizeObserver",
+    class {
+      constructor(callback: () => void) {
+        callbacks.push(callback)
+      }
+      observe() {}
+      disconnect() {}
+      unobserve() {}
+    }
+  )
+  return (container: HTMLElement, scrollWidth: number, clientWidth: number) => {
+    Object.defineProperty(container, "scrollWidth", { configurable: true, value: scrollWidth })
+    Object.defineProperty(container, "clientWidth", { configurable: true, value: clientWidth })
+    act(() => callbacks.forEach((callback) => callback()))
+  }
+}
 
 function renderUsers({ selectedRow }: { selectedRow?: Record<string, string> } = {}) {
   render(
@@ -111,5 +136,60 @@ describe("Table", () => {
 
     expect(highlights.length).toBeGreaterThan(0)
     expect(highlights.some((cssSelector) => row.matches(cssSelector))).toBe(true)
+  })
+
+  // Safari does not tab into a scroller, and axe `scrollable-region-focusable` is
+  // serious under WCAG 2.1.1 (design-system#148, #144 F4).
+  describe("when the table is wider than its container", () => {
+    it("makes the scroller a focusable region named by the caption", () => {
+      const resize = stubLayout()
+      const table = renderUsers()
+      const container = table.parentElement!
+
+      resize(container, 640, 320)
+
+      expect(container.tabIndex).toBe(0)
+      expect(screen.getByRole("region", { name: "Users with access to the shell." })).toBe(container)
+    })
+
+    it("shows a focus ring on the scroller", () => {
+      const resize = stubLayout()
+      const container = renderUsers().parentElement!
+
+      resize(container, 640, 320)
+
+      expect(container.className.split(/\s+/)).toEqual(
+        expect.arrayContaining(["focus-visible:ring-3", "focus-visible:ring-ring/50", "outline-none"])
+      )
+    })
+
+    it("drops the tab stop again once the table fits", () => {
+      const resize = stubLayout()
+      const container = renderUsers().parentElement!
+
+      resize(container, 640, 320)
+      resize(container, 320, 320)
+
+      expect(container.hasAttribute("tabindex")).toBe(false)
+      expect(screen.queryByRole("region")).toBeNull()
+    })
+  })
+
+  it("adds no tab stop to a table that fits", () => {
+    stubLayout()
+    const container = renderUsers().parentElement!
+
+    expect(container.hasAttribute("tabindex")).toBe(false)
+    expect(container.hasAttribute("role")).toBe(false)
+  })
+
+  it("keeps a caption id the consumer set", () => {
+    render(
+      <Table>
+        <TableCaption id="mine">Mine</TableCaption>
+      </Table>
+    )
+
+    expect(screen.getByText("Mine").id).toBe("mine")
   })
 })

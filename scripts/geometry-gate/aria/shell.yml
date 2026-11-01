@@ -43,6 +43,23 @@
       - row "1 2":
         - cell "1"
         - cell "2"
+  - region "Wide table":
+    - table "Wide table":
+      - caption: Wide table
+      - rowgroup:
+        - row "Name Role Region Last seen Status":
+          - columnheader "Name"
+          - columnheader "Role"
+          - columnheader "Region"
+          - columnheader "Last seen"
+          - columnheader "Status"
+      - rowgroup:
+        - row "Ada Lovelace Administrator Australia East Yesterday at 09:20 Active":
+          - cell "Ada Lovelace"
+          - cell "Administrator"
+          - cell "Australia East"
+          - cell "Yesterday at 09:20"
+          - cell "Active"
   - paragraph: "Paragraph 1: text that scrolls under the tab bar and the bottom curves."
   - paragraph: "Paragraph 2: text that scrolls under the tab bar and the bottom curves."
   - paragraph: "Paragraph 3: text that scrolls under the tab bar and the bottom curves."

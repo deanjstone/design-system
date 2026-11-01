@@ -22,7 +22,7 @@ import { Toaster } from "@/components/ui/sonner"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Spinner } from "@/components/ui/spinner"
 import { Switch } from "@/components/ui/switch"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Textarea } from "@/components/ui/textarea"
 import { Toggle } from "@/components/ui/toggle"
@@ -102,6 +102,19 @@ const Page = () => (
       </TableHeader>
       <TableBody>
         <TableRow><TableCell>1</TableCell><TableCell>2</TableCell></TableRow>
+      </TableBody>
+    </Table>
+    <Table className="whitespace-nowrap">
+      <TableCaption>Wide table</TableCaption>
+      <TableHeader>
+        <TableRow>
+          {["Name", "Role", "Region", "Last seen", "Status"].map((heading) => <TableHead key={heading}>{heading}</TableHead>)}
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        <TableRow>
+          {["Ada Lovelace", "Administrator", "Australia East", "Yesterday at 09:20", "Active"].map((value) => <TableCell key={value}>{value}</TableCell>)}
+        </TableRow>
       </TableBody>
     </Table>
     {Array.from({ length: 8 }, (_, index) => (
