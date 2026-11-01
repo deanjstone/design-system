@@ -605,9 +605,20 @@ failing run's files end in `__FAIL`. Attach them to the PR.
 real standalone status-bar style, no keyboard overlap and no dynamic viewport. The
 corner radius is a circle standing in for the real curve, from community data. Those
 are owner checks on the iPhone ([#141](https://github.com/deanjstone/design-system/issues/141)).
-It is not part of `pnpm check` or CI, which have no browser: run it before a change
-to a block's edges, and `GATE_REGISTRY=<other checkout>/registry` points it at
-another tree.
+It is not part of `pnpm check` (no browser there), but CI runs it on every push to
+`main` and on every pull request: the `Curve geometry gate` job in
+`.github/workflows/test.yml`. A red run uploads the curve screenshots as the
+`geometry-gate-curves` artifact. Run it locally before a change to a block's edges,
+and `GATE_REGISTRY=<other checkout>/registry` points it at another tree.
+
+**Chromium in CI is downloaded once.** The job sets `PLAYWRIGHT_BROWSERS_PATH` to
+`$HOME/.cache/ms-playwright`, outside the workspace, then runs
+`pnpm exec playwright-core install chromium`, which only downloads when the
+`playwright-core` revision in `package.json` is missing. A self-hosted runner keeps
+that directory on its host; a GitHub-hosted one restores it with `actions/cache`
+keyed on the `playwright-core` version. Only a version bump downloads again. The job
+never installs OS packages (no `--with-deps`, no sudo): a runner missing Chromium's
+system libraries is an owner change.
 
 ## Design check item
 
