@@ -2,8 +2,10 @@
 
 import * as React from "react"
 import { Drawer as DrawerPrimitive } from "@base-ui/react/drawer"
+import { XIcon } from "lucide-react"
 
 import { cn } from "cn"
+import { Button } from "@/components/ui/button"
 
 type DrawerContextProps = {
   hasSnapPoints: boolean
@@ -100,8 +102,11 @@ function DrawerSwipeHandle({
 function DrawerContent({
   className,
   children,
+  showCloseButton = false,
   ...props
-}: DrawerPrimitive.Popup.Props) {
+}: DrawerPrimitive.Popup.Props & {
+  showCloseButton?: boolean
+}) {
   const { hasSnapPoints, modal, showSwipeHandle, swipeDirection } = useDrawer()
   const swipeAxis =
     swipeDirection === "down" || swipeDirection === "up" ? "y" : "x"
@@ -162,6 +167,21 @@ function DrawerContent({
           >
             {children}
           </DrawerPrimitive.Content>
+          {showCloseButton && (
+            <DrawerPrimitive.Close
+              data-slot="drawer-close"
+              render={
+                <Button
+                  variant="ghost"
+                  className="absolute top-[calc(var(--safe-t)+0.75rem)] right-[calc(var(--safe-r)+0.75rem)] z-10"
+                  size="icon-sm"
+                />
+              }
+            >
+              <XIcon />
+              <span className="sr-only">Close</span>
+            </DrawerPrimitive.Close>
+          )}
         </DrawerPrimitive.Popup>
       </DrawerPrimitive.Viewport>
     </DrawerPortal>

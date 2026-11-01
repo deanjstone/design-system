@@ -164,11 +164,11 @@ describe("DialogHeader close button clearance", () => {
   })
 })
 
-function renderDrawer(props: { snapPoints?: number[] } = {}) {
-  const { snapPoints } = props
+function renderDrawer(props: { showCloseButton?: boolean; snapPoints?: number[] } = {}) {
+  const { showCloseButton, snapPoints } = props
   render(
     <Drawer open snapPoints={snapPoints}>
-      <DrawerContent>
+      <DrawerContent showCloseButton={showCloseButton}>
         <DrawerHeader>
           <DrawerTitle>Title</DrawerTitle>
           <DrawerDescription>Description</DrawerDescription>
@@ -196,6 +196,18 @@ describe("DrawerContent insets", () => {
     const classes = classesOf(renderDrawer())
     expect(classes).toContain("data-[swipe-axis=x]:pt-(--safe-t)")
     expect(classes).toContain("data-[swipe-axis=x]:pb-(--safe-b)")
+  })
+})
+
+describe("DrawerContent close button", () => {
+  it("has no close button by default, so existing drawers render as before", () => {
+    renderDrawer()
+    expect(screen.queryByRole("button", { name: "Close" })).toBeNull()
+  })
+
+  it("renders a labelled close button when asked, for VoiceOver and keyboard users", () => {
+    renderDrawer({ showCloseButton: true })
+    expect(screen.getByRole("button", { name: "Close" })).toBeTruthy()
   })
 })
 

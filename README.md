@@ -510,6 +510,38 @@ bar, and a light and a dark `theme-color` matching Ocean.
   belongs to [#148](https://github.com/deanjstone/design-system/issues/148), and the
   tap highlight is a check on the owner's iPhone ([#141](https://github.com/deanjstone/design-system/issues/141)).
 
+### Overlays
+
+Every overlay edge carries its own inset, so a consumer never adds `pb-safe` to a
+sheet by hand ([design-system#140](https://github.com/deanjstone/design-system/issues/140)).
+
+| Item | Edge | Inset |
+|---|---|---|
+| `sheet` | top; left and right | Top: `--safe-t`, `--safe-l`, `--safe-r`. Left and right: `--safe-t`, `--safe-b` and the outer-edge `--safe-l` or `--safe-r` |
+| `sheet` | bottom | `max(var(--safe-b), 1rem)`, plus `--safe-l` / `--safe-r` |
+| `sheet` close button | top, right | Offset by `--safe-t` / `--safe-r` as well, because an absolutely positioned control ignores the popup's padding |
+| `dialog`, `alert-dialog` | all | Height capped at `100dvh - 2rem - 2 * max(safe-t, safe-b)` and scrolls; side margin is `max(1rem, safe-l, safe-r)`. The cap is symmetric because the dialog is centred |
+| `dialog` header | right | `pr-10` when the close button shows, so a long title clears it |
+| `drawer` | by swipe direction | `--safe-b` (down), `--safe-t` (up and any snap-point drawer), `--safe-l` / `--safe-r` on the sides |
+| `sonner` | top, bottom | Default `offset` and `mobileOffset` of `calc(var(--safe-t) + 8px)` and `calc(var(--safe-b) + 8px)`. A consumer's own `offset` replaces them |
+
+`DrawerContent` takes an opt-in `showCloseButton` (default `false`, so existing
+drawers render as before). A swipe alone fails WCAG 2.5.7 and is unreachable for
+VoiceOver, so turn it on for any drawer without another close control.
+
+**Decisions recorded here:**
+- Toast lifetime stays at sonner's 4s default. sonner has no per-type duration, so
+  a longer error toast needs a wrapper around `toast.error`; pass `duration` on the
+  `Toaster` for a longer default.
+- The drawer takes the top inset whenever it has snap points, because the popup
+  cannot tell its full-height snap from the half one. A half-snap drawer therefore
+  has extra top padding on a notched device.
+- A scrolled dialog scrolls its close button away with the content; Escape and the
+  footer actions still close it.
+- Sheet and drawer slides becoming fades under Reduce Motion is
+  [#147](https://github.com/deanjstone/design-system/issues/147). Keyboard overlap
+  for overlays is a device check in [#141](https://github.com/deanjstone/design-system/issues/141).
+
 ## Design check item
 
 `design-check` puts [Impeccable's](https://impeccable.style) detector in a
