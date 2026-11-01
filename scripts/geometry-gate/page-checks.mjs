@@ -149,3 +149,68 @@ export const TOUCH_TARGET = {
     '[data-slot="button"]',
   ].join(", "),
 }
+
+// The labels drawn on the glass bars (design-system#146, #144 C6): the text lines and
+// icons inside the AppShell header and tab bar, each with its resolved colour as sRGB
+// bytes and its rect in CSS px. The colour goes through a canvas because a Tailwind
+// opacity utility computes to color-mix()/color(), which has no one fixed string form.
+export const GLASS_BARS = '[data-slot="app-shell-header"], [data-slot="app-shell-tabbar"]'
+
+export const glassLabels = (barSelector) => {
+  const canvas = document.createElement("canvas")
+  canvas.width = canvas.height = 1
+  const context = canvas.getContext("2d", { willReadFrequently: true })
+  const resolve = (value) => {
+    context.clearRect(0, 0, 1, 1)
+    context.fillStyle = "#000"
+    context.fillStyle = value
+    context.fillRect(0, 0, 1, 1)
+    const [r, g, b, a] = context.getImageData(0, 0, 1, 1).data
+    return { r, g, b, a: a / 255 }
+  }
+  const labels = []
+  for (const bar of document.querySelectorAll(barSelector)) {
+    const barName = bar.dataset.slot
+    const walker = document.createTreeWalker(bar, NodeFilter.SHOW_TEXT)
+    for (let node = walker.nextNode(); node; node = walker.nextNode()) {
+      const text = node.textContent.trim()
+      const parent = node.parentElement
+      if (!text || getComputedStyle(parent).visibility === "hidden") continue
+      const range = document.createRange()
+      range.selectNodeContents(node)
+      for (const rect of range.getClientRects()) {
+        if (rect.width < 2 || rect.height < 2) continue
+        labels.push({ bar: barName, kind: "text", text, color: resolve(getComputedStyle(parent).color), rect: { x: rect.x, y: rect.y, width: rect.width, height: rect.height } })
+      }
+    }
+    for (const icon of bar.querySelectorAll("svg")) {
+      const rect = icon.getBoundingClientRect()
+      if (rect.width < 2 || rect.height < 2 || getComputedStyle(icon).visibility === "hidden") continue
+      labels.push({ bar: barName, kind: "icon", text: icon.closest("[aria-label]")?.getAttribute("aria-label") ?? icon.parentElement.textContent.trim() ?? "icon", color: resolve(getComputedStyle(icon).color), rect: { x: rect.x, y: rect.y, width: rect.width, height: rect.height } })
+    }
+  }
+  return labels
+}
+
+// Decodes a screenshot and samples a grid of pixels inside each rect: the glass as
+// painted, backdrop blur and all, with the labels already hidden by the caller.
+export const sampleBackdrop = async ({ png, scale, rects }) => {
+  const bitmap = await createImageBitmap(await (await fetch(`data:image/png;base64,${png}`)).blob())
+  const canvas = document.createElement("canvas")
+  canvas.width = bitmap.width
+  canvas.height = bitmap.height
+  const context = canvas.getContext("2d", { willReadFrequently: true })
+  context.drawImage(bitmap, 0, 0)
+  return rects.map((rect) => {
+    const samples = []
+    for (let row = 0; row < 5; row++) {
+      for (let column = 0; column < 9; column++) {
+        const x = Math.min(bitmap.width - 1, Math.max(0, Math.round((rect.x + (rect.width * (column + 0.5)) / 9) * scale)))
+        const y = Math.min(bitmap.height - 1, Math.max(0, Math.round((rect.y + (rect.height * (row + 0.5)) / 5) * scale)))
+        const [r, g, b] = context.getImageData(x, y, 1, 1).data
+        samples.push([r, g, b])
+      }
+    }
+    return samples
+  })
+}

@@ -142,6 +142,7 @@ const main = async () => {
         ariaDir: path.join(here, "aria"),
         updateAria: args.updateAria,
         aria: !args.url,
+        glass: !args.url,
       })
       const covered = (entry) => checkScenarios.some((scenario) => !entry.scenario || entry.scenario === scenario.name) && views.some((view) => !entry.view || entry.view === view.name)
       const { fresh, known, stale } = classify(findings, args.url ? () => false : covered)

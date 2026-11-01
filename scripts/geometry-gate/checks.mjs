@@ -6,7 +6,8 @@ import { createRequire } from "node:module"
 import fs from "node:fs"
 import path from "node:path"
 
-import { TOUCH_TARGET, focusObscured, inputFontSize, motion, reflow, targetSize } from "./page-checks.mjs"
+import { MODES, THEME_NAMES, contrastRatio } from "../theme/extract-t3.mjs"
+import { GLASS_BARS, TOUCH_TARGET, focusObscured, glassLabels, inputFontSize, motion, reflow, sampleBackdrop, targetSize } from "./page-checks.mjs"
 import { openScenario } from "./session.mjs"
 
 const require = createRequire(import.meta.url)
@@ -34,6 +35,50 @@ export const classify = (findings, scope = () => true) => {
   const fresh = findings.filter((finding) => !known.includes(finding))
   const stale = KNOWN.filter((entry) => scope(entry) && !findings.some((finding) => matches(entry, finding)))
   return { fresh, known: known.map((finding) => ({ ...finding, issue: KNOWN.find((entry) => matches(entry, finding)).issue })), stale }
+}
+
+// The AppShell's glass bars carry labels over whatever scrolls beneath them (design-system#146,
+// #144 C6). For every theme and mode, at the top and the end of the page, each label is measured
+// against the bar as painted: the labels are hidden, the page is screenshotted, and the pixels
+// under each label's rect are the backdrop. Text must clear 4.5:1 (WCAG 1.4.3), an icon 3:1 (1.4.11).
+const GLASS_VIEW = "shell"
+const GLASS_TEXT = 4.5
+const GLASS_ICON = 3
+const hex = (channels) => `#${channels.map((value) => Math.round(value).toString(16).padStart(2, "0")).join("")}`
+
+export const glassContrast = async (page, scenario, theme, mode) => {
+  const findings = []
+  await page.evaluate(({ theme, mode }) => {
+    document.documentElement.dataset.theme = theme
+    document.documentElement.classList.toggle("dark", mode === "dark")
+  }, { theme, mode })
+  await page.addStyleTag({ content: "* { transition: none !important }" })
+  const hide = await page.addStyleTag({ content: `${GLASS_BARS.split(", ").map((bar) => `${bar} *`).join(", ")} { color: transparent !important }` })
+  await page.evaluate(() => new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve))))
+  for (const position of ["top", "end"]) {
+    await page.evaluate((to) => scrollTo(0, to === "end" ? document.documentElement.scrollHeight : 0), position)
+    // The labels' colours are read with them showing, then they are hidden for the screenshot.
+    await hide.evaluate((element) => { element.disabled = true })
+    const labels = await page.evaluate(glassLabels, GLASS_BARS)
+    await hide.evaluate((element) => { element.disabled = false })
+    await page.evaluate(() => new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve))))
+    const png = (await page.screenshot()).toString("base64")
+    const grounds = await page.evaluate(sampleBackdrop, { png, scale: 3, rects: labels.map((label) => label.rect) })
+    labels.forEach((label, at) => {
+      const { r, g, b, a } = label.color
+      const worst = Math.min(
+        ...grounds[at].map((ground) => {
+          const painted = [r, g, b].map((value, index) => value * a + ground[index] * (1 - a))
+          return contrastRatio(hex(painted), hex(ground))
+        }),
+      )
+      const minimum = label.kind === "icon" ? GLASS_ICON : GLASS_TEXT
+      if (worst < minimum) {
+        findings.push({ check: "glass-contrast", label: `${theme}/${mode} ${label.bar} ${label.kind} "${label.text}" (scrolled ${position})`, detail: `${worst.toFixed(2)}:1 over the painted bar, under ${minimum}:1` })
+      }
+    })
+  }
+  return findings
 }
 
 const REFLOW_VIEWPORT = { width: 320, height: 568 }
@@ -64,7 +109,7 @@ const tabLoop = async (page) => {
 
 const ariaSnapshot = async (page) => (await page.locator("body").ariaSnapshot()).trimEnd() + "\n"
 
-export const runChecks = async ({ browser, urlFor, scenarios, views, out, ariaDir, updateAria, aria = true }) => {
+export const runChecks = async ({ browser, urlFor, scenarios, views, out, ariaDir, updateAria, aria = true, glass = true }) => {
   const findings = []
   const tag = (list, scenario, view) => list.map((finding) => ({ scenario: scenario.name, view: view.name, ...finding }))
   for (const scenario of scenarios) {
@@ -91,6 +136,17 @@ export const runChecks = async ({ browser, urlFor, scenarios, views, out, ariaDi
         }
       }
       await context.close()
+    }
+  }
+  const shell = views.find((view) => view.name === GLASS_VIEW)
+  if (glass && shell) {
+    const scenario = scenarios.find((entry) => entry.name === CHECK_SCENARIOS[0]) ?? scenarios[0]
+    for (const theme of THEME_NAMES) {
+      for (const mode of MODES) {
+        const { context, page } = await openScenario(browser, scenario, urlFor(shell))
+        findings.push(...tag(await glassContrast(page, scenario, theme, mode), scenario, shell))
+        await context.close()
+      }
     }
   }
   const portrait = scenarios.find((scenario) => scenario.name === CHECK_SCENARIOS[0]) ?? scenarios[0]

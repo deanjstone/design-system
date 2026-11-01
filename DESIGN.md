@@ -335,6 +335,7 @@ Edit `themes.json` or the map in `extract-t3.mjs`, never the generated region.
 | `--popover-foreground` | `--color-foreground` |  |
 | `--primary` | `--color-primary` | Filled actions, focus accent |
 | `--primary-foreground` | `--color-primary-foreground` |  |
+| `--primary-text` | derived (extract-t3) | `--primary` as text or an icon: lifted toward the foreground until it clears 4.5:1 on background, card and popover, and equal to `--primary` where it already does |
 | `--secondary` | `--color-secondary` |  |
 | `--secondary-foreground` | `--color-secondary-foreground` |  |
 | `--muted` | `--color-grouped-card` | Grouped / tabs ground |

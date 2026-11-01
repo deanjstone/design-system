@@ -578,7 +578,7 @@ design (the indicator sits about 12px below where content looks right).
 **Also checked, in the same contexts.** Token contrast (the two vitest files, run
 first); WCAG 2.5.8 target size (24px, hit area counted) at 402×874 and 874×402;
 inputs at 16px or more; reduced motion (a `reducedMotion: "reduce"` context, then
-`document.getAnimations()` for movement); an aria snapshot per block against
+`document.getAnimations()` for movement); glass-bar contrast (every theme and mode: each label on the AppShell header and tab bar is measured against the bar as painted, with the labels hidden and the pixels under them sampled, 4.5:1 for text and 3:1 for icons); an aria snapshot per block against
 `scripts/geometry-gate/aria/`; a Tab loop whose focused control must not be under
 something else; a 320px / 200% text reflow context; and axe `target-size` and
 `scrollable-region-focusable`. A finding the #144 audit already filed sits in
