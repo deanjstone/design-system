@@ -1,3 +1,10 @@
+## [3.6.8](https://github.com/deanjstone/design-system/compare/v3.6.7...v3.6.8) (2026-11-01)
+
+
+### Bug Fixes
+
+* keep the login card clear of every curve and scrollable in landscape ([58edee6](https://github.com/deanjstone/design-system/commit/58edee640cf5c0ddf03d257614ede23a7a4e5f65)), closes [#149](https://github.com/deanjstone/design-system/issues/149)
+
 ## [3.6.7](https://github.com/deanjstone/design-system/compare/v3.6.6...v3.6.7) (2026-11-01)
 
 
