@@ -535,13 +535,21 @@ tall as mobile, so a phone in landscape gets the sheet sidebar.
 
 *Policy: [#150](https://github.com/deanjstone/design-system/issues/150); hardening: [#162](https://github.com/deanjstone/design-system/issues/162).*
 
-The registry follows iOS Larger Text: the root font is meant to derive from
+The registry follows iOS Larger Text: the root font derives from
 `-apple-system-body`, so every rem size and space scales (an installed PWA has
-no aA menu, so without it its text never scales). That root rule is enabled
-last, in [#163](https://github.com/deanjstone/design-system/issues/163), after
-the layout below holds. Until then browser text zoom is the only thing that
-scales it, and nothing changes at 100%.
+no aA menu, so without it its text never scales). It was enabled last, in
+[#163](https://github.com/deanjstone/design-system/issues/163), after the layout
+below held. At the default Larger Text size nothing changes: the body font is
+17px there, and the root stays 16px.
 
+- **How the root follows.** CSS cannot divide a length by a length, so the root
+  cannot be written as 16/17 of `-apple-system-body`. The `app-html-head` script
+  measures a probe with `font: -apple-system-body` and sets `--dt-scale` (body
+  size over 17px) on `<html>`; the theme's one guarded rule is
+  `font-size: calc(100% * var(--dt-scale, 1))`. An unset scale is 100%, so a
+  consumer without the script is unchanged. The guard,
+  `(font: -apple-system-body) and (-webkit-touch-callout: none)`, keeps macOS
+  Safari (a 13px body) out.
 - **Guaranteed range: 200% at a 320px-wide viewport** (WCAG 1.4.4, 1.4.10). No
   sideways scroll, no clipped label or control, on the shell and every block.
   Beyond 200% (iOS goes to about 310%) text keeps scaling and the page may

@@ -906,6 +906,11 @@
       "scroll-padding-top": "var(--scroll-pad-top)",
       "scroll-padding-bottom": "var(--scroll-pad-bottom)"
     },
+    "@supports (font: -apple-system-body) and (-webkit-touch-callout: none)": {
+      "html": {
+        "font-size": "calc(100% * var(--dt-scale, 1))"
+      }
+    },
     "@utility surface-glass": {
       "background": "var(--glass-surface)",
       "-webkit-backdrop-filter": "blur(var(--glass-blur)) saturate(var(--glass-saturation))",

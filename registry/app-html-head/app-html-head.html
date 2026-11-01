@@ -16,6 +16,13 @@
                        either way.
   theme-color          One per colour scheme; they match the default (Ocean) theme's
                        --background. Change them if the app sets another theme.
+  the script tag      Dynamic Type (design-system#163). On iOS it measures the system
+                       body font and sets --dt-scale on <html> (1 at the default Larger
+                       Text size); the theme's guarded `html` rule multiplies the root
+                       font by it, so rem text and spacing follow Larger Text, installed
+                       PWAs included. Elsewhere it does nothing. Without it the root font
+                       stays at the browser default. Keep it in <head>, so the first
+                       paint is already at the right size.
 -->
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <meta name="mobile-web-app-capable" content="yes" />
@@ -24,3 +31,23 @@
 <meta name="apple-mobile-web-app-title" content="App name" />
 <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f5f7f8" />
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#17212b" />
+<script>
+  (function () {
+    var IOS_DEFAULT_BODY = 17
+    if (!CSS.supports("font", "-apple-system-body") || !CSS.supports("-webkit-touch-callout", "none")) return
+    var root = document.documentElement
+    var measure = function () {
+      var probe = document.createElement("span")
+      probe.setAttribute("aria-hidden", "true")
+      probe.style.cssText = "position:absolute;visibility:hidden;font:-apple-system-body"
+      root.appendChild(probe)
+      var size = parseFloat(getComputedStyle(probe).fontSize)
+      root.removeChild(probe)
+      if (size > 0) root.style.setProperty("--dt-scale", String(Math.round((size / IOS_DEFAULT_BODY) * 1000) / 1000))
+    }
+    measure()
+    addEventListener("pageshow", measure)
+    addEventListener("resize", measure)
+    document.addEventListener("visibilitychange", measure)
+  })()
+</script>

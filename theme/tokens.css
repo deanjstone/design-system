@@ -1120,6 +1120,20 @@ html {
 }
 
 /*
+ * iOS Larger Text (design-system#150, #163). The root font follows Dynamic Type
+ * through --dt-scale, which the app-html-head script sets from the system body
+ * font (17px, scale 1, at the default size). The scale multiplies the browser's
+ * own default, so an unset scale leaves the root exactly as it was: no snippet,
+ * no change. The iOS-only touch-callout test keeps macOS Safari out: it has
+ * -apple-system-body too, at 13px.
+ */
+@supports (font: -apple-system-body) and (-webkit-touch-callout: none) {
+  html {
+    font-size: calc(100% * var(--dt-scale, 1));
+  }
+}
+
+/*
  * Tokenized glass surfaces (design-system#51). surface-glass is the bar
  * surface: the theme's translucent --glass-surface behind a --glass-blur
  * backdrop, and its opaque --glass-fallback where backdrop-filter is missing.

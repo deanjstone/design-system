@@ -466,10 +466,31 @@ the root font derives from `-apple-system-body`, so rem text and spacing scale. 
 consumer can rely on **200% at a 320px viewport with no sideways scroll and no
 clipped control**; past that, text keeps scaling and the page scrolls vertically.
 The AppShell's chrome stops growing at about 150%, then its tabs go icon-only
-(labels stay `sr-only`), and text fields stay at 16px at every size. The root
-rule itself is switched on last ([#163](https://github.com/deanjstone/design-system/issues/163)),
-so nothing changes at 100% yet. The rules and the checks that hold them are in
-`DESIGN.md` § Text size and the curve-geometry gate below.
+(labels stay `sr-only`), and text fields stay at 16px at every size. The rules and
+the checks that hold them are in `DESIGN.md` § Text size and the curve-geometry
+gate below.
+
+**How it is switched on** ([#163](https://github.com/deanjstone/design-system/issues/163)).
+Two parts, and a consumer needs both:
+
+- the `theme` item carries one rule, guarded to iOS,
+  `html { font-size: calc(100% * var(--dt-scale, 1)) }`;
+- the `app-html-head` snippet's script measures the system body font and sets
+  `--dt-scale` on `<html>`: 1 at the default Larger Text size (a 17px body), so
+  nothing changes there, and about 1.5 at the 150% step.
+
+**Consumers pick this up when they re-add the block**: `npx shadcn add
+deanjstone/design-system/theme` for the rule, and copy the new `<script>` from
+`app-html-head.html` into `<head>`. A consumer that re-adds only the theme keeps
+today's text size (an unset scale is 100%); one that adds only the script does
+nothing either. Nothing changes off iOS: macOS Safari also has `-apple-system-body`
+(at 13px), so the rule and the script both test for the iOS-only `-webkit-touch-callout`.
+
+Chromium cannot render Dynamic Type, so the gate and the unit tests prove the
+default (root 16px, scale unset off iOS; scale 1 gives 100%) and the maths of the
+scale, not WebKit. The device check is [#141](https://github.com/deanjstone/design-system/issues/141).
+**If it fails, revert the one commit that enabled this** (`feat: follow iOS Larger
+Text through a guarded root font and a measured scale`).
 
 ## Safe areas (iPhone)
 
@@ -516,7 +537,8 @@ npx shadcn add deanjstone/design-system/app-html-head
 It lands `app-html-head.html` at the project root; copy its tags into your
 `index.html`. It sets `viewport-fit=cover` (without it every `env(safe-area-inset-*)`
 is `0`), no zoom limit, the `apple-mobile-web-app-*` set with the `default` status
-bar, and a light and a dark `theme-color` matching Ocean.
+bar, a light and a dark `theme-color` matching Ocean, and the Dynamic Type script
+(see § Text size: it sets `--dt-scale` on iOS and does nothing elsewhere).
 
 **Decisions recorded here:**
 - `apple-mobile-web-app-capable` is included. iOS 26 opens every Home Screen site

@@ -95,6 +95,11 @@ export const runLoginEdges = async ({ browser, urlFor, scenarios, views }) => {
   return findings
 }
 
+// The theme's one Dynamic Type rule, lifted out of its iOS-only guard: Chromium has no
+// -apple-system-body, so the gate applies the declaration itself to prove its maths.
+const DYNAMIC_TYPE_RULE = fs.readFileSync(new URL("../../theme/tokens.css", import.meta.url), "utf8").match(/@supports \(font: -apple-system-body\)[^{]*\{\s*(html \{[^}]*\})\s*\}/)?.[1]
+if (!DYNAMIC_TYPE_RULE) throw new Error("theme/tokens.css has no guarded Dynamic Type rule for the gate to apply")
+
 const REFLOW_VIEWPORT = { width: 320, height: 568 }
 const SMALL_ROOT = "75%"
 
@@ -181,6 +186,19 @@ export const runChecks = async ({ browser, urlFor, scenarios, views, out, ariaDi
     await small.page.waitForTimeout(300)
     findings.push(...tag(await small.page.evaluate(inputFontSize), { name: "root-font-small" }, view))
     await small.context.close()
+    // Scale 1 is iOS's default Larger Text size and must be exactly the root it was; 1.5 grows it.
+    for (const [scale, expected] of [["1", 16], ["1.5", 24]]) {
+      const dynamic = await openScenario(browser, portrait, urlFor(view))
+      await dynamic.page.addStyleTag({ content: DYNAMIC_TYPE_RULE })
+      await dynamic.page.evaluate((value) => document.documentElement.style.setProperty("--dt-scale", value), scale)
+      await dynamic.page.waitForTimeout(100)
+      const found = await dynamic.page.evaluate(({ expected }) => {
+        const size = parseFloat(getComputedStyle(document.documentElement).fontSize)
+        return size === expected ? [] : [{ check: "dynamic-type-scale", label: "html", detail: `root font-size ${size}px at the scale, expected ${expected}px` }]
+      }, { expected })
+      findings.push(...tag(found, { name: `dynamic-type-${scale}` }, view))
+      await dynamic.context.close()
+    }
     const reduced = await openScenario(browser, portrait, urlFor(view), { reducedMotion: "reduce", settled: false })
     findings.push(...tag(await reduced.page.evaluate(motion), { name: "reduced-motion" }, view))
     await reduced.context.close()
