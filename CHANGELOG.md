@@ -1,3 +1,10 @@
+## [3.6.2](https://github.com/deanjstone/design-system/compare/v3.6.1...v3.6.2) (2026-11-01)
+
+
+### Bug Fixes
+
+* clear 4.5:1 for inactive tab labels on the glass tab bar, and gate glass contrast ([57dae06](https://github.com/deanjstone/design-system/commit/57dae0677cdc4b67928ad198520cf14df83f3219)), closes [#146](https://github.com/deanjstone/design-system/issues/146)
+
 ## [3.6.1](https://github.com/deanjstone/design-system/compare/v3.6.0...v3.6.1) (2026-11-01)
 
 
