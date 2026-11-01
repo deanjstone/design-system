@@ -1,3 +1,11 @@
+## [3.9.1](https://github.com/deanjstone/design-system/compare/v3.9.0...v3.9.1) (2026-11-01)
+
+
+### Bug Fixes
+
+* AppShell takes landscape rail padding only when it draws a rail ([089b73e](https://github.com/deanjstone/design-system/commit/089b73ede355b2ded4eb228cc568c483ab38eeb5)), closes [#161](https://github.com/deanjstone/design-system/issues/161) [#161](https://github.com/deanjstone/design-system/issues/161)
+* type the AppShell focus-back ref as the div it is put on ([88b9cad](https://github.com/deanjstone/design-system/commit/88b9cad30e99ac56debaf81953091118ffcd59cf)), closes [#160](https://github.com/deanjstone/design-system/issues/160) [#160](https://github.com/deanjstone/design-system/issues/160)
+
 # [3.9.0](https://github.com/deanjstone/design-system/compare/v3.8.1...v3.9.0) (2026-11-01)
 
 
