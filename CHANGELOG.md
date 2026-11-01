@@ -1,3 +1,10 @@
+# [3.7.0](https://github.com/deanjstone/design-system/compare/v3.6.8...v3.7.0) (2026-11-01)
+
+
+### Features
+
+* publish the links registry, builders, bash helper and link-check ([03bc35c](https://github.com/deanjstone/design-system/commit/03bc35cac113668ded12d1a95456406b673c820c)), closes [#152](https://github.com/deanjstone/design-system/issues/152)
+
 ## [3.6.8](https://github.com/deanjstone/design-system/compare/v3.6.7...v3.6.8) (2026-11-01)
 
 
