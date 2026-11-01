@@ -8,7 +8,7 @@
   "files": [
     {
       "path": "registry/base-nova/ui/spinner.tsx",
-      "content": "import { cn } from \"cn\"\nimport { Loader2Icon } from \"lucide-react\"\n\nfunction Spinner({ className, ...props }: React.ComponentProps<\"svg\">) {\n  return (\n    <Loader2Icon data-slot=\"spinner\" role=\"status\" aria-label=\"Loading\" className={cn(\"size-4 animate-spin motion-reduce:animate-none\", className)} {...props} />\n  )\n}\n\nexport { Spinner }\n",
+      "content": "import { cn } from \"cn\"\nimport { Loader2Icon } from \"lucide-react\"\n\nfunction Spinner({ className, ...props }: React.ComponentProps<\"svg\">) {\n  return (\n    <Loader2Icon data-slot=\"spinner\" role=\"status\" aria-label=\"Loading\" className={cn(\"size-4 animate-spin\", className)} {...props} />\n  )\n}\n\nexport { Spinner }\n",
       "type": "registry:ui"
     }
   ],
