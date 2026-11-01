@@ -17,10 +17,7 @@ export const CHECK_SCENARIOS = ["iphone-17-portrait", "iphone-17-landscape-top-0
 // Findings the #144 audit already filed. A listed finding is reported, not failed, so
 // the gate can land green; a listed entry that no longer fires fails the gate until
 // it is deleted, so the list only shrinks (the same rule as test/theme-contrast.test.ts).
-export const KNOWN = [
-  { check: "reduced-motion", view: "states", label: "[spinner]", issue: 147 },
-  { check: "reduced-motion", view: "states", label: "[skeleton]", issue: 147 },
-]
+export const KNOWN = []
 
 const matches = (known, finding) =>
   known.check === finding.check &&
@@ -29,12 +26,13 @@ const matches = (known, finding) =>
   finding.label.includes(known.label)
 
 // Splits findings into new ones (fail) and known ones, and lists the KNOWN entries
-// that matched nothing. `scope` limits the stale check to what this run covered.
-export const classify = (findings, scope = () => true) => {
-  const known = findings.filter((finding) => KNOWN.some((entry) => matches(entry, finding)))
+// that matched nothing. `scope` limits the stale check to what this run covered; `list`
+// defaults to KNOWN and is a parameter so the tests can classify against a fixed list.
+export const classify = (findings, scope = () => true, list = KNOWN) => {
+  const known = findings.filter((finding) => list.some((entry) => matches(entry, finding)))
   const fresh = findings.filter((finding) => !known.includes(finding))
-  const stale = KNOWN.filter((entry) => scope(entry) && !findings.some((finding) => matches(entry, finding)))
-  return { fresh, known: known.map((finding) => ({ ...finding, issue: KNOWN.find((entry) => matches(entry, finding)).issue })), stale }
+  const stale = list.filter((entry) => scope(entry) && !findings.some((finding) => matches(entry, finding)))
+  return { fresh, known: known.map((finding) => ({ ...finding, issue: list.find((entry) => matches(entry, finding)).issue })), stale }
 }
 
 // The AppShell's glass bars carry labels over whatever scrolls beneath them (design-system#146,

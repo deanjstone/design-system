@@ -14,29 +14,32 @@ const finding = (check: string, view: string, label: string, scenario = "iphone-
   detail: "x",
 })
 
+// A fixed list: KNOWN itself shrinks to nothing as the filed findings are fixed.
+const LIST = [{ check: "reduced-motion", view: "states", label: "[spinner]", issue: 147 }]
+
 describe("classify", () => {
   it("passes a finding the audit already filed and names its issue", () => {
-    const { fresh, known } = classify([finding("reduced-motion", "states", "[spinner] spin", "reduced-motion")])
+    const { fresh, known } = classify([finding("reduced-motion", "states", "[spinner] spin", "reduced-motion")], undefined, LIST)
     expect(fresh).toEqual([])
     expect(known[0]).toMatchObject({ issue: 147 })
   })
 
   it("fails a finding nobody filed", () => {
-    const { fresh } = classify([finding("target-size", "dialog", 'button{button} "OK"')])
+    const { fresh } = classify([finding("target-size", "dialog", 'button{button} "OK"')], undefined, LIST)
     expect(fresh).toHaveLength(1)
   })
 
   it("does not let a known label excuse the same label in another view", () => {
-    const { fresh } = classify([finding("reduced-motion", "dialog", "[spinner] spin", "reduced-motion")])
+    const { fresh } = classify([finding("reduced-motion", "dialog", "[spinner] spin", "reduced-motion")], undefined, LIST)
     expect(fresh).toHaveLength(1)
   })
 
   it("lists every KNOWN entry as stale when nothing fires", () => {
-    expect(classify([]).stale).toHaveLength(KNOWN.length)
+    expect(classify([], undefined, LIST).stale).toHaveLength(LIST.length)
   })
 
   it("limits the stale check to the entries a run covered", () => {
-    expect(classify([], (entry: { view?: string }) => entry.view === "states").stale.every((entry: { view?: string }) => entry.view === "states")).toBe(true)
+    expect(classify([], (entry: { view?: string }) => entry.view === "states", LIST).stale.every((entry: { view?: string }) => entry.view === "states")).toBe(true)
   })
 
   it("points every entry at an issue", () => {
