@@ -1923,6 +1923,88 @@
           "target": "~/app-html-head.html"
         }
       ]
+    },
+    {
+      "name": "links-data",
+      "type": "registry:file",
+      "title": "myargus links registry data",
+      "description": "links.json: every myargus.cc and tailnet host, app, route and status (ADR-0004). Vendored at the repo root; link-check compares it with design-system's.",
+      "files": [
+        {
+          "path": "registry/links/links.json",
+          "type": "registry:file",
+          "target": "~/links.json"
+        }
+      ]
+    },
+    {
+      "name": "links-core",
+      "type": "registry:lib",
+      "title": "links builders",
+      "description": "The URL builders behind the links registry. Import from links, not from here.",
+      "files": [
+        {
+          "path": "registry/lib/links-core.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "links",
+      "type": "registry:lib",
+      "title": "myargus links",
+      "description": "appUrl, routeUrl, apiUrl, mcpUrl, tailnetUrl, switcherApps and COOKIE_DOMAIN, generated from links.json (ADR-0004).",
+      "registryDependencies": [
+        "deanjstone/design-system/links-core"
+      ],
+      "files": [
+        {
+          "path": "registry/lib/links.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "links-sh",
+      "type": "registry:file",
+      "title": "links bash helper",
+      "description": "scripts/links.sh: build a URL from links.json with jq, for deploy scripts and hooks.",
+      "registryDependencies": [
+        "deanjstone/design-system/links-data"
+      ],
+      "files": [
+        {
+          "path": "registry/links/links.sh",
+          "type": "registry:file",
+          "target": "~/scripts/links.sh"
+        }
+      ]
+    },
+    {
+      "name": "link-check",
+      "type": "registry:file",
+      "title": "link-check",
+      "description": "Bans myargus.cc and tailnet host literals in code, fails on retired hosts, and checks config and the vendored registry against links.json. Report mode first, then block.",
+      "registryDependencies": [
+        "deanjstone/design-system/links-data"
+      ],
+      "files": [
+        {
+          "path": "registry/links/link-check.sh",
+          "type": "registry:file",
+          "target": "~/scripts/link-check.sh"
+        },
+        {
+          "path": "registry/links/link-check-config.mjs",
+          "type": "registry:file",
+          "target": "~/scripts/link-check-config.mjs"
+        },
+        {
+          "path": "registry/links/link-check.yml",
+          "type": "registry:file",
+          "target": "~/.github/workflows/link-check.yml"
+        }
+      ]
     }
   ]
 }
