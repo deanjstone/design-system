@@ -38,6 +38,10 @@ const TEXT = 4.5
 
 type Pair = { name: string; minimum: number; ratio: (tokens: Tokens, mode: string) => number }
 
+// Badge washes (badge.tsx destructive): the label colour on destructive at this alpha over the page.
+const BADGE_WASH = { light: 0.1, dark: 0.1 }
+const BADGE_HOVER_WASH = { light: 0.12, dark: 0.12 }
+
 const PAIRS: Pair[] = [
   // button.tsx, app-switcher.tsx, settings-page.tsx draw --primary-text where the primary colour is text or an icon.
   { name: "primary text on background", minimum: TEXT, ratio: (t) => contrastRatio(t["primary-text"], t.background) },
@@ -52,19 +56,24 @@ const PAIRS: Pair[] = [
   { name: "sidebar focus ring on sidebar", minimum: 3, ratio: (t) => contrastRatio(t["sidebar-ring"], t.sidebar) },
   // app-shell.tsx: the active tab is text-foreground on --muted, its icon included (#144 C2).
   { name: "active tab on muted", minimum: TEXT, ratio: (t) => contrastRatio(t.foreground, t.muted) },
-  // badge.tsx destructive: text-destructive on destructive/10 (light) or /20 (dark).
-  {
-    name: "destructive badge label",
-    minimum: TEXT,
-    ratio: (t, mode) => contrastRatio(t.destructive, over(t.destructive, mode === "dark" ? 0.2 : 0.1, t.background)),
-  },
+  // badge.tsx destructive: text-destructive on its wash, at rest and on a link badge's hover.
+  ...(["background", "card"] as const).flatMap((ground): Pair[] => [
+    {
+      name: `destructive badge label on ${ground}`,
+      minimum: TEXT,
+      ratio: (t, mode) =>
+        contrastRatio(t.destructive, over(t.destructive, BADGE_WASH[mode as "light" | "dark"], t[ground])),
+    },
+    {
+      name: `destructive badge label on ${ground}, hovered`,
+      minimum: TEXT,
+      ratio: (t, mode) =>
+        contrastRatio(t.destructive, over(t.destructive, BADGE_HOVER_WASH[mode as "light" | "dark"], t[ground])),
+    },
+  ]),
 ]
 
 const KNOWN_BELOW = new Set([
-  "destructive badge label|grove|dark",
-  "destructive badge label|ocean|dark",
-  "destructive badge label|ember|dark",
-  "destructive badge label|iris|dark",
 ])
 
 describe("composed text pairs", () => {
@@ -116,5 +125,12 @@ describe("component classes draw the pairs above", () => {
     const tabs = source("ui/tabs.tsx")
     expect(tabs).not.toContain("text-foreground/60")
     expect(tabs).toContain("text-muted-foreground")
+  })
+
+  it("badge.tsx washes the destructive badge at the alphas the pairs use", () => {
+    const badge = source("ui/badge.tsx")
+    expect(badge).toContain("bg-destructive/10 text-destructive")
+    expect(badge).toContain("dark:bg-destructive/10")
+    expect(badge).toContain("[a]:hover:bg-destructive/12")
   })
 })
