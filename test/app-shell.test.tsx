@@ -7,7 +7,7 @@ import { AppShell, type ShellSection } from "../registry/base-nova/blocks/app-sh
 
 afterEach(cleanup)
 
-// jsdom does no layout, so a test stands in for it: the header wrapper is 72px tall, the tab bar 60px.
+// jsdom does no layout, so a test stands in for it: the header wrapper is 64px tall, the tab bar 60px.
 const observed: Element[] = []
 let observerCallback: (() => void) | undefined
 class FakeResizeObserver {
@@ -106,6 +106,15 @@ describe("AppShell", () => {
 
     // The status-bar region and the gutter under it are solid, so scrolling content never shows through
     // and the header's blur has no seam against it (#122).
+    // 56px of glass on a phone is a lot of a 393x852 screen for a title and one control; the 44px back
+    // button still fits inside 48px with its borders (#138).
+    it("is 48px tall, with the 44px back button inside it", () => {
+      const { container } = render(<AppShell appName="Reader" sections={four} back={{ href: "/inbox" }}>x</AppShell>)
+
+      expect(header(container).className).toContain("min-h-12")
+      expect(header(container).className).not.toContain("min-h-14")
+    })
+
     it("sits on a solid fill over the status-bar safe area and its gutter", () => {
       const { container } = render(<AppShell appName="Reader" sections={four}>x</AppShell>)
 
@@ -212,21 +221,21 @@ describe("AppShell", () => {
     const root = (container: HTMLElement) => container.querySelector<HTMLElement>("[data-slot=app-shell]")!
 
     it("measures --shell-top from the sticky header wrapper", () => {
-      withLayout({ top: 72, bar: 60 })
+      withLayout({ top: 64, bar: 60 })
       const { container } = render(<AppShell appName="Reader" sections={four}>x</AppShell>)
 
-      expect(root(container).style.getPropertyValue("--shell-top")).toBe("72px")
+      expect(root(container).style.getPropertyValue("--shell-top")).toBe("64px")
     })
 
     it("measures --shell-bottom from the tab bar", () => {
-      withLayout({ top: 72, bar: 60 })
+      withLayout({ top: 64, bar: 60 })
       const { container } = render(<AppShell appName="Reader" sections={four}>x</AppShell>)
 
       expect(root(container).style.getPropertyValue("--shell-bottom")).toBe("60px")
     })
 
     it("re-measures when the header or the bar changes size", () => {
-      withLayout({ top: 72, bar: 60 })
+      withLayout({ top: 64, bar: 60 })
       const { container } = render(<AppShell appName="Reader" sections={four}>x</AppShell>)
       expect(observed).toHaveLength(2)
 
@@ -238,7 +247,7 @@ describe("AppShell", () => {
     })
 
     it("leaves the CSS fallback in place when the bar is not drawn (hidden from lg, or one section)", () => {
-      withLayout({ top: 72, bar: 0 })
+      withLayout({ top: 64, bar: 0 })
       const { container } = render(<AppShell appName="Reader" sections={four}>x</AppShell>)
 
       expect(root(container).style.getPropertyValue("--shell-bottom")).toBe("")
@@ -249,7 +258,7 @@ describe("AppShell", () => {
       const { container } = render(<AppShell appName="Reader" sections={four}>x</AppShell>)
 
       const className = root(container).className
-      expect(className).toContain("[--shell-top:calc(var(--safe-t)_+_4.5rem)]")
+      expect(className).toContain("[--shell-top:calc(var(--safe-t)_+_4rem)]")
       expect(className).toContain("[--shell-bottom:calc(var(--edge-b)_+_3.75rem)]")
       expect(root(container).style.getPropertyValue("--shell-top")).toBe("")
     })
@@ -271,15 +280,15 @@ describe("AppShell", () => {
     // The page scrolls, so scroll-padding lives on <html>: a focused control stays clear of the
     // sticky header and the fixed bar (WCAG 2.4.11, #144 F2).
     it("sets the page's scroll padding from the same measurements", () => {
-      withLayout({ top: 72, bar: 60 })
+      withLayout({ top: 64, bar: 60 })
       render(<AppShell appName="Reader" sections={four}>x</AppShell>)
 
-      expect(document.documentElement.style.getPropertyValue("--scroll-pad-top")).toBe("72px")
+      expect(document.documentElement.style.getPropertyValue("--scroll-pad-top")).toBe("64px")
       expect(document.documentElement.style.getPropertyValue("--scroll-pad-bottom")).toBe("60px")
     })
 
     it("hands the scroll padding back on unmount", () => {
-      withLayout({ top: 72, bar: 60 })
+      withLayout({ top: 64, bar: 60 })
       render(<AppShell appName="Reader" sections={four}>x</AppShell>)
 
       cleanup()

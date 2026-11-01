@@ -44,7 +44,7 @@ const TAB_COUNT = 4
 // server, and where ResizeObserver is missing; they are the same heights the chrome is built to.
 const workspaceFallback = (showTabBar: boolean) =>
   cn(
-    "[--shell-top:calc(var(--safe-t)_+_4.5rem)] [--shell-workspace:calc(100dvh_-_var(--shell-top)_-_var(--shell-bottom))] lg:[--shell-bottom:0px]",
+    "[--shell-top:calc(var(--safe-t)_+_4rem)] [--shell-workspace:calc(100dvh_-_var(--shell-top)_-_var(--shell-bottom))] lg:[--shell-bottom:0px]",
     showTabBar ? "[--shell-bottom:calc(var(--edge-b)_+_3.75rem)]" : "[--shell-bottom:var(--edge-b)]"
   )
 
@@ -179,7 +179,7 @@ function AppShell({
         >
           <header
             data-slot="app-shell-header"
-            className={cn(glassBar, "pointer-events-auto flex min-h-14 items-center gap-1 rounded-xl px-2")}
+            className={cn(glassBar, "pointer-events-auto flex min-h-12 items-center gap-1 rounded-xl px-2")}
           >
             {back
               ? renderLink({

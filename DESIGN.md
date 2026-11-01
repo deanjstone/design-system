@@ -568,7 +568,7 @@ an auth client.
 |---|---|---|
 | `app-shell` | Glass floating header, glass bottom tab bar, and from 1024px a left sidebar | `app-switcher`, `button`, `sheet` |
 | `app-switcher` | Every app and the Light / Dark / System quick toggle: a popover from 768px, a bottom sheet below | `popover`, `sheet`, `toggle-group`, `button` |
-| `page-header` | The page's one `h1`, a description and the main actions | none |
+| `page-header` | The page's one `h1`, a description and the main actions; `hideOnPhone` hides the title and description visually on a phone, where the shell header already names the page (the `h1` stays for screen readers) | none |
 | `empty-page` | A whole page with nothing in it | `empty` |
 | `settings-page` | `SettingsPage`, `SettingsSection` and `AppearanceSection` (theme list, Light / Dark / System) | `page-header`, `toggle-group` |
 | `login` | Passkey, email link and password, behind handlers the app passes | `card`, `field`, `input`, `button`, `spinner` |
@@ -583,7 +583,9 @@ Two helpers come with them: the `nav-link` lib (`renderAnchor`, the type of a
   are tabs. With five or more, the first four are tabs and the rest wait under a
   fifth tab, **More**, which opens a sheet listing them. With four or fewer
   there is no More. The More tab shows as active when the active section is in
-  it.
+  it. With fewer than two sections there is no tab bar at all (nothing to switch
+  to), and the page gets its height back; the sidebar still lists the section
+  from 1024px.
 - **From 1024px** (`lg`) the tab bar goes and the same sections, all of them,
   list in a 16rem left sidebar. The content column is offset by the sidebar's
   width. 1024px is the owner's number, not the registry `sidebar` item's 768px,
@@ -606,8 +608,23 @@ Two helpers come with them: the `nav-link` lib (`renderAnchor`, the type of a
   `6rem` plus that bottom offset clear for the tab bar on a phone, and releases
   it from 1024px. `--radius` stays `0.625rem`. An app must set `viewport-fit=cover`
   for the insets to be non-zero; without it the browser already keeps the page
-  inside the safe area.
-- **Header.** The app name opens the app switcher. A drill-down page passes
+  inside the safe area. A solid `bg-background` scrim under the tab bar, as
+  tall as its bottom offset, mirrors the top fill, so scrolling text does not
+  show in the strip where the display curve clips.
+- **Landscape.** In landscape the side insets are the display curve, so text
+  and controls never sit nearer an edge than `max(floor, inset)`: the header
+  wrapper pads `max(0.5rem, --safe-l | --safe-r)` and `main` uses `px-edge`. A
+  test fails any side inset read in `app-shell.tsx` without a `max()` floor.
+- **Workspace variables.** The shell measures its header zone and tab bar and
+  sets `--shell-top`, `--shell-bottom` and `--shell-workspace`
+  (`100dvh - top - bottom`) on its root, so a full-height pane writes
+  `h-(--shell-workspace)` instead of a `100dvh - calc(...)` magic number. It
+  also sets `--scroll-pad-top` and `--scroll-pad-bottom` on `<html>` from the
+  same measurements, so a focused control is never hidden behind the chrome
+  (WCAG 2.4.11), and removes them on unmount. CSS fallbacks hold before the
+  first measurement and without `ResizeObserver`; `--shell-bottom` is `0` from
+  1024px.
+- **Header.** The header is 48px tall on a phone. The app name opens the app switcher. A drill-down page passes
   `back={{ href, label }}` and the header gains a back button (44px, labelled
   "Back" unless a label is given) before the name. Header actions sit at the end.
 - **App switcher.** Every app with its description, the current one marked with
@@ -620,6 +637,11 @@ Two helpers come with them: the `nav-link` lib (`renderAnchor`, the type of a
   call feeds the switcher and the settings page alike. Each theme row previews
   the theme's own light and dark colours by scoping `data-theme` to the
   swatch, and the chosen row carries a check as well as a fill.
+- **Focus and large text.** Tabs, the More sheet's links and sidebar links draw
+  a solid `--ring` (`--sidebar-ring` on the sidebar), 3:1 or better in all 12
+  theme blocks; the active tab's icon is `foreground`, not `primary`. On a
+  screen under `15rem` wide, which only 200% text on a phone reaches, tab labels
+  drop to icons only and stay in the accessibility tree.
 - **Touch.** Tabs are 50px tall (the bar is 60px with its padding and borders, as in native iOS floating tab bars); every other control in a block is at least 44px
   (`min-h-11`), whatever the pointer.
 - **Titles.** One `h1` per page, from `page-header` (or `login`). A section
