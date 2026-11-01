@@ -206,6 +206,16 @@ unversioned `registry.json` and `r/`, so `main`'s tree is the release commit's
 tree. The tag stays reachable from `main`, which semantic-release needs to
 find the last release. A commit cannot contain its own SHA, so the tag name is
 the ref. Tags are immutable by convention, which is what makes that safe.
+
+**When `main` moves during a release.** Direct pushes can land while a Release
+run is in flight. The run starts from the tip of `main`, runs
+`scripts/release/release-with-retry.sh`, and redoes the release up to 3 times if
+semantic-release reports the branch is behind or a release push is rejected as
+a non-fast-forward; each attempt first resets the checkout to `origin/main`.
+Three failures fail the job with an `::error::` line. A rejection of the pin
+plugin's last push, which comes after the release commit has reached `main`,
+leaves a second release commit and a duplicate CHANGELOG section for the same
+version after the redo; the tag and `r/` pin are still made once.
 The `Registry output current` check runs on `main` and pull requests only, so
 it never sees the stamped form.
 

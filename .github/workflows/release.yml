@@ -4,6 +4,14 @@ on:
   push:
     branches: [main]
 
+# One Release at a time, queued rather than cancelled. Every run releases from
+# the tip of main (see the checkout below), so when GitHub drops an older pending
+# run in favour of a newer one, the newer run sees every commit the older would
+# have. With agents pushing to main, two runs would otherwise race each other.
+concurrency:
+  group: release
+  cancel-in-progress: false
+
 permissions:
   contents: write
   issues: write
@@ -16,6 +24,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
+          # The tip of main, not github.sha: a run that queued behind another
+          # push would otherwise start behind the remote and release nothing.
+          ref: main
           fetch-depth: 0
           persist-credentials: false
 
@@ -34,7 +45,8 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      # Up to 3 attempts, each from the remote tip of main; see the script.
       - name: Release
-        run: pnpm exec semantic-release
+        run: bash scripts/release/release-with-retry.sh
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

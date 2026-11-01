@@ -1,0 +1,67 @@
+#!/usr/bin/env bash
+# Runs semantic-release up to 3 times, starting each attempt from the remote tip
+# of main. Ported from argus's release.yml (argus-config#1016, map #1013).
+#
+# Why: with agents pushing straight to main, `main` can move between this run's
+# checkout and the release's pushes. That shows up two ways, and both are safe
+# to retry because nothing has been tagged or published yet:
+#   1. semantic-release sees the local branch is behind, logs "is behind the
+#      remote one" and exits 0 having released nothing. Left alone, the release
+#      silently does not happen.
+#   2. A release push (the release commit, or the pin plugin's restore commit)
+#      is rejected as a non-fast-forward and semantic-release exits non-zero.
+#
+# Before every attempt (the first included) the checkout is made to equal
+# origin/main exactly, dropping a half-finished attempt's local commits, staged
+# files and detached HEAD. That is a rebase in effect: the release is redone on
+# top of whatever landed, not merged with it.
+#
+# Anything else that fails (bad token, a rejected hook, a plugin error) is not
+# a race and is not retried: its exit status is passed through.
+#
+# One thing a retry cannot undo: a rejection of the pin plugin's last push
+# comes after the release commit has already reached main, so the redo adds a
+# second chore(release) commit and a duplicate CHANGELOG section for the same
+# version. The tag, the GitHub release and the pinned r/ are still made once.
+#
+# RELEASE_COMMAND overrides the command; test/release-retry.test.ts uses it.
+set -uo pipefail
+
+RELEASE_COMMAND="${RELEASE_COMMAND:-pnpm exec semantic-release}"
+LOG="${RUNNER_TEMP:-${TMPDIR:-/tmp}}/semantic-release.log"
+MAX_ATTEMPTS=3
+# `[remote rejected]` (a protected branch or a hook) is deliberately not here.
+REJECTED_PATTERN='failed to push some refs|\[rejected\]|non-fast-forward|fetch first|Updates were rejected'
+
+reason=""
+for attempt in $(seq 1 "${MAX_ATTEMPTS}"); do
+  if ! git fetch --quiet origin main; then
+    echo "::error::could not fetch origin main"
+    exit 1
+  fi
+  git checkout --quiet --force -B main origin/main || exit 1
+  git clean --quiet -fd
+
+  bash -c "${RELEASE_COMMAND}" 2>&1 | tee "${LOG}"
+  exit_code="${PIPESTATUS[0]}"
+
+  if [ "${exit_code}" -eq 0 ]; then
+    if ! grep -q "is behind the remote one" "${LOG}"; then
+      exit 0
+    fi
+    reason="behind"
+    echo "::warning::local main was behind the remote (attempt ${attempt} of ${MAX_ATTEMPTS})"
+  elif grep -qE "${REJECTED_PATTERN}" "${LOG}"; then
+    reason="rejected"
+    echo "::warning::a release push was rejected, main moved under it (attempt ${attempt} of ${MAX_ATTEMPTS})"
+  else
+    exit "${exit_code}"
+  fi
+done
+
+if [ "${reason}" = "behind" ]; then
+  echo "::error::still behind the remote after ${MAX_ATTEMPTS} attempts, release skipped"
+else
+  echo "::error::release push was rejected ${MAX_ATTEMPTS} times because main kept moving, release not completed"
+fi
+exit 1
