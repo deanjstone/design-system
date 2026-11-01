@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# link-check:vendored
 # Build a myargus.cc or tailnet URL from links.json, for deploy scripts and hooks.
 # The bash twin of the links.ts builders (design-system ADR-0004): same registry,
 # same canonical forms (decision 4), so a script and an app never disagree.

@@ -1,0 +1,39 @@
+name: Link check
+# link-check:vendored
+
+# Bans hand-written myargus.cc and tailnet host literals in code, and checks the
+# repo's host and path config against links.json. Shipped by the design-system
+# `link-check` registry item (ADR-0004).
+#
+# LINK_CHECK_MODE starts at `report`: the job prints every finding and passes,
+# which is the baseline (decision 10). Change it to `block` once the report
+# reads 0, and the job fails on any finding from then on.
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  link-check:
+    name: Link check
+    runs-on: ${{ fromJSON(vars.CI_RUNS_ON || '"ubuntu-latest"') }}
+    env:
+      LINK_CHECK_MODE: report
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Check links
+        run: bash scripts/link-check.sh
