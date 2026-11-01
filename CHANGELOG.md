@@ -1,3 +1,10 @@
+# [3.5.0](https://github.com/deanjstone/design-system/compare/v3.4.0...v3.5.0) (2026-11-01)
+
+
+### Features
+
+* make the AppShell phone header 48px and document the shell fixes ([c4ef4da](https://github.com/deanjstone/design-system/commit/c4ef4daf2f6388f03807b08a0247cc7811cea4e7)), closes [#138](https://github.com/deanjstone/design-system/issues/138)
+
 # [3.4.0](https://github.com/deanjstone/design-system/compare/v3.3.0...v3.4.0) (2026-11-01)
 
 
