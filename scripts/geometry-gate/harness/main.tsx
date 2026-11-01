@@ -62,11 +62,11 @@ const Page = () => (
       <Label htmlFor="name">Name</Label>
       <Input id="name" placeholder="name" />
       <Textarea aria-label="Notes" placeholder="notes" />
-      <div className="flex items-center gap-2">
+      <div className="flex min-h-11 items-center gap-2">
         <Checkbox id="check" />
         <Label htmlFor="check">Check</Label>
       </div>
-      <div className="flex items-center gap-2">
+      <div className="flex min-h-11 items-center gap-2">
         <Switch id="switch" />
         <Label htmlFor="switch">Switch</Label>
       </div>

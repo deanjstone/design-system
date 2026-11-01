@@ -16,9 +16,9 @@ const finding = (check: string, view: string, label: string, scenario = "iphone-
 
 describe("classify", () => {
   it("passes a finding the audit already filed and names its issue", () => {
-    const { fresh, known } = classify([finding("input-font-size", "login", 'input{input} "email"')])
+    const { fresh, known } = classify([finding("reduced-motion", "states", "[spinner] spin", "reduced-motion")])
     expect(fresh).toEqual([])
-    expect(known[0]).toMatchObject({ issue: 145 })
+    expect(known[0]).toMatchObject({ issue: 147 })
   })
 
   it("fails a finding nobody filed", () => {

@@ -18,6 +18,9 @@ export const targetSize = ({ minimum = 24, selector = 'a[href], button, input:no
   for (const element of document.querySelectorAll(selector)) {
     const style = getComputedStyle(element)
     if (style.visibility === "hidden" || style.display === "none" || style.pointerEvents === "none") continue
+    // elementFromPoint answers null below the fold, which would read as a hit area
+    // of zero, so each control is scrolled into view before it is probed.
+    element.scrollIntoView({ block: "center", inline: "center" })
     const rect = element.getBoundingClientRect()
     if (rect.width < 2 && rect.height < 2) continue
     const centreX = rect.x + rect.width / 2

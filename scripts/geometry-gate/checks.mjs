@@ -17,15 +17,6 @@ export const CHECK_SCENARIOS = ["iphone-17-portrait", "iphone-17-landscape-top-0
 // the gate can land green; a listed entry that no longer fires fails the gate until
 // it is deleted, so the list only shrinks (the same rule as test/theme-contrast.test.ts).
 export const KNOWN = [
-  { check: "target-size", scenario: "iphone-17-landscape-top-0", view: "shell", label: "{checkbox}", issue: 145 },
-  { check: "input-font-size", scenario: "iphone-17-landscape-top-0", view: "shell", label: "input", issue: 145 },
-  { check: "input-font-size", scenario: "iphone-17-landscape-top-0", view: "shell", label: "textarea", issue: 145 },
-  { check: "input-font-size", scenario: "iphone-17-landscape-top-0", view: "login", label: "input", issue: 145 },
-  { check: "input-font-size", scenario: "iphone-17-landscape-top-0", view: "dialog", label: "input", issue: 145 },
-  { check: "input-font-size", view: "shell", label: "{command-input}", issue: 145 },
-  { check: "target-size", view: "shell", label: "{badge}", issue: 145 },
-  { check: "target-size", view: "shell", label: "{command-input}", issue: 145 },
-  ...["{badge}", "{toggle}", "{checkbox}", "{switch}", "{command-input}", "{select-trigger}", "{tabs-trigger}"].map((label) => ({ check: "touch-target", view: "shell", label, issue: 145 })),
   { check: "reduced-motion", view: "states", label: "[spinner]", issue: 147 },
   { check: "reduced-motion", view: "states", label: "[skeleton]", issue: 147 },
 ]
