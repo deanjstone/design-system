@@ -17,7 +17,11 @@ export const CHECK_SCENARIOS = ["iphone-17-portrait", "iphone-17-landscape-top-0
 // Findings the #144 audit already filed. A listed finding is reported, not failed, so
 // the gate can land green; a listed entry that no longer fires fails the gate until
 // it is deleted, so the list only shrinks (the same rule as test/theme-contrast.test.ts).
-export const KNOWN = []
+export const KNOWN = [
+  { check: "input-font-size", scenario: "root-font-small", label: "input{input}", issue: 162 },
+  { check: "input-font-size", scenario: "root-font-small", label: "textarea{textarea}", issue: 162 },
+  { check: "input-font-size", scenario: "root-font-small", label: "input{command-input}", issue: 162 },
+]
 
 const matches = (known, finding) =>
   known.check === finding.check &&
@@ -96,6 +100,7 @@ export const runLoginEdges = async ({ browser, urlFor, scenarios, views }) => {
 }
 
 const REFLOW_VIEWPORT = { width: 320, height: 568 }
+const SMALL_ROOT = "75%"
 
 const axeFindings = async (page) => {
   await page.addScriptTag({ path: AXE_SOURCE })
@@ -172,6 +177,13 @@ export const runChecks = async ({ browser, urlFor, scenarios, views, out, ariaDi
     findings.push(...tag(await reflowContext.page.evaluate(largeText, { height: REFLOW_VIEWPORT.height, ceiling: CHROME_CEILING }), { name: "320px-200pct" }, view))
     findings.push(...tag(await reflowContext.page.evaluate(inputFontSize), { name: "320px-200pct" }, view))
     await reflowContext.context.close()
+    // iOS zooms on focus into a field under 16px, and a root below 100% (the smallest Larger Text
+    // sizes) pulls a rem font under it: the minimum is held at every size (design-system#145, #162).
+    const small = await openScenario(browser, portrait, urlFor(view))
+    await small.page.addStyleTag({ content: `html { font-size: ${SMALL_ROOT} !important }` })
+    await small.page.waitForTimeout(300)
+    findings.push(...tag(await small.page.evaluate(inputFontSize), { name: "root-font-small" }, view))
+    await small.context.close()
     const reduced = await openScenario(browser, portrait, urlFor(view), { reducedMotion: "reduce", settled: false })
     findings.push(...tag(await reduced.page.evaluate(motion), { name: "reduced-motion" }, view))
     await reduced.context.close()
