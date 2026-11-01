@@ -4,7 +4,7 @@
   "title": "links bash helper",
   "description": "scripts/links.sh: build a URL from links.json with jq, for deploy scripts and hooks.",
   "registryDependencies": [
-    "deanjstone/design-system/links-data"
+    "deanjstone/design-system/links-data#v3.9.2"
   ],
   "files": [
     {
