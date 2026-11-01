@@ -1,5 +1,6 @@
 import { cleanup, fireEvent, render, screen, within } from "@testing-library/react"
 import { BookOpenIcon, HomeIcon, InboxIcon, SearchIcon, SettingsIcon, StarIcon } from "lucide-react"
+import { readFileSync } from "node:fs"
 import { afterEach, describe, expect, it, vi } from "vitest"
 
 import { AppShell, type ShellSection } from "../registry/base-nova/blocks/app-shell"
@@ -30,7 +31,43 @@ const tabBar = (container: HTMLElement) => container.querySelector<HTMLElement>(
 const sidebar = (container: HTMLElement) => container.querySelector<HTMLElement>("[data-slot=app-shell-sidebar]")!
 const header = (container: HTMLElement) => container.querySelector<HTMLElement>("[data-slot=app-shell-header]")!
 
+const shellSource = readFileSync("registry/base-nova/blocks/app-shell.tsx", "utf8")
+
 describe("AppShell", () => {
+  // The curve rule (#136, #142): a background may bleed into the display's rounded corners, but text and
+  // controls never do. In landscape the side insets are the curve, so every side edge needs an inset
+  // behind a max() floor. The status fill and the bottom scrim are backgrounds and are exempt.
+  describe("side edges in landscape", () => {
+    it("pads the header wrapper by max(0.5rem, inset) on both sides", () => {
+      const { container } = render(<AppShell appName="Reader" sections={four}>x</AppShell>)
+
+      const className = header(container).parentElement!.className
+      expect(className).toContain("pl-[max(0.5rem,var(--safe-l))]")
+      expect(className).toContain("pr-[max(0.5rem,var(--safe-r))]")
+      expect(className).not.toMatch(/(^|\s)px-2(\s|$)/)
+    })
+
+    it("pads the main column with px-edge, which clears the insets", () => {
+      render(<AppShell appName="Reader" sections={four}>x</AppShell>)
+
+      const className = screen.getByRole("main").className
+      expect(className).toMatch(/(^|\s)px-edge(\s|$)/)
+      expect(className).not.toMatch(/(^|\s)px-4(\s|$)/)
+    })
+
+    it("never reads a side inset without a max() floor", () => {
+      const use = /(env\(safe-area-inset-(?:left|right)\)|var\(--safe-[lr]\))/g
+      const lines = shellSource.split("\n").filter((line) => line.match(use))
+
+      expect(lines.length).toBeGreaterThan(0)
+      for (const line of lines) {
+        for (const [, inset] of line.matchAll(use)) {
+          expect(line.slice(0, line.indexOf(inset)), inset).toMatch(/max\([^()]*$/)
+        }
+      }
+    })
+  })
+
   it("renders the page inside a main landmark", () => {
     render(
       <AppShell appName="Reader" sections={four}>

@@ -108,7 +108,7 @@ function AppShell({
           aria-hidden="true"
           className="pointer-events-none fixed inset-x-0 top-0 z-40 h-[calc(env(safe-area-inset-top)+0.5rem)] bg-background lg:left-64"
         />
-        <div className="pointer-events-none sticky top-0 z-30 px-2 pt-[calc(env(safe-area-inset-top)+0.5rem)] pb-2">
+        <div className="pointer-events-none sticky top-0 z-30 pr-[max(0.5rem,var(--safe-r))] pl-[max(0.5rem,var(--safe-l))] pt-[calc(env(safe-area-inset-top)+0.5rem)] pb-2">
           <header
             data-slot="app-shell-header"
             className={cn(glassBar, "pointer-events-auto flex min-h-14 items-center gap-1 rounded-xl px-2")}
@@ -135,7 +135,7 @@ function AppShell({
 
         <main
           data-slot="app-shell-main"
-          className="mx-auto flex w-full max-w-5xl flex-1 flex-col px-4 pt-2 pb-[calc(6rem+max(0.5rem,calc(env(safe-area-inset-bottom)-12px)))] lg:px-6 lg:pb-6"
+          className="mx-auto flex w-full max-w-5xl flex-1 flex-col px-edge pt-2 pb-[calc(6rem+max(0.5rem,calc(env(safe-area-inset-bottom)-12px)))] lg:px-6 lg:pb-6"
         >
           {children}
         </main>
