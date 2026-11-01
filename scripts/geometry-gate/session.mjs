@@ -15,6 +15,7 @@ export const HARNESS_DIST = process.env.GATE_OUT ?? path.join(repo, "node_module
 
 export const VIEWS = [
   { name: "shell", query: "v=shell" },
+  { name: "shell-focus", query: "v=shell-focus" },
   { name: "login", query: "v=login" },
   ...["top", "right", "bottom", "left"].map((side) => ({ name: `sheet-${side}`, query: `v=sheet&side=${side}` })),
   { name: "dialog", query: "v=dialog" },

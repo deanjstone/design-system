@@ -24,7 +24,13 @@ type AppShellProps = Pick<AppSwitcherProps, "mode" | "onModeChange" | "currentAp
   activeSectionId?: string
   /** Every app, for the switcher the app name opens. Without it the name is plain text. */
   apps?: AppSwitcherProps["apps"]
-  /** Set on a drill-down page: the header gets a back button to the parent. */
+  /**
+   * "full" (default) draws the header, tab bar and sidebar. "none" is focus mode for an immersive view
+   * (mail thread, article, graph, scanner): no chrome, the whole screen to the page, and just the back
+   * control (if `back` is set) in the top-left corner, clear of the display curve.
+   */
+  chrome?: "full" | "none"
+  /** Set on a drill-down page: the header gets a back button to the parent (in focus mode, a floating one). */
   back?: { href: string; label?: string }
   /** Controls at the end of the header. */
   headerActions?: React.ReactNode
@@ -42,36 +48,50 @@ const TAB_COUNT = 4
 // (the viewport between the two), plus the page's scroll padding so a focused control is never hidden
 // behind either (WCAG 2.4.11). The class fallbacks below hold until the first measurement, on the
 // server, and where ResizeObserver is missing; they are the same heights the chrome is built to.
-const workspaceFallback = (showTabBar: boolean) =>
-  cn(
-    "[--shell-top:calc(var(--safe-t)_+_4rem)] [--shell-workspace:calc(100dvh_-_var(--shell-top)_-_var(--shell-bottom))] lg:[--shell-bottom:0px]",
-    showTabBar ? "[--shell-bottom:calc(var(--edge-b)_+_3.75rem)]" : "[--shell-bottom:var(--edge-b)]"
-  )
+const workspaceFallback = (showTabBar: boolean, focus: boolean) =>
+  focus
+    ? "[--shell-top:0px] [--shell-bottom:var(--edge-b)] [--shell-workspace:calc(100dvh_-_var(--shell-top)_-_var(--shell-bottom))]"
+    : cn(
+        "[--shell-top:calc(var(--safe-t)_+_4rem)] [--shell-workspace:calc(100dvh_-_var(--shell-top)_-_var(--shell-bottom))] lg:[--shell-bottom:0px]",
+        showTabBar ? "[--shell-bottom:calc(var(--edge-b)_+_3.75rem)]" : "[--shell-bottom:var(--edge-b)]"
+      )
+
+// In focus mode the only thing over the page is the back control; a focused control scrolls clear of it.
+const BACK_CLEARANCE = 8
+
+const setPixels = (target: HTMLElement, name: string, pixels: number) => {
+  if (pixels > 0) target.style.setProperty(name, `${pixels}px`)
+  else target.style.removeProperty(name)
+}
 
 const useShellMetrics = (
   rootRef: React.RefObject<HTMLElement | null>,
   topRef: React.RefObject<HTMLElement | null>,
   barRef: React.RefObject<HTMLElement | null>,
-  showTabBar: boolean
+  backRef: React.RefObject<HTMLElement | null>,
+  showTabBar: boolean,
+  focus: boolean
 ) => {
   React.useLayoutEffect(() => {
     const root = rootRef.current
+    if (!root) return
     const top = topRef.current
-    if (!root || !top) return
+    if (!focus && !top) return
     const page = document.documentElement
 
     const publish = (name: string, scrollPadName: string, pixels: number) => {
-      if (pixels > 0) {
-        root.style.setProperty(name, `${pixels}px`)
-        page.style.setProperty(scrollPadName, `${pixels}px`)
-      } else {
-        root.style.removeProperty(name)
-        page.style.removeProperty(scrollPadName)
-      }
+      setPixels(root, name, pixels)
+      setPixels(page, scrollPadName, pixels)
     }
     const measure = () => {
+      if (focus) {
+        const back = backRef.current
+        const backBottom = back ? (Number.parseFloat(getComputedStyle(back).top) || 0) + back.offsetHeight : 0
+        setPixels(page, "--scroll-pad-top", backBottom > 0 ? backBottom + BACK_CLEARANCE : 0)
+        return
+      }
       const bar = barRef.current
-      publish("--shell-top", "--scroll-pad-top", top.offsetHeight)
+      publish("--shell-top", "--scroll-pad-top", top ? top.offsetHeight : 0)
       // A bar hidden from lg has no height; the CSS fallback (0 there) applies.
       const barHeight = bar ? bar.offsetHeight : 0
       const barOffset = bar && barHeight > 0 ? Number.parseFloat(getComputedStyle(bar).bottom) || 0 : 0
@@ -79,16 +99,20 @@ const useShellMetrics = (
     }
 
     measure()
-    if (typeof ResizeObserver === "undefined") return undefined
-    const observer = new ResizeObserver(measure)
-    observer.observe(top)
-    if (barRef.current) observer.observe(barRef.current)
-    return () => {
-      observer.disconnect()
+    const release = () => {
       publish("--shell-top", "--scroll-pad-top", 0)
       publish("--shell-bottom", "--scroll-pad-bottom", 0)
     }
-  }, [rootRef, topRef, barRef, showTabBar])
+    if (typeof ResizeObserver === "undefined") return release
+    const observer = new ResizeObserver(measure)
+    if (top) observer.observe(top)
+    if (barRef.current) observer.observe(barRef.current)
+    if (backRef.current) observer.observe(backRef.current)
+    return () => {
+      observer.disconnect()
+      release()
+    }
+  }, [rootRef, topRef, barRef, backRef, showTabBar, focus])
 }
 
 const glassBar = "surface-glass border border-border/60 shadow-lg"
@@ -118,6 +142,7 @@ function AppShell({
   currentAppId,
   mode,
   onModeChange,
+  chrome = "full",
   back,
   headerActions,
   renderLink = renderAnchor,
@@ -131,7 +156,9 @@ function AppShell({
   const rootRef = React.useRef<HTMLDivElement>(null)
   const topRef = React.useRef<HTMLDivElement>(null)
   const barRef = React.useRef<HTMLElement>(null)
-  useShellMetrics(rootRef, topRef, barRef, showTabBar)
+  const backRef = React.useRef<HTMLElement>(null)
+  const focus = chrome === "none"
+  useShellMetrics(rootRef, topRef, barRef, backRef, showTabBar, focus)
   const overflowActive = overflow.some((entry) => entry.id === activeSectionId)
 
   const link = (entry: ShellSection, className: (active: boolean) => string) => {
@@ -153,70 +180,100 @@ function AppShell({
     <div
       ref={rootRef}
       data-slot="app-shell"
-      className={cn("min-h-dvh bg-background text-foreground", workspaceFallback(showTabBar), className)}
+      className={cn("min-h-dvh bg-background text-foreground", workspaceFallback(showTabBar, focus), className)}
     >
-      <aside
-        data-slot="app-shell-sidebar"
-        className="fixed inset-y-0 left-0 z-20 hidden w-64 flex-col gap-1 border-r border-sidebar-border bg-sidebar p-3 pt-safe lg:flex"
-      >
-        <nav aria-label="Sections" className="flex flex-col gap-1">
-          {sections.map((entry) => (
-            <React.Fragment key={entry.id}>{link(entry, sidebarLinkClass)}</React.Fragment>
-          ))}
-        </nav>
-      </aside>
+      {focus ? null : (
+        <aside
+          data-slot="app-shell-sidebar"
+          className="fixed inset-y-0 left-0 z-20 hidden w-64 flex-col gap-1 border-r border-sidebar-border bg-sidebar p-3 pt-safe lg:flex"
+        >
+          <nav aria-label="Sections" className="flex flex-col gap-1">
+            {sections.map((entry) => (
+              <React.Fragment key={entry.id}>{link(entry, sidebarLinkClass)}</React.Fragment>
+            ))}
+          </nav>
+        </aside>
+      )}
 
-      <div data-slot="app-shell-column" className="flex min-h-dvh flex-col lg:pl-64">
+      <div data-slot="app-shell-column" className={cn("flex min-h-dvh flex-col", !focus && "lg:pl-64")}>
         <div
           data-slot="app-shell-status-fill"
           aria-hidden="true"
-          className="pointer-events-none fixed inset-x-0 top-0 z-40 h-[calc(env(safe-area-inset-top)+0.5rem)] bg-background lg:left-64"
+          className={cn(
+            "pointer-events-none fixed inset-x-0 top-0 z-40 h-[calc(env(safe-area-inset-top)+0.5rem)] bg-background",
+            !focus && "lg:left-64"
+          )}
         />
-        <div
-          ref={topRef}
-          data-slot="app-shell-top"
-          className="pointer-events-none sticky top-0 z-30 pr-[max(0.5rem,var(--safe-r))] pl-[max(0.5rem,var(--safe-l))] pt-[calc(env(safe-area-inset-top)+0.5rem)] pb-2"
-        >
-          <header
-            data-slot="app-shell-header"
-            className={cn(glassBar, "pointer-events-auto flex min-h-12 items-center gap-1 rounded-xl px-2")}
+        {focus ? (
+          back ? (
+            <div
+              ref={backRef}
+              data-slot="app-shell-focus-back"
+              className="fixed top-[max(1rem,var(--safe-t))] left-[max(1rem,var(--safe-l))] z-50"
+            >
+              {renderLink({
+                href: back.href,
+                "aria-label": back.label ?? "Back",
+                className: cn(
+                  glassBar,
+                  "flex min-h-11 min-w-11 items-center justify-center rounded-full text-foreground outline-none transition-colors hover:bg-muted focus-visible:ring-3 focus-visible:ring-ring [&_svg]:size-5 [&_svg]:shrink-0"
+                ),
+                children: <ChevronLeftIcon aria-hidden="true" />,
+              })}
+            </div>
+          ) : null
+        ) : (
+          <div
+            ref={topRef}
+            data-slot="app-shell-top"
+            className="pointer-events-none sticky top-0 z-30 pr-[max(0.5rem,var(--safe-r))] pl-[max(0.5rem,var(--safe-l))] pt-[calc(env(safe-area-inset-top)+0.5rem)] pb-2"
           >
-            {back
-              ? renderLink({
-                  href: back.href,
-                  "aria-label": back.label ?? "Back",
-                  className: cn(buttonVariants({ variant: "ghost", size: "icon" }), "min-h-11 min-w-11"),
-                  children: <ChevronLeftIcon aria-hidden="true" />,
-                })
-              : null}
-            <AppSwitcher
-              appName={appName}
-              apps={apps}
-              currentAppId={currentAppId}
-              mode={mode}
-              onModeChange={onModeChange}
-              renderLink={renderLink}
-            />
-            {headerActions ? <div className="ml-auto flex items-center gap-1">{headerActions}</div> : null}
-          </header>
-        </div>
+            <header
+              data-slot="app-shell-header"
+              className={cn(glassBar, "pointer-events-auto flex min-h-12 items-center gap-1 rounded-xl px-2")}
+            >
+              {back
+                ? renderLink({
+                    href: back.href,
+                    "aria-label": back.label ?? "Back",
+                    className: cn(buttonVariants({ variant: "ghost", size: "icon" }), "min-h-11 min-w-11"),
+                    children: <ChevronLeftIcon aria-hidden="true" />,
+                  })
+                : null}
+              <AppSwitcher
+                appName={appName}
+                apps={apps}
+                currentAppId={currentAppId}
+                mode={mode}
+                onModeChange={onModeChange}
+                renderLink={renderLink}
+              />
+              {headerActions ? <div className="ml-auto flex items-center gap-1">{headerActions}</div> : null}
+            </header>
+          </div>
+        )}
 
         <main
           data-slot="app-shell-main"
-          className={cn("mx-auto flex w-full max-w-5xl flex-1 flex-col px-edge pt-2 lg:px-6 lg:pb-6", showTabBar ? "pb-[calc(6rem+var(--edge-b))]" : "pb-edge")}
+          className={cn(
+            "mx-auto flex w-full max-w-5xl flex-1 flex-col px-edge lg:px-6",
+            focus
+              ? cn("pb-edge", back ? "pt-[calc(max(1rem,var(--safe-t))+3.25rem)]" : "pt-[max(1rem,var(--safe-t))]")
+              : cn("pt-2 lg:pb-6", showTabBar ? "pb-[calc(6rem+var(--edge-b))]" : "pb-edge")
+          )}
         >
           {children}
         </main>
       </div>
 
-      {showTabBar ? (
+      {showTabBar && !focus ? (
         <div
           data-slot="app-shell-bottom-fill"
           aria-hidden="true"
           className="pointer-events-none fixed inset-x-0 bottom-0 z-20 h-(--edge-b) bg-background lg:hidden"
         />
       ) : null}
-      {showTabBar ? (
+      {showTabBar && !focus ? (
         <nav
           ref={barRef}
           data-slot="app-shell-tabbar"

@@ -202,6 +202,13 @@ const App = () => {
       </div>
     )
   }
+  if (view === "shell-focus") {
+    return (
+      <AppShell appName="Shell" sections={sections} activeSectionId="a" chrome="none" back={{ href: "#", label: "Back to Inbox" }}>
+        <Page />
+      </AppShell>
+    )
+  }
   return (
     <AppShell
       appName="Shell"

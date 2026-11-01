@@ -589,6 +589,170 @@ describe("AppShell", () => {
     })
   })
 
+  // Focus mode (#139): an immersive view (mail thread, article, graph, scanner) gives the whole screen
+  // to the page. The only chrome left is a back control clear of the display curve.
+  describe('chrome="none" (focus mode)', () => {
+    const focus = (extra: Partial<React.ComponentProps<typeof AppShell>> = {}) =>
+      render(
+        <AppShell appName="Reader" sections={six} chrome="none" {...extra}>
+          <p>Thread</p>
+        </AppShell>
+      )
+
+    it("draws no header, tab bar, sidebar or bottom scrim", () => {
+      const { container } = focus({ back: { href: "/inbox" } })
+
+      for (const slot of ["app-shell-header", "app-shell-top", "app-shell-tabbar", "app-shell-sidebar", "app-shell-bottom-fill"]) {
+        expect(container.querySelector(`[data-slot=${slot}]`), slot).toBeNull()
+      }
+    })
+
+    it("still renders the page inside the main landmark", () => {
+      focus()
+
+      expect(within(screen.getByRole("main")).getByText("Thread")).toBeTruthy()
+    })
+
+    it("leaves a back control to the parent, 44px, named after it", () => {
+      focus({ back: { href: "/inbox", label: "Back to Inbox" } })
+
+      const back = screen.getByRole("link", { name: "Back to Inbox" })
+      expect(back.getAttribute("href")).toBe("/inbox")
+      expect(back.parentElement!.getAttribute("data-slot")).toBe("app-shell-focus-back")
+      expect(back.className).toContain("min-h-11")
+      expect(back.className).toContain("min-w-11")
+    })
+
+    it("pins the back control a gutter in from the corner, clear of the curve and the inset", () => {
+      focus({ back: { href: "/inbox" } })
+
+      const className = screen.getByRole("link", { name: "Back" }).parentElement!.className
+      expect(className).toContain("fixed")
+      expect(className).toContain("top-[max(1rem,var(--safe-t))]")
+      expect(className).toContain("left-[max(1rem,var(--safe-l))]")
+    })
+
+    it("draws a solid focus ring on the back control, never ring/50", () => {
+      focus({ back: { href: "/inbox" } })
+
+      const className = screen.getByRole("link", { name: "Back" }).className
+      expect(className).toContain("focus-visible:ring-ring")
+      expect(className).not.toContain("ring-ring/50")
+    })
+
+    it("has no back control on a page with no parent", () => {
+      focus()
+
+      expect(screen.queryByRole("link")).toBeNull()
+    })
+
+    it("does not offset the column for the sidebar", () => {
+      const { container } = focus()
+
+      expect(container.querySelector("[data-slot=app-shell-column]")?.className).not.toContain("lg:pl-64")
+    })
+
+    it("keeps the bottom edge clear and drops the tab bar's room", () => {
+      focus()
+
+      const className = screen.getByRole("main").className
+      expect(className).toContain("pb-edge")
+      expect(className).not.toContain("6rem")
+      expect(className).not.toContain("lg:pb-6")
+    })
+
+    // No header means nothing else keeps the page out of the status-bar inset, the island and the
+    // back control, so the main column does (the geometry gate caught this, #143).
+    it("starts the page below the inset, and below the back control when there is one", () => {
+      focus({ back: { href: "/inbox" } })
+      expect(screen.getByRole("main").className).toContain("pt-[calc(max(1rem,var(--safe-t))+3.25rem)]")
+      cleanup()
+
+      focus()
+      expect(screen.getByRole("main").className).toContain("pt-[max(1rem,var(--safe-t))]")
+    })
+
+    it("falls back to no top chrome and the bottom edge alone", () => {
+      const { container } = focus()
+
+      const className = container.querySelector<HTMLElement>("[data-slot=app-shell]")!.className
+      expect(className).toContain("[--shell-top:0px]")
+      expect(className).toContain("[--shell-bottom:var(--edge-b)]")
+      expect(className).not.toContain("lg:[--shell-bottom:0px]")
+    })
+
+    it('is the same shell as chrome="full": a default render keeps its header and bar', () => {
+      const { container } = render(<AppShell appName="Reader" sections={four}>x</AppShell>)
+
+      expect(header(container)).toBeTruthy()
+      expect(tabBar(container)).toBeTruthy()
+      expect(container.querySelector("[data-slot=app-shell-focus-back]")).toBeNull()
+    })
+
+    describe("workspace variables", () => {
+      afterEach(() => {
+        vi.unstubAllGlobals()
+        vi.restoreAllMocks()
+        if (offsetHeight) Object.defineProperty(HTMLElement.prototype, "offsetHeight", offsetHeight)
+        document.documentElement.removeAttribute("style")
+        observed.length = 0
+      })
+
+      // jsdom resolves no layout, so stand in for the browser: the back control is 44px tall at top 16px.
+      const withBack = () => {
+        vi.stubGlobal("ResizeObserver", FakeResizeObserver)
+        Object.defineProperty(HTMLElement.prototype, "offsetHeight", {
+          configurable: true,
+          get() {
+            return (this as HTMLElement).dataset.slot === "app-shell-focus-back" ? 44 : 0
+          },
+        })
+        vi.spyOn(window, "getComputedStyle").mockImplementation(
+          () => ({ top: "16px", bottom: "0px" }) as unknown as CSSStyleDeclaration
+        )
+      }
+
+      it("publishes no top or bottom chrome", () => {
+        withBack()
+        const { container } = focus({ back: { href: "/inbox" } })
+
+        const root = container.querySelector<HTMLElement>("[data-slot=app-shell]")!
+        expect(root.style.getPropertyValue("--shell-top")).toBe("")
+        expect(root.style.getPropertyValue("--shell-bottom")).toBe("")
+        expect(document.documentElement.style.getPropertyValue("--scroll-pad-bottom")).toBe("")
+      })
+
+      // A control scrolled under the 44px back control would be hidden (WCAG 2.4.11), so the page keeps
+      // clear of it: its top offset, its height and a gutter below.
+      it("keeps a focused control clear of the back control", () => {
+        withBack()
+        focus({ back: { href: "/inbox" } })
+
+        expect(document.documentElement.style.getPropertyValue("--scroll-pad-top")).toBe("68px")
+      })
+
+      it("hands the scroll padding back on unmount", () => {
+        withBack()
+        focus({ back: { href: "/inbox" } })
+
+        cleanup()
+
+        expect(document.documentElement.style.getPropertyValue("--scroll-pad-top")).toBe("")
+      })
+    })
+
+    it("reads no side inset in the focus code without a max() floor", () => {
+      const lines = shellSource.split("\n").filter((line) => line.includes("focus-back") || line.includes("left-[") || line.includes("top-[max"))
+      const use = /(env\(safe-area-inset-(?:left|right)\)|var\(--safe-[lr]\))/g
+
+      for (const line of lines) {
+        for (const [, inset] of line.matchAll(use)) {
+          expect(line.slice(0, line.indexOf(inset)), inset).toMatch(/max\([^()]*$/)
+        }
+      }
+    })
+  })
+
   it("lays the page out as a column, so an EmptyPage can fill what is left", () => {
     render(<AppShell appName="Reader" sections={four}>x</AppShell>)
 

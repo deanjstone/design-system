@@ -1,0 +1,67 @@
+- link "Back to Inbox":
+  - /url: "#"
+- main:
+  - heading "Page title" [level=1]
+  - paragraph: A description that is long enough to wrap onto a second line on a phone.
+  - button "Act"
+  - button "Default"
+  - button "Small"
+  - button "Outline"
+  - button "Link"
+  - text: Badge
+  - link "Link badge":
+    - /url: "#badge"
+  - button "Bold": B
+  - text: Name
+  - textbox "Name":
+    - /placeholder: name
+  - textbox "Notes":
+    - /placeholder: notes
+  - checkbox "Check"
+  - text: Check
+  - switch "Switch"
+  - text: Switch
+  - group:
+    - combobox [expanded]
+    - group
+  - listbox "Suggestions"
+  - combobox "Choice": a
+  - tablist:
+    - tab "One" [selected]
+    - tab "Two"
+  - tabpanel "One": Tab content
+  - text: Card Card description Card body
+  - table:
+    - rowgroup:
+      - row "A B":
+        - columnheader "A"
+        - columnheader "B"
+    - rowgroup:
+      - row "1 2":
+        - cell "1"
+        - cell "2"
+  - region "Wide table":
+    - table "Wide table":
+      - caption: Wide table
+      - rowgroup:
+        - row "Name Role Region Last seen Status":
+          - columnheader "Name"
+          - columnheader "Role"
+          - columnheader "Region"
+          - columnheader "Last seen"
+          - columnheader "Status"
+      - rowgroup:
+        - row "Ada Lovelace Administrator Australia East Yesterday at 09:20 Active":
+          - cell "Ada Lovelace"
+          - cell "Administrator"
+          - cell "Australia East"
+          - cell "Yesterday at 09:20"
+          - cell "Active"
+  - paragraph: "Paragraph 1: text that scrolls under the tab bar and the bottom curves."
+  - paragraph: "Paragraph 2: text that scrolls under the tab bar and the bottom curves."
+  - paragraph: "Paragraph 3: text that scrolls under the tab bar and the bottom curves."
+  - paragraph: "Paragraph 4: text that scrolls under the tab bar and the bottom curves."
+  - paragraph: "Paragraph 5: text that scrolls under the tab bar and the bottom curves."
+  - paragraph: "Paragraph 6: text that scrolls under the tab bar and the bottom curves."
+  - paragraph: "Paragraph 7: text that scrolls under the tab bar and the bottom curves."
+  - paragraph: "Paragraph 8: text that scrolls under the tab bar and the bottom curves."
