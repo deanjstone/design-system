@@ -1,3 +1,10 @@
+## [3.8.1](https://github.com/deanjstone/design-system/compare/v3.8.0...v3.8.1) (2026-11-01)
+
+
+### Bug Fixes
+
+* keep large text working in the shell and the registry's text fields ([088dad1](https://github.com/deanjstone/design-system/commit/088dad103c089802865e27a77e8f52bde3edd74d)), closes [#162](https://github.com/deanjstone/design-system/issues/162)
+
 # [3.8.0](https://github.com/deanjstone/design-system/compare/v3.7.1...v3.8.0) (2026-11-01)
 
 
