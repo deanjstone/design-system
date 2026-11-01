@@ -6,9 +6,9 @@
     "cn@^0.5.0"
   ],
   "registryDependencies": [
-    "deanjstone/design-system/button#v3.7.1",
-    "deanjstone/design-system/input#v3.7.1",
-    "deanjstone/design-system/textarea#v3.7.1"
+    "deanjstone/design-system/button",
+    "deanjstone/design-system/input",
+    "deanjstone/design-system/textarea"
   ],
   "files": [
     {
