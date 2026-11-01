@@ -1,3 +1,10 @@
+## [3.6.1](https://github.com/deanjstone/design-system/compare/v3.6.0...v3.6.1) (2026-11-01)
+
+
+### Bug Fixes
+
+* 16px text and 44pt targets for touch form controls, pointer-aware useIsMobile ([be6f8b7](https://github.com/deanjstone/design-system/commit/be6f8b7265fc478fc8c9703386c4724eef6432c5)), closes [#145](https://github.com/deanjstone/design-system/issues/145) [#145](https://github.com/deanjstone/design-system/issues/145)
+
 # [3.6.0](https://github.com/deanjstone/design-system/compare/v3.5.0...v3.6.0) (2026-11-01)
 
 
