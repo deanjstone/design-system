@@ -102,7 +102,7 @@ function AppSwitcher({
                 "aria-current": current ? "true" : undefined,
                 onClick: () => setOpen(false),
                 className: cn(
-                  "flex min-h-11 items-center gap-3 rounded-lg px-3 py-2 outline-none hover:bg-muted focus-visible:ring-3 focus-visible:ring-ring/50",
+                  "flex min-h-11 items-center gap-3 rounded-lg px-3 py-2 outline-none hover:bg-muted focus-visible:ring-3 focus-visible:ring-ring",
                   current && "bg-muted"
                 ),
                 children: (

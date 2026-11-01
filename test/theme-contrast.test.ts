@@ -52,6 +52,8 @@ const PAIRS: Pair[] = [
   // app-shell.tsx: the focus ring is a solid --ring (--sidebar-ring on the sidebar), no longer ring/50,
   // against what it is drawn over. WCAG 1.4.11 asks 3:1 for a focus indicator (#144 F1).
   { name: "focus ring on background", minimum: 3, ratio: (t) => contrastRatio(t.ring, t.background) },
+  { name: "focus ring on card", minimum: 3, ratio: (t) => contrastRatio(t.ring, t.card) },
+  { name: "focus ring on popover", minimum: 3, ratio: (t) => contrastRatio(t.ring, t.popover) },
   { name: "focus ring on muted", minimum: 3, ratio: (t) => contrastRatio(t.ring, t.muted) },
   { name: "sidebar focus ring on sidebar", minimum: 3, ratio: (t) => contrastRatio(t["sidebar-ring"], t.sidebar) },
   // app-shell.tsx: the active tab is text-foreground on --muted, its icon included (#144 C2).
@@ -132,5 +134,14 @@ describe("component classes draw the pairs above", () => {
     expect(badge).toContain("bg-destructive/10 text-destructive")
     expect(badge).toContain("dark:bg-destructive/10")
     expect(badge).toContain("[a]:hover:bg-destructive/12")
+  })
+
+  it.each([
+    "blocks/app-switcher.tsx",
+    "ui/toggle.tsx",
+    "ui/attachment.tsx",
+    "ui/trace.tsx",
+  ])("%s has no translucent-only focus ring", (file) => {
+    expect(source(file)).not.toContain("ring-ring/50")
   })
 })
