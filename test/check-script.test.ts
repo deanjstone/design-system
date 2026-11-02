@@ -15,7 +15,7 @@ import { join } from "node:path"
 import { fileURLToPath } from "node:url"
 import { afterEach, beforeEach, describe, expect, it } from "vitest"
 
-// scripts/check.sh runs the three CI checks before a push (argus-config#1013,
+// scripts/check.sh runs the four CI checks before a push (argus-config#1013,
 // #1015). pnpm and npx are stubs on PATH inside a throwaway git repo: no
 // network, no real scan. Each stub appends its arguments to calls.txt and exits
 // with the status the test picks.
@@ -34,10 +34,17 @@ const stub = (name: string, body: string) => {
   chmodSync(join(bin, name), 0o755)
 }
 
-// pnpm and the impeccable call exit with STUB_FAIL_<step> when set; the shadcn
-// build call writes STUB_BUILD_WRITES (a path under the repo) when set.
+// pnpm test, pnpm lint and the impeccable call exit with STUB_FAIL_<step> when set;
+// the shadcn build call writes STUB_BUILD_WRITES (a path under the repo) when set.
 const installStubs = () => {
-  stub("pnpm", `echo "pnpm $*" >> "$CALLS"\n[ -z "\${STUB_FAIL_TEST:-}" ] || exit 1`)
+  stub(
+    "pnpm",
+    `echo "pnpm $*" >> "$CALLS"
+case "$*" in
+  test) [ -z "\${STUB_FAIL_TEST:-}" ] || exit 1 ;;
+  lint) [ -z "\${STUB_FAIL_LINT:-}" ] || exit 1 ;;
+esac`,
+  )
   stub(
     "npx",
     `echo "npx $*" >> "$CALLS"
@@ -84,7 +91,7 @@ afterEach(() => {
 })
 
 describe("scripts/check.sh", () => {
-  it("runs test, detect and build in order, then prints one pass line with the short sha", () => {
+  it("runs test, detect, build and lint in order, then prints one pass line with the short sha", () => {
     const result = run()
     expect(result.status).toBe(0)
     expect(result.stdout.trim()).toBe(`check: pass ${git("rev-parse", "--short", "HEAD")}`)
@@ -92,13 +99,14 @@ describe("scripts/check.sh", () => {
       "pnpm test",
       expect.stringMatching(/^npx --yes impeccable@\S+ detect registry\/ theme\/$/),
       expect.stringMatching(/^npx --yes shadcn@\S+ build --output \.\/r$/),
+      "pnpm lint",
     ])
   })
 
   it("fails on step 1 and stops when the tests fail", () => {
     const result = run({ STUB_FAIL_TEST: "1" })
     expect(result.status).not.toBe(0)
-    expect(result.stderr).toContain("FAIL at step 1/3 (pnpm test)")
+    expect(result.stderr).toContain("FAIL at step 1/4 (pnpm test)")
     expect(result.stdout).not.toContain("check: pass")
     expect(calls()).toEqual(["pnpm test"])
   })
@@ -106,21 +114,29 @@ describe("scripts/check.sh", () => {
   it("fails on step 2 and stops when the detector fails", () => {
     const result = run({ STUB_FAIL_DETECT: "1" })
     expect(result.status).not.toBe(0)
-    expect(result.stderr).toContain("FAIL at step 2/3 (impeccable detect")
+    expect(result.stderr).toContain("FAIL at step 2/4 (impeccable detect")
     expect(calls()).toHaveLength(2)
   })
 
   it("fails on step 3 when the build changes a tracked r/ file", () => {
     const result = run({ STUB_BUILD_WRITES: join(repo, "r/item.json") })
     expect(result.status).not.toBe(0)
-    expect(result.stderr).toContain("FAIL at step 3/3 (r/ is out of date")
+    expect(result.stderr).toContain("FAIL at step 3/4 (r/ is out of date")
     expect(result.stdout).not.toContain("check: pass")
   })
 
   it("fails on step 3 when the build creates a new, untracked r/ file", () => {
     const result = run({ STUB_BUILD_WRITES: join(repo, "r/new-item.json") })
     expect(result.status).not.toBe(0)
-    expect(result.stderr).toContain("FAIL at step 3/3 (r/ is out of date")
+    expect(result.stderr).toContain("FAIL at step 3/4 (r/ is out of date")
+  })
+
+  it("fails on step 4 when the linter fails", () => {
+    const result = run({ STUB_FAIL_LINT: "1" })
+    expect(result.status).not.toBe(0)
+    expect(result.stderr).toContain("FAIL at step 4/4 (pnpm lint)")
+    expect(result.stdout).not.toContain("check: pass")
+    expect(calls()).toHaveLength(4)
   })
 
   it("passes when the build rewrites r/ with identical bytes", () => {
@@ -158,6 +174,11 @@ describe("pins match CI", () => {
   it("test step is the same command test.yml runs", () => {
     expect(read(".github/workflows/test.yml")).toMatch(/run: pnpm test$/m)
     expect(script).toMatch(/^pnpm test \|\| /m)
+  })
+
+  it("lint step is the same command test.yml runs", () => {
+    expect(read(".github/workflows/test.yml")).toMatch(/run: pnpm lint$/m)
+    expect(script).toMatch(/^pnpm lint \|\| /m)
   })
 
   it("is wired as pnpm check", () => {

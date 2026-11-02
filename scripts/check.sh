@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# The three CI checks, run locally before a push (argus-config#1013, #1015).
+# The four CI checks, run locally before a push (argus-config#1013, #1015).
 # Workers run `pnpm check` and paste its last line into the issue; CI stays the
 # backstop. No git hook runs this: it is a step in the worker's brief.
 #
@@ -8,6 +8,7 @@
 #   2. npx impeccable detect registry/ theme/     .github/workflows/design.yml "Detect UI anti-patterns"
 #   3. npx shadcn build --output ./r, then r/ must not have drifted
 #                                                 .github/workflows/design.yml "Rebuild per-item output and fail if it drifted"
+#   4. pnpm lint                                  .github/workflows/test.yml   "Run oxlint"
 #
 # The two pins below must equal the ones in design.yml (and shadcn's in
 # package.json build:theme); test/check-script.test.ts fails when they drift.
@@ -30,18 +31,21 @@ fail() {
   exit 1
 }
 
-echo "check: step 1/3 pnpm test" >&2
-pnpm test || fail "1/3" "pnpm test"
+echo "check: step 1/4 pnpm test" >&2
+pnpm test || fail "1/4" "pnpm test"
 
-echo "check: step 2/3 impeccable detect" >&2
-npx --yes "impeccable@${IMPECCABLE_VERSION}" detect registry/ theme/ || fail "2/3" "impeccable detect registry/ theme/"
+echo "check: step 2/4 impeccable detect" >&2
+npx --yes "impeccable@${IMPECCABLE_VERSION}" detect registry/ theme/ || fail "2/4" "impeccable detect registry/ theme/"
 
-echo "check: step 3/3 registry output current" >&2
-npx --yes "shadcn@${SHADCN_VERSION}" build --output ./r || fail "3/3" "shadcn build"
+echo "check: step 3/4 registry output current" >&2
+npx --yes "shadcn@${SHADCN_VERSION}" build --output ./r || fail "3/4" "shadcn build"
 if ! git diff --quiet -- r/ || [ -n "$(git ls-files --others --exclude-standard -- r/)" ]; then
   git status --short -- r/ >&2
-  fail "3/3" "r/ is out of date: run 'npx shadcn@${SHADCN_VERSION} build --output ./r' and commit the result"
+  fail "3/4" "r/ is out of date: run 'npx shadcn@${SHADCN_VERSION} build --output ./r' and commit the result"
 fi
+
+echo "check: step 4/4 pnpm lint" >&2
+pnpm lint || fail "4/4" "pnpm lint"
 
 if [ -n "$(git status --porcelain)" ]; then
   echo "check: note: the working tree has uncommitted changes; this result is not for HEAD alone" >&2
