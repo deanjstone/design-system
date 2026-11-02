@@ -708,6 +708,7 @@ describe("AppShell", () => {
           },
         })
         vi.spyOn(window, "getComputedStyle").mockImplementation(
+          // oxlint-disable-next-line anti-slop/no-chained-type-assertions -- partial CSSStyleDeclaration stub; only top/bottom are read
           () => ({ top: "16px", bottom: "0px" }) as unknown as CSSStyleDeclaration
         )
       }

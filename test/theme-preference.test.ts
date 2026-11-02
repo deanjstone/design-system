@@ -205,6 +205,7 @@ describe("watchSystemMode", () => {
 
   it("reports system changes until unsubscribed", () => {
     const seen: boolean[] = []
+    // oxlint-disable-next-line anti-slop/no-chained-type-assertions -- matchMedia stub typed down to the one method under test
     const stop = watchSystemMode((prefersDark) => seen.push(prefersDark), matchMedia as unknown as typeof window.matchMedia)
     expect(matchMedia).toHaveBeenCalledWith("(prefers-color-scheme: dark)")
     listeners.forEach((listener) => listener({ matches: true }))

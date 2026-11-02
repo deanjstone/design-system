@@ -24,6 +24,7 @@ const install = (device: Device) => {
           throw new Error(`unmodelled media feature ${part}`)
         }),
     )
+  // oxlint-disable-next-line anti-slop/no-chained-type-assertions -- minimal matchMedia stub; jsdom lacks MediaQueryList
   window.matchMedia = vi.fn((query: string) => ({
     get matches() {
       return matches(query)
