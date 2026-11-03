@@ -1,3 +1,10 @@
+# [3.12.0](https://github.com/deanjstone/design-system/compare/v3.11.0...v3.12.0) (2026-11-03)
+
+
+### Features
+
+* add combobox, the searchable select over input-group ([ca301ce](https://github.com/deanjstone/design-system/commit/ca301ce2ed78efc5d0243e8a19b873df05da91d6)), closes [#171](https://github.com/deanjstone/design-system/issues/171)
+
 # [3.11.0](https://github.com/deanjstone/design-system/compare/v3.10.0...v3.11.0) (2026-11-03)
 
 
