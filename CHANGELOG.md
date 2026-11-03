@@ -1,3 +1,10 @@
+# [3.10.0](https://github.com/deanjstone/design-system/compare/v3.9.2...v3.10.0) (2026-11-03)
+
+
+### Features
+
+* add graph-3d, a three.js force-graph orb primitive ([41f0ba6](https://github.com/deanjstone/design-system/commit/41f0ba64209e6c3ff20086ad56db60b55381e7e4)), closes [#169](https://github.com/deanjstone/design-system/issues/169)
+
 ## [3.9.2](https://github.com/deanjstone/design-system/compare/v3.9.1...v3.9.2) (2026-11-01)
 
 
