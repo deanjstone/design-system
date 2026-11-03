@@ -7,7 +7,7 @@
     "lucide-react"
   ],
   "registryDependencies": [
-    "deanjstone/design-system/dropdown-menu#v3.14.0"
+    "deanjstone/design-system/dropdown-menu"
   ],
   "files": [
     {
