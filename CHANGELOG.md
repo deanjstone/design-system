@@ -1,3 +1,10 @@
+# [3.13.0](https://github.com/deanjstone/design-system/compare/v3.12.0...v3.13.0) (2026-11-03)
+
+
+### Features
+
+* add context-menu, hover-card, menubar and navigation-menu ([84482bc](https://github.com/deanjstone/design-system/commit/84482bc5576092678d91304a21723da34846fd94)), closes [#173](https://github.com/deanjstone/design-system/issues/173)
+
 # [3.12.0](https://github.com/deanjstone/design-system/compare/v3.11.0...v3.12.0) (2026-11-03)
 
 
