@@ -1801,6 +1801,21 @@
       ]
     },
     {
+      "name": "input-otp",
+      "type": "registry:ui",
+      "dependencies": [
+        "cn@^0.5.0",
+        "input-otp@^1.5.0",
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "registry/base-nova/ui/input-otp.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "link-pill-core",
       "type": "registry:lib",
       "files": [
