@@ -1985,6 +1985,23 @@
       ]
     },
     {
+      "name": "pagination",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "deanjstone/design-system/button"
+      ],
+      "dependencies": [
+        "cn@^0.5.0",
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "registry/base-nova/ui/pagination.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "link-pill-core",
       "type": "registry:lib",
       "files": [
