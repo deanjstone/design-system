@@ -1816,6 +1816,25 @@
       ]
     },
     {
+      "name": "combobox",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "deanjstone/design-system/button",
+        "deanjstone/design-system/input-group"
+      ],
+      "dependencies": [
+        "@base-ui/react",
+        "cn@^0.5.0",
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "registry/base-nova/ui/combobox.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "link-pill-core",
       "type": "registry:lib",
       "files": [
