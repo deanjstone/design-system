@@ -1,3 +1,10 @@
+# [3.15.0](https://github.com/deanjstone/design-system/compare/v3.14.1...v3.15.0) (2026-11-03)
+
+
+### Features
+
+* add the chart and data-table items ([7cda884](https://github.com/deanjstone/design-system/commit/7cda88406e4936bcd76fe246175e576ebe80b9f0)), closes [#175](https://github.com/deanjstone/design-system/issues/175)
+
 ## [3.14.1](https://github.com/deanjstone/design-system/compare/v3.14.0...v3.14.1) (2026-11-03)
 
 
