@@ -1967,6 +1967,24 @@
       ]
     },
     {
+      "name": "carousel",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "deanjstone/design-system/button"
+      ],
+      "dependencies": [
+        "cn@^0.5.0",
+        "embla-carousel-react@^8.6.0",
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "registry/base-nova/ui/carousel.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "link-pill-core",
       "type": "registry:lib",
       "files": [
