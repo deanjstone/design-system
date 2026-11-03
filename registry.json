@@ -2002,6 +2002,51 @@
       ]
     },
     {
+      "name": "chart",
+      "type": "registry:ui",
+      "title": "chart",
+      "description": "The recharts wrapper (ChartContainer, tooltip and legend content) restyled to theme tokens: colour a series with var(--chart-1) to var(--chart-5). chart-lazy.tsx adds createLazyChart, which loads the recharts module on first render behind a 16:9 skeleton, so recharts stays out of the first bundle.",
+      "registryDependencies": [
+        "deanjstone/design-system/skeleton"
+      ],
+      "dependencies": [
+        "cn@^0.5.0",
+        "recharts@^3.8.0"
+      ],
+      "files": [
+        {
+          "path": "registry/base-nova/ui/chart.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/base-nova/ui/chart-lazy.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "data-table",
+      "type": "registry:ui",
+      "title": "data-table",
+      "description": "The table item driven by @tanstack/react-table v8: sortable column headers (aria-sort), one column filter and a pager that announces the page.",
+      "registryDependencies": [
+        "deanjstone/design-system/table",
+        "deanjstone/design-system/button",
+        "deanjstone/design-system/input"
+      ],
+      "dependencies": [
+        "cn@^0.5.0",
+        "@tanstack/react-table@^8.21.3",
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "registry/base-nova/ui/data-table.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "link-pill-core",
       "type": "registry:lib",
       "files": [

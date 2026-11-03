@@ -1044,6 +1044,12 @@ chroma-zero like the rest, so its primary and ring follow `--primary` and
 through `data-[orientation=…]`, the same fix #54 made for `separator` and
 `tabs`.
 
+**Data** — `chart` and `data-table`. A series takes its colour from `chart-1` to
+`chart-5` through the chart config (`color: "var(--chart-1)"`), never a literal, and
+the tooltip is a popover surface. recharts is the heaviest dependency the registry
+ships, so `chart-lazy` loads the chart module on first render rather than with the
+page; `data-table` is the `table` item driven by `@tanstack/react-table` v8.
+
 The set began bounded to what the consuming apps actually used, rather than to
 shadcn's full catalogue. On 3 Nov 2026 the owner decided to fill the catalogue
 gaps (design-system#170 and its children), so the registry now grows toward

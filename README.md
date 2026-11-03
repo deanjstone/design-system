@@ -834,6 +834,51 @@ Then restart the session — plugins are read at startup. Verify with
 that earn their place here. `/impeccable live` does not apply — it
 iterates against a running app, and this repo has none.
 
+## Data primitives
+
+`chart` and `data-table` ([#175](https://github.com/deanjstone/design-system/issues/175)).
+`docs/data/smoke-check.mjs` builds a demo that renders both in a light and a dark
+panel and runs 13 checks in one headless tab (screenshot: `docs/assets/data-demo.png`).
+
+**chart** is the base-nova recharts wrapper (`ChartContainer`, `ChartTooltipContent`,
+`ChartLegendContent`) restyled to theme tokens. Colour a series with a token in its
+config, `color: "var(--chart-1)"` to `var(--chart-5)`, and draw it with
+`fill="var(--color-<key>)"`; the bars follow light and dark with the token, and the
+tooltip is a popover surface. `recharts` is a dependency of the item.
+
+**Load it lazily.** `chart.tsx` imports recharts statically, so a page that imports it
+pays for recharts up front. The item also ships `chart-lazy.tsx`, which imports neither:
+put the recharts composition in its own module that default-exports a component, and
+wrap it once at module scope.
+
+```tsx
+const RevenueChart = createLazyChart(() => import("./revenue-chart"))
+<RevenueChart className="h-64" />
+```
+
+The chunk is fetched when the chart first renders. A 16:9 skeleton holds the box while it
+loads, and a failed fetch shows a `role="alert"` message and logs the cause.
+
+**Bundle cost**, measured on the demo build (`vite build`, gzip):
+
+| Chunk | Raw | Gzip | Loads |
+| --- | --- | --- | --- |
+| recharts + chart + the demo chart | 366.3 kB | 104.7 kB | on demand, with the first chart |
+| `@tanstack/react-table` (`data-table`) | 56.4 kB | 15.3 kB | with the page that imports `data-table` |
+| first bundle (React, demo shell, `data-table`, no recharts) | 260.1 kB | 84.2 kB | first paint |
+
+A page without a chart never downloads the recharts chunk. The item asks for
+`recharts@^3.8.0`; `budget` already depends on `recharts` directly, so check its range
+against that when it adopts the item.
+
+**data-table** is the shadcn recipe as a component: the `table` item driven by
+`@tanstack/react-table` v8, with sortable column headers (`DataTableColumnHeader`, and
+`aria-sort` on the header cell), one column filter (`filterColumn`) and a pager that
+announces the page. `caption` is required and names the table for assistive tech. v8
+is pinned because that is the API the shadcn recipe and its examples use; v9 is a
+different, feature-composed API. For row selection, column visibility or server-side
+paging, call `useReactTable` yourself with the `table` item.
+
 ## Style
 
 - `base-nova` shadcn style, OKLCH color tokens, Tailwind v4 (`@theme inline`,
@@ -877,6 +922,8 @@ iterates against a running app, and this repo has none.
     `breadcrumb`, `command`
   - *Forms and grouping* — `field`, `input-group`, `toggle`, `toggle-group`,
     `button-group`
+  - *Data* — `chart` (recharts, loaded lazily) and `data-table`; see
+    [Data primitives](#data-primitives)
 
   `tooltip` and `sidebar` need a `TooltipProvider` at the app root.
   `message-scroller` and `questionnaire` add the `@shadcn/react` package;
