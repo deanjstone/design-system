@@ -980,7 +980,7 @@ the label tracks the field's state rather than sitting inert beside it.
 
 ### The full set
 
-Forty-five components ship, plus the `use-mobile`, `use-highlighted-code` and `use-theme-preference` hooks, and the six layout blocks described in Layout Blocks above. The sections above describe the ones that define
+Forty-six components ship, plus the `use-mobile`, `use-highlighted-code` and `use-theme-preference` hooks, and the six layout blocks described in Layout Blocks above. The sections above describe the ones that define
 the system's behaviour; the rest follow the same rules — the shared focus
 treatment, the radius scale, the 32px control height where they are controls —
 and are listed here so the inventory is not something you have to infer from
@@ -999,13 +999,20 @@ rest stay flat and lean on borders, per the two-mechanism depth rule.
 `alert-dialog` and `sheet` compose `button`, so pulling either pulls it too.
 
 **Display and feedback** — `badge`, `avatar`, `progress`, `skeleton`,
-`separator`, `tabs`, `table`, `sonner`, `spinner`, `empty`, `tooltip`. Things that
-report rather than accept input.
+`separator`, `tabs`, `table`, `sonner`, `spinner`, `empty`, `tooltip`,
+`graph-3d`. Things that report rather than accept input.
 `table` is native `<table>` markup in a horizontally scrolling wrapper —
 `className` reaches the `<table>`, not the wrapper. Rows divide on `border`,
 heads and captions sit on `muted-foreground`/`foreground`, and a row marked
 `data-selected` (Base UI's convention) or `data-state="selected"` (TanStack's)
 fills with `muted`.
+`graph-3d` is a three.js force-graph orb for relationship data. Its group colours
+are `chart-1` to `chart-5` and its edges `muted-foreground`, read from the tokens
+at mount and again when the `html` element's class or attributes change, so it
+follows light, dark and every named theme. It is the one display component that
+loads a heavy dependency, so three.js sits behind a dynamic import. Under
+`prefers-reduced-motion` it neither rotates nor glides the camera, and it paints
+only the settled layout. Details and measurements: `docs/graph-3d/README.md`.
 `skeleton` and `progress` are the two that animate at rest, so they are the
 ones the reduced-motion rules matter most for.
 
@@ -1038,7 +1045,7 @@ through `data-[orientation=…]`, the same fix #54 made for `separator` and
 `tabs`.
 
 The set is deliberately bounded to what the consuming apps actually use rather
-than to shadcn's full catalogue — 45 of about 65. Adding another is mechanical
+than to shadcn's full catalogue — 46 of about 65. Adding another is mechanical
 (fetch the base-nova item, add a `registry.json` entry, rebuild `r/`), so
 demand can pull components in rather than the registry pushing them out.
 

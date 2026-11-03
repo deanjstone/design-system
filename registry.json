@@ -1880,6 +1880,59 @@
       ]
     },
     {
+      "name": "graph-3d",
+      "type": "registry:ui",
+      "title": "graph-3d",
+      "description": "A 3D force-directed graph as a slowly turning orb: orbit, zoom, hover tooltip, click to focus, highlight, theme-token colours and a reduced-motion path. three.js is lazy-loaded.",
+      "registryDependencies": [
+        "deanjstone/design-system/graph-3d-core",
+        "deanjstone/design-system/graph-3d-engine"
+      ],
+      "dependencies": [
+        "cn@^0.5.0"
+      ],
+      "files": [
+        {
+          "path": "registry/base-nova/ui/graph-3d.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "graph-3d-engine",
+      "type": "registry:lib",
+      "registryDependencies": [
+        "deanjstone/design-system/graph-3d-core"
+      ],
+      "dependencies": [
+        "three",
+        "d3-force-3d"
+      ],
+      "devDependencies": [
+        "@types/three"
+      ],
+      "files": [
+        {
+          "path": "registry/lib/graph-3d-engine.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "registry/lib/d3-force-3d.d.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "graph-3d-core",
+      "type": "registry:lib",
+      "files": [
+        {
+          "path": "registry/lib/graph-3d-core.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
       "name": "questionnaire",
       "type": "registry:ui",
       "registryDependencies": [
