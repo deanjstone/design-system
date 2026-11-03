@@ -5,7 +5,7 @@
     "cn@^0.5.0"
   ],
   "registryDependencies": [
-    "deanjstone/design-system/empty#v3.14.1"
+    "deanjstone/design-system/empty"
   ],
   "files": [
     {
