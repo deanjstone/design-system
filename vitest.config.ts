@@ -29,5 +29,8 @@ export default defineConfig({
   test: {
     environment: "jsdom",
     include: ["test/**/*.test.{ts,tsx}"],
+    // The host is shared and often loaded; the tsc and git-spawning tests take 8-15 s there
+    // against vitest's 5 s default, and pass when given room.
+    testTimeout: 30_000,
   },
 })
