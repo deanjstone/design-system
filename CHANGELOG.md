@@ -1,3 +1,10 @@
+# [3.11.0](https://github.com/deanjstone/design-system/compare/v3.10.0...v3.11.0) (2026-11-03)
+
+
+### Features
+
+* add the date-picker composition over calendar and popover ([63be5c4](https://github.com/deanjstone/design-system/commit/63be5c4cc06fc7db4659cd4138f4c3c7a6f4737f)), closes [#172](https://github.com/deanjstone/design-system/issues/172)
+
 # [3.10.0](https://github.com/deanjstone/design-system/compare/v3.9.2...v3.10.0) (2026-11-03)
 
 
