@@ -1957,7 +1957,7 @@
       "type": "registry:ui",
       "dependencies": [
         "cn@^0.5.0",
-        "react-resizable-panels@^4.17.0"
+        "react-resizable-panels@^4.16.1"
       ],
       "files": [
         {
