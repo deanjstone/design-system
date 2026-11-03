@@ -1940,6 +1940,19 @@
       ]
     },
     {
+      "name": "kbd",
+      "type": "registry:ui",
+      "dependencies": [
+        "cn@^0.5.0"
+      ],
+      "files": [
+        {
+          "path": "registry/base-nova/ui/kbd.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "link-pill-core",
       "type": "registry:lib",
       "files": [
