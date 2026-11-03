@@ -1864,6 +1864,24 @@
       ]
     },
     {
+      "name": "menubar",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "deanjstone/design-system/dropdown-menu"
+      ],
+      "dependencies": [
+        "@base-ui/react",
+        "cn@^0.5.0",
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "registry/base-nova/ui/menubar.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "link-pill-core",
       "type": "registry:lib",
       "files": [
