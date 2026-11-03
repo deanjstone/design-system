@@ -5,12 +5,17 @@ import { chmodSync, mkdtempSync, readFileSync, rmSync, writeFileSync, existsSync
 import { tmpdir } from "node:os"
 import { join } from "node:path"
 import { fileURLToPath } from "node:url"
-import { afterEach, beforeEach, describe, expect, it } from "vitest"
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
 
 // scripts/release/release-with-retry.sh runs semantic-release up to three times,
 // fast-forwarding to the remote tip before each (argus-config#1016, modelled on
 // argus's release.yml). The remote is a real bare repo in a temp dir, so the
 // non-fast-forward cases are git's own rejections, not a simulation of them.
+
+// Each case builds real git repos and runs the script through up to three attempts, which
+// takes 5-8 s on a loaded shared host: over vitest's 5 s default, so the "rejected on all 3
+// attempts" case timed out while its assertions held.
+vi.setConfig({ testTimeout: 30_000 })
 
 const root = fileURLToPath(new URL("../", import.meta.url))
 const script = join(root, "scripts/release/release-with-retry.sh")
