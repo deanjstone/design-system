@@ -1,3 +1,10 @@
+# [3.14.0](https://github.com/deanjstone/design-system/compare/v3.13.0...v3.14.0) (2026-11-03)
+
+
+### Features
+
+* add pagination and the layout demo for the seven layout primitives ([ba45ec9](https://github.com/deanjstone/design-system/commit/ba45ec90f6e652e2363c7ce80099c77520f9566e)), closes [#174](https://github.com/deanjstone/design-system/issues/174)
+
 # [3.13.0](https://github.com/deanjstone/design-system/compare/v3.12.0...v3.13.0) (2026-11-03)
 
 
