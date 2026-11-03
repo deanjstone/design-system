@@ -16,6 +16,8 @@ export default defineConfig({
       "@/lib/link-pill-core": fileURLToPath(
         new URL("./registry/lib/link-pill-core.ts", import.meta.url),
       ),
+      "@/lib/graph-3d-core": fileURLToPath(new URL("./registry/lib/graph-3d-core.ts", import.meta.url)),
+      "@/lib/graph-3d-engine": fileURLToPath(new URL("./registry/lib/graph-3d-engine.ts", import.meta.url)),
       "@/lib/highlighter": fileURLToPath(new URL("./registry/lib/highlighter.tsx", import.meta.url)),
       "@/lib/theme-preference": fileURLToPath(new URL("./registry/lib/theme-preference.ts", import.meta.url)),
       "@/lib/nav-link": fileURLToPath(new URL("./registry/lib/nav-link.tsx", import.meta.url)),
