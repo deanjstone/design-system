@@ -1,0 +1,22 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "date-picker",
+  "dependencies": [
+    "date-fns@^4.4.0",
+    "lucide-react",
+    "cn@^0.5.0"
+  ],
+  "registryDependencies": [
+    "deanjstone/design-system/button",
+    "deanjstone/design-system/calendar",
+    "deanjstone/design-system/popover"
+  ],
+  "files": [
+    {
+      "path": "registry/base-nova/ui/date-picker.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { enAU } from \"date-fns/locale\"\nimport { format } from \"date-fns\"\nimport { CalendarIcon } from \"lucide-react\"\n\nimport { cn } from \"cn\"\nimport { Button } from \"@/components/ui/button\"\nimport { Calendar } from \"@/components/ui/calendar\"\nimport {\n  Popover,\n  PopoverContent,\n  PopoverTrigger,\n} from \"@/components/ui/popover\"\n\ntype DatePickerProps = {\n  value?: Date\n  onValueChange?: (date: Date | undefined) => void\n  placeholder?: string\n  disabled?: boolean\n  className?: string\n  id?: string\n  locale?: React.ComponentProps<typeof Calendar>[\"locale\"]\n  weekStartsOn?: React.ComponentProps<typeof Calendar>[\"weekStartsOn\"]\n}\n\nconst DEFAULT_DISPLAY_FORMAT = \"PPP\"\n\nfunction DatePicker({\n  value,\n  onValueChange,\n  placeholder = \"Pick a date\",\n  disabled,\n  className,\n  id,\n  locale = enAU,\n  weekStartsOn = 1,\n}: DatePickerProps) {\n  const [open, setOpen] = React.useState(false)\n\n  return (\n    <Popover open={open} onOpenChange={setOpen}>\n      <PopoverTrigger\n        render={\n          <Button\n            id={id}\n            variant=\"outline\"\n            disabled={disabled}\n            data-slot=\"date-picker-trigger\"\n            data-empty={!value}\n            className={cn(\n              \"w-64 justify-start font-normal data-[empty=true]:text-muted-foreground\",\n              className\n            )}\n          />\n        }\n      >\n        <CalendarIcon data-icon=\"inline-start\" />\n        {value ? format(value, DEFAULT_DISPLAY_FORMAT, { locale }) : placeholder}\n      </PopoverTrigger>\n      <PopoverContent className=\"w-auto p-0\" align=\"start\">\n        <Calendar\n          mode=\"single\"\n          selected={value}\n          defaultMonth={value}\n          locale={locale}\n          weekStartsOn={weekStartsOn}\n          onSelect={(date) => {\n            onValueChange?.(date)\n            setOpen(false)\n          }}\n        />\n      </PopoverContent>\n    </Popover>\n  )\n}\n\nexport { DatePicker }\nexport type { DatePickerProps }\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

@@ -1753,6 +1753,26 @@
       ]
     },
     {
+      "name": "date-picker",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "deanjstone/design-system/button",
+        "deanjstone/design-system/calendar",
+        "deanjstone/design-system/popover"
+      ],
+      "dependencies": [
+        "date-fns@^4.4.0",
+        "lucide-react",
+        "cn@^0.5.0"
+      ],
+      "files": [
+        {
+          "path": "registry/base-nova/ui/date-picker.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "link-pill-core",
       "type": "registry:lib",
       "files": [
