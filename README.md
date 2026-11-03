@@ -540,7 +540,18 @@ It lands `app-html-head.html` at the project root; copy its tags into your
 `index.html`. It sets `viewport-fit=cover` (without it every `env(safe-area-inset-*)`
 is `0`), no zoom limit, the `apple-mobile-web-app-*` set with the `default` status
 bar, a light and a dark `theme-color` matching Ocean, and the Dynamic Type script
-(see § Text size: it sets `--dt-scale` on iOS and does nothing elsewhere).
+(see § Text size: it sets `--dt-scale` on iOS and does nothing elsewhere), plus a second
+script that keeps the status-bar band in step with light and dark.
+
+**Gotcha: the band stayed dark after the system appearance changed.** An installed iOS
+web app may not re-read its two media-scoped `theme-color` tags when it resumes after the
+system switches light/dark; only a relaunch cleared it
+([#167](https://github.com/deanjstone/design-system/issues/167)). The second script
+replaces the two tags with one unscoped `theme-color` (a fresh element each time) and
+sets `color-scheme` on `<html>`, on `pageshow`, `visibilitychange`, a system mode change
+and a change of the `dark` class. jsdom tests pin what the page asks for; that iOS then
+repaints the band is a device check ([#168](https://github.com/deanjstone/design-system/issues/168)).
+If the band is still wrong on a device, iOS owns it and the page cannot fix it.
 
 **Decisions recorded here:**
 - `apple-mobile-web-app-capable` is included. iOS 26 opens every Home Screen site

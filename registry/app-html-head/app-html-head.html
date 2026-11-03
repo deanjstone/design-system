@@ -23,6 +23,19 @@
                        PWAs included. Elsewhere it does nothing. Without it the root font
                        stays at the browser default. Keep it in <head>, so the first
                        paint is already at the right size.
+  the second script   The status-bar band (design-system#167). The two theme-color tags above
+                       give the right first paint, but an installed iOS web app may not
+                       re-read them when it resumes after the system switches between
+                       light and dark, and the band stays the old colour until a relaunch.
+                       This script replaces them with one unscoped theme-color, and sets
+                       color-scheme on <html>, from the resolved mode: the app's own dark
+                       class once the theme init has set data-theme, else the system. It
+                       re-applies on pageshow, visibilitychange, a system mode change and a
+                       change of the dark class, inserting a fresh tag each time because
+                       WebKit is known to notice an inserted meta before an edited one. It
+                       reads the colours from the two tags, so changing them is enough.
+                       Whether iOS re-reads the band on resume is a device check
+                       (design-system#168); a page cannot confirm it. Keep it in <head>.
 -->
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <meta name="mobile-web-app-capable" content="yes" />
@@ -49,5 +62,36 @@
     addEventListener("pageshow", measure)
     addEventListener("resize", measure)
     document.addEventListener("visibilitychange", measure)
+  })()
+</script>
+<script>
+  (function () {
+    if (typeof matchMedia !== "function") return
+    var root = document.documentElement
+    var system = matchMedia("(prefers-color-scheme: dark)")
+    var declared = document.querySelectorAll('meta[name="theme-color"]')
+    var colors = {}
+    for (var index = 0; index < declared.length; index++) {
+      var media = declared[index].getAttribute("media") || ""
+      var content = declared[index].getAttribute("content")
+      if (media.indexOf("dark") > -1) colors.dark = content
+      else if (media.indexOf("light") > -1) colors.light = content
+    }
+    if (!colors.light || !colors.dark) return
+    var apply = function () {
+      var mode = (root.hasAttribute("data-theme") ? root.classList.contains("dark") : system.matches) ? "dark" : "light"
+      var stale = document.querySelectorAll('meta[name="theme-color"]')
+      for (var position = 0; position < stale.length; position++) stale[position].parentNode.removeChild(stale[position])
+      var tag = document.createElement("meta")
+      tag.setAttribute("name", "theme-color")
+      tag.setAttribute("content", colors[mode])
+      document.head.appendChild(tag)
+      root.style.colorScheme = mode
+    }
+    apply()
+    addEventListener("pageshow", apply)
+    document.addEventListener("visibilitychange", apply)
+    system.addEventListener("change", apply)
+    if (typeof MutationObserver === "function") new MutationObserver(apply).observe(root, { attributes: true, attributeFilter: ["class", "data-theme"] })
   })()
 </script>
