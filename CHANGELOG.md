@@ -1,3 +1,10 @@
+## [3.14.1](https://github.com/deanjstone/design-system/compare/v3.14.0...v3.14.1) (2026-11-03)
+
+
+### Bug Fixes
+
+* re-apply theme-color and color-scheme on resume and appearance change ([36d5bd9](https://github.com/deanjstone/design-system/commit/36d5bd93b359e41eae3e9f137926fb4b8c6741e6)), closes [#167](https://github.com/deanjstone/design-system/issues/167)
+
 # [3.14.0](https://github.com/deanjstone/design-system/compare/v3.13.0...v3.14.0) (2026-11-03)
 
 
