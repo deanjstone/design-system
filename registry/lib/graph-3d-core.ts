@@ -52,7 +52,7 @@ export type MappedGraph = {
 /** Groups take these in sorted order, wrapping after the fifth. */
 export const GROUP_TOKENS = ["--chart-1", "--chart-2", "--chart-3", "--chart-4", "--chart-5"] as const
 
-const BASE_RADIUS = 1.1
+const BASE_RADIUS = 1.8
 const MIN_SIZE = 0.25
 const MAX_SIZE = 16
 
