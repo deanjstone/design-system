@@ -1044,10 +1044,13 @@ chroma-zero like the rest, so its primary and ring follow `--primary` and
 through `data-[orientation=…]`, the same fix #54 made for `separator` and
 `tabs`.
 
-The set is deliberately bounded to what the consuming apps actually use rather
-than to shadcn's full catalogue — 46 of about 65. Adding another is mechanical
-(fetch the base-nova item, add a `registry.json` entry, rebuild `r/`), so
-demand can pull components in rather than the registry pushing them out.
+The set began bounded to what the consuming apps actually used, rather than to
+shadcn's full catalogue. On 3 Nov 2026 the owner decided to fill the catalogue
+gaps (design-system#170 and its children), so the registry now grows toward
+shadcn's full set, one item at a time. Adding another is mechanical (fetch the
+base-nova item, restyle it to theme tokens, add a `registry.json` entry, rebuild
+`r/`), and each addition is pulled in by a consumer need or by the owner's
+catalogue decision rather than pushed out by the registry.
 
 ## Do's and Don'ts
 
