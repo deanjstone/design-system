@@ -17,7 +17,7 @@ beforeAll(() => {
     takeRecords() {
       return []
     }
-  } as unknown as typeof IntersectionObserver
+  }
   window.matchMedia ??= (query: string) =>
     ({ matches: false, media: query, addEventListener: () => {}, removeEventListener: () => {} }) as MediaQueryList
 })
