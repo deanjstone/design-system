@@ -1734,6 +1734,25 @@
       ]
     },
     {
+      "name": "calendar",
+      "type": "registry:ui",
+      "registryDependencies": [
+        "deanjstone/design-system/button"
+      ],
+      "dependencies": [
+        "react-day-picker@^9.14.0",
+        "date-fns@^4.4.0",
+        "lucide-react",
+        "cn@^0.5.0"
+      ],
+      "files": [
+        {
+          "path": "registry/base-nova/ui/calendar.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "link-pill-core",
       "type": "registry:lib",
       "files": [
