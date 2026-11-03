@@ -4,7 +4,7 @@
   "title": "myargus links",
   "description": "appUrl, routeUrl, apiUrl, mcpUrl, tailnetUrl, switcherApps and COOKIE_DOMAIN, generated from links.json (ADR-0004).",
   "registryDependencies": [
-    "deanjstone/design-system/links-core"
+    "deanjstone/design-system/links-core#v3.14.0"
   ],
   "files": [
     {
