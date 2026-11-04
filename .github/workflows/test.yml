@@ -2,8 +2,10 @@ name: Test
 
 on:
   pull_request:
+  # deploy too: the Release workflow starts from a green Test run on the promoted SHA
+  # (design-system#179), so a promotion re-runs the checks on exactly what it releases.
   push:
-    branches: [main]
+    branches: [main, deploy]
 
 jobs:
   test:
