@@ -10,10 +10,15 @@ import type { SimulationNode } from "d3-force-3d"
 
 import {
   easeInOutCubic,
+  heatBrightness,
+  heatColour,
+  heatSizeScale,
   nodeSpriteSize,
   parseCssColor,
   pickNearest,
   resolveTone,
+  shellForce,
+  snapToShells,
   spritePixelDiameter,
   toneProfile,
   type Graph3DTone,
@@ -172,7 +177,7 @@ export function createGraphEngine(options: GraphEngineOptions): GraphEngine {
   const scene = new THREE.Scene()
   const camera = new THREE.PerspectiveCamera(FIELD_OF_VIEW, 1, 1, 6000)
   const sphereRadius = 11 * Math.cbrt(Math.max(nodeCount, 8))
-  camera.position.set(0, sphereRadius * 1, sphereRadius * 3.6)
+  camera.position.set(0, sphereRadius * profile.cameraScale, sphereRadius * 3.6 * profile.cameraScale)
 
   const controls = new OrbitControls(camera, canvas)
   controls.enableDamping = !reducedMotion
@@ -185,8 +190,10 @@ export function createGraphEngine(options: GraphEngineOptions): GraphEngine {
   const focusDistance = Math.max(controls.minDistance * 1.5, sphereRadius * 0.55)
   controls.addEventListener("change", () => requestRender())
 
-  // Layout. A weak radial force pulls the cloud toward a sphere, which is what
-  // makes a sparse graph read as an orb rather than a smear.
+  // Layout. Default tone: a weak radial force pulls the cloud toward a sphere, which is
+  // what makes a sparse graph read as an orb rather than a smear. Void tone: even a strong
+  // radial force leaves the cloud lumpy (nodes out to 1.3R), so a shell force aims each node
+  // at a radius between 0.4R and 1.0R by rank, and the settled layout is snapped onto them.
   // NaN positions make d3-force-3d seed a phyllotaxis spiral instead of stacking every node at the origin.
   const simNodes: SimNode[] = graph.nodes.map(() => ({ x: Number.NaN, y: Number.NaN, z: Number.NaN }))
   const linkData = graph.links.map((link) => ({ source: link.source, target: link.target }))
@@ -199,7 +206,7 @@ export function createGraphEngine(options: GraphEngineOptions): GraphEngine {
     .force("link", linkForce)
     .force("charge", forceManyBody().strength(-26).distanceMax(sphereRadius * 1.2).theta(1))
     .force("centre", forceCenter(0, 0, 0))
-    .force("sphere", forceRadial(sphereRadius, 0, 0, 0).strength(0.12))
+    .force("sphere", profile.shellLayout ? shellForce(sphereRadius) : forceRadial(sphereRadius, 0, 0, 0).strength(0.12))
     .stop()
   let settled = nodeCount === 0
 
@@ -272,7 +279,7 @@ export function createGraphEngine(options: GraphEngineOptions): GraphEngine {
     const byToken = new Map<string, Rgb>()
     for (const { token } of graph.groups) byToken.set(token, read(token, inherited))
     graph.nodes.forEach((node, index) => {
-      const colour = byToken.get(node.token) ?? inherited
+      const colour = heatColour(byToken.get(node.token) ?? inherited, node.heat)
       nodeColours[index] = colour
       colours.set(colour, index * 3)
     })
@@ -290,7 +297,8 @@ export function createGraphEngine(options: GraphEngineOptions): GraphEngine {
       const emphasised = index === hovered || highlight.has(index)
       const node = graph.nodes[index]
       sizes[index] = (node ? nodeSpriteSize(node, tone) : 0) * (emphasised ? ACTIVE_SCALE : 1)
-      alphas[index] = emphasised || !anyHighlight ? (emphasised ? 1 : BASE_ALPHA) : DIMMED_ALPHA
+      // Heat dims a cold node toward its floor; a hovered or highlighted node is always full.
+      alphas[index] = emphasised ? 1 : (anyHighlight ? DIMMED_ALPHA : BASE_ALPHA) * heatBrightness(node?.heat)
     }
     nodeGeometry.getAttribute("aSize").needsUpdate = true
     nodeGeometry.getAttribute("aAlpha").needsUpdate = true
@@ -355,7 +363,7 @@ export function createGraphEngine(options: GraphEngineOptions): GraphEngine {
       radiiPx[index] =
         tone === "void"
           ? spritePixelDiameter(sizes[index] ?? 0, pixelsPerWorldUnit, distance, pixelRatio, profile) / pixelRatio / 2
-          : ((graph.nodes[index]?.radius ?? 0) * pixelsPerWorldUnit) / distance
+          : (((graph.nodes[index]?.radius ?? 0) * heatSizeScale(graph.nodes[index]?.heat) * pixelsPerWorldUnit) / distance)
     }
   }
 
@@ -483,6 +491,7 @@ export function createGraphEngine(options: GraphEngineOptions): GraphEngine {
           break
         }
       } while (performance.now() < deadline)
+      if (settled && profile.shellLayout) snapToShells(simNodes, sphereRadius)
       syncPositions()
       moved = true
       if (settled && pendingFocus !== -1) focusNode(pendingFocus)

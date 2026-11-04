@@ -13,7 +13,7 @@ import { Graph3D } from "@/components/ui/graph-3d"
 
 // Keep these arrays stable (module scope or useMemo): a new array rebuilds the layout.
 <Graph3D
-  nodes={nodes}            // { id, label, group, size? }
+  nodes={nodes}            // { id, label, group, size?, heat? }
   links={links}            // { source, target, weight?, kind? }
   highlight={["memory-4"]} // ids; the rest dim, their links light up
   focusId="memory-4"       // glide the camera to a node picked elsewhere (a search result); a jump under reduced motion
@@ -45,6 +45,7 @@ alike:
 - **Size.** No 2.6x sprite padding. A sprite is clamped to 3 to 20 CSS px; hubs grow by
   `sqrt(degree)` (the count of kept links), so most nodes are specks and a few bloom.
 - **Picking.** The hit radius follows the drawn sprite, not the node's size.
+- **Shape.** The layout settles as a spherical shell, not a cloud: see Layout below.
 
 Changing `tone` rebuilds the layout, like changing `nodes`. Try it in the demo with
 `?tone=void`.
@@ -54,6 +55,39 @@ Changing `tone` rebuilds the layout, like changing `nodes`. Try it in the demo w
 | ![default tone, dark page](../assets/graph-3d-void-before-default-dark.png) | ![void tone, dark page](../assets/graph-3d-void-after-dark.png) |
 
 `tone="void"` on a light page: ![void tone, light page](../assets/graph-3d-void-after-light.png)
+
+## Heat
+
+`heat` on a node, 0 to 1, sets how much it stands out. It works in both tones and is
+optional: a graph with no heat draws exactly as before.
+
+- **Brightness.** `floor + heat * gain`, with a floor of 0.42, so a cold node dims to
+  about 40% and a hot one is full. A hovered or highlighted node is always full.
+- **Size.** The sprite scales from 0.6x at heat 0 to 1.4x at heat 1 (1.0x at 0.5),
+  inside the tone's pixel clamp.
+- **Colour.** A cold node keeps its group colour's hue but loses saturation, down to
+  30% at heat 0, so the cold majority reads as faint and the hot few carry the colour.
+- Values outside 0 to 1 are clamped; a missing or non-finite value means no heat.
+
+Feed it something that is mostly low with a few high: the sample uses
+`sqrt(links / most links)`, so a few hubs run hot and most notes stay cool. The demo
+draws the same graph without heat at `?heat=0`.
+
+| `tone="void"`, no heat, force cloud | `tone="void"`, heat and shell layout |
+|---|---|
+| ![before: no heat, force cloud](../assets/graph-3d-heat-shell-before-void-dark.png) | ![after: heat and shell layout](../assets/graph-3d-heat-shell-after-void-dark.png) |
+
+## Layout
+
+Under `tone="void"` the layout is a sphere. A stronger `forceRadial` was tried first and
+was not enough: on the 1,300-node sample, even at strength 1 nodes ended between 0.55R
+and 1.31R with the spread still 12% of the mean radius. So void swaps the radial force
+for a shell force that ranks the nodes by distance from the centre and aims each at a
+radius between 0.4R and 1.0R, spread evenly by volume, and the settled layout is
+snapped onto those radii. The force is strong enough (4x) that the snap moves a node
+about 0.06R on average, so nothing visibly jumps. Each node keeps its direction from
+the centre, so the clusters the links formed stay where they are; only the spacing is
+regularised. The default tone keeps its radial-force cloud.
 
 ## Behaviour
 
@@ -65,7 +99,9 @@ Changing `tone` rebuilds the layout, like changing `nodes`. Try it in the demo w
   `--foreground`. Pass `groupTokens={{ risk: "--destructive" }}` to pin a group to
   another token. Light, dark and every named theme work because the engine
   re-reads the tokens when the `html` element's class or attributes change.
-- **Reduced motion.** Under `prefers-reduced-motion: reduce` nothing rotates, the
+- **Reduced motion.** Heat and the shell layout add no motion of their own: heat is
+  static, and the snap happens before the first frame when the layout is computed
+  unseen. Under `prefers-reduced-motion: reduce` nothing rotates, the
   camera jumps instead of gliding, damping is off, and the layout is computed
   unseen so the first thing painted is the settled graph. The page then draws
   nothing until you interact. The preference is read live: flipping it while the

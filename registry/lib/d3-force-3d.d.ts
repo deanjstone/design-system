@@ -10,7 +10,7 @@ declare module "d3-force-3d" {
     vz?: number
   }
 
-  export type Force = ((alpha: number) => void) & Record<string, unknown>
+  export type Force = (alpha: number) => void
 
   export type Simulation<N extends SimulationNode> = {
     tick(iterations?: number): Simulation<N>

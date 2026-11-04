@@ -31,3 +31,23 @@ describe("sampleGraph", () => {
     expect(new Set(mapped.groups.map((entry) => entry.token)).size).toBe(5)
   })
 })
+
+describe("sampleGraph heat", () => {
+  const { nodes } = sampleGraph(1300, 169)
+  const heats = nodes.map((node) => node.heat)
+
+  it("gives every node a heat in 0-1", () => {
+    for (const heat of heats) {
+      expect(heat).toBeGreaterThanOrEqual(0)
+      expect(heat).toBeLessThanOrEqual(1)
+    }
+  })
+
+  it("keeps most nodes cool and a few hot, so the orb has focal points", () => {
+    const sorted = heats.map(Number).sort((a, b) => a - b)
+    expect(sorted.at(-1)).toBe(1)
+    expect(sorted[Math.floor(sorted.length / 2)]).toBeLessThan(0.35)
+    expect(sorted.filter((heat) => heat > 0.6).length).toBeLessThan(sorted.length * 0.1)
+    expect(sorted.filter((heat) => heat > 0.6).length).toBeGreaterThan(0)
+  })
+})

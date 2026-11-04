@@ -59,8 +59,12 @@ export function sampleGraph(nodeCount = 1300, seed = 169): { nodes: Graph3DNode[
     byGroup.set(node.group, siblings)
   })
 
+  // Heat follows the square root of the link count, as the memory map's will: a few
+  // foundational notes run hot and most stay cool.
+  const busiest = Math.max(1, ...degree)
   nodes.forEach((node, index) => {
     node.size = 1 + Math.min(6, degree[index] / 3)
+    node.heat = Math.sqrt(degree[index] / busiest)
   })
   return { nodes, links }
 }

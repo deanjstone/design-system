@@ -263,6 +263,17 @@ describe("toneProfile", () => {
     expect(profile.spriteFactor).toBe(1)
   })
 
+  it("lays out as a spherical shell under void only; the default tone keeps its cloud layout", () => {
+    expect(toneProfile("void", 1).shellLayout).toBe(true)
+    expect(toneProfile("default", 1).shellLayout).toBe(false)
+  })
+
+  it("moves the camera in for the tighter shell, and leaves the default tone's framing alone", () => {
+    expect(toneProfile("default", 1).cameraScale).toBe(1)
+    expect(toneProfile("void", 1).cameraScale).toBeLessThan(1)
+    expect(toneProfile("void", 1).cameraScale).toBeGreaterThan(0.5)
+  })
+
   it("clamps void sprites to 3 to 20 CSS px, scaled to device pixels", () => {
     expect(toneProfile("void", 1)).toMatchObject({ minSpritePx: 3, maxSpritePx: 20 })
     expect(toneProfile("void", 2)).toMatchObject({ minSpritePx: 6, maxSpritePx: 40 })

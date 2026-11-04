@@ -213,6 +213,10 @@ export type ToneProfile = {
   maxSpritePx: number
   baseEdgeOpacity: number
   activeEdgeOpacity: number
+  /** True settles the layout as a spherical shell (0.4R to 1.0R); false leaves the force cloud as it falls. */
+  shellLayout: boolean
+  /** Multiplies the camera's starting distance: the shell is tighter than the cloud, so void moves in. */
+  cameraScale: number
 }
 
 export function toneProfile(tone: Graph3DTone, pixelRatio: number): ToneProfile {
@@ -225,6 +229,8 @@ export function toneProfile(tone: Graph3DTone, pixelRatio: number): ToneProfile 
       maxSpritePx: VOID_SPRITE_PX.max * pixelRatio,
       baseEdgeOpacity: 0.16,
       activeEdgeOpacity: 0.7,
+      shellLayout: true,
+      cameraScale: 0.8,
     }
   }
   return {
@@ -235,6 +241,8 @@ export function toneProfile(tone: Graph3DTone, pixelRatio: number): ToneProfile 
     maxSpritePx: 160,
     baseEdgeOpacity: 0.2,
     activeEdgeOpacity: 0.85,
+    shellLayout: false,
+    cameraScale: 1,
   }
 }
 
