@@ -183,6 +183,36 @@ git push origin HEAD:main`),
   })
 })
 
+describe("RELEASE_BRANCH=deploy (releases from a promotion, design-system#179)", () => {
+  beforeEach(() => {
+    git(work, "push", "-q", "origin", "HEAD:deploy")
+    // main moves on after the promotion; the release must not see it.
+    racerPushes("feat: landed on main after the promotion")
+  })
+
+  const runOnDeploy = (command: string) =>
+    spawnSync("bash", [script], {
+      cwd: work,
+      encoding: "utf8",
+      env: { ...process.env, RELEASE_COMMAND: command, RUNNER_TEMP: dir, RELEASE_BRANCH: "deploy" },
+    })
+
+  it("releases from the promoted commit on a local branch named deploy, not from main", () => {
+    const result = runOnDeploy(
+      releaseCommand(`git rev-parse --abbrev-ref HEAD > "${dir}/branch"; git log --format=%s -1 > "${dir}/head-subject"`),
+    )
+    expect(result.status, result.stdout + result.stderr).toBe(0)
+    expect(readFileSync(join(dir, "branch"), "utf8").trim()).toBe("deploy")
+    expect(readFileSync(join(dir, "head-subject"), "utf8").trim()).toBe("feat: first")
+  })
+
+  it("names deploy in the final error when pushes keep being rejected", () => {
+    const result = runOnDeploy(releaseCommand(`echo "! [rejected] HEAD -> main (non-fast-forward)"; exit 1`))
+    expect(result.status).toBe(1)
+    expect(result.stdout).toContain("push was rejected 3 times because deploy kept moving")
+  })
+})
+
 describe("the Release workflow", () => {
   const workflow = readFileSync(join(root, ".github/workflows/release.yml"), "utf8")
 

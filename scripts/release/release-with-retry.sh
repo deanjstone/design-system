@@ -24,9 +24,13 @@
 # second chore(release) commit and a duplicate CHANGELOG section for the same
 # version. The tag, the GitHub release and the pinned r/ are still made once.
 #
+# RELEASE_BRANCH is the branch the release runs on (default main). After the move to
+# promotion-driven releases (design-system#179) it is deploy: each attempt then starts
+# from the remote tip of deploy, the SHA the owner promoted, never from a newer main.
 # RELEASE_COMMAND overrides the command; test/release-retry.test.ts uses it.
 set -uo pipefail
 
+RELEASE_BRANCH="${RELEASE_BRANCH:-main}"
 RELEASE_COMMAND="${RELEASE_COMMAND:-pnpm exec semantic-release}"
 LOG="${RUNNER_TEMP:-${TMPDIR:-/tmp}}/semantic-release.log"
 MAX_ATTEMPTS=3
@@ -35,11 +39,11 @@ REJECTED_PATTERN='failed to push some refs|\[rejected\]|non-fast-forward|fetch f
 
 reason=""
 for attempt in $(seq 1 "${MAX_ATTEMPTS}"); do
-  if ! git fetch --quiet origin main; then
-    echo "::error::could not fetch origin main"
+  if ! git fetch --quiet origin "${RELEASE_BRANCH}"; then
+    echo "::error::could not fetch origin ${RELEASE_BRANCH}"
     exit 1
   fi
-  git checkout --quiet --force -B main origin/main || exit 1
+  git checkout --quiet --force -B "${RELEASE_BRANCH}" "origin/${RELEASE_BRANCH}" || exit 1
   git clean --quiet -fd
 
   bash -c "${RELEASE_COMMAND}" 2>&1 | tee "${LOG}"
@@ -62,6 +66,6 @@ done
 if [ "${reason}" = "behind" ]; then
   echo "::error::still behind the remote after ${MAX_ATTEMPTS} attempts, release skipped"
 else
-  echo "::error::release push was rejected ${MAX_ATTEMPTS} times because main kept moving, release not completed"
+  echo "::error::release push was rejected ${MAX_ATTEMPTS} times because ${RELEASE_BRANCH} kept moving, release not completed"
 fi
 exit 1
