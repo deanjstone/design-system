@@ -89,6 +89,44 @@ about 0.06R on average, so nothing visibly jumps. Each node keeps its direction 
 the centre, so the clusters the links formed stay where they are; only the spacing is
 regularised. The default tone keeps its radial-force cloud.
 
+## Atmosphere and motion
+
+`tone="void"` also draws a glass shell and some dust, and the orb moves. None of it
+exists under `tone="default"`.
+
+- **Membrane.** A back-faced sphere at 1.04R, additive, lit only at its rim (a fresnel
+  term, `pow(1 - |n.v|, 2.4)`) with a peak alpha of 0.3. Its tint drifts slowly between
+  `--chart-5` and `--chart-2`, read from the tokens, so it follows the theme. It gives
+  the orb a silhouette.
+- **Motes.** 1,000 additive specks of about 2.6 CSS px between 1.15R and 2.25R, spread
+  evenly by volume, each wandering a few percent of R on its own phase. The field is
+  seeded, so rebuilding the graph does not reshuffle it. They carry no data and are never
+  picked.
+- **Breathing.** The whole orb scales by two sines that do not line up, within 1%, and
+  each node pulses to as low as 60% of its brightness on its own phase, so no two
+  pulse in step.
+- **Precession.** In place of OrbitControls' fixed-axis spin, the orb turns about its
+  vertical axis while its pitch tips to and fro within 0.2 rad on a slower cycle, so the
+  view circles from changing angles. It follows the `autoRotate` prop; breathing, pulse
+  and drift do not.
+- **Holds still when touched.** Motion stops (within about a quarter of a second) while
+  you drag, zoom or hover a node, and after you let go it waits 8 seconds and then eases
+  back over a couple of seconds. Clicking a node to focus it counts as a touch.
+- **Reduced motion.** `prefers-reduced-motion: reduce` turns off the motes and all
+  motion: no breathing, pulse, drift or precession. The membrane stays, because it is
+  still, and the first thing painted is the settled graph.
+- **Cost.** Draw calls stay at 3, counted per frame in a real browser: the motes share
+  the nodes' `Points` object (an attribute marks them and gives their pixel size), the
+  faint and active links share one `LineSegments` (a per-vertex flag picks the brighter
+  look), and the membrane is the third. Before this, the nodes, the faint links and a
+  separate active-links layer were the three.
+
+| Before: `tone="void"`, heat and shell layout | After: membrane, motes and motion |
+|---|---|
+| ![before: no membrane or dust](../assets/graph-3d-atmosphere-before-void-dark.png) | ![after: membrane, motes](../assets/graph-3d-atmosphere-after-void-dark.png) |
+
+Under reduced motion: ![reduced motion: membrane only, no motes](../assets/graph-3d-atmosphere-reduced-motion-void-dark.png)
+
 ## Behaviour
 
 - **Orbit, zoom, hover, click.** Drag to orbit, wheel or pinch to zoom, hover for a
@@ -101,7 +139,7 @@ regularised. The default tone keeps its radial-force cloud.
   re-reads the tokens when the `html` element's class or attributes change.
 - **Reduced motion.** Heat and the shell layout add no motion of their own: heat is
   static, and the snap happens before the first frame when the layout is computed
-  unseen. Under `prefers-reduced-motion: reduce` nothing rotates, the
+  unseen. Void's motes and motion are off (see Atmosphere and motion). Under `prefers-reduced-motion: reduce` nothing rotates, the
   camera jumps instead of gliding, damping is off, and the layout is computed
   unseen so the first thing painted is the settled graph. The page then draws
   nothing until you interact. The preference is read live: flipping it while the
@@ -115,8 +153,9 @@ regularised. The default tone keeps its radial-force cloud.
 object per link. At 1,300 nodes and 2,000 to 4,000 links that is thousands of draw
 calls, which is what the 60fps goal rules out. Here the layout is
 `d3-force-3d` (Barnes-Hut many-body, so a tick is near-linear) and drawing is two
-draw calls: one `Points` object with a glow shader for the nodes and one
-`LineSegments` for the edges. Picking projects the nodes to the screen instead of
+draw calls: one `Points` object with a glow shader for the nodes (the void tone's dust
+rides in it too) and one `LineSegments` for the edges (the void tone adds the membrane
+as a third). Picking projects the nodes to the screen instead of
 raycasting sprites. It costs roughly 400 lines we own, but no per-node scene graph
 and no dependency on a wrapper's release cadence.
 
@@ -154,8 +193,8 @@ homelab host (no GPU, so WebGL is SwiftShader software rendering):
 | `prefers-reduced-motion: reduce` | `data-auto-rotate="false"`, two screenshots 1.5 s apart are byte-identical |
 
 The 22 fps is the software rasteriser, not this code: the page's own work is about
-0.6 ms a frame, which leaves room for far more than 60 fps, and a GPU draws two
-draw calls of points and lines in well under a millisecond. Treat the frame rate
+0.6 ms a frame, which leaves room for far more than 60 fps, and a GPU draws three
+draw calls of points, lines and a small sphere in well under a millisecond. Treat the frame rate
 here as a floor measured without a GPU, and re-measure on the consuming device when
 it matters. Screenshots: [dark](../assets/graph-3d-1300-dark.png),
 [light](../assets/graph-3d-1300-light.png).

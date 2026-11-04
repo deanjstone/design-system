@@ -733,6 +733,17 @@ describe("stepMotionRate", () => {
     expect(rate).toBeLessThan(0.01)
   })
 
+  it("stops faster than it starts: nearly still within a second of being touched, still gathering speed after a second", () => {
+    let stopping = 1
+    let starting = 0
+    for (let step = 0; step < 60; step++) {
+      stopping = stepMotionRate(stopping, 0, 16)
+      starting = stepMotionRate(starting, 1, 16)
+    }
+    expect(stopping).toBeLessThan(0.05)
+    expect(starting).toBeLessThan(0.6)
+  })
+
   it("takes the same path at 30fps as at 60fps", () => {
     let fast = 0
     let slow = 0

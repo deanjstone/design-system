@@ -477,7 +477,7 @@ export const ATMOSPHERE = {
   moteInner: 1.15,
   moteOuter: 2.25,
   /** Diameter of a mote, in CSS px, whatever its distance. */
-  motePx: 2.2,
+  motePx: 2.6,
   moteAlpha: 0.5,
   /** How far a mote wanders from its home along each axis, as a share of R. */
   moteDrift: 0.05,
@@ -499,8 +499,10 @@ export const MOTION = {
   pulseDepth: 0.4,
   /** Motion holds still this long after the last interaction, then eases back. */
   idleMs: 8000,
-  /** Time constant of the ease, in ms: the share of the way covered per step is `1 - exp(-dt / easeMs)`. */
-  easeMs: 1200,
+  /** Time constants of the ease, in ms; a step covers `1 - exp(-dt / tau)` of the way to its target. */
+  easeInMs: 1500,
+  /** Stopping is quicker than starting, so the orb is still by the time you have looked at what you touched. */
+  easeOutMs: 250,
 } as const
 
 /**
@@ -575,7 +577,8 @@ export function motionTarget(state: { interacting: boolean; hovered: boolean; id
   return state.idleMs >= MOTION.idleMs ? 1 : 0
 }
 
-/** Moves the motion rate toward `target` over `dtMs`; frame-rate independent, never past the target. */
+/** Moves the motion rate toward `target` over `dtMs`: slowly up, quickly down; frame-rate independent, never past the target. */
 export function stepMotionRate(rate: number, target: number, dtMs: number): number {
-  return rate + (target - rate) * (1 - Math.exp(-Math.max(0, dtMs) / MOTION.easeMs))
+  const tau = target < rate ? MOTION.easeOutMs : MOTION.easeInMs
+  return rate + (target - rate) * (1 - Math.exp(-Math.max(0, dtMs) / tau))
 }

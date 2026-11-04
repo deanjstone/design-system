@@ -9,17 +9,26 @@ import { forceCenter, forceLink, forceManyBody, forceRadial, forceSimulation } f
 import type { SimulationNode } from "d3-force-3d"
 
 import {
+  ATMOSPHERE,
+  MOTION,
+  breathScale,
   easeInOutCubic,
   heatBrightness,
   heatColour,
   heatSizeScale,
+  moteField,
+  motionTarget,
+  nodePhase,
   nodeSpriteSize,
   parseCssColor,
   pickNearest,
+  precession,
+  resolveAtmosphere,
   resolveTone,
   shellForce,
   snapToShells,
   spritePixelDiameter,
+  stepMotionRate,
   toneProfile,
   type Graph3DTone,
   type MappedGraph,
@@ -61,19 +70,36 @@ const nodeVertexShader = /* glsl */ `
   attribute vec3 aColor;
   attribute float aSize;
   attribute float aAlpha;
+  attribute float aPhase;
+  attribute float aMote;
   uniform float uScale;
   uniform float uPixelRatio;
   uniform float uSpriteFactor;
   uniform float uMinPx;
   uniform float uMaxPx;
+  uniform float uTime;
+  uniform float uPulse;
+  uniform float uPulseRate;
+  uniform float uPulseDepth;
+  uniform float uDrift;
   varying vec3 vColor;
   varying float vAlpha;
   void main() {
-    vec4 viewPosition = modelViewMatrix * vec4(position, 1.0);
+    // aMote is 0 for a node and a dust mote's diameter in CSS px otherwise: motes share this draw call.
+    bool isMote = aMote > 0.0;
+    vec3 home = position;
+    if (isMote) {
+      home += uDrift * vec3(sin(uTime * 0.06 + aPhase), sin(uTime * 0.047 + aPhase * 1.7), cos(uTime * 0.053 + aPhase * 2.3));
+    }
+    vec4 viewPosition = modelViewMatrix * vec4(home, 1.0);
     vColor = aColor;
-    vAlpha = aAlpha;
+    // A node's pulse dims it by up to uPulseDepth, each on its own phase; uPulse is 0 when nothing moves.
+    float pulse = isMote ? 1.0 : 1.0 - uPulse * uPulseDepth * (0.5 - 0.5 * sin(uTime * uPulseRate + aPhase));
+    vAlpha = aAlpha * pulse;
     // The default tone's sprite covers 2.6x the node diameter so the halo has room to fade out.
-    gl_PointSize = clamp(aSize * uSpriteFactor * uScale * uPixelRatio / -viewPosition.z, uMinPx, uMaxPx);
+    gl_PointSize = isMote
+      ? aMote * uPixelRatio
+      : clamp(aSize * uSpriteFactor * uScale * uPixelRatio / -viewPosition.z, uMinPx, uMaxPx);
     gl_Position = projectionMatrix * viewPosition;
   }
 `
@@ -128,6 +154,37 @@ const lineFragmentShader = /* glsl */ `
   }
 `
 
+// Void tone's membrane: a back-faced sphere just outside the outermost node, lit only at the
+// rim (a fresnel term on the view angle) and tinted between two tokens that drift slowly.
+const membraneVertexShader = /* glsl */ `
+  varying vec3 vNormal;
+  varying vec3 vView;
+  varying vec3 vDirection;
+  void main() {
+    vec4 viewPosition = modelViewMatrix * vec4(position, 1.0);
+    vNormal = normalize(normalMatrix * normal);
+    vView = normalize(-viewPosition.xyz);
+    vDirection = normalize(position);
+    gl_Position = projectionMatrix * viewPosition;
+  }
+`
+
+const membraneFragmentShader = /* glsl */ `
+  uniform vec3 uColourA;
+  uniform vec3 uColourB;
+  uniform float uTime;
+  uniform float uAlpha;
+  uniform float uPower;
+  varying vec3 vNormal;
+  varying vec3 vView;
+  varying vec3 vDirection;
+  void main() {
+    float rim = pow(1.0 - abs(dot(normalize(vNormal), normalize(vView))), uPower);
+    float drift = 0.5 + 0.5 * sin(uTime * 0.15 + vDirection.y * 2.0 + vDirection.x * 1.3);
+    gl_FragColor = vec4(mix(uColourA, uColourB, drift), rim * uAlpha);
+  }
+`
+
 // Tokens are CSS custom properties; their values are whatever the theme wrote.
 // Fall back to the browser's own parse for syntax graph-3d-core does not read.
 let colourProbe: CanvasRenderingContext2D | null | undefined
@@ -175,6 +232,7 @@ export function createGraphEngine(options: GraphEngineOptions): GraphEngine {
   const pixelRatio = Math.min(window.devicePixelRatio || 1, 2)
   const profile = toneProfile(tone, pixelRatio)
   const blending = profile.additive ? THREE.AdditiveBlending : THREE.NormalBlending
+  const atmosphere = resolveAtmosphere(profile, reducedMotion)
   renderer.setPixelRatio(pixelRatio)
   const canvas = renderer.domElement
   canvas.style.display = "block"
@@ -190,13 +248,24 @@ export function createGraphEngine(options: GraphEngineOptions): GraphEngine {
   const controls = new OrbitControls(camera, canvas)
   controls.enableDamping = !reducedMotion
   controls.dampingFactor = 0.08
-  controls.autoRotate = options.autoRotate
+  // With motion on, the orb itself precesses (see applyMotion) and OrbitControls' fixed-axis spin stays off.
+  controls.autoRotate = !atmosphere.motion && options.autoRotate
   controls.autoRotateSpeed = 0.45
   controls.enablePan = false
   controls.minDistance = 20
   controls.maxDistance = sphereRadius * 8
   const focusDistance = Math.max(controls.minDistance * 1.5, sphereRadius * 0.55)
   controls.addEventListener("change", () => requestRender())
+  // Motion holds still while the orb is being dragged or zoomed, and eases back once it has been left alone.
+  let interacting = false
+  let lastInteractionAt = Number.NEGATIVE_INFINITY
+  controls.addEventListener("start", () => {
+    interacting = true
+  })
+  controls.addEventListener("end", () => {
+    interacting = false
+    lastInteractionAt = performance.now()
+  })
 
   // Layout. Default tone: a weak radial force pulls the cloud toward a sphere, which is
   // what makes a sparse graph read as an orb rather than a smear. Void tone: even a strong
@@ -219,16 +288,32 @@ export function createGraphEngine(options: GraphEngineOptions): GraphEngine {
   let settled = nodeCount === 0
 
   // Node buffers.
-  const positions = new Float32Array(nodeCount * 3)
-  const colours = new Float32Array(nodeCount * 3)
-  const sizes = new Float32Array(nodeCount)
-  const alphas = new Float32Array(nodeCount)
+  // Dust motes follow the nodes in the same buffers, so they draw in the nodes' one call.
+  const moteCount = atmosphere.motes ? ATMOSPHERE.moteCount : 0
+  const pointCount = nodeCount + moteCount
+  const positions = new Float32Array(pointCount * 3)
+  const colours = new Float32Array(pointCount * 3)
+  const sizes = new Float32Array(pointCount)
+  const alphas = new Float32Array(pointCount)
+  const phases = new Float32Array(pointCount)
+  const moteDiameters = new Float32Array(pointCount)
+  for (let index = 0; index < nodeCount; index++) phases[index] = nodePhase(index)
+  if (moteCount > 0) {
+    const field = moteField(moteCount, sphereRadius)
+    positions.set(field.positions, nodeCount * 3)
+    phases.set(field.phases, nodeCount)
+    alphas.fill(ATMOSPHERE.moteAlpha, nodeCount)
+    moteDiameters.fill(ATMOSPHERE.motePx, nodeCount)
+  }
   const nodeGeometry = new THREE.BufferGeometry()
   nodeGeometry.setAttribute("position", new THREE.BufferAttribute(positions, 3).setUsage(THREE.DynamicDrawUsage))
   nodeGeometry.setAttribute("aColor", new THREE.BufferAttribute(colours, 3))
   nodeGeometry.setAttribute("aSize", new THREE.BufferAttribute(sizes, 1).setUsage(THREE.DynamicDrawUsage))
   nodeGeometry.setAttribute("aAlpha", new THREE.BufferAttribute(alphas, 1).setUsage(THREE.DynamicDrawUsage))
+  nodeGeometry.setAttribute("aPhase", new THREE.BufferAttribute(phases, 1))
+  nodeGeometry.setAttribute("aMote", new THREE.BufferAttribute(moteDiameters, 1))
   const scaleUniform = { value: 1 }
+  const timeUniform = { value: 0 }
   const nodeMaterial = new THREE.ShaderMaterial({
     vertexShader: nodeVertexShader,
     fragmentShader: profile.softGlow ? voidNodeFragmentShader : nodeFragmentShader,
@@ -238,6 +323,11 @@ export function createGraphEngine(options: GraphEngineOptions): GraphEngine {
       uSpriteFactor: { value: profile.spriteFactor },
       uMinPx: { value: profile.minSpritePx },
       uMaxPx: { value: profile.maxSpritePx },
+      uTime: timeUniform,
+      uPulse: { value: atmosphere.motion ? 1 : 0 },
+      uPulseRate: { value: MOTION.pulseRate },
+      uPulseDepth: { value: MOTION.pulseDepth },
+      uDrift: { value: atmosphere.motion ? sphereRadius * ATMOSPHERE.moteDrift : 0 },
     },
     transparent: true,
     blending,
@@ -245,7 +335,10 @@ export function createGraphEngine(options: GraphEngineOptions): GraphEngine {
   })
   const nodePoints = new THREE.Points(nodeGeometry, nodeMaterial)
   nodePoints.frustumCulled = false
-  scene.add(nodePoints)
+  // Everything that belongs to the orb turns and breathes together; the camera stays put.
+  const orb = new THREE.Group()
+  orb.add(nodePoints)
+  scene.add(orb)
 
   // Link buffers: every link faint, the active ones brighter, all in one draw.
   const linkPositions = new Float32Array(linkCount * 6)
@@ -273,7 +366,34 @@ export function createGraphEngine(options: GraphEngineOptions): GraphEngine {
   // Links first so node glows blend over them.
   lines.renderOrder = 0
   nodePoints.renderOrder = 2
-  scene.add(lines)
+  orb.add(lines)
+
+  const membraneColourA = new THREE.Vector3()
+  const membraneColourB = new THREE.Vector3()
+  const membraneGeometry = atmosphere.membrane ? new THREE.SphereGeometry(sphereRadius * ATMOSPHERE.membraneRadius, 48, 32) : null
+  const membraneMaterial = atmosphere.membrane
+    ? new THREE.ShaderMaterial({
+        vertexShader: membraneVertexShader,
+        fragmentShader: membraneFragmentShader,
+        uniforms: {
+          uColourA: { value: membraneColourA },
+          uColourB: { value: membraneColourB },
+          uTime: timeUniform,
+          uAlpha: { value: ATMOSPHERE.rimAlpha },
+          uPower: { value: ATMOSPHERE.rimPower },
+        },
+        side: THREE.BackSide,
+        transparent: true,
+        blending: THREE.AdditiveBlending,
+        depthWrite: false,
+      })
+    : null
+  if (membraneGeometry && membraneMaterial) {
+    const membrane = new THREE.Mesh(membraneGeometry, membraneMaterial)
+    membrane.frustumCulled = false
+    membrane.renderOrder = -1
+    orb.add(membrane)
+  }
 
   const nodeColours: Rgb[] = []
 
@@ -292,6 +412,9 @@ export function createGraphEngine(options: GraphEngineOptions): GraphEngine {
     const active = read("--foreground", inherited)
     baseColour.set(...edge)
     activeColour.set(...active)
+    for (let mote = 0; mote < moteCount; mote++) colours.set(edge, (nodeCount + mote) * 3)
+    membraneColourA.set(...read("--chart-5", inherited))
+    membraneColourB.set(...read("--chart-2", inherited))
     nodeGeometry.getAttribute("aColor").needsUpdate = true
     requestRender()
   }
@@ -349,9 +472,10 @@ export function createGraphEngine(options: GraphEngineOptions): GraphEngine {
   const projected = new THREE.Vector3()
   function projectNodes(width: number, height: number) {
     camera.updateMatrixWorld()
+    orb.updateMatrixWorld()
     const pixelsPerWorldUnit = height / (2 * Math.tan((FIELD_OF_VIEW * Math.PI) / 360))
     for (let index = 0; index < nodeCount; index++) {
-      projected.set(positions[index * 3] ?? 0, positions[index * 3 + 1] ?? 0, positions[index * 3 + 2] ?? 0)
+      projected.set(positions[index * 3] ?? 0, positions[index * 3 + 1] ?? 0, positions[index * 3 + 2] ?? 0).applyMatrix4(orb.matrixWorld)
       const distance = projected.distanceTo(camera.position)
       projected.project(camera)
       const behind = projected.z > 1
@@ -369,7 +493,7 @@ export function createGraphEngine(options: GraphEngineOptions): GraphEngine {
   function setHovered(next: number, x = 0, y = 0) {
     if (next !== hovered) {
       hovered = next
-      controls.autoRotate = hovered === -1 && wantsAutoRotate
+      syncNativeAutoRotate()
       canvas.style.cursor = hovered === -1 ? "grab" : "pointer"
       applyEmphasis()
     }
@@ -378,6 +502,9 @@ export function createGraphEngine(options: GraphEngineOptions): GraphEngine {
   }
 
   let wantsAutoRotate = options.autoRotate
+  function syncNativeAutoRotate() {
+    controls.autoRotate = !atmosphere.motion && wantsAutoRotate && hovered === -1
+  }
   let pointerMoved: { x: number; y: number } | null = null
   let downAt: { x: number; y: number } | null = null
 
@@ -436,7 +563,12 @@ export function createGraphEngine(options: GraphEngineOptions): GraphEngine {
     // The layout is still moving: glide now, and again once it settles so the
     // camera ends on the node's final position rather than its seeded one.
     pendingFocus = settled ? -1 : index
-    const toTarget = new THREE.Vector3(positions[index * 3] ?? 0, positions[index * 3 + 1] ?? 0, positions[index * 3 + 2] ?? 0)
+    // The orb is still, so the camera ends on the node: a click is an interaction and holds the motion.
+    lastInteractionAt = performance.now()
+    orb.updateMatrixWorld()
+    const toTarget = new THREE.Vector3(positions[index * 3] ?? 0, positions[index * 3 + 1] ?? 0, positions[index * 3 + 2] ?? 0).applyMatrix4(
+      orb.matrixWorld,
+    )
     const outward = camera.position.clone().sub(controls.target).normalize()
     const toCamera = toTarget.clone().addScaledVector(outward, focusDistance)
     if (reducedMotion) {
@@ -475,10 +607,40 @@ export function createGraphEngine(options: GraphEngineOptions): GraphEngine {
     if (!frameHandle && !disposed) frameHandle = requestAnimationFrame(frame)
   }
 
+  // Motion clocks, in seconds. `motionClock` drives the breath, the pulse and the drift; `spinClock`
+  // drives the precessing rotation and runs only while auto-rotate is on. Both advance at `motionRate`,
+  // which holds at 0 while the orb is touched or hovered and eases back to 1 once it has been idle.
+  let motionClock = 0
+  let spinClock = 0
+  let motionRate = 1
+  let lastFrameAt = performance.now()
+
+  function applyMotion() {
+    timeUniform.value = motionClock
+    orb.scale.setScalar(breathScale(motionClock))
+    const { yaw, pitch } = precession(spinClock)
+    orb.rotation.set(pitch, yaw, 0, "YXZ")
+    orb.updateMatrixWorld()
+  }
+
+  function stepMotion(now: number): boolean {
+    const elapsed = Math.min(100, now - lastFrameAt)
+    lastFrameAt = now
+    const target = motionTarget({ interacting, hovered: hovered !== -1, idleMs: now - lastInteractionAt })
+    motionRate = stepMotionRate(motionRate, target, elapsed)
+    if (target === 0 && motionRate < 0.0005) motionRate = 0
+    if (motionRate === 0) return false
+    motionClock += (elapsed / 1000) * motionRate
+    if (wantsAutoRotate) spinClock += (elapsed / 1000) * motionRate
+    applyMotion()
+    return true
+  }
+
   function frame() {
     frameHandle = 0
     if (disposed) return
     let moved = false
+    if (atmosphere.motion && stepMotion(performance.now())) moved = true
 
     if (!settled) {
       const deadline = performance.now() + FRAME_BUDGET_MS
@@ -522,7 +684,7 @@ export function createGraphEngine(options: GraphEngineOptions): GraphEngine {
       renderRequested = false
     }
 
-    if ((!settled || tween || controls.autoRotate || moved) && !frameHandle) {
+    if ((!settled || tween || controls.autoRotate || moved || atmosphere.motion) && !frameHandle) {
       frameHandle = requestAnimationFrame(frame)
     }
   }
@@ -537,7 +699,7 @@ export function createGraphEngine(options: GraphEngineOptions): GraphEngine {
   return {
     setAutoRotate(autoRotate) {
       wantsAutoRotate = autoRotate
-      controls.autoRotate = autoRotate && hovered === -1
+      syncNativeAutoRotate()
       requestRender()
     },
     setHighlight(next) {
@@ -560,6 +722,8 @@ export function createGraphEngine(options: GraphEngineOptions): GraphEngine {
       linkGeometry.dispose()
       nodeMaterial.dispose()
       linkMaterial.dispose()
+      membraneGeometry?.dispose()
+      membraneMaterial?.dispose()
       renderer.dispose()
       renderer.forceContextLoss()
       canvas.remove()

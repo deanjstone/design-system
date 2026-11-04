@@ -8,7 +8,8 @@ import { Graph3D, type Graph3DNode } from "@/components/ui/graph-3d"
 import { sampleGraph } from "./sample"
 
 // Query: ?n=1300 nodes, ?seed=169, ?theme=dark|light, ?rotate=0 to stop rotation, ?tone=void for the orb look,
-// ?heat=0 to draw the same graph without per-node heat.
+// ?heat=0 to draw the same graph without per-node heat. Under ?tone=void the membrane, dust and motion show;
+// emulate prefers-reduced-motion to see them go.
 const params = new URLSearchParams(location.search)
 const nodeCount = Number(params.get("n") ?? 1300)
 const seed = Number(params.get("seed") ?? 169)
