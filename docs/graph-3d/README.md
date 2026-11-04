@@ -18,14 +18,42 @@ import { Graph3D } from "@/components/ui/graph-3d"
   highlight={["memory-4"]} // ids; the rest dim, their links light up
   focusId="memory-4"       // glide the camera to a node picked elsewhere (a search result); a jump under reduced motion
   autoRotate               // default true, always off under prefers-reduced-motion
+  tone="void"              // the orb look: its own dark gradient, additive soft glow (default: "default")
   onNodeClick={(node) => openMemory(node.id)}
   className="h-[32rem] border bg-card"
 />
 ```
 
-The component fills its parent (`size-full`, `min-h-64`) and paints a transparent
-canvas, so the surface behind it is yours: `bg-card`, or `bg-surface-1` for a
-permanently dark panel.
+The component fills its parent (`size-full`, `min-h-64`) and, with the default tone,
+paints a transparent canvas, so the surface behind it is yours: `bg-card`, or
+`bg-surface-1` for a permanently dark panel.
+
+## Tone
+
+`tone="default"` (the default) is unchanged: normal blending, a hard disc with a halo
+and the page's own theme.
+
+`tone="void"` is the orb look, built to sit on a dark surface in light and dark pages
+alike:
+
+- **Surface.** The component paints its own gradient, `--surface-0` rising to a deep
+  blue mixed from `--chart-5`, so it needs no background class. It carries a `dark`
+  class (and copies the page's `data-theme`), so group colours and edges read the dark
+  values of the tokens even on a light page.
+- **Light.** Nodes and links use additive blending, so overlaps sum toward white. A node
+  is a soft point with no edge, a pale core fading out through `pow(1 - smoothstep, 1.8)`.
+- **Size.** No 2.6x sprite padding. A sprite is clamped to 3 to 20 CSS px; hubs grow by
+  `sqrt(degree)` (the count of kept links), so most nodes are specks and a few bloom.
+- **Picking.** The hit radius follows the drawn sprite, not the node's size.
+
+Changing `tone` rebuilds the layout, like changing `nodes`. Try it in the demo with
+`?tone=void`.
+
+| Default tone | `tone="void"` |
+|---|---|
+| ![default tone, dark page](../assets/graph-3d-void-before-default-dark.png) | ![void tone, dark page](../assets/graph-3d-void-after-dark.png) |
+
+`tone="void"` on a light page: ![void tone, light page](../assets/graph-3d-void-after-light.png)
 
 ## Behaviour
 

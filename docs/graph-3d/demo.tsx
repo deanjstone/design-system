@@ -7,10 +7,11 @@ import { Button } from "@/components/ui/button"
 import { Graph3D, type Graph3DNode } from "@/components/ui/graph-3d"
 import { sampleGraph } from "./sample"
 
-// Query: ?n=1300 nodes, ?seed=169, ?theme=dark|light, ?rotate=0 to stop rotation.
+// Query: ?n=1300 nodes, ?seed=169, ?theme=dark|light, ?rotate=0 to stop rotation, ?tone=void for the orb look.
 const params = new URLSearchParams(location.search)
 const nodeCount = Number(params.get("n") ?? 1300)
 const seed = Number(params.get("seed") ?? 169)
+const tone = params.get("tone") === "void" ? "void" : "default"
 document.documentElement.classList.toggle("dark", params.get("theme") !== "light")
 
 function Demo() {
@@ -49,7 +50,8 @@ function Demo() {
         highlight={highlight}
         autoRotate={params.get("rotate") !== "0"}
         onNodeClick={setClicked}
-        className="min-h-0 flex-1 border border-border bg-card"
+        tone={tone}
+        className={tone === "void" ? "min-h-0 flex-1 border border-border" : "min-h-0 flex-1 border border-border bg-card"}
       />
     </main>
   )

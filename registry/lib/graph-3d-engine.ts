@@ -10,8 +10,13 @@ import type { SimulationNode } from "d3-force-3d"
 
 import {
   easeInOutCubic,
+  nodeSpriteSize,
   parseCssColor,
   pickNearest,
+  resolveTone,
+  spritePixelDiameter,
+  toneProfile,
+  type Graph3DTone,
   type MappedGraph,
   type MappedNode,
   type Rgb,
@@ -22,6 +27,8 @@ export type GraphHover = { node: MappedNode; x: number; y: number }
 export type GraphEngineOptions = {
   container: HTMLElement
   graph: MappedGraph
+  /** Defaults to "default". `void` draws additive soft-glow nodes and links for a dark surface. */
+  tone?: Graph3DTone
   autoRotate: boolean
   reducedMotion: boolean
   highlight: ReadonlySet<number>
@@ -51,14 +58,17 @@ const nodeVertexShader = /* glsl */ `
   attribute float aAlpha;
   uniform float uScale;
   uniform float uPixelRatio;
+  uniform float uSpriteFactor;
+  uniform float uMinPx;
+  uniform float uMaxPx;
   varying vec3 vColor;
   varying float vAlpha;
   void main() {
     vec4 viewPosition = modelViewMatrix * vec4(position, 1.0);
     vColor = aColor;
     vAlpha = aAlpha;
-    // Sprite covers 2.6x the node diameter so the halo has room to fade out.
-    gl_PointSize = clamp(aSize * 2.6 * uScale * uPixelRatio / -viewPosition.z, 2.0, 160.0);
+    // The default tone's sprite covers 2.6x the node diameter so the halo has room to fade out.
+    gl_PointSize = clamp(aSize * uSpriteFactor * uScale * uPixelRatio / -viewPosition.z, uMinPx, uMaxPx);
     gl_Position = projectionMatrix * viewPosition;
   }
 `
@@ -73,6 +83,21 @@ const nodeFragmentShader = /* glsl */ `
     float alpha = max(core, halo) * vAlpha;
     if (alpha < 0.01) discard;
     gl_FragColor = vec4(vColor, alpha);
+  }
+`
+
+// Void tone: a point of light with no edge. The falloff and the pale core are written
+// for this engine; additive blending sums overlapping nodes toward white.
+const voidNodeFragmentShader = /* glsl */ `
+  varying vec3 vColor;
+  varying float vAlpha;
+  void main() {
+    float distanceFromCentre = length(gl_PointCoord - 0.5);
+    float glow = pow(1.0 - smoothstep(0.0, 0.5, distanceFromCentre), 1.8);
+    float core = pow(glow, 4.0);
+    float alpha = glow * vAlpha;
+    if (alpha < 0.004) discard;
+    gl_FragColor = vec4(mix(vColor, vec3(1.0), core * 0.4), alpha);
   }
 `
 
@@ -121,6 +146,7 @@ const NO_LINK = { source: 0, target: 0 } as const
 
 export function createGraphEngine(options: GraphEngineOptions): GraphEngine {
   const { container, graph, onNodeClick, onHover } = options
+  const tone = resolveTone(options.tone)
   const nodeCount = graph.nodes.length
   const linkCount = graph.links.length
 
@@ -134,6 +160,8 @@ export function createGraphEngine(options: GraphEngineOptions): GraphEngine {
   const renderer = new THREE.WebGLRenderer({ antialias: false, alpha: true, powerPreference: "high-performance" })
   renderer.setClearColor(0x000000, 0)
   const pixelRatio = Math.min(window.devicePixelRatio || 1, 2)
+  const profile = toneProfile(tone, pixelRatio)
+  const blending = profile.additive ? THREE.AdditiveBlending : THREE.NormalBlending
   renderer.setPixelRatio(pixelRatio)
   const canvas = renderer.domElement
   canvas.style.display = "block"
@@ -188,9 +216,16 @@ export function createGraphEngine(options: GraphEngineOptions): GraphEngine {
   const scaleUniform = { value: 1 }
   const nodeMaterial = new THREE.ShaderMaterial({
     vertexShader: nodeVertexShader,
-    fragmentShader: nodeFragmentShader,
-    uniforms: { uScale: scaleUniform, uPixelRatio: { value: pixelRatio } },
+    fragmentShader: profile.softGlow ? voidNodeFragmentShader : nodeFragmentShader,
+    uniforms: {
+      uScale: scaleUniform,
+      uPixelRatio: { value: pixelRatio },
+      uSpriteFactor: { value: profile.spriteFactor },
+      uMinPx: { value: profile.minSpritePx },
+      uMaxPx: { value: profile.maxSpritePx },
+    },
     transparent: true,
+    blending,
     depthWrite: false,
   })
   const nodePoints = new THREE.Points(nodeGeometry, nodeMaterial)
@@ -213,10 +248,11 @@ export function createGraphEngine(options: GraphEngineOptions): GraphEngine {
       fragmentShader: lineFragmentShader,
       uniforms: { uColor: { value: colour }, uOpacity: { value: opacity } },
       transparent: true,
+      blending,
       depthWrite: false,
     })
-  const baseLineMaterial = lineMaterial(0.2, baseColour)
-  const activeLineMaterial = lineMaterial(0.85, activeColour)
+  const baseLineMaterial = lineMaterial(profile.baseEdgeOpacity, baseColour)
+  const activeLineMaterial = lineMaterial(profile.activeEdgeOpacity, activeColour)
   const baseLines = new THREE.LineSegments(linkGeometry, baseLineMaterial)
   const activeLines = new THREE.LineSegments(activeGeometry, activeLineMaterial)
   baseLines.frustumCulled = false
@@ -252,7 +288,8 @@ export function createGraphEngine(options: GraphEngineOptions): GraphEngine {
     const anyHighlight = highlight.size > 0
     for (let index = 0; index < nodeCount; index++) {
       const emphasised = index === hovered || highlight.has(index)
-      sizes[index] = (graph.nodes[index]?.radius ?? 0) * 2 * (emphasised ? ACTIVE_SCALE : 1)
+      const node = graph.nodes[index]
+      sizes[index] = (node ? nodeSpriteSize(node, tone) : 0) * (emphasised ? ACTIVE_SCALE : 1)
       alphas[index] = emphasised || !anyHighlight ? (emphasised ? 1 : BASE_ALPHA) : DIMMED_ALPHA
     }
     nodeGeometry.getAttribute("aSize").needsUpdate = true
@@ -314,7 +351,11 @@ export function createGraphEngine(options: GraphEngineOptions): GraphEngine {
       screen[index * 3] = (projected.x * 0.5 + 0.5) * width
       screen[index * 3 + 1] = (-projected.y * 0.5 + 0.5) * height
       screen[index * 3 + 2] = behind ? Number.NaN : distance
-      radiiPx[index] = ((graph.nodes[index]?.radius ?? 0) * pixelsPerWorldUnit) / distance
+      // Default tone: the node's own radius. Void: the drawn (clamped) sprite, so a pick matches what is lit.
+      radiiPx[index] =
+        tone === "void"
+          ? spritePixelDiameter(sizes[index] ?? 0, pixelsPerWorldUnit, distance, pixelRatio, profile) / pixelRatio / 2
+          : ((graph.nodes[index]?.radius ?? 0) * pixelsPerWorldUnit) / distance
     }
   }
 

@@ -8,13 +8,16 @@ import {
   resolveAutoRotate,
   resolveFocus,
   resolveHighlight,
+  resolveTone,
+  VOID_SURFACE_BACKGROUND,
   type Graph3DLink,
   type Graph3DNode,
+  type Graph3DTone,
   type MappedNode,
 } from "@/lib/graph-3d-core"
 import type { GraphEngine, GraphHover } from "@/lib/graph-3d-engine"
 
-export type { Graph3DLink, Graph3DNode }
+export type { Graph3DLink, Graph3DNode, Graph3DTone }
 
 const REDUCED_MOTION_QUERY = "(prefers-reduced-motion: reduce)"
 
@@ -50,6 +53,12 @@ type Graph3DProps = Omit<React.ComponentProps<"div">, "children" | "onError"> & 
   autoRotate?: boolean
   /** group -> CSS custom property, overriding the default chart-1..5 cycle. */
   groupTokens?: Readonly<Record<string, string>>
+  /**
+   * `default` draws on the surface you give it. `void` paints its own always-dark
+   * gradient (from theme tokens, in light and dark pages alike) and draws nodes and
+   * links as additive soft glow, so it needs no background class from you.
+   */
+  tone?: Graph3DTone
 }
 
 function Graph3D({
@@ -60,14 +69,18 @@ function Graph3D({
   focusId,
   autoRotate,
   groupTokens,
+  tone,
   className,
+  style,
   ...props
 }: Graph3DProps) {
+  const rootRef = React.useRef<HTMLDivElement>(null)
   const containerRef = React.useRef<HTMLDivElement>(null)
   const engineRef = React.useRef<GraphEngine | null>(null)
   const [status, setStatus] = React.useState<"loading" | "ready" | "error">("loading")
   const [hover, setHover] = React.useState<GraphHover | null>(null)
 
+  const resolvedTone = resolveTone(tone)
   const reducedMotion = useReducedMotion()
   const rotates = resolveAutoRotate(autoRotate, reducedMotion)
   const graph = React.useMemo(() => mapGraph(nodes, links, groupTokens), [nodes, links, groupTokens])
@@ -75,6 +88,21 @@ function Graph3D({
   // Effects below read the latest values without re-running the engine build.
   const latest = React.useRef({ graph, highlight, rotates, onNodeClick })
   latest.current = { graph, highlight, rotates, onNodeClick }
+
+  // The void surface is always dark. Its own `dark` class makes the tokens below it
+  // resolve to their dark values; a named theme lives on <html>, and its dark palette
+  // is keyed to `[data-theme].dark` on one element, so the theme name is copied here.
+  const mirrorPageTheme = React.useCallback(() => {
+    const root = rootRef.current
+    if (!root || resolvedTone !== "void") return
+    const theme = document.documentElement.getAttribute("data-theme")
+    if (theme === null) root.removeAttribute("data-theme")
+    else root.setAttribute("data-theme", theme)
+  }, [resolvedTone])
+
+  React.useLayoutEffect(() => {
+    mirrorPageTheme()
+  }, [mirrorPageTheme])
 
   React.useEffect(() => {
     const container = containerRef.current
@@ -91,6 +119,7 @@ function Graph3D({
         engineRef.current = createGraphEngine({
           container,
           graph,
+          tone: resolvedTone,
           autoRotate: current.rotates,
           reducedMotion,
           highlight: resolveHighlight(current.highlight, graph),
@@ -113,7 +142,7 @@ function Graph3D({
       engineRef.current?.dispose()
       engineRef.current = null
     }
-  }, [graph, nodes, reducedMotion])
+  }, [graph, nodes, reducedMotion, resolvedTone])
 
   const highlightKey = highlight?.join("\u0000") ?? ""
   React.useEffect(() => {
@@ -133,20 +162,26 @@ function Graph3D({
   // class or attributes change (light/dark and named themes switch there).
   React.useEffect(() => {
     if (typeof MutationObserver === "undefined") return
-    const observer = new MutationObserver(() => engineRef.current?.refreshTheme())
+    const observer = new MutationObserver(() => {
+      mirrorPageTheme()
+      engineRef.current?.refreshTheme()
+    })
     observer.observe(document.documentElement, { attributes: true })
     return () => observer.disconnect()
-  }, [])
+  }, [mirrorPageTheme])
 
   return (
     <div
+      ref={rootRef}
       data-slot="graph-3d"
+      data-tone={resolvedTone}
       data-state={status}
       data-auto-rotate={rotates}
       data-reduced-motion={reducedMotion}
       role="img"
       aria-label={`Graph of ${graph.nodes.length} nodes and ${graph.links.length} links`}
-      className={cn("relative size-full min-h-64 overflow-hidden rounded-lg", className)}
+      className={cn("relative size-full min-h-64 overflow-hidden rounded-lg", resolvedTone === "void" && "dark", className)}
+      style={resolvedTone === "void" ? { background: VOID_SURFACE_BACKGROUND, ...style } : style}
       {...props}
     >
       <div ref={containerRef} data-slot="graph-3d-canvas" className="absolute inset-0 touch-none" />

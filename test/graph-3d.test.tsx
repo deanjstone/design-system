@@ -222,3 +222,52 @@ describe("Graph3D focusId", () => {
     expect(engine.focusNode).toHaveBeenCalledTimes(1)
   })
 })
+
+describe("Graph3D tone", () => {
+  it("is the default tone unless asked: no surface of its own, no forced theme, and the engine is told", async () => {
+    mockReducedMotion(false)
+    render(<Graph3D nodes={nodes} links={links} />)
+    await ready()
+    const root = screen.getByRole("img")
+    expect(root.getAttribute("data-tone")).toBe("default")
+    expect(root.classList.contains("dark")).toBe(false)
+    expect(root.getAttribute("style") ?? "").not.toContain("gradient")
+    expect(lastOptions().tone).toBe("default")
+  })
+
+  it("paints its own dark token gradient under tone=void, whatever the page theme", async () => {
+    mockReducedMotion(false)
+    render(<Graph3D nodes={nodes} links={links} tone="void" />)
+    await ready()
+    const root = screen.getByRole("img")
+    expect(root.getAttribute("data-tone")).toBe("void")
+    expect(root.classList.contains("dark")).toBe(true)
+    expect(root.getAttribute("style") ?? "").toContain("linear-gradient")
+    expect(lastOptions().tone).toBe("void")
+  })
+
+  it("carries the page's named theme onto the void surface so the dark palette of that theme applies", async () => {
+    mockReducedMotion(false)
+    document.documentElement.setAttribute("data-theme", "ember")
+    try {
+      render(<Graph3D nodes={nodes} links={links} tone="void" />)
+      await ready()
+      expect(screen.getByRole("img").getAttribute("data-theme")).toBe("ember")
+      act(() => document.documentElement.setAttribute("data-theme", "iris"))
+      await waitFor(() => expect(screen.getByRole("img").getAttribute("data-theme")).toBe("iris"))
+      expect(engine.refreshTheme).toHaveBeenCalled()
+    } finally {
+      document.documentElement.removeAttribute("data-theme")
+    }
+  })
+
+  it("rebuilds the engine when the tone changes, and keeps a caller's className", async () => {
+    mockReducedMotion(false)
+    const { rerender } = render(<Graph3D nodes={nodes} links={links} className="h-96" />)
+    await ready()
+    rerender(<Graph3D nodes={nodes} links={links} className="h-96" tone="void" />)
+    await waitFor(() => expect(engine.create).toHaveBeenCalledTimes(2))
+    expect(lastOptions().tone).toBe("void")
+    expect(screen.getByRole("img").classList.contains("h-96")).toBe(true)
+  })
+})
