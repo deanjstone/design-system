@@ -19,6 +19,13 @@ export type Graph3DLink = {
   kind?: string
 }
 
+/**
+ * `default` draws on whatever surface the host provides. `void` is the orb look:
+ * an always-dark gradient the component paints itself, additive soft-glow nodes
+ * and a tight node-size range.
+ */
+export type Graph3DTone = "default" | "void"
+
 export type MappedNode = {
   id: string
   label: string
@@ -27,6 +34,8 @@ export type MappedNode = {
   index: number
   /** World-space radius. */
   radius: number
+  /** Kept links touching this node. */
+  degree: number
   /** CSS custom property this node's group draws from. */
   token: string
 }
@@ -90,6 +99,7 @@ export function mapGraph(
     group: node.group,
     index,
     radius: BASE_RADIUS * Math.sqrt(Math.min(MAX_SIZE, Math.max(MIN_SIZE, finitePositive(node.size, 1)))),
+    degree: 0,
     token: tokenByGroup.get(node.group)!,
   }))
 
@@ -105,6 +115,10 @@ export function mapGraph(
     resolved.push({ source, target, weight: finitePositive(link.weight, 1), kind: link.kind })
   }
   const heaviest = resolved.reduce((max, link) => Math.max(max, link.weight), 0)
+  for (const { source, target } of resolved) {
+    mappedNodes[source]!.degree++
+    mappedNodes[target]!.degree++
+  }
 
   return {
     nodes: mappedNodes,
@@ -117,6 +131,77 @@ export function mapGraph(
     droppedLinks,
     droppedNodes,
   }
+}
+
+/** The tone prop's value, with anything unrecognised read as the default tone. */
+export function resolveTone(tone: Graph3DTone | undefined): Graph3DTone {
+  return tone === "void" ? "void" : "default"
+}
+
+/** The surface `tone="void"` paints: the page's darkest surface rising to a deep blue, all from tokens. */
+export const VOID_SURFACE_BACKGROUND =
+  "linear-gradient(0deg, var(--surface-0) 30%, color-mix(in oklab, var(--surface-0) 88%, var(--chart-5)))"
+
+/** Void node sprites stay between these, in CSS px: a speck for a loose note, a bright bloom for a hub. */
+const VOID_SPRITE_PX = { min: 3, max: 20 } as const
+/** Void sprites are drawn at this share of the node's diameter; the glow supplies the rest of the size. */
+const VOID_NODE_SCALE = 0.7
+/** Each unit of sqrt(degree) adds this share of a void sprite's base size. */
+const VOID_DEGREE_GAIN = 0.35
+
+/** How the engine draws one tone: blending, node profile, sprite clamp (device px) and link opacity. */
+export type ToneProfile = {
+  additive: boolean
+  /** True draws a soft falloff with no edge; false draws a hard disc with a halo. */
+  softGlow: boolean
+  /** Sprite size over node size; the default tone pads the sprite so its halo has room. */
+  spriteFactor: number
+  minSpritePx: number
+  maxSpritePx: number
+  baseEdgeOpacity: number
+  activeEdgeOpacity: number
+}
+
+export function toneProfile(tone: Graph3DTone, pixelRatio: number): ToneProfile {
+  if (tone === "void") {
+    return {
+      additive: true,
+      softGlow: true,
+      spriteFactor: 1,
+      minSpritePx: VOID_SPRITE_PX.min * pixelRatio,
+      maxSpritePx: VOID_SPRITE_PX.max * pixelRatio,
+      baseEdgeOpacity: 0.16,
+      activeEdgeOpacity: 0.7,
+    }
+  }
+  return {
+    additive: false,
+    softGlow: false,
+    spriteFactor: 2.6,
+    minSpritePx: 2,
+    maxSpritePx: 160,
+    baseEdgeOpacity: 0.2,
+    activeEdgeOpacity: 0.85,
+  }
+}
+
+/** World-space size the node's sprite is drawn from: the node diameter, and under void a degree-weighted one. */
+export function nodeSpriteSize(node: Pick<MappedNode, "radius" | "degree">, tone: Graph3DTone): number {
+  const diameter = node.radius * 2
+  if (tone !== "void") return diameter
+  return diameter * VOID_NODE_SCALE * (1 + VOID_DEGREE_GAIN * Math.sqrt(node.degree))
+}
+
+/** On-screen sprite diameter in device px: the vertex shader's formula, for picking and tests. */
+export function spritePixelDiameter(
+  worldSize: number,
+  pixelsPerWorldUnit: number,
+  distance: number,
+  pixelRatio: number,
+  profile: ToneProfile,
+): number {
+  const raw = (worldSize * profile.spriteFactor * pixelsPerWorldUnit * pixelRatio) / distance
+  return Math.min(profile.maxSpritePx, Math.max(profile.minSpritePx, raw))
 }
 
 /** Indices of the highlighted ids that exist in the graph; unknown ids are ignored. */

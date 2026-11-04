@@ -7,10 +7,15 @@ import {
   easeInOutCubic,
   mapGraph,
   parseCssColor,
+  nodeSpriteSize,
   pickNearest,
   resolveAutoRotate,
   resolveFocus,
   resolveHighlight,
+  resolveTone,
+  spritePixelDiameter,
+  toneProfile,
+  VOID_SURFACE_BACKGROUND,
 } from "@/lib/graph-3d-core"
 
 // graph-3d prop mapping, theme-colour parsing and the reduced-motion decision
@@ -198,5 +203,109 @@ describe("easeInOutCubic", () => {
     expect(easeInOutCubic(0)).toBe(0)
     expect(easeInOutCubic(1)).toBe(1)
     expect(easeInOutCubic(0.5)).toBeCloseTo(0.5)
+  })
+})
+
+describe("mapGraph degree", () => {
+  it("counts the kept links touching each node, so a hub has a high degree", () => {
+    const graph = mapGraph(nodes, [
+      { source: "a", target: "b" },
+      { source: "a", target: "c" },
+      { source: "b", target: "c" },
+      { source: "a", target: "ghost" },
+      { source: "a", target: "a" },
+    ])
+    expect(graph.nodes.map((node) => [node.id, node.degree])).toEqual([["a", 2], ["b", 2], ["c", 2]])
+  })
+
+  it("is 0 for a node with no links", () => {
+    expect(mapGraph(nodes, []).nodes.map((node) => node.degree)).toEqual([0, 0, 0])
+  })
+})
+
+describe("resolveTone", () => {
+  it("is the default tone unless the prop says void", () => {
+    expect(resolveTone(undefined)).toBe("default")
+    expect(resolveTone("default")).toBe("default")
+    expect(resolveTone("void")).toBe("void")
+    expect(resolveTone("neon" as never)).toBe("default")
+  })
+})
+
+describe("toneProfile", () => {
+  it("keeps the default tone as it was: normal blending, hard disc, 2.6x sprite, 2 to 160 device px", () => {
+    expect(toneProfile("default", 2)).toMatchObject({
+      additive: false,
+      softGlow: false,
+      spriteFactor: 2.6,
+      minSpritePx: 2,
+      maxSpritePx: 160,
+      baseEdgeOpacity: 0.2,
+      activeEdgeOpacity: 0.85,
+    })
+  })
+
+  it("makes void additive with a soft glow and no sprite padding factor", () => {
+    const profile = toneProfile("void", 1)
+    expect(profile.additive).toBe(true)
+    expect(profile.softGlow).toBe(true)
+    expect(profile.spriteFactor).toBe(1)
+  })
+
+  it("clamps void sprites to 3 to 20 CSS px, scaled to device pixels", () => {
+    expect(toneProfile("void", 1)).toMatchObject({ minSpritePx: 3, maxSpritePx: 20 })
+    expect(toneProfile("void", 2)).toMatchObject({ minSpritePx: 6, maxSpritePx: 40 })
+  })
+})
+
+describe("nodeSpriteSize", () => {
+  const plain = { radius: 1.8, degree: 0 }
+
+  it("leaves the default tone at the node diameter whatever the degree", () => {
+    expect(nodeSpriteSize(plain, "default")).toBe(3.6)
+    expect(nodeSpriteSize({ radius: 1.8, degree: 40 }, "default")).toBe(3.6)
+  })
+
+  it("makes void sprites smaller than the default for a node with no links", () => {
+    expect(nodeSpriteSize(plain, "void")).toBeLessThan(nodeSpriteSize(plain, "default"))
+  })
+
+  it("grows a void sprite with the square root of the degree", () => {
+    const base = nodeSpriteSize(plain, "void")
+    const growth = (degree: number) => nodeSpriteSize({ radius: 1.8, degree }, "void") / base - 1
+    expect(growth(16)).toBeCloseTo(growth(4) * 2)
+    expect(growth(4)).toBeGreaterThan(0)
+  })
+})
+
+describe("spritePixelDiameter", () => {
+  // 800 px canvas, 50 degree field of view, camera 450 units out: the engine's usual orb view.
+  const scale = 800 / (2 * Math.tan((50 * Math.PI) / 360))
+  const px = (node: { radius: number; degree: number }, tone: "default" | "void", pixelRatio = 1) =>
+    spritePixelDiameter(nodeSpriteSize(node, tone), scale, 450, pixelRatio, toneProfile(tone, pixelRatio))
+
+  it("keeps void sprites inside 3 to 20 CSS px, from an unlinked small node to a huge hub", () => {
+    expect(px({ radius: 0.9, degree: 0 }, "void")).toBeGreaterThanOrEqual(3)
+    expect(px({ radius: 1.8, degree: 0 }, "void")).toBeLessThan(8)
+    expect(px({ radius: 1.8, degree: 9 }, "void")).toBeGreaterThan(px({ radius: 1.8, degree: 0 }, "void"))
+    expect(px({ radius: 7, degree: 400 }, "void")).toBe(20)
+  })
+
+  it("scales the void clamp with the device pixel ratio", () => {
+    expect(px({ radius: 7, degree: 400 }, "void", 2)).toBe(40)
+  })
+
+  it("does not change the default tone: the old 2.6x sprite, clamped 2 to 160", () => {
+    const old = (2 * 1.8 * 2.6 * scale) / 450
+    expect(px({ radius: 1.8, degree: 0 }, "default")).toBeCloseTo(old)
+    expect(px({ radius: 1.8, degree: 0 }, "default")).toBeGreaterThan(15)
+  })
+})
+
+describe("VOID_SURFACE_BACKGROUND", () => {
+  it("is a dark gradient built from theme tokens, with no literal colour", () => {
+    expect(VOID_SURFACE_BACKGROUND).toMatch(/^linear-gradient\(/)
+    expect(VOID_SURFACE_BACKGROUND).toMatch(/var\(--[a-z0-9-]+\)/)
+    expect(VOID_SURFACE_BACKGROUND).not.toMatch(/#[0-9a-f]{3,8}\b|rgba?\(|hsla?\(|oklch\(/i)
   })
 })
