@@ -552,6 +552,56 @@ describe("AppShell", () => {
     })
   })
 
+  // WebKit on iOS can match :focus-visible after a tap (focus handed back to the More tab when its sheet
+  // closes), which leaves a ring on the control (design-system#185). The shell tracks how the last input
+  // arrived: a pointer or touch marks the root, a key clears it, and the ring is held off while it is set.
+  describe("focus ring after a tap", () => {
+    const root = (container: HTMLElement) => container.querySelector<HTMLElement>("[data-slot=app-shell]")!
+
+    it("marks the root once a pointer goes down, and clears it on a key press", () => {
+      const { container } = render(<AppShell appName="Reader" sections={six}>x</AppShell>)
+      expect(root(container).hasAttribute("data-pointer")).toBe(false)
+
+      fireEvent.pointerDown(document.body)
+      expect(root(container).hasAttribute("data-pointer")).toBe(true)
+
+      fireEvent.keyDown(document.body, { key: "Tab" })
+      expect(root(container).hasAttribute("data-pointer")).toBe(false)
+    })
+
+    it("ignores a modifier key on its own", () => {
+      const { container } = render(<AppShell appName="Reader" sections={six}>x</AppShell>)
+
+      fireEvent.pointerDown(document.body)
+      fireEvent.keyDown(document.body, { key: "Shift" })
+
+      expect(root(container).hasAttribute("data-pointer")).toBe(true)
+    })
+
+    it("stops listening when the shell unmounts", () => {
+      const { container, unmount } = render(<AppShell appName="Reader" sections={six}>x</AppShell>)
+      const shell = root(container)
+      unmount()
+
+      fireEvent.pointerDown(document.body)
+
+      expect(shell.hasAttribute("data-pointer")).toBe(false)
+    })
+
+    it("holds the ring off, whatever :focus-visible says, on every tab, the More tab and the sidebar links", () => {
+      const { container } = render(<AppShell appName="Reader" sections={six}>x</AppShell>)
+
+      expect(root(container).className).toContain("group/shell")
+      const bar = within(tabBar(container))
+      for (const control of [...bar.getAllByRole("link"), bar.getByRole("button", { name: "More" })]) {
+        expect(control.className).toContain("group-data-[pointer]/shell:focus-visible:ring-0!")
+      }
+      for (const link of within(sidebar(container)).getAllByRole("link")) {
+        expect(link.className).toContain("group-data-[pointer]/shell:focus-visible:ring-0!")
+      }
+    })
+  })
+
   describe("sidebar", () => {
     it("is shown from lg", () => {
       const { container } = render(<AppShell appName="Reader" sections={four}>x</AppShell>)

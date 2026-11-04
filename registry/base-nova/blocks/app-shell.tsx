@@ -132,6 +132,31 @@ const useShellMetrics = (
   }, [rootRef, topRef, barRef, backRef, showTabBar, focus, rail])
 }
 
+// WebKit on iOS can match :focus-visible after a tap (focus handed back to the More tab when its sheet
+// closes), leaving a ring on a control nobody tabbed to. The shell marks its root while the last input
+// was a pointer or a touch and clears the mark on a key press; the controls hold their ring off under
+// the mark (`group-data-[pointer]/shell:focus-visible:ring-0!`, important so it wins whatever order the
+// two sort in). Modifier keys alone don't count as a key press, as in the browsers' own heuristic.
+const MODIFIER_KEYS = new Set(["Shift", "Control", "Alt", "Meta", "AltGraph", "CapsLock"])
+
+const usePointerModality = (rootRef: React.RefObject<HTMLElement | null>) => {
+  React.useEffect(() => {
+    const root = rootRef.current
+    if (!root) return undefined
+    const onPointer = () => root.setAttribute("data-pointer", "")
+    const onKey = (event: KeyboardEvent) => {
+      if (!MODIFIER_KEYS.has(event.key)) root.removeAttribute("data-pointer")
+    }
+    document.addEventListener("pointerdown", onPointer, true)
+    document.addEventListener("keydown", onKey, true)
+    return () => {
+      document.removeEventListener("pointerdown", onPointer, true)
+      document.removeEventListener("keydown", onKey, true)
+      root.removeAttribute("data-pointer")
+    }
+  }, [rootRef])
+}
+
 // The scroll that must build up in one direction before the header moves, so a finger's jitter doesn't.
 const HIDE_THRESHOLD = 8
 
@@ -192,13 +217,13 @@ const glassBar = "surface-glass border border-border/60 shadow-lg"
 
 const tabClass = (active: boolean) =>
   cn(
-    "flex min-h-[clamp(44px,3.125rem,75px)] min-w-0 flex-1 flex-col items-center justify-center gap-0.5 rounded-full px-1 text-[min(0.75rem,18px)] leading-[min(1rem,24px)] font-medium outline-none transition-colors focus-visible:ring-3 focus-visible:ring-ring max-[15rem]:[&>span]:sr-only @max-[16rem]/tabbar:[&>span]:sr-only @max-[16rem]/tabbar:min-h-[44px] [@media(orientation:landscape)_and_(max-height:500px)]:min-h-11 [@media(orientation:landscape)_and_(max-height:500px)]:min-w-11 [@media(orientation:landscape)_and_(max-height:500px)]:flex-none [@media(orientation:landscape)_and_(max-height:500px)]:[&>span]:sr-only [&_svg]:size-[min(1.25rem,30px)] [&_svg]:shrink-0",
+    "flex min-h-[clamp(44px,3.125rem,75px)] min-w-0 flex-1 flex-col items-center justify-center gap-0.5 rounded-full px-1 text-[min(0.75rem,18px)] leading-[min(1rem,24px)] font-medium outline-none transition-colors focus-visible:ring-3 focus-visible:ring-ring group-data-[pointer]/shell:focus-visible:ring-0! max-[15rem]:[&>span]:sr-only @max-[16rem]/tabbar:[&>span]:sr-only @max-[16rem]/tabbar:min-h-[44px] [@media(orientation:landscape)_and_(max-height:500px)]:min-h-11 [@media(orientation:landscape)_and_(max-height:500px)]:min-w-11 [@media(orientation:landscape)_and_(max-height:500px)]:flex-none [@media(orientation:landscape)_and_(max-height:500px)]:[&>span]:sr-only [&_svg]:size-[min(1.25rem,30px)] [&_svg]:shrink-0",
     active ? "bg-muted text-foreground" : "text-foreground/80 hover:text-foreground"
   )
 
 const sidebarLinkClass = (active: boolean) =>
   cn(
-    "flex min-h-10 items-center gap-3 rounded-lg px-3 text-sm font-medium outline-none transition-colors focus-visible:ring-3 focus-visible:ring-sidebar-ring [&_svg]:size-4 [&_svg]:shrink-0",
+    "flex min-h-10 items-center gap-3 rounded-lg px-3 text-sm font-medium outline-none transition-colors focus-visible:ring-3 focus-visible:ring-sidebar-ring group-data-[pointer]/shell:focus-visible:ring-0! [&_svg]:size-4 [&_svg]:shrink-0",
     active
       ? "bg-sidebar-accent text-sidebar-accent-foreground"
       : "text-sidebar-foreground/80 hover:bg-sidebar-accent/60 hover:text-sidebar-accent-foreground"
@@ -234,6 +259,7 @@ function AppShell({
   const focus = chrome === "none"
   const rail = useMediaQuery(RAIL_QUERY)
   useShellMetrics(rootRef, topRef, barRef, backRef, showTabBar, focus, rail)
+  usePointerModality(rootRef)
   // In the rail the header is not sticky: it scrolls away by itself.
   const headerHidden = useAutoHideHeader(topRef, autoHideHeader && !focus && !rail)
   const overflowActive = overflow.some((entry) => entry.id === activeSectionId)
@@ -257,7 +283,7 @@ function AppShell({
     <div
       ref={rootRef}
       data-slot="app-shell"
-      className={cn("min-h-dvh bg-background text-foreground", workspaceFallback(showTabBar, focus), className)}
+      className={cn("group/shell min-h-dvh bg-background text-foreground", workspaceFallback(showTabBar, focus), className)}
     >
       {focus ? null : (
         <aside
