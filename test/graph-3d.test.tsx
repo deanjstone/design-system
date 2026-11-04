@@ -13,6 +13,7 @@ const engine = vi.hoisted(() => ({
   setHighlight: vi.fn(),
   setAutoRotate: vi.fn(),
   refreshTheme: vi.fn(),
+  focusNode: vi.fn(),
   dispose: vi.fn(),
 }))
 
@@ -23,7 +24,7 @@ vi.mock("@/lib/graph-3d-engine", () => ({
       setHighlight: engine.setHighlight,
       setAutoRotate: engine.setAutoRotate,
       refreshTheme: engine.refreshTheme,
-      focusNode: vi.fn(),
+      focusNode: engine.focusNode,
       dispose: engine.dispose,
     }
   },
@@ -174,5 +175,50 @@ describe("Graph3D lifecycle", () => {
     await ready()
     unmount()
     expect(engine.dispose).toHaveBeenCalledTimes(1)
+  })
+})
+
+describe("Graph3D focusId", () => {
+  it("glides the camera to the node once the engine is ready", async () => {
+    mockReducedMotion(false)
+    render(<Graph3D nodes={nodes} links={links} focusId="b" />)
+    await ready()
+    await waitFor(() => expect(engine.focusNode).toHaveBeenCalledWith(1))
+    expect(engine.create).toHaveBeenCalledTimes(1)
+  })
+
+  it("moves to the new node when focusId changes, without rebuilding the layout", async () => {
+    mockReducedMotion(false)
+    const { rerender } = render(<Graph3D nodes={nodes} links={links} focusId="a" />)
+    await waitFor(() => expect(engine.focusNode).toHaveBeenCalledWith(0))
+    rerender(<Graph3D nodes={nodes} links={links} focusId="b" />)
+    await waitFor(() => expect(engine.focusNode).toHaveBeenLastCalledWith(1))
+    expect(engine.focusNode).toHaveBeenCalledTimes(2)
+    expect(engine.create).toHaveBeenCalledTimes(1)
+  })
+
+  it("does nothing for an id that is not in the graph, or when unset", async () => {
+    mockReducedMotion(false)
+    const { rerender } = render(<Graph3D nodes={nodes} links={links} focusId="ghost" />)
+    await ready()
+    rerender(<Graph3D nodes={nodes} links={links} />)
+    expect(engine.focusNode).not.toHaveBeenCalled()
+  })
+
+  it("still focuses under reduced motion, and tells the engine to jump instead of glide", async () => {
+    mockReducedMotion(true)
+    render(<Graph3D nodes={nodes} links={links} focusId="a" />)
+    await ready()
+    await waitFor(() => expect(engine.focusNode).toHaveBeenCalledWith(0))
+    expect(lastOptions().reducedMotion).toBe(true)
+  })
+
+  it("does not refocus when an unrelated prop changes", async () => {
+    mockReducedMotion(false)
+    const { rerender } = render(<Graph3D nodes={nodes} links={links} focusId="a" />)
+    await waitFor(() => expect(engine.focusNode).toHaveBeenCalledTimes(1))
+    rerender(<Graph3D nodes={nodes} links={links} focusId="a" highlight={["b"]} />)
+    await waitFor(() => expect(engine.setHighlight).toHaveBeenCalled())
+    expect(engine.focusNode).toHaveBeenCalledTimes(1)
   })
 })

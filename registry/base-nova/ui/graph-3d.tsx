@@ -6,6 +6,7 @@ import { cn } from "cn"
 import {
   mapGraph,
   resolveAutoRotate,
+  resolveFocus,
   resolveHighlight,
   type Graph3DLink,
   type Graph3DNode,
@@ -39,6 +40,12 @@ type Graph3DProps = Omit<React.ComponentProps<"div">, "children" | "onError"> & 
   onNodeClick?: (node: Graph3DNode) => void
   /** Ids to emphasise. The rest dim, and the links touching these light up. */
   highlight?: readonly string[]
+  /**
+   * Id of a node to glide the camera to, for a host that picked it elsewhere
+   * (a search result). Changing it refocuses; an unknown id or undefined does
+   * nothing. Under prefers-reduced-motion the camera jumps instead of gliding.
+   */
+  focusId?: string
   /** Slow rotation. Defaults to true and is always off under prefers-reduced-motion. */
   autoRotate?: boolean
   /** group -> CSS custom property, overriding the default chart-1..5 cycle. */
@@ -50,6 +57,7 @@ function Graph3D({
   links,
   onNodeClick,
   highlight,
+  focusId,
   autoRotate,
   groupTokens,
   className,
@@ -111,6 +119,11 @@ function Graph3D({
   React.useEffect(() => {
     engineRef.current?.setHighlight(resolveHighlight(latest.current.highlight, latest.current.graph))
   }, [highlightKey, status])
+
+  React.useEffect(() => {
+    const index = resolveFocus(focusId, latest.current.graph)
+    if (index !== -1) engineRef.current?.focusNode(index)
+  }, [focusId, status])
 
   React.useEffect(() => {
     engineRef.current?.setAutoRotate(rotates)

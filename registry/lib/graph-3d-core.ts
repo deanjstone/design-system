@@ -125,6 +125,12 @@ export function resolveHighlight(ids: readonly string[] | undefined, graph: Mapp
   return new Set(graph.nodes.filter((node) => wanted.has(node.id)).map((node) => node.index))
 }
 
+/** Index of the node with this id, or -1 when `id` is unset or not in the graph. */
+export function resolveFocus(id: string | undefined, graph: MappedGraph): number {
+  if (id === undefined) return -1
+  return graph.nodes.find((node) => node.id === id)?.index ?? -1
+}
+
 /** Auto-rotate is on unless the prop says no, and never under reduced motion. */
 export function resolveAutoRotate(autoRotate: boolean | undefined, reducedMotion: boolean): boolean {
   return (autoRotate ?? true) && !reducedMotion
@@ -151,7 +157,8 @@ function oklchToSrgb(lightness: number, chroma: number, hueDegrees: number): Rgb
   ]
 }
 
-const numberOrNone = (token: string, percentScale: number) => {
+const numberOrNone = (token: string | undefined, percentScale: number) => {
+  if (token === undefined) return Number.NaN
   if (token === "none") return 0
   const value = Number.parseFloat(token)
   if (Number.isNaN(value)) return Number.NaN
@@ -174,18 +181,20 @@ export function parseCssColor(value: string): Rgb | null {
 
   const functional = /^(rgba?|oklch)\(([^)]*)\)$/.exec(text)
   if (!functional) return null
-  const channels = functional[2].split("/")[0].trim().split(/[\s,]+/)
+  const channels = (functional[2]?.split("/")[0] ?? "").trim().split(/[\s,]+/)
   if (channels.length < 3) return null
 
   if (functional[1] === "oklch") {
     const lightness = numberOrNone(channels[0], 1)
     const chroma = numberOrNone(channels[1], 0.4)
-    const hue = channels[2].endsWith("deg") ? Number.parseFloat(channels[2]) : numberOrNone(channels[2], 360)
+    const hueToken = channels[2]
+    const hue = hueToken?.endsWith("deg") ? Number.parseFloat(hueToken) : numberOrNone(hueToken, 360)
     return [lightness, chroma, hue].some(Number.isNaN) ? null : oklchToSrgb(lightness, chroma, hue)
   }
 
-  const rgb: Rgb = [0, 1, 2].map((position) => numberOrNone(channels[position], 255) / 255) as [number, number, number]
-  return rgb.some(Number.isNaN) ? null : [clamp01(rgb[0]), clamp01(rgb[1]), clamp01(rgb[2])]
+  const [red, green, blue] = [0, 1, 2].map((position) => numberOrNone(channels[position], 255) / 255)
+  if (red === undefined || green === undefined || blue === undefined) return null
+  return [red, green, blue].some(Number.isNaN) ? null : [clamp01(red), clamp01(green), clamp01(blue)]
 }
 
 /**
@@ -203,11 +212,11 @@ export function pickNearest(
   let best = -1
   let bestDepth = Number.POSITIVE_INFINITY
   for (let index = 0; index < radiiPx.length; index++) {
-    const depth = screen[index * 3 + 2]
+    const depth = screen[index * 3 + 2] ?? Number.NaN
     if (!Number.isFinite(depth)) continue
-    const reach = radiiPx[index] + slack
-    const dx = screen[index * 3] - pointerX
-    const dy = screen[index * 3 + 1] - pointerY
+    const reach = (radiiPx[index] ?? 0) + slack
+    const dx = (screen[index * 3] ?? 0) - pointerX
+    const dy = (screen[index * 3 + 1] ?? 0) - pointerY
     if (dx * dx + dy * dy <= reach * reach && depth < bestDepth) {
       best = index
       bestDepth = depth

@@ -109,11 +109,15 @@ function resolveColour(value: string, fallback: Rgb): Rgb {
   colourProbe.fillStyle = "#000"
   colourProbe.fillStyle = value
   colourProbe.fillRect(0, 0, 1, 1)
-  const [red, green, blue, alpha] = colourProbe.getImageData(0, 0, 1, 1).data
+  const [red = 0, green = 0, blue = 0, alpha = 0] = colourProbe.getImageData(0, 0, 1, 1).data
   return alpha === 0 ? fallback : [red / 255, green / 255, blue / 255]
 }
 
 type SimNode = SimulationNode
+
+// Stands in for a link index that is out of range, which cannot happen: it is
+// read only to satisfy noUncheckedIndexedAccess without a non-null assertion.
+const NO_LINK = { source: 0, target: 0 } as const
 
 export function createGraphEngine(options: GraphEngineOptions): GraphEngine {
   const { container, graph, onNodeClick, onHover } = options
@@ -160,7 +164,7 @@ export function createGraphEngine(options: GraphEngineOptions): GraphEngine {
   const linkData = graph.links.map((link) => ({ source: link.source, target: link.target }))
   const linkForce = forceLink(linkData)
     .distance(10)
-    .strength((_link, position) => 0.06 + 0.5 * graph.links[position].strength)
+    .strength((_link, position) => 0.06 + 0.5 * (graph.links[position]?.strength ?? 1))
   const simulation = forceSimulation(simNodes, 3)
     .alphaDecay(0.035)
     .velocityDecay(0.35)
@@ -181,10 +185,11 @@ export function createGraphEngine(options: GraphEngineOptions): GraphEngine {
   nodeGeometry.setAttribute("aColor", new THREE.BufferAttribute(colours, 3))
   nodeGeometry.setAttribute("aSize", new THREE.BufferAttribute(sizes, 1).setUsage(THREE.DynamicDrawUsage))
   nodeGeometry.setAttribute("aAlpha", new THREE.BufferAttribute(alphas, 1).setUsage(THREE.DynamicDrawUsage))
+  const scaleUniform = { value: 1 }
   const nodeMaterial = new THREE.ShaderMaterial({
     vertexShader: nodeVertexShader,
     fragmentShader: nodeFragmentShader,
-    uniforms: { uScale: { value: 1 }, uPixelRatio: { value: pixelRatio } },
+    uniforms: { uScale: scaleUniform, uPixelRatio: { value: pixelRatio } },
     transparent: true,
     depthWrite: false,
   })
@@ -200,16 +205,18 @@ export function createGraphEngine(options: GraphEngineOptions): GraphEngine {
   const activeGeometry = new THREE.BufferGeometry()
   activeGeometry.setAttribute("position", new THREE.BufferAttribute(activePositions, 3).setUsage(THREE.DynamicDrawUsage))
   activeGeometry.setDrawRange(0, 0)
-  const lineMaterial = (opacity: number) =>
+  const baseColour = new THREE.Vector3()
+  const activeColour = new THREE.Vector3()
+  const lineMaterial = (opacity: number, colour: THREE.Vector3) =>
     new THREE.ShaderMaterial({
       vertexShader: lineVertexShader,
       fragmentShader: lineFragmentShader,
-      uniforms: { uColor: { value: new THREE.Vector3() }, uOpacity: { value: opacity } },
+      uniforms: { uColor: { value: colour }, uOpacity: { value: opacity } },
       transparent: true,
       depthWrite: false,
     })
-  const baseLineMaterial = lineMaterial(0.2)
-  const activeLineMaterial = lineMaterial(0.85)
+  const baseLineMaterial = lineMaterial(0.2, baseColour)
+  const activeLineMaterial = lineMaterial(0.85, activeColour)
   const baseLines = new THREE.LineSegments(linkGeometry, baseLineMaterial)
   const activeLines = new THREE.LineSegments(activeGeometry, activeLineMaterial)
   baseLines.frustumCulled = false
@@ -235,8 +242,8 @@ export function createGraphEngine(options: GraphEngineOptions): GraphEngine {
     })
     const edge = read("--muted-foreground", inherited)
     const active = read("--foreground", inherited)
-    ;(baseLineMaterial.uniforms.uColor.value as THREE.Vector3).set(...edge)
-    ;(activeLineMaterial.uniforms.uColor.value as THREE.Vector3).set(...active)
+    baseColour.set(...edge)
+    activeColour.set(...active)
     nodeGeometry.getAttribute("aColor").needsUpdate = true
     requestRender()
   }
@@ -245,7 +252,7 @@ export function createGraphEngine(options: GraphEngineOptions): GraphEngine {
     const anyHighlight = highlight.size > 0
     for (let index = 0; index < nodeCount; index++) {
       const emphasised = index === hovered || highlight.has(index)
-      sizes[index] = graph.nodes[index].radius * 2 * (emphasised ? ACTIVE_SCALE : 1)
+      sizes[index] = (graph.nodes[index]?.radius ?? 0) * 2 * (emphasised ? ACTIVE_SCALE : 1)
       alphas[index] = emphasised || !anyHighlight ? (emphasised ? 1 : BASE_ALPHA) : DIMMED_ALPHA
     }
     nodeGeometry.getAttribute("aSize").needsUpdate = true
@@ -257,11 +264,11 @@ export function createGraphEngine(options: GraphEngineOptions): GraphEngine {
   function refreshActiveLinks() {
     let written = 0
     for (let link = 0; link < linkCount; link++) {
-      const { source, target } = graph.links[link]
+      const { source, target } = graph.links[link] ?? NO_LINK
       if (!(source === hovered || target === hovered || highlight.has(source) || highlight.has(target))) continue
       for (let axis = 0; axis < 3; axis++) {
-        activePositions[written * 6 + axis] = positions[source * 3 + axis]
-        activePositions[written * 6 + 3 + axis] = positions[target * 3 + axis]
+        activePositions[written * 6 + axis] = positions[source * 3 + axis] ?? 0
+        activePositions[written * 6 + 3 + axis] = positions[target * 3 + axis] ?? 0
       }
       written++
     }
@@ -269,17 +276,21 @@ export function createGraphEngine(options: GraphEngineOptions): GraphEngine {
     activeGeometry.getAttribute("position").needsUpdate = true
   }
 
+  function copySimulationPositions() {
+    simNodes.forEach(({ x, y, z }, index) => {
+      positions[index * 3] = x
+      positions[index * 3 + 1] = y
+      positions[index * 3 + 2] = z
+    })
+  }
+
   function syncPositions() {
-    for (let index = 0; index < nodeCount; index++) {
-      positions[index * 3] = simNodes[index].x
-      positions[index * 3 + 1] = simNodes[index].y
-      positions[index * 3 + 2] = simNodes[index].z
-    }
+    copySimulationPositions()
     for (let link = 0; link < linkCount; link++) {
-      const { source, target } = graph.links[link]
+      const { source, target } = graph.links[link] ?? NO_LINK
       for (let axis = 0; axis < 3; axis++) {
-        linkPositions[link * 6 + axis] = positions[source * 3 + axis]
-        linkPositions[link * 6 + 3 + axis] = positions[target * 3 + axis]
+        linkPositions[link * 6 + axis] = positions[source * 3 + axis] ?? 0
+        linkPositions[link * 6 + 3 + axis] = positions[target * 3 + axis] ?? 0
       }
     }
     nodeGeometry.getAttribute("position").needsUpdate = true
@@ -296,14 +307,14 @@ export function createGraphEngine(options: GraphEngineOptions): GraphEngine {
     camera.updateMatrixWorld()
     const pixelsPerWorldUnit = height / (2 * Math.tan((FIELD_OF_VIEW * Math.PI) / 360))
     for (let index = 0; index < nodeCount; index++) {
-      projected.set(positions[index * 3], positions[index * 3 + 1], positions[index * 3 + 2])
+      projected.set(positions[index * 3] ?? 0, positions[index * 3 + 1] ?? 0, positions[index * 3 + 2] ?? 0)
       const distance = projected.distanceTo(camera.position)
       projected.project(camera)
       const behind = projected.z > 1
       screen[index * 3] = (projected.x * 0.5 + 0.5) * width
       screen[index * 3 + 1] = (-projected.y * 0.5 + 0.5) * height
       screen[index * 3 + 2] = behind ? Number.NaN : distance
-      radiiPx[index] = (graph.nodes[index].radius * pixelsPerWorldUnit) / distance
+      radiiPx[index] = ((graph.nodes[index]?.radius ?? 0) * pixelsPerWorldUnit) / distance
     }
   }
 
@@ -314,7 +325,8 @@ export function createGraphEngine(options: GraphEngineOptions): GraphEngine {
       canvas.style.cursor = hovered === -1 ? "grab" : "pointer"
       applyEmphasis()
     }
-    onHover?.(hovered === -1 ? null : { node: graph.nodes[hovered], x, y })
+    const node = graph.nodes[hovered]
+    onHover?.(node ? { node, x, y } : null)
   }
 
   let wantsAutoRotate = options.autoRotate
@@ -339,6 +351,7 @@ export function createGraphEngine(options: GraphEngineOptions): GraphEngine {
   }
   const onPointerDown = (event: PointerEvent) => {
     downAt = localPoint(event)
+    pendingFocus = -1
   }
   const onPointerUp = (event: PointerEvent) => {
     const up = localPoint(event)
@@ -349,8 +362,10 @@ export function createGraphEngine(options: GraphEngineOptions): GraphEngine {
     projectNodes(rect.width, rect.height)
     const hit = pickNearest(screen, radiiPx, up.x, up.y, event.pointerType === "touch" ? 14 : 4)
     if (hit === -1) return
+    const node = graph.nodes[hit]
+    if (!node) return
     focusNode(hit)
-    onNodeClick?.(graph.nodes[hit])
+    onNodeClick?.(node)
   }
   canvas.addEventListener("pointermove", onPointerMove)
   canvas.addEventListener("pointerleave", onPointerLeave)
@@ -359,6 +374,7 @@ export function createGraphEngine(options: GraphEngineOptions): GraphEngine {
   canvas.style.cursor = "grab"
 
   // Click-to-focus tween: target and camera glide so the node ends centred.
+  let pendingFocus = -1
   let tween: {
     start: number
     fromTarget: THREE.Vector3
@@ -369,7 +385,10 @@ export function createGraphEngine(options: GraphEngineOptions): GraphEngine {
 
   function focusNode(index: number) {
     if (index < 0 || index >= nodeCount) return
-    const toTarget = new THREE.Vector3(positions[index * 3], positions[index * 3 + 1], positions[index * 3 + 2])
+    // The layout is still moving: glide now, and again once it settles so the
+    // camera ends on the node's final position rather than its seeded one.
+    pendingFocus = settled ? -1 : index
+    const toTarget = new THREE.Vector3(positions[index * 3] ?? 0, positions[index * 3 + 1] ?? 0, positions[index * 3 + 2] ?? 0)
     const outward = camera.position.clone().sub(controls.target).normalize()
     const toCamera = toTarget.clone().addScaledVector(outward, focusDistance)
     if (reducedMotion) {
@@ -395,7 +414,7 @@ export function createGraphEngine(options: GraphEngineOptions): GraphEngine {
     renderer.setSize(width, height, false)
     camera.aspect = width / height
     camera.updateProjectionMatrix()
-    nodeMaterial.uniforms.uScale.value = height / (2 * Math.tan((FIELD_OF_VIEW * Math.PI) / 360))
+    scaleUniform.value = height / (2 * Math.tan((FIELD_OF_VIEW * Math.PI) / 360))
     requestRender()
   }
   const resizeObserver = new ResizeObserver(resize)
@@ -425,6 +444,7 @@ export function createGraphEngine(options: GraphEngineOptions): GraphEngine {
       } while (performance.now() < deadline)
       syncPositions()
       moved = true
+      if (settled && pendingFocus !== -1) focusNode(pendingFocus)
     }
 
     if (tween) {
@@ -462,11 +482,6 @@ export function createGraphEngine(options: GraphEngineOptions): GraphEngine {
   applyEmphasis()
   resize()
   // First paint shows a seeded starting cloud; reduced motion hides it until settled.
-  for (let index = 0; index < nodeCount; index++) {
-    positions[index * 3] = simNodes[index].x
-    positions[index * 3 + 1] = simNodes[index].y
-    positions[index * 3 + 2] = simNodes[index].z
-  }
   syncPositions()
   requestRender()
 

@@ -16,6 +16,7 @@ import { Graph3D } from "@/components/ui/graph-3d"
   nodes={nodes}            // { id, label, group, size? }
   links={links}            // { source, target, weight?, kind? }
   highlight={["memory-4"]} // ids; the rest dim, their links light up
+  focusId="memory-4"       // glide the camera to a node picked elsewhere (a search result); a jump under reduced motion
   autoRotate               // default true, always off under prefers-reduced-motion
   onNodeClick={(node) => openMemory(node.id)}
   className="h-[32rem] border bg-card"

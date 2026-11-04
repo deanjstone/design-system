@@ -9,6 +9,7 @@ import {
   parseCssColor,
   pickNearest,
   resolveAutoRotate,
+  resolveFocus,
   resolveHighlight,
 } from "@/lib/graph-3d-core"
 
@@ -105,6 +106,16 @@ describe("mapGraph", () => {
 
   it("maps an empty graph without dividing by zero", () => {
     expect(mapGraph([], [])).toEqual({ nodes: [], links: [], groups: [], droppedLinks: 0, droppedNodes: 0 })
+  })
+})
+
+describe("resolveFocus", () => {
+  const graph = mapGraph(nodes, [])
+
+  it("returns the node's index, or -1 for an unknown or unset id", () => {
+    expect(resolveFocus("b", graph)).toBe(1)
+    expect(resolveFocus("ghost", graph)).toBe(-1)
+    expect(resolveFocus(undefined, graph)).toBe(-1)
   })
 })
 
