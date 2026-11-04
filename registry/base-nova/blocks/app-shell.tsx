@@ -40,6 +40,13 @@ type AppShellProps = Pick<AppSwitcherProps, "mode" | "onModeChange" | "currentAp
   back?: { href: string; label?: string }
   /** Controls at the end of the header. */
   headerActions?: React.ReactNode
+  /**
+   * A status strip that sits just above the tab bar (a download's progress, an offline notice), or at the
+   * bottom edge where there is no bar. The page leaves room for it, and `--shell-banner`, `--shell-bottom`
+   * and the page's bottom scroll padding grow by its height while it shows. Render nothing, or leave the
+   * prop out, when there is nothing to say. The shell draws the glass; the content is yours.
+   */
+  banner?: React.ReactNode
   renderLink?: RenderLink
   className?: string
   children: React.ReactNode
@@ -54,14 +61,16 @@ const TAB_COUNT = 4
 // (the viewport between the two), plus the page's scroll padding so a focused control is never hidden
 // behind either (WCAG 2.4.11). The class fallbacks below hold until the first measurement, on the
 // server, and where ResizeObserver is missing; they are the same heights the chrome is built to.
+// --shell-bar is the tab bar alone (its height plus its offset from the bottom), the line a banner
+// sits on; --shell-banner is the banner and its gap, 0 with none; --shell-bottom is the two together.
 const workspaceFallback = (showTabBar: boolean, focus: boolean) =>
   focus
-    ? "[--shell-top:0px] [--shell-bottom:var(--edge-b)] [--shell-workspace:calc(100dvh_-_var(--shell-top)_-_var(--shell-bottom))]"
+    ? "[--shell-top:0px] [--shell-bottom:var(--edge-b)] [--shell-bar:var(--edge-b)] [--shell-banner:0px] [--shell-workspace:calc(100dvh_-_var(--shell-top)_-_var(--shell-bottom))]"
     : cn(
-        "[--shell-top:calc(var(--safe-t)_+_min(4rem,96px))] [--shell-workspace:calc(100dvh_-_var(--shell-top)_-_var(--shell-bottom))] lg:[--shell-bottom:0px]",
+        "[--shell-top:calc(var(--safe-t)_+_min(4rem,96px))] [--shell-banner:0px] [--shell-workspace:calc(100dvh_-_var(--shell-top)_-_var(--shell-bottom))] lg:[--shell-bottom:0px] lg:[--shell-bar:0px]",
         showTabBar
-          ? "[--shell-bottom:calc(var(--edge-b)_+_min(3.75rem,90px))] [@media(orientation:landscape)_and_(max-height:500px)]:[--shell-bottom:var(--edge-b)]"
-          : "[--shell-bottom:var(--edge-b)]"
+          ? "[--shell-bottom:calc(var(--edge-b)_+_min(3.75rem,90px))] [--shell-bar:calc(var(--edge-b)_+_min(3.75rem,90px))] [@media(orientation:landscape)_and_(max-height:500px)]:[--shell-bottom:var(--edge-b)] [@media(orientation:landscape)_and_(max-height:500px)]:[--shell-bar:var(--edge-b)]"
+          : "[--shell-bottom:var(--edge-b)] [--shell-bar:var(--edge-b)]"
       )
 
 // A phone turned on its side: short enough that a bottom bar and a sticky header cost too much of it.
@@ -70,6 +79,9 @@ const RAIL_QUERY = "(orientation: landscape) and (max-height: 500px)"
 
 // In focus mode the only thing over the page is the back control; a focused control scrolls clear of it.
 const BACK_CLEARANCE = 8
+
+// The space between a banner and the tab bar under it, which the page keeps clear along with the banner.
+const BANNER_GAP = 8
 
 const setPixels = (target: HTMLElement, name: string, pixels: number) => {
   if (pixels > 0) target.style.setProperty(name, `${pixels}px`)
@@ -81,9 +93,11 @@ const useShellMetrics = (
   topRef: React.RefObject<HTMLElement | null>,
   barRef: React.RefObject<HTMLElement | null>,
   backRef: React.RefObject<HTMLElement | null>,
+  bannerRef: React.RefObject<HTMLElement | null>,
   showTabBar: boolean,
   focus: boolean,
-  rail: boolean
+  rail: boolean,
+  hasBanner: boolean
 ) => {
   React.useLayoutEffect(() => {
     const root = rootRef.current
@@ -96,11 +110,23 @@ const useShellMetrics = (
       setPixels(root, name, pixels)
       setPixels(page, scrollPadName, pixels)
     }
+    // The bar's block and the banner's block stack at the bottom. With a banner and no measured bar (the
+    // rail, from lg, one section, focus mode) --shell-bottom keeps the bar's CSS fallback and adds the banner.
+    const publishBottom = (barBlock: number) => {
+      const banner = bannerRef.current
+      const bannerBlock = banner && banner.offsetHeight > 0 ? banner.offsetHeight + BANNER_GAP : 0
+      setPixels(root, "--shell-bar", barBlock)
+      setPixels(root, "--shell-banner", bannerBlock)
+      setPixels(page, "--scroll-pad-bottom", barBlock + bannerBlock)
+      if (bannerBlock > 0 && barBlock === 0) root.style.setProperty("--shell-bottom", `calc(var(--shell-bar) + ${bannerBlock}px)`)
+      else setPixels(root, "--shell-bottom", barBlock + bannerBlock)
+    }
     const measure = () => {
       if (focus) {
         const back = backRef.current
         const backBottom = back ? (Number.parseFloat(getComputedStyle(back).top) || 0) + back.offsetHeight : 0
         setPixels(page, "--scroll-pad-top", backBottom > 0 ? backBottom + BACK_CLEARANCE : 0)
+        publishBottom(0)
         return
       }
       const bar = barRef.current
@@ -112,24 +138,27 @@ const useShellMetrics = (
       // side, so it has no bottom height either; the fallback (the bottom edge alone) applies.
       const barHeight = bar && !rail ? bar.offsetHeight : 0
       const barOffset = bar && barHeight > 0 ? Number.parseFloat(getComputedStyle(bar).bottom) || 0 : 0
-      publish("--shell-bottom", "--scroll-pad-bottom", barHeight > 0 ? barHeight + barOffset : 0)
+      publishBottom(barHeight > 0 ? barHeight + barOffset : 0)
     }
 
     measure()
     const release = () => {
       publish("--shell-top", "--scroll-pad-top", 0)
       publish("--shell-bottom", "--scroll-pad-bottom", 0)
+      setPixels(root, "--shell-bar", 0)
+      setPixels(root, "--shell-banner", 0)
     }
     if (typeof ResizeObserver === "undefined") return release
     const observer = new ResizeObserver(measure)
     if (top) observer.observe(top)
     if (barRef.current) observer.observe(barRef.current)
     if (backRef.current) observer.observe(backRef.current)
+    if (bannerRef.current) observer.observe(bannerRef.current)
     return () => {
       observer.disconnect()
       release()
     }
-  }, [rootRef, topRef, barRef, backRef, showTabBar, focus, rail])
+  }, [rootRef, topRef, barRef, backRef, bannerRef, showTabBar, focus, rail, hasBanner])
 }
 
 // WebKit on iOS can match :focus-visible after a tap (focus handed back to the More tab when its sheet
@@ -244,6 +273,7 @@ function AppShell({
   autoHideHeader = false,
   back,
   headerActions,
+  banner,
   renderLink = renderAnchor,
   className,
   children,
@@ -256,9 +286,10 @@ function AppShell({
   const topRef = React.useRef<HTMLDivElement>(null)
   const barRef = React.useRef<HTMLElement>(null)
   const backRef = React.useRef<HTMLDivElement>(null)
+  const bannerRef = React.useRef<HTMLDivElement>(null)
   const focus = chrome === "none"
   const rail = useMediaQuery(RAIL_QUERY)
-  useShellMetrics(rootRef, topRef, barRef, backRef, showTabBar, focus, rail)
+  useShellMetrics(rootRef, topRef, barRef, backRef, bannerRef, showTabBar, focus, rail, Boolean(banner))
   usePointerModality(rootRef)
   // In the rail the header is not sticky: it scrolls away by itself.
   const headerHidden = useAutoHideHeader(topRef, autoHideHeader && !focus && !rail)
@@ -363,7 +394,7 @@ function AppShell({
         <main
           data-slot="app-shell-main"
           className={cn(
-            "mx-auto flex w-full max-w-5xl flex-1 flex-col px-edge lg:px-6",
+            "mx-auto mb-(--shell-banner) flex w-full max-w-5xl flex-1 flex-col px-edge lg:px-6",
             focus
               ? cn("pb-edge", back ? "pt-[calc(max(1rem,var(--safe-t))+min(3.25rem,78px))]" : "pt-[max(1rem,var(--safe-t))]")
               : cn("pt-2 lg:pb-6 [@media(orientation:landscape)_and_(max-height:500px)]:pb-edge", showTabBar ? "pb-[calc(6rem+var(--edge-b))] [@media(orientation:landscape)_and_(max-height:500px)]:pl-[calc(var(--edge-x)+4.5rem)]" : "pb-edge")
@@ -379,6 +410,18 @@ function AppShell({
           aria-hidden="true"
           className="pointer-events-none fixed inset-x-0 bottom-0 z-20 h-(--edge-b) bg-background lg:hidden"
         />
+      ) : null}
+      {banner ? (
+        <div
+          ref={bannerRef}
+          data-slot="app-shell-banner"
+          className={cn(
+            glassBar,
+            "fixed right-[max(1.3rem,env(safe-area-inset-right))] bottom-[calc(var(--shell-bar)+0.5rem)] left-[max(1.3rem,env(safe-area-inset-left))] z-30 rounded-2xl px-4 py-2 text-sm lg:right-6 lg:left-[calc(16rem+1.5rem)] [@media(orientation:landscape)_and_(max-height:500px)]:left-[calc(var(--edge-x)+4.5rem)]"
+          )}
+        >
+          {banner}
+        </div>
       ) : null}
       {showTabBar && !focus ? (
         <nav

@@ -123,6 +123,19 @@ const Page = () => (
   </div>
 )
 
+// A page banner for the shell's slot (`?v=shell&banner=1`): the knowledge app's model-download strip.
+const Banner = () => (
+  <div className="flex flex-col gap-1">
+    <div className="flex items-center justify-between text-primary">
+      <span>Downloading AI model…</span>
+      <span className="tabular-nums text-muted-foreground">60%</span>
+    </div>
+    <div className="h-0.5 w-full rounded-full bg-muted">
+      <div className="h-0.5 w-3/5 rounded-full bg-primary" />
+    </div>
+  </div>
+)
+
 const SIDES = ["top", "right", "bottom", "left"] as const
 type Side = (typeof SIDES)[number]
 const side: Side = SIDES.includes(params.get("side") as Side) ? (params.get("side") as Side) : "right"
@@ -220,6 +233,7 @@ const App = () => {
       onModeChange={() => {}}
       back={{ href: "#" }}
       headerActions={<Button size="icon" variant="ghost" aria-label="Alerts"><Bell /></Button>}
+      banner={params.get("banner") ? <Banner /> : undefined}
     >
       <Page />
     </AppShell>

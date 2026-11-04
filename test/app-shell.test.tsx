@@ -602,6 +602,114 @@ describe("AppShell", () => {
     })
   })
 
+  // A page banner (a download's progress, an offline notice) used to draw over the tab bar, since the shell
+  // gave it no place (design-system#185). `banner` is that place: just above the bar, counted in the
+  // workspace variables and the page's scroll padding.
+  describe("banner slot", () => {
+    const withLayout = (sizes: { bar: number; banner: number }) => {
+      vi.stubGlobal("ResizeObserver", FakeResizeObserver)
+      Object.defineProperty(HTMLElement.prototype, "offsetHeight", {
+        configurable: true,
+        get() {
+          const slot = (this as HTMLElement).dataset.slot
+          if (slot === "app-shell-tabbar") return sizes.bar
+          if (slot === "app-shell-banner") return sizes.banner
+          return slot === "app-shell-top" ? 64 : 0
+        },
+      })
+    }
+    afterEach(() => {
+      vi.unstubAllGlobals()
+      if (offsetHeight) Object.defineProperty(HTMLElement.prototype, "offsetHeight", offsetHeight)
+      document.documentElement.removeAttribute("style")
+      observed.length = 0
+    })
+
+    const root = (container: HTMLElement) => container.querySelector<HTMLElement>("[data-slot=app-shell]")!
+    const slot = (container: HTMLElement) => container.querySelector<HTMLElement>("[data-slot=app-shell-banner]")
+
+    it("draws nothing without a banner, and leaves the variables as they were", () => {
+      withLayout({ bar: 60, banner: 0 })
+      const { container } = render(<AppShell appName="Reader" sections={four}>x</AppShell>)
+
+      expect(slot(container)).toBeNull()
+      expect(root(container).style.getPropertyValue("--shell-banner")).toBe("")
+      expect(root(container).style.getPropertyValue("--shell-bottom")).toBe("60px")
+      expect(root(container).className).toContain("[--shell-banner:0px]")
+    })
+
+    it("renders the banner's content in a fixed glass strip above the tab bar", () => {
+      const { container } = render(
+        <AppShell appName="Reader" sections={four} banner={<p>Downloading AI model</p>}>
+          x
+        </AppShell>
+      )
+
+      const strip = slot(container)!
+      expect(within(strip).getByText("Downloading AI model")).toBeTruthy()
+      expect(strip.className).toContain("surface-glass")
+      expect(strip.className).toContain("fixed")
+      expect(strip.className).toContain("bottom-[calc(var(--shell-bar)+0.5rem)]")
+      expect(strip.className).toContain("z-30")
+      expect(tabBar(container).className).toContain("z-30")
+    })
+
+    it("clears the display curve at the sides the way the tab bar does", () => {
+      const { container } = render(<AppShell appName="Reader" sections={four} banner={<p>x</p>}>x</AppShell>)
+
+      const className = slot(container)!.className
+      expect(className).toContain("right-[max(1.3rem,env(safe-area-inset-right))]")
+      expect(className).toContain("left-[max(1.3rem,env(safe-area-inset-left))]")
+    })
+
+    it("adds its height and an 8px gap to --shell-bottom, and the bar alone stays in --shell-bar", () => {
+      withLayout({ bar: 60, banner: 44 })
+      const { container } = render(<AppShell appName="Reader" sections={four} banner={<p>x</p>}>x</AppShell>)
+
+      expect(root(container).style.getPropertyValue("--shell-banner")).toBe("52px")
+      expect(root(container).style.getPropertyValue("--shell-bar")).toBe("60px")
+      expect(root(container).style.getPropertyValue("--shell-bottom")).toBe("112px")
+      expect(document.documentElement.style.getPropertyValue("--scroll-pad-bottom")).toBe("112px")
+    })
+
+    it("adds the banner to the bar's CSS fallback when no bar is measured", () => {
+      withLayout({ bar: 0, banner: 44 })
+      const { container } = render(<AppShell appName="Reader" sections={four} banner={<p>x</p>}>x</AppShell>)
+
+      expect(root(container).style.getPropertyValue("--shell-bar")).toBe("")
+      expect(root(container).style.getPropertyValue("--shell-bottom")).toBe("calc(var(--shell-bar) + 52px)")
+      expect(document.documentElement.style.getPropertyValue("--scroll-pad-bottom")).toBe("52px")
+    })
+
+    it("keeps the page clear of it with a bottom margin of --shell-banner", () => {
+      const { container } = render(<AppShell appName="Reader" sections={four} banner={<p>x</p>}>x</AppShell>)
+
+      expect(container.querySelector<HTMLElement>("[data-slot=app-shell-main]")!.className).toContain("mb-(--shell-banner)")
+    })
+
+    it("re-measures when the banner changes size, and hands the variables back when it goes", () => {
+      withLayout({ bar: 60, banner: 44 })
+      const { container, rerender } = render(<AppShell appName="Reader" sections={four} banner={<p>x</p>}>x</AppShell>)
+
+      withLayout({ bar: 60, banner: 70 })
+      observerCallback?.()
+      expect(root(container).style.getPropertyValue("--shell-banner")).toBe("78px")
+
+      rerender(<AppShell appName="Reader" sections={four}>x</AppShell>)
+      expect(root(container).style.getPropertyValue("--shell-banner")).toBe("")
+      expect(root(container).style.getPropertyValue("--shell-bottom")).toBe("60px")
+    })
+
+    it("sits at the bottom edge in focus mode, where there is no tab bar", () => {
+      withLayout({ bar: 0, banner: 44 })
+      const { container } = render(<AppShell appName="Reader" sections={four} chrome="none" banner={<p>x</p>}>x</AppShell>)
+
+      expect(slot(container)).toBeTruthy()
+      expect(root(container).className).toContain("[--shell-bar:var(--edge-b)]")
+      expect(root(container).style.getPropertyValue("--shell-bottom")).toBe("calc(var(--shell-bar) + 52px)")
+    })
+  })
+
   // Content that scrolls up under the glass header showed through it and was cut mid-line at its edge
   // (design-system#185). On a phone the header zone is a solid band, and the page fades out below it.
   describe("header scroll edge", () => {
