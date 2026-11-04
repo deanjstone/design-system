@@ -1,3 +1,10 @@
+# [3.17.0](https://github.com/deanjstone/design-system/compare/v3.16.0...v3.17.0) (2026-11-04)
+
+
+### Features
+
+* add a void tone to graph-3d with a token surface and additive soft-glow nodes ([86284f0](https://github.com/deanjstone/design-system/commit/86284f063955869693bbfba25da3be0bc9929934)), closes [#180](https://github.com/deanjstone/design-system/issues/180)
+
 # [3.16.0](https://github.com/deanjstone/design-system/compare/v3.15.0...v3.16.0) (2026-11-04)
 
 
