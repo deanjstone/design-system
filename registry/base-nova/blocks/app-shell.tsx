@@ -331,7 +331,7 @@ function AppShell({
             data-slot="app-shell-top"
             data-hidden={headerHidden ? "true" : undefined}
             className={cn(
-              "pointer-events-none sticky top-0 z-30 [@media(orientation:landscape)_and_(max-height:500px)]:static transition-transform duration-200 data-[hidden=true]:-translate-y-full focus-within:translate-y-0 motion-reduce:transition-none pr-[max(0.5rem,var(--safe-r))] pl-[max(0.5rem,var(--safe-l))] pt-[calc(env(safe-area-inset-top)+0.5rem)] pb-2",
+              "pointer-events-none sticky top-0 z-30 max-md:bg-background max-md:after:pointer-events-none max-md:after:absolute max-md:after:inset-x-0 max-md:after:top-full max-md:after:h-4 max-md:after:bg-[linear-gradient(to_bottom,var(--background),transparent)][@media(orientation:landscape)_and_(max-height:500px)]:static transition-transform duration-200 data-[hidden=true]:-translate-y-full focus-within:translate-y-0 motion-reduce:transition-none pr-[max(0.5rem,var(--safe-r))] pl-[max(0.5rem,var(--safe-l))] pt-[calc(env(safe-area-inset-top)+0.5rem)] pb-2",
               showTabBar && "[@media(orientation:landscape)_and_(max-height:500px)]:pl-[calc(var(--edge-x)+4rem)]"
             )}
           >

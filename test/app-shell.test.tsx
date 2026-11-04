@@ -602,6 +602,26 @@ describe("AppShell", () => {
     })
   })
 
+  // Content that scrolls up under the glass header showed through it and was cut mid-line at its edge
+  // (design-system#185). On a phone the header zone is a solid band, and the page fades out below it.
+  describe("header scroll edge", () => {
+    it("fills the header zone on a phone and fades the page out under it", () => {
+      const { container } = render(<AppShell appName="Reader" sections={four}>x</AppShell>)
+
+      const className = header(container).parentElement!.className
+      expect(className).toContain("max-md:bg-background")
+      expect(className).toContain("max-md:after:absolute")
+      expect(className).toContain("max-md:after:top-full")
+      expect(className).toContain("max-md:after:bg-[linear-gradient(to_bottom,var(--background),transparent)]")
+    })
+
+    it("adds no height to the zone, so --shell-top stays the measured header", () => {
+      const { container } = render(<AppShell appName="Reader" sections={four}>x</AppShell>)
+
+      expect(header(container).parentElement!.className).toContain("max-md:after:pointer-events-none")
+    })
+  })
+
   describe("sidebar", () => {
     it("is shown from lg", () => {
       const { container } = render(<AppShell appName="Reader" sections={four}>x</AppShell>)
