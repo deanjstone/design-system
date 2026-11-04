@@ -219,6 +219,12 @@ export type ToneProfile = {
   cameraScale: number
   /** True adds the membrane, the motes and the breathing motion: see `resolveAtmosphere`. */
   atmosphere: boolean
+  /** True tints each link by its kind (see `edgeTier`); false draws every link in the one edge colour. */
+  kindTint: boolean
+  /** How many neighbours a hovered node lights up, strongest link first; Infinity lights every link touching it. */
+  hoverNeighbourLimit: number
+  /** True draws DOM labels for the hovered node, its neighbours and, zoomed in, the hottest nodes. */
+  labels: boolean
 }
 
 export function toneProfile(tone: Graph3DTone, pixelRatio: number): ToneProfile {
@@ -234,6 +240,9 @@ export function toneProfile(tone: Graph3DTone, pixelRatio: number): ToneProfile 
       shellLayout: true,
       cameraScale: 0.8,
       atmosphere: true,
+      kindTint: true,
+      hoverNeighbourLimit: LABELS.neighbours,
+      labels: true,
     }
   }
   return {
@@ -247,6 +256,9 @@ export function toneProfile(tone: Graph3DTone, pixelRatio: number): ToneProfile 
     shellLayout: false,
     cameraScale: 1,
     atmosphere: false,
+    kindTint: false,
+    hoverNeighbourLimit: Number.POSITIVE_INFINITY,
+    labels: false,
   }
 }
 
@@ -581,4 +593,138 @@ export function motionTarget(state: { interacting: boolean; hovered: boolean; id
 export function stepMotionRate(rate: number, target: number, dtMs: number): number {
   const tau = target < rate ? MOTION.easeOutMs : MOTION.easeInMs
   return rate + (target - rate) * (1 - Math.exp(-Math.max(0, dtMs) / tau))
+}
+
+/** The void tone's edge tints and labels, as the spec gives them. */
+export const LABELS = {
+  /** A hovered node lights, and labels, this many neighbours: the ones on its strongest links. */
+  neighbours: 8,
+  /** Zoomed in, this many of the hottest nodes on screen carry a label. */
+  hottest: 40,
+  /** The camera counts as zoomed in once it is closer than this many outer radii to its target. */
+  zoomedInRadii: 1.95,
+} as const
+
+/** Which theme token tints a link, by tier: a `[[link]]` and a shared topic are two different threads. */
+export const EDGE_TOKENS = { link: "--chart-5", topic: "--chart-2" } as const
+
+export type EdgeTier = keyof typeof EDGE_TOKENS
+
+/** A kind that names a topic ("topic", "shared-topic") is a topic edge; every other kind, and none, is a link. */
+export function edgeTier(kind: string | undefined): EdgeTier {
+  return kind !== undefined && /topic/i.test(kind) ? "topic" : "link"
+}
+
+/** Link indices strongest first. Equal strengths keep their given order, so the order never changes between builds. */
+export function linkDrawOrder(links: readonly Pick<MappedLink, "strength">[]): number[] {
+  return Array.from({ length: links.length }, (_, index) => index).sort(
+    (a, b) => (links[b]?.strength ?? 0) - (links[a]?.strength ?? 0) || a - b,
+  )
+}
+
+const otherEnd = (link: Pick<MappedLink, "source" | "target">, node: number) => (link.source === node ? link.target : link.source)
+
+/**
+ * For each node, the indices of the links touching it, best first: strongest link, then the
+ * better connected neighbour (so a tie favours a hub), then the link's own index.
+ */
+export function buildAdjacency(graph: Pick<MappedGraph, "nodes" | "links">): number[][] {
+  const adjacency: number[][] = graph.nodes.map(() => [])
+  graph.links.forEach((link, index) => {
+    adjacency[link.source]?.push(index)
+    adjacency[link.target]?.push(index)
+  })
+  adjacency.forEach((touching, node) => {
+    touching.sort((a, b) => {
+      const linkA = graph.links[a]!
+      const linkB = graph.links[b]!
+      return (
+        linkB.strength - linkA.strength ||
+        (graph.nodes[otherEnd(linkB, node)]?.degree ?? 0) - (graph.nodes[otherEnd(linkA, node)]?.degree ?? 0) ||
+        a - b
+      )
+    })
+  })
+  return adjacency
+}
+
+/**
+ * The neighbours of `node` on its strongest links, up to `limit`, and the link that makes
+ * each one a neighbour. Two links to the same neighbour count once, by the stronger.
+ */
+export function strongestNeighbours(
+  adjacency: readonly (readonly number[])[],
+  links: readonly Pick<MappedLink, "source" | "target">[],
+  node: number,
+  limit: number,
+): { nodes: number[]; links: number[] } {
+  const found = { nodes: [] as number[], links: [] as number[] }
+  const seen = new Set<number>()
+  for (const index of adjacency[node] ?? []) {
+    if (found.nodes.length >= limit) break
+    const link = links[index]
+    if (!link) continue
+    const neighbour = otherEnd(link, node)
+    if (seen.has(neighbour)) continue
+    seen.add(neighbour)
+    found.nodes.push(neighbour)
+    found.links.push(index)
+  }
+  return found
+}
+
+/** Node indices hottest first; a node with no heat counts as cold, and ties go to the better connected, then to the lower index. */
+export function hotOrder(nodes: readonly Pick<MappedNode, "heat" | "degree">[]): number[] {
+  return Array.from({ length: nodes.length }, (_, index) => index).sort(
+    (a, b) =>
+      (nodes[b]?.heat ?? 0) - (nodes[a]?.heat ?? 0) || (nodes[b]?.degree ?? 0) - (nodes[a]?.degree ?? 0) || a - b,
+  )
+}
+
+/** True when the camera is close enough to its target for the hottest-nodes labels to show. */
+export function isZoomedIn(cameraDistance: number, outerRadius: number): boolean {
+  return cameraDistance < LABELS.zoomedInRadii * outerRadius
+}
+
+/** Label metrics, in CSS px: a label sits just off its node, and its width is estimated from its text. */
+const LABEL_BOX = { height: 18, offsetX: 8, padding: 12, glyph: 6.4, gap: 2 } as const
+
+export type LabelCandidate = { index: number; x: number; y: number; text: string }
+export type PlacedLabel = LabelCandidate & { left: number; top: number; width: number; height: number }
+
+/**
+ * Chooses which labels to draw. Candidates arrive best first; each takes the right of its
+ * node (or the left when the right runs off the canvas) and is dropped when it would leave
+ * the canvas or sit on a label already placed. Stops at `max`.
+ */
+export function placeLabels(
+  candidates: readonly LabelCandidate[],
+  viewport: { width: number; height: number },
+  max: number,
+): PlacedLabel[] {
+  const placed: PlacedLabel[] = []
+  const clear = (left: number, top: number, width: number) =>
+    left >= 0 &&
+    top >= 0 &&
+    left + width <= viewport.width &&
+    top + LABEL_BOX.height <= viewport.height &&
+    placed.every(
+      (other) =>
+        left >= other.left + other.width + LABEL_BOX.gap ||
+        left + width + LABEL_BOX.gap <= other.left ||
+        top >= other.top + other.height + LABEL_BOX.gap ||
+        top + LABEL_BOX.height + LABEL_BOX.gap <= other.top,
+    )
+  for (const candidate of candidates) {
+    if (placed.length >= max) break
+    if (!Number.isFinite(candidate.x) || !Number.isFinite(candidate.y)) continue
+    const width = LABEL_BOX.padding + candidate.text.length * LABEL_BOX.glyph
+    const top = candidate.y - LABEL_BOX.height / 2
+    const right = candidate.x + LABEL_BOX.offsetX
+    const left = candidate.x - LABEL_BOX.offsetX - width
+    const chosen = clear(right, top, width) ? right : clear(left, top, width) ? left : null
+    if (chosen === null) continue
+    placed.push({ ...candidate, left: chosen, top, width, height: LABEL_BOX.height })
+  }
+  return placed
 }
