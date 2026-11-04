@@ -106,17 +106,25 @@ const voidNodeFragmentShader = /* glsl */ `
   }
 `
 
+// One draw for every link: aActive is 1 on both ends of a link that touches the hovered
+// or highlighted node, which then takes the brighter colour and opacity.
 const lineVertexShader = /* glsl */ `
+  attribute float aActive;
+  varying float vActive;
   void main() {
+    vActive = aActive;
     gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
   }
 `
 
 const lineFragmentShader = /* glsl */ `
   uniform vec3 uColor;
+  uniform vec3 uActiveColor;
   uniform float uOpacity;
+  uniform float uActiveOpacity;
+  varying float vActive;
   void main() {
-    gl_FragColor = vec4(uColor, uOpacity);
+    gl_FragColor = vec4(mix(uColor, uActiveColor, vActive), mix(uOpacity, uActiveOpacity, vActive));
   }
 `
 
@@ -239,36 +247,33 @@ export function createGraphEngine(options: GraphEngineOptions): GraphEngine {
   nodePoints.frustumCulled = false
   scene.add(nodePoints)
 
-  // Link buffers: every link faint, then the active ones brighter on top.
+  // Link buffers: every link faint, the active ones brighter, all in one draw.
   const linkPositions = new Float32Array(linkCount * 6)
-  const activePositions = new Float32Array(linkCount * 6)
+  const linkActive = new Float32Array(linkCount * 2)
   const linkGeometry = new THREE.BufferGeometry()
   linkGeometry.setAttribute("position", new THREE.BufferAttribute(linkPositions, 3).setUsage(THREE.DynamicDrawUsage))
-  const activeGeometry = new THREE.BufferGeometry()
-  activeGeometry.setAttribute("position", new THREE.BufferAttribute(activePositions, 3).setUsage(THREE.DynamicDrawUsage))
-  activeGeometry.setDrawRange(0, 0)
+  linkGeometry.setAttribute("aActive", new THREE.BufferAttribute(linkActive, 1).setUsage(THREE.DynamicDrawUsage))
   const baseColour = new THREE.Vector3()
   const activeColour = new THREE.Vector3()
-  const lineMaterial = (opacity: number, colour: THREE.Vector3) =>
-    new THREE.ShaderMaterial({
-      vertexShader: lineVertexShader,
-      fragmentShader: lineFragmentShader,
-      uniforms: { uColor: { value: colour }, uOpacity: { value: opacity } },
-      transparent: true,
-      blending,
-      depthWrite: false,
-    })
-  const baseLineMaterial = lineMaterial(profile.baseEdgeOpacity, baseColour)
-  const activeLineMaterial = lineMaterial(profile.activeEdgeOpacity, activeColour)
-  const baseLines = new THREE.LineSegments(linkGeometry, baseLineMaterial)
-  const activeLines = new THREE.LineSegments(activeGeometry, activeLineMaterial)
-  baseLines.frustumCulled = false
-  activeLines.frustumCulled = false
+  const linkMaterial = new THREE.ShaderMaterial({
+    vertexShader: lineVertexShader,
+    fragmentShader: lineFragmentShader,
+    uniforms: {
+      uColor: { value: baseColour },
+      uActiveColor: { value: activeColour },
+      uOpacity: { value: profile.baseEdgeOpacity },
+      uActiveOpacity: { value: profile.activeEdgeOpacity },
+    },
+    transparent: true,
+    blending,
+    depthWrite: false,
+  })
+  const lines = new THREE.LineSegments(linkGeometry, linkMaterial)
+  lines.frustumCulled = false
   // Links first so node glows blend over them.
-  baseLines.renderOrder = 0
-  activeLines.renderOrder = 1
+  lines.renderOrder = 0
   nodePoints.renderOrder = 2
-  scene.add(baseLines, activeLines)
+  scene.add(lines)
 
   const nodeColours: Rgb[] = []
 
@@ -307,18 +312,13 @@ export function createGraphEngine(options: GraphEngineOptions): GraphEngine {
   }
 
   function refreshActiveLinks() {
-    let written = 0
     for (let link = 0; link < linkCount; link++) {
       const { source, target } = graph.links[link] ?? NO_LINK
-      if (!(source === hovered || target === hovered || highlight.has(source) || highlight.has(target))) continue
-      for (let axis = 0; axis < 3; axis++) {
-        activePositions[written * 6 + axis] = positions[source * 3 + axis] ?? 0
-        activePositions[written * 6 + 3 + axis] = positions[target * 3 + axis] ?? 0
-      }
-      written++
+      const active = source === hovered || target === hovered || highlight.has(source) || highlight.has(target) ? 1 : 0
+      linkActive[link * 2] = active
+      linkActive[link * 2 + 1] = active
     }
-    activeGeometry.setDrawRange(0, written * 2)
-    activeGeometry.getAttribute("position").needsUpdate = true
+    linkGeometry.getAttribute("aActive").needsUpdate = true
   }
 
   function copySimulationPositions() {
@@ -340,7 +340,6 @@ export function createGraphEngine(options: GraphEngineOptions): GraphEngine {
     }
     nodeGeometry.getAttribute("position").needsUpdate = true
     linkGeometry.getAttribute("position").needsUpdate = true
-    refreshActiveLinks()
   }
 
   // Picking: project every node to the screen and take the nearest under the
@@ -559,10 +558,8 @@ export function createGraphEngine(options: GraphEngineOptions): GraphEngine {
       simulation.stop()
       nodeGeometry.dispose()
       linkGeometry.dispose()
-      activeGeometry.dispose()
       nodeMaterial.dispose()
-      baseLineMaterial.dispose()
-      activeLineMaterial.dispose()
+      linkMaterial.dispose()
       renderer.dispose()
       renderer.forceContextLoss()
       canvas.remove()
