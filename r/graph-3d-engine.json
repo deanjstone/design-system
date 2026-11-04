@@ -9,7 +9,7 @@
     "@types/three"
   ],
   "registryDependencies": [
-    "deanjstone/design-system/graph-3d-core#v3.17.0"
+    "deanjstone/design-system/graph-3d-core"
   ],
   "files": [
     {
