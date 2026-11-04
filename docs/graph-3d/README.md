@@ -127,10 +127,42 @@ exists under `tone="default"`.
 
 Under reduced motion: ![reduced motion: membrane only, no motes](../assets/graph-3d-atmosphere-reduced-motion-void-dark.png)
 
+## Edges and labels
+
+Under `tone="void"` the links and the text around them change too. None of it exists
+under `tone="default"`, which keeps its one edge colour, its tooltip and every link that
+touches a hovered node.
+
+- **Edges.** Faint links draw at 0.16 opacity, additive, so a crossing sums to a brighter
+  thread. Each link is tinted by its `kind`: a kind that names a topic (`topic`,
+  `shared-topic`) takes `--chart-2`, every other kind (and none) takes `--chart-5`, both
+  read from the tokens so they follow the theme. Links are laid into the buffer strongest
+  first; additive blending sums the same in any order, so this changes no pixel today, but
+  it fixes the order for any later cap on how many are drawn.
+- **Hover.** A hovered node lights its top 8 neighbours, on its strongest links (a tie goes
+  to the better connected neighbour), instead of every link it has. `highlight` still lights
+  every link that touches a highlighted node.
+- **Labels.** Plain DOM, not sprites, so the text is crisp at any zoom. A hovered node gets
+  a label, its top 8 neighbours get one each, and once the camera is closer than about
+  twice the orb's radius to its target, the 40 hottest nodes on screen are labelled too
+  (hottest by `heat`, then by link count). A label sits to the right of its node, flips to
+  the left at the canvas edge, and is dropped rather than drawn over another. They follow
+  the orb as it turns and are hidden from assistive technology: the graph is one
+  `role="img"`. Under `tone="void"` these labels replace the hover tooltip; `onHover` still
+  fires.
+- **Cost.** Draw calls stay at 3, counted per frame in a real browser with
+  `docs/graph-3d/inspect.mjs`, at rest, hovered and zoomed in. The edge tint is a per-vertex
+  attribute on the same `LineSegments`, and the labels are DOM.
+
+| Before: grey edges, tooltip only | After: tinted edges, hover labels |
+|---|---|
+| ![before: hover](../assets/graph-3d-edges-labels-before-hover-void-dark.png) | ![after: hover](../assets/graph-3d-edges-labels-after-hover-void-dark.png) |
+| ![before: zoomed in](../assets/graph-3d-edges-labels-before-zoomed-void-dark.png) | ![after: zoomed in](../assets/graph-3d-edges-labels-after-zoomed-void-dark.png) |
+
 ## Behaviour
 
 - **Orbit, zoom, hover, click.** Drag to orbit, wheel or pinch to zoom, hover for a
-  label tooltip, click to glide the camera to the node and call `onNodeClick` with
+  label tooltip (under `tone="void"`, labels: see Edges and labels), click to glide the camera to the node and call `onNodeClick` with
   your own node object. Auto-rotate pauses while a node is hovered.
 - **Colour comes from tokens.** Each group takes `--chart-1` to `--chart-5` in
   sorted order, wrapping after five; edges use `--muted-foreground`, active edges
@@ -170,6 +202,7 @@ them into their own chunk and a page without a graph never pays for them.
 ```bash
 node docs/graph-3d/measure.mjs            # builds, opens one headless tab, prints JSON
 node docs/graph-3d/measure.mjs --nodes 600
+node docs/graph-3d/inspect.mjs            # ?tone=void: draw calls and labels at rest, hovered, zoomed in
 ```
 
 The demo (`docs/graph-3d/demo.tsx`) renders `sampleGraph(1300)`, a seeded graph

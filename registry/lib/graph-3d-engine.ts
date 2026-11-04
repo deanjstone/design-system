@@ -10,18 +10,26 @@ import type { SimulationNode } from "d3-force-3d"
 
 import {
   ATMOSPHERE,
+  EDGE_TOKENS,
+  LABELS,
   MOTION,
   breathScale,
+  buildAdjacency,
   easeInOutCubic,
+  edgeTier,
   heatBrightness,
   heatColour,
   heatSizeScale,
+  hotOrder,
+  isZoomedIn,
+  linkDrawOrder,
   moteField,
   motionTarget,
   nodePhase,
   nodeSpriteSize,
   parseCssColor,
   pickNearest,
+  placeLabels,
   precession,
   resolveAtmosphere,
   resolveTone,
@@ -29,6 +37,7 @@ import {
   snapToShells,
   spritePixelDiameter,
   stepMotionRate,
+  strongestNeighbours,
   toneProfile,
   type Graph3DTone,
   type MappedGraph,
@@ -132,25 +141,29 @@ const voidNodeFragmentShader = /* glsl */ `
   }
 `
 
-// One draw for every link: aActive is 1 on both ends of a link that touches the hovered
+// One draw for every link: aTint is the link's own colour (its kind's token under void, the
+// one edge colour otherwise), and aActive is 1 on both ends of a link that touches the hovered
 // or highlighted node, which then takes the brighter colour and opacity.
 const lineVertexShader = /* glsl */ `
+  attribute vec3 aTint;
   attribute float aActive;
+  varying vec3 vTint;
   varying float vActive;
   void main() {
+    vTint = aTint;
     vActive = aActive;
     gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
   }
 `
 
 const lineFragmentShader = /* glsl */ `
-  uniform vec3 uColor;
   uniform vec3 uActiveColor;
   uniform float uOpacity;
   uniform float uActiveOpacity;
+  varying vec3 vTint;
   varying float vActive;
   void main() {
-    gl_FragColor = vec4(mix(uColor, uActiveColor, vActive), mix(uOpacity, uActiveOpacity, vActive));
+    gl_FragColor = vec4(mix(vTint, uActiveColor, vActive), mix(uOpacity, uActiveOpacity, vActive));
   }
 `
 
@@ -340,19 +353,22 @@ export function createGraphEngine(options: GraphEngineOptions): GraphEngine {
   orb.add(nodePoints)
   scene.add(orb)
 
-  // Link buffers: every link faint, the active ones brighter, all in one draw.
+  // Link buffers: every link faint and tinted by kind, the active ones brighter, all in one draw.
+  // Under void the buffers run strongest link first; `drawOrder[slot]` is the graph link in each slot.
+  // Additive blending sums the same whatever the order, so the order costs nothing and changes no pixel.
+  const drawOrder = profile.kindTint ? linkDrawOrder(graph.links) : graph.links.map((_link, index) => index)
   const linkPositions = new Float32Array(linkCount * 6)
   const linkActive = new Float32Array(linkCount * 2)
+  const linkTints = new Float32Array(linkCount * 6)
   const linkGeometry = new THREE.BufferGeometry()
   linkGeometry.setAttribute("position", new THREE.BufferAttribute(linkPositions, 3).setUsage(THREE.DynamicDrawUsage))
+  linkGeometry.setAttribute("aTint", new THREE.BufferAttribute(linkTints, 3))
   linkGeometry.setAttribute("aActive", new THREE.BufferAttribute(linkActive, 1).setUsage(THREE.DynamicDrawUsage))
-  const baseColour = new THREE.Vector3()
   const activeColour = new THREE.Vector3()
   const linkMaterial = new THREE.ShaderMaterial({
     vertexShader: lineVertexShader,
     fragmentShader: lineFragmentShader,
     uniforms: {
-      uColor: { value: baseColour },
       uActiveColor: { value: activeColour },
       uOpacity: { value: profile.baseEdgeOpacity },
       uActiveOpacity: { value: profile.activeEdgeOpacity },
@@ -410,8 +426,17 @@ export function createGraphEngine(options: GraphEngineOptions): GraphEngine {
     })
     const edge = read("--muted-foreground", inherited)
     const active = read("--foreground", inherited)
-    baseColour.set(...edge)
     activeColour.set(...active)
+    const tierColours = {
+      link: read(EDGE_TOKENS.link, edge),
+      topic: read(EDGE_TOKENS.topic, edge),
+    }
+    drawOrder.forEach((link, slot) => {
+      const tint = profile.kindTint ? tierColours[edgeTier(graph.links[link]?.kind)] : edge
+      linkTints.set(tint, slot * 6)
+      linkTints.set(tint, slot * 6 + 3)
+    })
+    linkGeometry.getAttribute("aTint").needsUpdate = true
     for (let mote = 0; mote < moteCount; mote++) colours.set(edge, (nodeCount + mote) * 3)
     membraneColourA.set(...read("--chart-5", inherited))
     membraneColourB.set(...read("--chart-2", inherited))
@@ -434,12 +459,21 @@ export function createGraphEngine(options: GraphEngineOptions): GraphEngine {
     requestRender()
   }
 
+  // Under void a hovered node lights its top 8 neighbours' links, not every link it has.
+  const adjacency = profile.labels || Number.isFinite(profile.hoverNeighbourLimit) ? buildAdjacency(graph) : []
+  const limitedHover = Number.isFinite(profile.hoverNeighbourLimit)
   function refreshActiveLinks() {
-    for (let link = 0; link < linkCount; link++) {
+    const hoverLinks =
+      limitedHover && hovered !== -1
+        ? new Set(strongestNeighbours(adjacency, graph.links, hovered, profile.hoverNeighbourLimit).links)
+        : null
+    for (let slot = 0; slot < linkCount; slot++) {
+      const link = drawOrder[slot] ?? 0
       const { source, target } = graph.links[link] ?? NO_LINK
-      const active = source === hovered || target === hovered || highlight.has(source) || highlight.has(target) ? 1 : 0
-      linkActive[link * 2] = active
-      linkActive[link * 2 + 1] = active
+      const touchesHover = hoverLinks ? hoverLinks.has(link) : source === hovered || target === hovered
+      const active = touchesHover || highlight.has(source) || highlight.has(target) ? 1 : 0
+      linkActive[slot * 2] = active
+      linkActive[slot * 2 + 1] = active
     }
     linkGeometry.getAttribute("aActive").needsUpdate = true
   }
@@ -454,11 +488,11 @@ export function createGraphEngine(options: GraphEngineOptions): GraphEngine {
 
   function syncPositions() {
     copySimulationPositions()
-    for (let link = 0; link < linkCount; link++) {
-      const { source, target } = graph.links[link] ?? NO_LINK
+    for (let slot = 0; slot < linkCount; slot++) {
+      const { source, target } = graph.links[drawOrder[slot] ?? 0] ?? NO_LINK
       for (let axis = 0; axis < 3; axis++) {
-        linkPositions[link * 6 + axis] = positions[source * 3 + axis] ?? 0
-        linkPositions[link * 6 + 3 + axis] = positions[target * 3 + axis] ?? 0
+        linkPositions[slot * 6 + axis] = positions[source * 3 + axis] ?? 0
+        linkPositions[slot * 6 + 3 + axis] = positions[target * 3 + axis] ?? 0
       }
     }
     nodeGeometry.getAttribute("position").needsUpdate = true
@@ -547,6 +581,94 @@ export function createGraphEngine(options: GraphEngineOptions): GraphEngine {
   canvas.addEventListener("pointerdown", onPointerDown)
   canvas.addEventListener("pointerup", onPointerUp)
   canvas.style.cursor = "grab"
+
+  // Labels (void only). Plain DOM, not sprites: they stay crisp and selectable-free, and a handful
+  // is cheap to move. A pool is built once; each update places the hovered node, its top 8
+  // neighbours and, zoomed in, the hottest nodes on screen, then hides the rest of the pool.
+  const labelLayer = profile.labels ? document.createElement("div") : null
+  const labelPool: HTMLDivElement[] = []
+  const hottestFirst = profile.labels ? hotOrder(graph.nodes) : []
+  if (labelLayer) {
+    labelLayer.dataset.slot = "graph-3d-labels"
+    labelLayer.style.cssText = "position:absolute;inset:0;overflow:hidden;pointer-events:none"
+    container.appendChild(labelLayer)
+  }
+
+  const labelStyle = (role: string) =>
+    "position:absolute;left:0;top:0;display:none;box-sizing:border-box;height:18px;padding:0 6px;" +
+    "font:500 11px/18px var(--font-sans, system-ui, sans-serif);white-space:nowrap;pointer-events:none;" +
+    (role === "hover"
+      ? "background:var(--foreground);color:var(--background);"
+      : "background:color-mix(in oklab, var(--surface-0) 72%, transparent);color:var(--foreground);" +
+        (role === "hot" ? "opacity:0.78;" : ""))
+
+  function labelElement(position: number) {
+    let element = labelPool[position]
+    if (!element) {
+      element = document.createElement("div")
+      element.dataset.slot = "graph-3d-label"
+      // The corner comes from the theme's radius scale; everything else is inline, so the layout needs no stylesheet.
+      element.className = "rounded-sm"
+      element.setAttribute("aria-hidden", "true")
+      labelLayer?.appendChild(element)
+      labelPool[position] = element
+    }
+    return element
+  }
+
+  function updateLabels() {
+    if (!labelLayer) return
+    const width = Math.max(1, container.clientWidth)
+    const height = Math.max(1, container.clientHeight)
+    const zoomedIn = isZoomedIn(camera.position.distanceTo(controls.target), sphereRadius)
+    const candidates: { index: number; x: number; y: number; text: string; role: string }[] = []
+    if (hovered !== -1 || zoomedIn) {
+      projectNodes(width, height)
+      const add = (index: number, role: string) => {
+        const node = graph.nodes[index]
+        if (node) candidates.push({ index, x: screen[index * 3] ?? Number.NaN, y: screen[index * 3 + 1] ?? Number.NaN, text: node.label, role })
+      }
+      const listed = new Set<number>()
+      if (hovered !== -1) {
+        add(hovered, "hover")
+        listed.add(hovered)
+        for (const neighbour of strongestNeighbours(adjacency, graph.links, hovered, LABELS.neighbours).nodes) {
+          add(neighbour, "neighbour")
+          listed.add(neighbour)
+        }
+      }
+      if (zoomedIn) {
+        let onScreen = 0
+        for (const index of hottestFirst) {
+          if (listed.has(index)) continue
+          const x = screen[index * 3] ?? Number.NaN
+          const y = screen[index * 3 + 1] ?? Number.NaN
+          if (!Number.isFinite(screen[index * 3 + 2] ?? Number.NaN) || x < 0 || y < 0 || x > width || y > height) continue
+          add(index, "hot")
+          // Overlapping labels are dropped, so offer a few more than will fit.
+          if (++onScreen >= LABELS.hottest * 3) break
+        }
+      }
+    }
+    const roleOf = new Map(candidates.map((candidate) => [candidate.index, candidate.role]))
+    const cap = (hovered === -1 ? 0 : 1 + LABELS.neighbours) + (zoomedIn ? LABELS.hottest : 0)
+    const placed = placeLabels(candidates, { width, height }, cap)
+    placed.forEach((label, position) => {
+      const element = labelElement(position)
+      const role = roleOf.get(label.index) ?? "hot"
+      if (element.dataset.role !== role) {
+        element.dataset.role = role
+        element.style.cssText = labelStyle(role)
+      }
+      if (element.textContent !== label.text) element.textContent = label.text
+      element.style.transform = `translate(${Math.round(label.left)}px, ${Math.round(label.top)}px)`
+      element.style.display = "block"
+    })
+    for (let position = placed.length; position < labelPool.length; position++) {
+      const element = labelPool[position]
+      if (element) element.style.display = "none"
+    }
+  }
 
   // Click-to-focus tween: target and camera glide so the node ends centred.
   let pendingFocus = -1
@@ -682,6 +804,7 @@ export function createGraphEngine(options: GraphEngineOptions): GraphEngine {
     if (!hideUntilSettled && (moved || renderRequested)) {
       renderer.render(scene, camera)
       renderRequested = false
+      updateLabels()
     }
 
     if ((!settled || tween || controls.autoRotate || moved || atmosphere.motion) && !frameHandle) {
@@ -726,6 +849,7 @@ export function createGraphEngine(options: GraphEngineOptions): GraphEngine {
       membraneMaterial?.dispose()
       renderer.dispose()
       renderer.forceContextLoss()
+      labelLayer?.remove()
       canvas.remove()
     },
   }

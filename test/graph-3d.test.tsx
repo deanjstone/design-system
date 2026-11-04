@@ -131,6 +131,18 @@ describe("Graph3D prop mapping", () => {
   })
 })
 
+describe("Graph3D void labels", () => {
+  it("leaves the hovered node's label to the engine's label layer: no tooltip under tone void", async () => {
+    mockReducedMotion(false)
+    render(<Graph3D nodes={nodes} links={links} tone="void" />)
+    await ready()
+    act(() => {
+      lastOptions().onHover({ node: lastOptions().graph.nodes[0], x: 40, y: 60 })
+    })
+    expect(screen.queryByRole("tooltip")).toBeNull()
+  })
+})
+
 describe("Graph3D reduced motion", () => {
   it("never auto-rotates, even when autoRotate is true, and tells the engine", async () => {
     mockReducedMotion(true)

@@ -56,7 +56,9 @@ type Graph3DProps = Omit<React.ComponentProps<"div">, "children" | "onError"> & 
   /**
    * `default` draws on the surface you give it. `void` paints its own always-dark
    * gradient (from theme tokens, in light and dark pages alike) and draws nodes and
-   * links as additive soft glow, so it needs no background class from you.
+   * links as additive soft glow, so it needs no background class from you. It also labels
+   * the hovered node, its top 8 neighbours and, zoomed in, the hottest nodes, in place of
+   * the hover tooltip.
    */
   tone?: Graph3DTone
 }
@@ -194,7 +196,7 @@ function Graph3D({
           3D view unavailable: WebGL could not start in this browser.
         </p>
       ) : null}
-      {hover ? (
+      {hover && resolvedTone !== "void" ? (
         <div
           role="tooltip"
           data-slot="graph-3d-tooltip"
