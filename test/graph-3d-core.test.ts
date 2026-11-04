@@ -4,7 +4,11 @@ import { describe, expect, it } from "vitest"
 
 import {
   GROUP_TOKENS,
+  HEAT_FLOOR,
   easeInOutCubic,
+  heatBrightness,
+  heatColour,
+  heatSizeScale,
   mapGraph,
   parseCssColor,
   nodeSpriteSize,
@@ -307,5 +311,93 @@ describe("VOID_SURFACE_BACKGROUND", () => {
     expect(VOID_SURFACE_BACKGROUND).toMatch(/^linear-gradient\(/)
     expect(VOID_SURFACE_BACKGROUND).toMatch(/var\(--[a-z0-9-]+\)/)
     expect(VOID_SURFACE_BACKGROUND).not.toMatch(/#[0-9a-f]{3,8}\b|rgba?\(|hsla?\(|oklch\(/i)
+  })
+})
+
+// Per-node heat (design-system#181): a 0-1 value that sets how bright, how large and how
+// saturated a node is. A graph with no heat draws exactly as it did before.
+describe("mapGraph heat", () => {
+  const heated = (heat: number | undefined) => mapGraph([{ id: "a", label: "A", group: "g", heat }], []).nodes[0]!
+
+  it("carries heat through, clamped to 0-1", () => {
+    expect(heated(0.4).heat).toBe(0.4)
+    expect(heated(0).heat).toBe(0)
+    expect(heated(3).heat).toBe(1)
+    expect(heated(-2).heat).toBe(0)
+  })
+
+  it("leaves heat off the node when it is missing or not a finite number", () => {
+    for (const heat of [undefined, Number.NaN, Number.POSITIVE_INFINITY, Number.NEGATIVE_INFINITY]) {
+      expect("heat" in heated(heat)).toBe(false)
+    }
+  })
+})
+
+describe("heatBrightness", () => {
+  it("is full brightness when a node has no heat, so an unheated graph is unchanged", () => {
+    expect(heatBrightness(undefined)).toBe(1)
+  })
+
+  it("runs from the floor at heat 0 to full at heat 1, rising in between", () => {
+    expect(heatBrightness(0)).toBeCloseTo(HEAT_FLOOR)
+    expect(heatBrightness(1)).toBeCloseTo(1)
+    expect(heatBrightness(0.25)).toBeLessThan(heatBrightness(0.5))
+    expect(heatBrightness(0.5)).toBeLessThan(heatBrightness(0.75))
+  })
+
+  it("keeps a cold node visible: the floor is well above zero", () => {
+    expect(HEAT_FLOOR).toBeGreaterThan(0.3)
+    expect(HEAT_FLOOR).toBeLessThan(0.6)
+  })
+})
+
+describe("heatSizeScale", () => {
+  it("is 1 for a node with no heat", () => {
+    expect(heatSizeScale(undefined)).toBe(1)
+  })
+
+  it("shrinks a cold node and grows a hot one", () => {
+    expect(heatSizeScale(0)).toBeLessThan(1)
+    expect(heatSizeScale(1)).toBeGreaterThan(1)
+    expect(heatSizeScale(0.2)).toBeLessThan(heatSizeScale(0.8))
+  })
+})
+
+describe("heatColour", () => {
+  const red = [0.9, 0.2, 0.1] as const
+  const spread = (colour: readonly number[]) => Math.max(...colour) - Math.min(...colour)
+  const luma = (colour: readonly number[]) => 0.2126 * colour[0]! + 0.7152 * colour[1]! + 0.0722 * colour[2]!
+
+  it("returns the group colour untouched with no heat, and at full heat", () => {
+    expect(heatColour(red, undefined)).toEqual(red)
+    for (const [index, channel] of heatColour(red, 1).entries()) expect(channel).toBeCloseTo(red[index]!)
+  })
+
+  it("desaturates a cold node toward grey but keeps its hue and luminance", () => {
+    const cold = heatColour(red, 0)
+    expect(spread(cold)).toBeLessThan(spread(red))
+    expect(spread(cold)).toBeGreaterThan(0)
+    expect(luma(cold)).toBeCloseTo(luma(red))
+    expect(cold[0]).toBeGreaterThan(cold[1]!)
+    expect(cold[1]).toBeGreaterThan(cold[2]!)
+  })
+
+  it("saturates more as heat rises", () => {
+    expect(spread(heatColour(red, 0.2))).toBeLessThan(spread(heatColour(red, 0.7)))
+  })
+})
+
+describe("nodeSpriteSize with heat", () => {
+  const base = { radius: 1.8, degree: 4 }
+
+  it("is unchanged when the node has no heat, in both tones", () => {
+    expect(nodeSpriteSize(base, "default")).toBe(3.6)
+    expect(nodeSpriteSize({ ...base, heat: undefined }, "void")).toBe(nodeSpriteSize(base, "void"))
+  })
+
+  it("draws a hot node larger than a cold one", () => {
+    for (const tone of ["default", "void"] as const) {
+      expect(nodeSpriteSize({ ...base, heat: 1 }, tone)).toBeGreaterThan(nodeSpriteSize({ ...base, heat: 0 }, tone))
+    }
   })
 })

@@ -8,6 +8,12 @@ export type Graph3DNode = {
   group: string
   /** Relative size. Defaults to 1; the drawn radius grows with its square root. */
   size?: number
+  /**
+   * How hot the node is, 0 to 1. Hot nodes are brighter, larger and more saturated;
+   * cold ones dim toward a floor and tint toward grey. Leave it off and the node
+   * draws exactly as it did before heat existed. Values outside 0-1 are clamped.
+   */
+  heat?: number
 }
 
 export type Graph3DLink = {
@@ -38,6 +44,8 @@ export type MappedNode = {
   degree: number
   /** CSS custom property this node's group draws from. */
   token: string
+  /** 0 to 1, present only when the node was given a finite heat. */
+  heat?: number
 }
 
 export type MappedLink = {
@@ -93,15 +101,20 @@ export function mapGraph(
     ]),
   )
 
-  const mappedNodes: MappedNode[] = kept.map((node, index) => ({
-    id: node.id,
-    label: node.label,
-    group: node.group,
-    index,
-    radius: BASE_RADIUS * Math.sqrt(Math.min(MAX_SIZE, Math.max(MIN_SIZE, finitePositive(node.size, 1)))),
-    degree: 0,
-    token: tokenByGroup.get(node.group)!,
-  }))
+  const mappedNodes: MappedNode[] = kept.map((node, index) => {
+    const mapped: MappedNode = {
+      id: node.id,
+      label: node.label,
+      group: node.group,
+      index,
+      radius: BASE_RADIUS * Math.sqrt(Math.min(MAX_SIZE, Math.max(MIN_SIZE, finitePositive(node.size, 1)))),
+      degree: 0,
+      token: tokenByGroup.get(node.group)!,
+    }
+    const heat = resolveHeat(node.heat)
+    if (heat !== undefined) mapped.heat = heat
+    return mapped
+  })
 
   const resolved: { source: number; target: number; weight: number; kind?: string }[] = []
   let droppedLinks = 0
@@ -131,6 +144,46 @@ export function mapGraph(
     droppedLinks,
     droppedNodes,
   }
+}
+
+/** A node's heat clamped to 0-1, or undefined when it has none (missing or not a finite number). */
+export function resolveHeat(heat: number | undefined): number | undefined {
+  if (typeof heat !== "number" || !Number.isFinite(heat)) return undefined
+  return Math.min(1, Math.max(0, heat))
+}
+
+/** A cold node (heat 0) draws at this share of full brightness: dim, but still there to be found. */
+export const HEAT_FLOOR = 0.42
+/** Brightness gained from heat 0 to heat 1, so the hottest node reaches full brightness. */
+const HEAT_GAIN = 1 - HEAT_FLOOR
+/** A cold node keeps this share of its group colour's saturation; a hot one keeps all of it. */
+const HEAT_MIN_SATURATION = 0.3
+/** Sprite scale at heat 0 and heat 1; heat 0.5 is the node's own size. */
+const HEAT_SIZE_RANGE = { cold: 0.6, hot: 1.4 } as const
+
+/** Brightness multiplier: `floor + heat * gain`, or 1 when the node has no heat. */
+export function heatBrightness(heat: number | undefined): number {
+  return heat === undefined ? 1 : HEAT_FLOOR + heat * HEAT_GAIN
+}
+
+/** Sprite size multiplier, 0.6 cold to 1.4 hot, or 1 when the node has no heat. */
+export function heatSizeScale(heat: number | undefined): number {
+  return heat === undefined ? 1 : HEAT_SIZE_RANGE.cold + heat * (HEAT_SIZE_RANGE.hot - HEAT_SIZE_RANGE.cold)
+}
+
+/**
+ * The group colour a node draws in. A cold node is pulled toward the grey of equal
+ * luminance, so it keeps its hue but loses saturation; a hot node keeps the full colour.
+ */
+export function heatColour(colour: Rgb, heat: number | undefined): Rgb {
+  if (heat === undefined) return colour
+  const saturation = HEAT_MIN_SATURATION + (1 - HEAT_MIN_SATURATION) * heat
+  const grey = 0.2126 * colour[0] + 0.7152 * colour[1] + 0.0722 * colour[2]
+  return [
+    grey + (colour[0] - grey) * saturation,
+    grey + (colour[1] - grey) * saturation,
+    grey + (colour[2] - grey) * saturation,
+  ]
 }
 
 /** The tone prop's value, with anything unrecognised read as the default tone. */
@@ -185,9 +238,12 @@ export function toneProfile(tone: Graph3DTone, pixelRatio: number): ToneProfile 
   }
 }
 
-/** World-space size the node's sprite is drawn from: the node diameter, and under void a degree-weighted one. */
-export function nodeSpriteSize(node: Pick<MappedNode, "radius" | "degree">, tone: Graph3DTone): number {
-  const diameter = node.radius * 2
+/**
+ * World-space size the node's sprite is drawn from: the node diameter, and under void a
+ * degree-weighted one, both scaled by the node's heat when it has any.
+ */
+export function nodeSpriteSize(node: Pick<MappedNode, "radius" | "degree" | "heat">, tone: Graph3DTone): number {
+  const diameter = node.radius * 2 * heatSizeScale(node.heat)
   if (tone !== "void") return diameter
   return diameter * VOID_NODE_SCALE * (1 + VOID_DEGREE_GAIN * Math.sqrt(node.degree))
 }
