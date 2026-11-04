@@ -666,7 +666,8 @@ Two helpers come with them: the `nav-link` lib (`renderAnchor`, the type of a
   governs touch targets, which follow `pointer: coarse`, not width.
 - **Glass bars.** The header and the tab bar are `surface-glass` (the theme's
   `--glass-surface`, blurred, with the opaque `--glass-fallback` where
-  `backdrop-filter` is missing) and floating. Content scrolls beneath both. The
+  `backdrop-filter` is missing) and floating. Content scrolls beneath the tab bar, and on a phone fades out
+  under the header band (see Header scroll edge). The
   header is `rounded-xl`, one gutter (0.5rem) below the top safe-area inset, and
   a solid `bg-background` fill covers the inset and that gutter, so content never
   shows through the status-bar region and the blur has no seam against it. The tab bar
@@ -713,7 +714,29 @@ Two helpers come with them: the `nav-link` lib (`renderAnchor`, the type of a
   same measurements, so a focused control is never hidden behind the chrome
   (WCAG 2.4.11), and removes them on unmount. CSS fallbacks hold before the
   first measurement and without `ResizeObserver`; `--shell-bottom` is `0` from
-  1024px.
+  1024px. `--shell-bar` and `--shell-banner` split `--shell-bottom` into the tab
+  bar and the banner slot (below).
+- **Header scroll edge (phone).** Below `md` the header zone (the safe-area
+  inset, the gutter and the header) is a solid `bg-background` band, and the
+  page fades out over 1rem under it. Scrolling content no longer shows through
+  the glass or is cut mid-line at its edge; the zone adds no height, so
+  `--shell-top` is still the measured header. From `md` and in the landscape
+  rail the header is as before (design-system#185).
+- **Banner slot.** `banner` takes a status strip (a download's progress, an
+  offline notice) and draws it as a glass strip on the tab bar's line, 0.5rem
+  above it, level with the tab bar's sides (or, with no bar, above the bottom
+  edge). The page keeps clear of it with a bottom margin of `--shell-banner`.
+  While it shows, `--shell-banner` is its height plus the 0.5rem gap,
+  `--shell-bar` is the tab bar's block alone, `--shell-bottom` is the two
+  together and `--scroll-pad-bottom` follows. With no banner `--shell-banner`
+  is `0px` and every other value is as before. A page that drew its own
+  `fixed bottom-0` banner passes it here instead.
+- **Focus ring after a tap.** The shell marks its root (`data-pointer`) once a
+  pointer or touch goes down and clears the mark on a key press (a lone
+  modifier does not count). While it is set, the tabs, More and the sidebar
+  links draw no ring, whatever `:focus-visible` says: WebKit on iOS can match
+  it after a tap, when focus is handed back to More as its sheet closes. A key
+  press brings the ring back.
 - **Header.** The header is 48px tall on a phone. The app name opens the app switcher. A drill-down page passes
   `back={{ href, label }}` and the header gains a back button (44px, labelled
   "Back" unless a label is given) before the name. Header actions sit at the end.
