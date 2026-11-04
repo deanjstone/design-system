@@ -27,10 +27,16 @@
 # RELEASE_BRANCH is the branch the release runs on (default main). After the move to
 # promotion-driven releases (design-system#179) it is deploy: each attempt then starts
 # from the remote tip of deploy, the SHA the owner promoted, never from a newer main.
+# CATCH_UP_FROM (e.g. main), when set, runs catch-up-release-tags.sh after each reset, so a
+# release whose promoted SHA sits below the previous release's landing on main still
+# sees that release's tag (see that script).
 # RELEASE_COMMAND overrides the command; test/release-retry.test.ts uses it.
 set -uo pipefail
 
 RELEASE_BRANCH="${RELEASE_BRANCH:-main}"
+CATCH_UP_FROM="${CATCH_UP_FROM:-}"
+# Resolved before the first reset: the checkout switches under a running script.
+CATCH_UP_SCRIPT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/catch-up-release-tags.sh"
 RELEASE_COMMAND="${RELEASE_COMMAND:-pnpm exec semantic-release}"
 LOG="${RUNNER_TEMP:-${TMPDIR:-/tmp}}/semantic-release.log"
 MAX_ATTEMPTS=3
@@ -45,6 +51,9 @@ for attempt in $(seq 1 "${MAX_ATTEMPTS}"); do
   fi
   git checkout --quiet --force -B "${RELEASE_BRANCH}" "origin/${RELEASE_BRANCH}" || exit 1
   git clean --quiet -fd
+  if [ -n "${CATCH_UP_FROM}" ]; then
+    CATCH_UP_FROM="${CATCH_UP_FROM}" bash "${CATCH_UP_SCRIPT}" || exit 1
+  fi
 
   bash -c "${RELEASE_COMMAND}" 2>&1 | tee "${LOG}"
   exit_code="${PIPESTATUS[0]}"

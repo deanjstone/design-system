@@ -206,6 +206,31 @@ describe("RELEASE_BRANCH=deploy (releases from a promotion, design-system#179)",
     expect(readFileSync(join(dir, "head-subject"), "utf8").trim()).toBe("feat: first")
   })
 
+  it("with CATCH_UP_FROM, the release sees a tag that main took in above the promoted SHA", () => {
+    // main gets a release tag on a commit deploy does not contain.
+    git(work, "checkout", "-q", "main")
+    git(work, "pull", "-q", "--ff-only", "origin", "main")
+    git(work, "tag", "v1.0.0")
+    git(work, "push", "-q", "origin", "v1.0.0")
+    const result = spawnSync("bash", [script], {
+      cwd: work,
+      encoding: "utf8",
+      env: {
+        ...process.env,
+        RELEASE_COMMAND: releaseCommand(`git tag --merged HEAD --list 'v*' > "${dir}/tags"`),
+        RUNNER_TEMP: dir,
+        RELEASE_BRANCH: "deploy",
+        CATCH_UP_FROM: "main",
+        GIT_AUTHOR_NAME: "bot",
+        GIT_AUTHOR_EMAIL: "bot@example.com",
+        GIT_COMMITTER_NAME: "bot",
+        GIT_COMMITTER_EMAIL: "bot@example.com",
+      },
+    })
+    expect(result.status, result.stdout + result.stderr).toBe(0)
+    expect(readFileSync(join(dir, "tags"), "utf8").trim()).toBe("v1.0.0")
+  })
+
   it("names deploy in the final error when pushes keep being rejected", () => {
     const result = runOnDeploy(releaseCommand(`echo "! [rejected] HEAD -> main (non-fast-forward)"; exit 1`))
     expect(result.status).toBe(1)
