@@ -217,6 +217,8 @@ export type ToneProfile = {
   shellLayout: boolean
   /** Multiplies the camera's starting distance: the shell is tighter than the cloud, so void moves in. */
   cameraScale: number
+  /** True adds the membrane, the motes and the breathing motion: see `resolveAtmosphere`. */
+  atmosphere: boolean
 }
 
 export function toneProfile(tone: Graph3DTone, pixelRatio: number): ToneProfile {
@@ -231,6 +233,7 @@ export function toneProfile(tone: Graph3DTone, pixelRatio: number): ToneProfile 
       activeEdgeOpacity: 0.7,
       shellLayout: true,
       cameraScale: 0.8,
+      atmosphere: true,
     }
   }
   return {
@@ -243,6 +246,7 @@ export function toneProfile(tone: Graph3DTone, pixelRatio: number): ToneProfile 
     activeEdgeOpacity: 0.85,
     shellLayout: false,
     cameraScale: 1,
+    atmosphere: false,
   }
 }
 
@@ -459,4 +463,119 @@ export function shellForce(outerRadius: number, strength = 4) {
     bodies = next
   }
   return force
+}
+
+/** The void tone's glass shell and dust. Radii are shares of the outer radius R, the one the shell layout fills. */
+export const ATMOSPHERE = {
+  /** The membrane sphere sits just outside the outermost node. */
+  membraneRadius: 1.04,
+  /** Peak alpha of the membrane's rim; the face-on centre is clear. */
+  rimAlpha: 0.3,
+  /** Fresnel falloff: higher keeps the glow to a thinner rim. */
+  rimPower: 2.4,
+  moteCount: 1000,
+  moteInner: 1.15,
+  moteOuter: 2.25,
+  /** Diameter of a mote, in CSS px, whatever its distance. */
+  motePx: 2.2,
+  moteAlpha: 0.5,
+  /** How far a mote wanders from its home along each axis, as a share of R. */
+  moteDrift: 0.05,
+} as const
+
+/** The clocks behind the void tone's motion, in seconds and radians per second. */
+export const MOTION = {
+  /** Turn of the whole orb about its vertical axis. */
+  yawRate: 0.05,
+  /** The orb tips toward and away from the viewer by up to this many radians... */
+  pitchTilt: 0.2,
+  /** ...and the tilt itself swings round this slowly, so the view never repeats quickly. */
+  pitchRate: 0.037,
+  /** Two sines make the breath; their rates are not a multiple of each other. */
+  breathRates: [0.52, 0.83] as const,
+  breathAmplitudes: [0.006, 0.0035] as const,
+  /** A node's pulse is `0.6 + 0.4 sin(rate t + phase)`, so it dims to 60% and no further. */
+  pulseRate: 0.55,
+  pulseDepth: 0.4,
+  /** Motion holds still this long after the last interaction, then eases back. */
+  idleMs: 8000,
+  /** Time constant of the ease, in ms: the share of the way covered per step is `1 - exp(-dt / easeMs)`. */
+  easeMs: 1200,
+} as const
+
+/**
+ * What the atmosphere draws. Under void the membrane is always there: it does not move,
+ * so reduced motion keeps it. The motes and every motion are off under reduced motion.
+ */
+export function resolveAtmosphere(profile: Pick<ToneProfile, "atmosphere">, reducedMotion: boolean) {
+  return {
+    membrane: profile.atmosphere,
+    motes: profile.atmosphere && !reducedMotion,
+    motion: profile.atmosphere && !reducedMotion,
+  }
+}
+
+/** A small seeded generator (mulberry32), so a rebuilt graph gets the same dust. */
+function seededRandom(seed: number) {
+  let state = seed >>> 0
+  return () => {
+    state = (state + 0x6d2b79f5) >>> 0
+    let mixed = Math.imul(state ^ (state >>> 15), 1 | state)
+    mixed = (mixed + Math.imul(mixed ^ (mixed >>> 7), 61 | mixed)) ^ mixed
+    return ((mixed ^ (mixed >>> 14)) >>> 0) / 4294967296
+  }
+}
+
+/**
+ * Where the dust lives: `count` points spread evenly by volume through the shell between
+ * `ATMOSPHERE.moteInner` and `moteOuter` times `outerRadius`, each with its own phase for
+ * the drift. The same arguments give the same field.
+ */
+export function moteField(count: number, outerRadius: number, seed = 1182) {
+  const random = seededRandom(seed)
+  const positions = new Float32Array(count * 3)
+  const phases = new Float32Array(count)
+  const innerVolume = ATMOSPHERE.moteInner ** 3
+  const outerVolume = ATMOSPHERE.moteOuter ** 3
+  for (let index = 0; index < count; index++) {
+    const radius = outerRadius * Math.cbrt(innerVolume + (outerVolume - innerVolume) * random())
+    const height = 2 * random() - 1
+    const ring = Math.sqrt(1 - height * height)
+    const angle = 2 * Math.PI * random()
+    positions[index * 3] = radius * ring * Math.cos(angle)
+    positions[index * 3 + 1] = radius * height
+    positions[index * 3 + 2] = radius * ring * Math.sin(angle)
+    phases[index] = 2 * Math.PI * random()
+  }
+  return { positions, phases }
+}
+
+/** A node's pulse phase, in [0, 2 pi): the golden angle per index, so neighbours are never in step. */
+export function nodePhase(index: number): number {
+  return (index * Math.PI * (3 - Math.sqrt(5))) % (2 * Math.PI)
+}
+
+/** The orb's size at motion time `seconds`, within 1% of 1: two sines that do not line up. */
+export function breathScale(seconds: number): number {
+  return (
+    1 +
+    MOTION.breathAmplitudes[0] * Math.sin(MOTION.breathRates[0] * seconds) +
+    MOTION.breathAmplitudes[1] * Math.sin(MOTION.breathRates[1] * seconds + 1.3)
+  )
+}
+
+/** The orb's rotation at motion time `seconds`, in radians: a steady yaw and a pitch that swings slowly. */
+export function precession(seconds: number): { yaw: number; pitch: number } {
+  return { yaw: MOTION.yawRate * seconds, pitch: MOTION.pitchTilt * Math.sin(MOTION.pitchRate * seconds) }
+}
+
+/** The rate (0 still, 1 full) the motion clock is heading for: still while touched, until idle long enough. */
+export function motionTarget(state: { interacting: boolean; hovered: boolean; idleMs: number }): 0 | 1 {
+  if (state.interacting || state.hovered) return 0
+  return state.idleMs >= MOTION.idleMs ? 1 : 0
+}
+
+/** Moves the motion rate toward `target` over `dtMs`; frame-rate independent, never past the target. */
+export function stepMotionRate(rate: number, target: number, dtMs: number): number {
+  return rate + (target - rate) * (1 - Math.exp(-Math.max(0, dtMs) / MOTION.easeMs))
 }

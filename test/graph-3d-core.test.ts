@@ -4,18 +4,26 @@ import { forceCenter, forceLink, forceManyBody, forceRadial, forceSimulation } f
 import { describe, expect, it } from "vitest"
 
 import {
+  ATMOSPHERE,
   GROUP_TOKENS,
   HEAT_FLOOR,
+  MOTION,
   SHELL_INNER_FRACTION,
+  breathScale,
   easeInOutCubic,
   fibonacciDirection,
   heatBrightness,
   heatColour,
   heatSizeScale,
   mapGraph,
+  moteField,
+  motionTarget,
+  nodePhase,
   parseCssColor,
   nodeSpriteSize,
   pickNearest,
+  precession,
+  resolveAtmosphere,
   resolveAutoRotate,
   resolveFocus,
   resolveHighlight,
@@ -24,6 +32,7 @@ import {
   shellRadii,
   snapToShells,
   spritePixelDiameter,
+  stepMotionRate,
   toneProfile,
   VOID_SURFACE_BACKGROUND,
 } from "@/lib/graph-3d-core"
@@ -552,5 +561,183 @@ describe("shellForce in a simulation", () => {
       expect(radius).toBeGreaterThanOrEqual(sphereRadius * SHELL_INNER_FRACTION - 1e-6)
       expect(radius).toBeLessThanOrEqual(sphereRadius + 1e-6)
     }
+  })
+})
+
+describe("atmosphere gating", () => {
+  it("is part of the void profile only", () => {
+    expect(toneProfile("void", 1).atmosphere).toBe(true)
+    expect(toneProfile("default", 1).atmosphere).toBe(false)
+  })
+
+  it("draws nothing extra and moves nothing under the default tone", () => {
+    expect(resolveAtmosphere(toneProfile("default", 1), false)).toEqual({ membrane: false, motes: false, motion: false })
+  })
+
+  it("draws the membrane, the motes and the motion under void", () => {
+    expect(resolveAtmosphere(toneProfile("void", 1), false)).toEqual({ membrane: true, motes: true, motion: true })
+  })
+
+  it("keeps only the still membrane under reduced motion: no motes, no motion", () => {
+    expect(resolveAtmosphere(toneProfile("void", 1), true)).toEqual({ membrane: true, motes: false, motion: false })
+  })
+
+  it("holds the spec's numbers: membrane at 1.04R, rim alpha 0.3, 1,000 motes between 1.15R and 2.25R", () => {
+    expect(ATMOSPHERE.membraneRadius).toBe(1.04)
+    expect(ATMOSPHERE.rimAlpha).toBe(0.3)
+    expect(ATMOSPHERE.moteCount).toBe(1000)
+    expect([ATMOSPHERE.moteInner, ATMOSPHERE.moteOuter]).toEqual([1.15, 2.25])
+  })
+})
+
+describe("moteField", () => {
+  const radius = 100
+  const field = moteField(ATMOSPHERE.moteCount, radius)
+  const distance = (index: number) =>
+    Math.hypot(field.positions[index * 3]!, field.positions[index * 3 + 1]!, field.positions[index * 3 + 2]!)
+
+  it("returns one position triple and one phase per mote", () => {
+    expect(field.positions).toHaveLength(ATMOSPHERE.moteCount * 3)
+    expect(field.phases).toHaveLength(ATMOSPHERE.moteCount)
+  })
+
+  it("keeps every mote between 1.15R and 2.25R", () => {
+    for (let index = 0; index < ATMOSPHERE.moteCount; index++) {
+      expect(distance(index)).toBeGreaterThanOrEqual(radius * ATMOSPHERE.moteInner - 1e-3)
+      expect(distance(index)).toBeLessThanOrEqual(radius * ATMOSPHERE.moteOuter + 1e-3)
+    }
+  })
+
+  it("fills the shell evenly by volume, not bunched at the inner edge", () => {
+    const innerVolume = ATMOSPHERE.moteInner ** 3
+    const outerVolume = ATMOSPHERE.moteOuter ** 3
+    const halfway = Math.cbrt((innerVolume + outerVolume) / 2) * radius
+    const inside = Array.from({ length: ATMOSPHERE.moteCount }, (_, index) => distance(index)).filter((value) => value < halfway).length
+    expect(inside / ATMOSPHERE.moteCount).toBeGreaterThan(0.4)
+    expect(inside / ATMOSPHERE.moteCount).toBeLessThan(0.6)
+  })
+
+  it("is the same field every time, so a rebuild does not reshuffle the dust", () => {
+    expect(Array.from(moteField(50, radius).positions)).toEqual(Array.from(moteField(50, radius).positions))
+  })
+
+  it("spreads over every direction rather than one hemisphere", () => {
+    const mean = [0, 1, 2].map((axis) => {
+      let sum = 0
+      for (let index = 0; index < ATMOSPHERE.moteCount; index++) sum += field.positions[index * 3 + axis]! / distance(index)
+      return sum / ATMOSPHERE.moteCount
+    })
+    for (const value of mean) expect(Math.abs(value)).toBeLessThan(0.1)
+  })
+
+  it("returns an empty field for no motes", () => {
+    expect(moteField(0, radius).positions).toHaveLength(0)
+  })
+})
+
+describe("nodePhase", () => {
+  it("is deterministic and inside one turn", () => {
+    for (const index of [0, 1, 2, 500, 1486]) {
+      expect(nodePhase(index)).toBe(nodePhase(index))
+      expect(nodePhase(index)).toBeGreaterThanOrEqual(0)
+      expect(nodePhase(index)).toBeLessThan(Math.PI * 2)
+    }
+  })
+
+  it("gives neighbouring nodes different phases, so they do not pulse in step", () => {
+    expect(new Set(Array.from({ length: 200 }, (_, index) => nodePhase(index).toFixed(6))).size).toBe(200)
+    expect(Math.abs(nodePhase(1) - nodePhase(0))).toBeGreaterThan(0.5)
+  })
+})
+
+describe("breathScale", () => {
+  const samples = Array.from({ length: 4000 }, (_, step) => breathScale(step * 0.5))
+
+  it("stays within about 1% of full size", () => {
+    expect(Math.min(...samples)).toBeGreaterThanOrEqual(0.99)
+    expect(Math.max(...samples)).toBeLessThanOrEqual(1.01)
+  })
+
+  it("moves, in both directions, so it reads as breathing", () => {
+    expect(Math.max(...samples)).toBeGreaterThan(1.005)
+    expect(Math.min(...samples)).toBeLessThan(0.995)
+  })
+
+  it("is the same size at the same time", () => {
+    expect(breathScale(12.5)).toBe(breathScale(12.5))
+  })
+
+  it("is made of two sines, so its beat does not repeat on the first sine's period", () => {
+    const first = 2 * Math.PI / MOTION.breathRates[0]
+    expect(breathScale(first + 3)).not.toBeCloseTo(breathScale(3), 6)
+  })
+})
+
+describe("precession", () => {
+  it("turns the yaw steadily forward", () => {
+    expect(precession(0).yaw).toBe(0)
+    expect(precession(20).yaw).toBeGreaterThan(precession(10).yaw)
+    expect(precession(30).yaw - precession(20).yaw).toBeCloseTo(precession(10).yaw - precession(0).yaw, 9)
+  })
+
+  it("tilts the pitch to and fro within its limit, so the view circles from changing angles", () => {
+    const pitches = Array.from({ length: 2000 }, (_, step) => precession(step * 2).pitch)
+    expect(Math.max(...pitches)).toBeLessThanOrEqual(MOTION.pitchTilt + 1e-9)
+    expect(Math.min(...pitches)).toBeGreaterThanOrEqual(-MOTION.pitchTilt - 1e-9)
+    expect(Math.max(...pitches)).toBeGreaterThan(MOTION.pitchTilt * 0.9)
+    expect(Math.min(...pitches)).toBeLessThan(-MOTION.pitchTilt * 0.9)
+  })
+
+  it("is not a fixed axis: the pitch is not constant", () => {
+    expect(precession(5).pitch).not.toBeCloseTo(precession(60).pitch, 3)
+  })
+})
+
+describe("motionTarget", () => {
+  it("is still while the pointer is on the orb or a node is hovered", () => {
+    expect(motionTarget({ interacting: true, hovered: false, idleMs: 1e9 })).toBe(0)
+    expect(motionTarget({ interacting: false, hovered: true, idleMs: 1e9 })).toBe(0)
+  })
+
+  it("stays still until the idle time has passed, then moves", () => {
+    expect(motionTarget({ interacting: false, hovered: false, idleMs: 0 })).toBe(0)
+    expect(motionTarget({ interacting: false, hovered: false, idleMs: MOTION.idleMs - 1 })).toBe(0)
+    expect(motionTarget({ interacting: false, hovered: false, idleMs: MOTION.idleMs })).toBe(1)
+  })
+})
+
+describe("stepMotionRate", () => {
+  it("does not move on a zero step", () => {
+    expect(stepMotionRate(0.3, 1, 0)).toBe(0.3)
+  })
+
+  it("eases toward its target without overshooting", () => {
+    let rate = 0
+    let previous = 0
+    for (let step = 0; step < 600; step++) {
+      rate = stepMotionRate(rate, 1, 16)
+      expect(rate).toBeGreaterThanOrEqual(previous)
+      expect(rate).toBeLessThanOrEqual(1)
+      previous = rate
+    }
+    expect(rate).toBeGreaterThan(0.99)
+  })
+
+  it("is not an instant jump: one frame covers a small share of the way", () => {
+    expect(stepMotionRate(0, 1, 16)).toBeLessThan(0.05)
+  })
+
+  it("eases back down to still when the target drops", () => {
+    let rate = 1
+    for (let step = 0; step < 600; step++) rate = stepMotionRate(rate, 0, 16)
+    expect(rate).toBeLessThan(0.01)
+  })
+
+  it("takes the same path at 30fps as at 60fps", () => {
+    let fast = 0
+    let slow = 0
+    for (let step = 0; step < 120; step++) fast = stepMotionRate(fast, 1, 16)
+    for (let step = 0; step < 60; step++) slow = stepMotionRate(slow, 1, 32)
+    expect(slow).toBeCloseTo(fast, 6)
   })
 })
