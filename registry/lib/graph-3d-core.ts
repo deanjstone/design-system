@@ -368,3 +368,87 @@ export function pickNearest(
 
 export const easeInOutCubic = (progress: number) =>
   progress < 0.5 ? 4 * progress ** 3 : 1 - (-2 * progress + 2) ** 3 / 2
+
+/** The innermost shell, as a share of the outer radius: nodes spread between 0.4R and 1.0R. */
+export const SHELL_INNER_FRACTION = 0.4
+
+/** A body the shell layout can move: d3-force's node shape, positions plus optional velocity. */
+export type ShellBody = { x: number; y: number; z: number; vx?: number; vy?: number; vz?: number }
+
+/** A point on the unit sphere, evenly spread over `count` points by the golden angle. */
+export function fibonacciDirection(index: number, count: number): readonly [x: number, y: number, z: number] {
+  const height = 1 - (2 * (index + 0.5)) / Math.max(1, count)
+  const ring = Math.sqrt(Math.max(0, 1 - height * height))
+  const angle = index * Math.PI * (3 - Math.sqrt(5))
+  return [ring * Math.cos(angle), height, ring * Math.sin(angle)]
+}
+
+/**
+ * The shell radius for each node, from its distance from the centre: nodes are ranked by
+ * distance and spread so the ball is filled evenly by volume between `SHELL_INNER_FRACTION`
+ * and 1 times `outerRadius`. The order is the layout's own, so a node the links pulled
+ * inward stays inward; only the spacing is regularised. Ties rank by index.
+ */
+export function shellRadii(distances: ArrayLike<number>, outerRadius: number): Float64Array {
+  const count = distances.length
+  const radii = new Float64Array(count)
+  const order = Array.from({ length: count }, (_, index) => index).sort(
+    (a, b) => (distances[a] ?? 0) - (distances[b] ?? 0) || a - b,
+  )
+  const innerVolume = SHELL_INNER_FRACTION ** 3
+  order.forEach((node, rank) => {
+    const share = count === 1 ? 1 : rank / (count - 1)
+    radii[node] = outerRadius * Math.cbrt(innerVolume + (1 - innerVolume) * share)
+  })
+  return radii
+}
+
+const CENTRE_EPSILON = 1e-6
+
+/** Unit direction of a body from the origin and its distance, or a spread-out direction at distance 0 for one sitting on the origin. */
+function direction(body: ShellBody, index: number, count: number) {
+  const distance = Math.hypot(body.x, body.y, body.z)
+  if (distance < CENTRE_EPSILON) {
+    const [x, y, z] = fibonacciDirection(index, count)
+    return { x, y, z, distance: 0 }
+  }
+  return { x: body.x / distance, y: body.y / distance, z: body.z / distance, distance }
+}
+
+/** Moves every body onto its shell, along its own direction from the origin. Run once the layout settles. */
+export function snapToShells(bodies: ShellBody[], outerRadius: number): void {
+  const aims = bodies.map((body, index) => direction(body, index, bodies.length))
+  const radii = shellRadii(aims.map((aim) => aim.distance), outerRadius)
+  bodies.forEach((body, index) => {
+    const aim = aims[index]!
+    body.x = aim.x * radii[index]!
+    body.y = aim.y * radii[index]!
+    body.z = aim.z * radii[index]!
+  })
+}
+
+/**
+ * A d3-force force that pulls each body toward its shell radius: the radial force's
+ * job, but aimed at a spread of radii instead of one, so the layout settles as a ball
+ * with a clean outline. `strength` plays the same role as forceRadial's, and is high
+ * on purpose: at 4 the settled layout sits within about 0.06R of its shells on average
+ * (0.5 left 0.22R), so the final snap is a nudge, not a jump.
+ */
+export function shellForce(outerRadius: number, strength = 4) {
+  let bodies: ShellBody[] = []
+  const force = (alpha: number) => {
+    const aims = bodies.map((body, index) => direction(body, index, bodies.length))
+    const radii = shellRadii(aims.map((aim) => aim.distance), outerRadius)
+    bodies.forEach((body, index) => {
+      const aim = aims[index]!
+      const pull = (radii[index]! - aim.distance) * strength * alpha
+      body.vx = (body.vx ?? 0) + aim.x * pull
+      body.vy = (body.vy ?? 0) + aim.y * pull
+      body.vz = (body.vz ?? 0) + aim.z * pull
+    })
+  }
+  force.initialize = (next: ShellBody[]) => {
+    bodies = next
+  }
+  return force
+}

@@ -1,11 +1,14 @@
 // @vitest-environment node
 
+import { forceCenter, forceLink, forceManyBody, forceRadial, forceSimulation } from "d3-force-3d"
 import { describe, expect, it } from "vitest"
 
 import {
   GROUP_TOKENS,
   HEAT_FLOOR,
+  SHELL_INNER_FRACTION,
   easeInOutCubic,
+  fibonacciDirection,
   heatBrightness,
   heatColour,
   heatSizeScale,
@@ -17,10 +20,14 @@ import {
   resolveFocus,
   resolveHighlight,
   resolveTone,
+  shellForce,
+  shellRadii,
+  snapToShells,
   spritePixelDiameter,
   toneProfile,
   VOID_SURFACE_BACKGROUND,
 } from "@/lib/graph-3d-core"
+import { sampleGraph } from "../docs/graph-3d/sample"
 
 // graph-3d prop mapping, theme-colour parsing and the reduced-motion decision
 // (design-system#169). The renderer is WebGL and is proved in a real browser by
@@ -398,6 +405,141 @@ describe("nodeSpriteSize with heat", () => {
   it("draws a hot node larger than a cold one", () => {
     for (const tone of ["default", "void"] as const) {
       expect(nodeSpriteSize({ ...base, heat: 1 }, tone)).toBeGreaterThan(nodeSpriteSize({ ...base, heat: 0 }, tone))
+    }
+  })
+})
+
+// The spherical shell layout (design-system#181). A stronger forceRadial alone left the
+// cloud lumpy (radial spread 0.12 of the mean even at strength 1, reaching 1.3R), so under
+// tone="void" nodes are pulled to shells between 0.4R and 1.0R and snapped there on settle.
+describe("shellRadii", () => {
+  const outer = 100
+
+  it("spreads ranks from the inner shell to the outer radius, nearest the centre first", () => {
+    const radii = shellRadii([5, 80, 20, 300, 41], outer)
+    expect(Math.min(...radii)).toBeCloseTo(outer * SHELL_INNER_FRACTION)
+    expect(Math.max(...radii)).toBeCloseTo(outer)
+    expect(radii[0]).toBeLessThan(radii[2]!)
+    expect(radii[2]).toBeLessThan(radii[4]!)
+    expect(radii[4]).toBeLessThan(radii[1]!)
+    expect(radii[1]).toBeLessThan(radii[3]!)
+  })
+
+  it("keeps every node inside the band whatever the input distances", () => {
+    const distances = Array.from({ length: 500 }, (_, index) => (index * 7919) % 1000)
+    for (const radius of shellRadii(distances, outer)) {
+      expect(radius).toBeGreaterThanOrEqual(outer * SHELL_INNER_FRACTION - 1e-9)
+      expect(radius).toBeLessThanOrEqual(outer + 1e-9)
+    }
+  })
+
+  it("fills the ball evenly by volume, so the median node sits near the cube-root midpoint", () => {
+    const sorted = [...shellRadii(Array.from({ length: 1001 }, (_, index) => index), outer)].sort((a, b) => a - b)
+    const expected = outer * Math.cbrt((SHELL_INNER_FRACTION ** 3 + 1) / 2)
+    expect(sorted[500]).toBeCloseTo(expected, 0)
+  })
+
+  it("handles no nodes and a single node", () => {
+    expect(shellRadii([], outer)).toHaveLength(0)
+    expect(shellRadii([12], outer)[0]).toBeCloseTo(outer)
+  })
+
+  it("gives tied distances different shells deterministically, by index", () => {
+    const radii = shellRadii([3, 3, 3], outer)
+    expect(radii[0]).toBeLessThan(radii[1]!)
+    expect(radii[1]).toBeLessThan(radii[2]!)
+  })
+})
+
+describe("fibonacciDirection", () => {
+  it("returns unit vectors, all different", () => {
+    const seen = new Set<string>()
+    for (let index = 0; index < 50; index++) {
+      const [x, y, z] = fibonacciDirection(index, 50)
+      expect(Math.hypot(x, y, z)).toBeCloseTo(1)
+      seen.add([x, y, z].map((value) => value.toFixed(4)).join(","))
+    }
+    expect(seen.size).toBe(50)
+  })
+
+  it("is finite for a single node", () => {
+    expect(fibonacciDirection(0, 1).every(Number.isFinite)).toBe(true)
+  })
+})
+
+describe("snapToShells", () => {
+  const outer = 120
+  const distanceOf = (node: { x: number; y: number; z: number }) => Math.hypot(node.x, node.y, node.z)
+
+  it("moves each node along its own direction from the centre, and keeps its rank order", () => {
+    const nodes = [
+      { x: 10, y: 0, z: 0 },
+      { x: 0, y: 40, z: 0 },
+      { x: 0, y: 0, z: 400 },
+    ]
+    snapToShells(nodes, outer)
+    expect(nodes[0]!.x).toBeGreaterThan(0)
+    expect(nodes[0]!.y).toBeCloseTo(0)
+    expect(nodes[1]!.y).toBeGreaterThan(0)
+    expect(nodes[2]!.z).toBeGreaterThan(0)
+    expect(distanceOf(nodes[0]!)).toBeCloseTo(outer * SHELL_INNER_FRACTION)
+    expect(distanceOf(nodes[2]!)).toBeCloseTo(outer)
+    expect(distanceOf(nodes[0]!)).toBeLessThan(distanceOf(nodes[1]!))
+    expect(distanceOf(nodes[1]!)).toBeLessThan(distanceOf(nodes[2]!))
+  })
+
+  it("places nodes stacked on the centre on distinct directions instead of leaving them there", () => {
+    const nodes = Array.from({ length: 6 }, () => ({ x: 0, y: 0, z: 0 }))
+    snapToShells(nodes, outer)
+    expect(new Set(nodes.map((node) => [node.x, node.y, node.z].map((value) => value.toFixed(3)).join(","))).size).toBe(6)
+    for (const node of nodes) expect(Number.isFinite(distanceOf(node))).toBe(true)
+  })
+})
+
+describe("shellForce in a simulation", () => {
+  const { nodes, links } = sampleGraph(400, 169)
+  const graph = mapGraph(nodes, links)
+  const sphereRadius = 11 * Math.cbrt(graph.nodes.length)
+
+  type Body = { x: number; y: number; z: number }
+  const settle = (sphereForce: ReturnType<typeof shellForce> | ReturnType<typeof forceRadial>) => {
+    const bodies: Body[] = graph.nodes.map(() => ({ x: Number.NaN, y: Number.NaN, z: Number.NaN }))
+    const simulation = forceSimulation(bodies, 3)
+      .alphaDecay(0.035)
+      .velocityDecay(0.35)
+      .force("link", forceLink(graph.links.map(({ source, target }) => ({ source, target }))).distance(10))
+      .force("charge", forceManyBody().strength(-26).distanceMax(sphereRadius * 1.2).theta(1))
+      .force("centre", forceCenter(0, 0, 0))
+      .force("sphere", sphereForce)
+      .stop()
+    while (simulation.alpha() >= simulation.alphaMin()) simulation.tick()
+    return bodies
+  }
+  const outline = (bodies: Body[]) => Math.max(...bodies.map((body) => Math.hypot(body.x, body.y, body.z))) / sphereRadius
+
+  it("settles with a clean outline: nothing strays far past the outer radius, unlike the radial force it replaces", () => {
+    const cloud = settle(forceRadial(sphereRadius, 0, 0, 0).strength(0.12))
+    const shells = settle(shellForce(sphereRadius))
+    expect(outline(cloud)).toBeGreaterThan(1.4)
+    expect(outline(shells)).toBeLessThan(1.2)
+  })
+
+  it("already sits near its shells before the final snap, so the snap does not jump", () => {
+    const bodies = settle(shellForce(sphereRadius))
+    const before = bodies.map((body) => ({ ...body }))
+    snapToShells(bodies, sphereRadius)
+    const moved = bodies.map((body, index) => Math.hypot(body.x - before[index]!.x, body.y - before[index]!.y, body.z - before[index]!.z))
+    const mean = moved.reduce((sum, distance) => sum + distance, 0) / moved.length
+    expect(mean).toBeLessThan(sphereRadius * 0.1)
+  })
+
+  it("ends with every node between 0.4R and 1.0R after the snap", () => {
+    const bodies = settle(shellForce(sphereRadius))
+    snapToShells(bodies, sphereRadius)
+    for (const body of bodies) {
+      const radius = Math.hypot(body.x, body.y, body.z)
+      expect(radius).toBeGreaterThanOrEqual(sphereRadius * SHELL_INNER_FRACTION - 1e-6)
+      expect(radius).toBeLessThanOrEqual(sphereRadius + 1e-6)
     }
   })
 })
