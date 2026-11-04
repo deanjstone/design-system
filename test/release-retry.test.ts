@@ -241,10 +241,12 @@ describe("RELEASE_BRANCH=deploy (releases from a promotion, design-system#179)",
 describe("the Release workflow", () => {
   const workflow = readFileSync(join(root, ".github/workflows/release.yml"), "utf8")
 
-  it("runs semantic-release through the retry script, from the tip of main", () => {
+  it("runs semantic-release through the retry script, from the tip of deploy", () => {
     expect(workflow).toContain("run: bash scripts/release/release-with-retry.sh")
     expect(workflow).not.toMatch(/run: pnpm exec semantic-release/)
-    expect(workflow).toMatch(/ref: main/)
+    expect(workflow).toMatch(/ref: deploy/)
+    expect(workflow).toMatch(/RELEASE_BRANCH: deploy/)
+    expect(workflow).toMatch(/CATCH_UP_FROM: main/)
   })
 
   it("queues releases one at a time instead of cancelling them", () => {

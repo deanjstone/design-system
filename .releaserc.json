@@ -1,6 +1,6 @@
 {
   "branches": [
-    "main"
+    "deploy"
   ],
   "plugins": [
     "@semantic-release/commit-analyzer",
@@ -14,19 +14,14 @@
     ],
     "@semantic-release/github",
     [
-      "@semantic-release/git",
+      "./scripts/release/semantic-release-pin.mjs",
       {
-        "assets": [
+        "buildCommand": "npx --yes shadcn@4.19.1 build --output ./r",
+        "releaseFiles": [
           "CHANGELOG.md",
           "package.json"
         ],
-        "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
-      }
-    ],
-    [
-      "./scripts/release/semantic-release-pin.mjs",
-      {
-        "buildCommand": "npx --yes shadcn@4.19.1 build --output ./r"
+        "targetBranch": "main"
       }
     ]
   ]

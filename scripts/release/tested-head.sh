@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 # The release gate's second half (design-system#159). Release starts from a
-# green Test run, but it releases from the tip of main (see release.yml), and
-# main can have moved since that run began. This prints `release=true` only when
-# the SHA Test went green on is still the newest real commit on main, so every
+# green Test run, but it releases from the tip of deploy (see release.yml), and
+# deploy can have moved since that run began. This prints `release=true` only when
+# the SHA Test went green on is still the newest real commit on the branch, so every
 # commit semantic-release is about to publish has been through a green Test.
-# Otherwise it prints `release=false`: the newer push has its own Test run, and
+# Otherwise it prints `release=false`: the newer promotion has its own Test run, and
 # its own Release will follow that.
 #
 # "Real" excludes the release bot's own commits, which are made with CI
@@ -12,7 +12,7 @@
 # `chore(release):` at the start; a lookalike later in a subject does not count.
 # A real commit that skipped CI also blocks the release: it has no green Test.
 #
-# Usage: tested-head.sh <tested-sha>, run inside a checkout of main. Always
+# Usage: tested-head.sh <tested-sha>, run inside a checkout of the release branch. Always
 # exits 0 with one of the two lines on stdout, or non-zero (printing nothing
 # on stdout) when called wrongly, so a broken call can never read as `true`.
 set -euo pipefail

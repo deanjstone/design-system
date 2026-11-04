@@ -10,7 +10,8 @@ import { afterEach, beforeEach, describe, expect, it } from "vitest"
 // design-system#159: on 1 Nov 2026 Release published v3.6.3 from a head whose
 // Test run was red, because release.yml and test.yml both started on the push.
 // Release now starts only from a finished, green Test run on the same SHA, and
-// publishes only when that SHA is still the newest real commit on main.
+// publishes only when that SHA is still the newest real commit on the release
+// branch. Since design-system#179 the release branch is deploy, not main.
 
 const root = fileURLToPath(new URL("../", import.meta.url))
 const read = (path: string) => readFileSync(join(root, path), "utf8")
@@ -28,11 +29,11 @@ describe("release.yml is gated on Test", () => {
     expect(test).toMatch(/^name: Test$/m)
   })
 
-  it("runs the release job only for a successful Test run of a push to main", () => {
+  it("runs the release job only for a successful Test run of a push to deploy", () => {
     const job = workflow.slice(workflow.indexOf("\njobs:"))
     expect(job).toContain("github.event.workflow_run.conclusion == 'success'")
     expect(job).toContain("github.event.workflow_run.event == 'push'")
-    expect(job).toContain("github.event.workflow_run.head_branch == 'main'")
+    expect(job).toContain("github.event.workflow_run.head_branch == 'deploy'")
   })
 
   it("keeps the release job on one condition line joined with &&, never ||", () => {
@@ -54,8 +55,8 @@ describe("release.yml is gated on Test", () => {
     expect(gate).toBeLessThan(workflow.indexOf("release-with-retry.sh"))
   })
 
-  it("still releases from the tip of main through the retry script", () => {
-    expect(workflow).toMatch(/ref: main/)
+  it("releases from the tip of deploy through the retry script", () => {
+    expect(workflow).toMatch(/ref: deploy/)
     expect(workflow).toContain("run: bash scripts/release/release-with-retry.sh")
   })
 
@@ -88,7 +89,7 @@ describe("scripts/release/tested-head.sh", () => {
   })
   afterEach(() => rmSync(dir, { recursive: true, force: true }))
 
-  it("releases when the tested SHA is the tip of main", () => {
+  it("releases when the tested SHA is the tip of the release branch", () => {
     commit("feat: base")
     const tested = commit("fix: thing")
     const result = gate(tested)
@@ -103,7 +104,7 @@ describe("scripts/release/tested-head.sh", () => {
     expect(gate(tested).stdout.trim()).toBe("release=true")
   })
 
-  it("does not release when a newer, untested commit has landed on main", () => {
+  it("does not release when a newer, untested commit has landed on the branch", () => {
     const tested = commit("fix: thing")
     commit("feat: pushed while Test was running")
     const result = gate(tested)
@@ -117,7 +118,7 @@ describe("scripts/release/tested-head.sh", () => {
     expect(gate(tested).stdout.trim()).toBe("release=false")
   })
 
-  it("does not release a SHA that is not on main at all", () => {
+  it("does not release a SHA that is not on the branch at all", () => {
     commit("fix: thing")
     expect(gate("0".repeat(40)).stdout.trim()).toBe("release=false")
   })

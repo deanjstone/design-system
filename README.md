@@ -167,7 +167,9 @@ be overwritten by the next `shadcn add`:
 ## Versioning
 
 Releases are cut automatically by semantic-release from Conventional
-Commits on `main` — there is no manual tagging step. A `fix:` bumps the
+Commits, but only when the owner promotes a `main` commit to the `deploy` branch
+([docs/deploy-branch.md](docs/deploy-branch.md)). A push to `main` runs checks
+and releases nothing; there is no manual tagging step. A `fix:` bumps the
 patch, a `feat:` the minor, and a `BREAKING CHANGE:` footer the major. The
 analyzer here (`conventional-changelog-angular` 8.3.1) does not read a `!` in
 the subject, so a `feat!:` with no footer releases nothing; write both. Every release gets a `vX.Y.Z` tag, a GitHub release, and a CHANGELOG
@@ -203,7 +205,8 @@ paragraph below. Entries from other registries are never stamped. Only `theme`,
 registry dependencies. Almost every other item depends on at least `utils`.
 
 **What the release does.** semantic-release's `prepare` step runs
-`scripts/release/semantic-release-pin.mjs` after the release commit. It stamps
+`scripts/release/semantic-release-pin.mjs` after the changelog and version files
+are written (the plugin commits them itself, on top of the promoted SHA). It stamps
 `#<tag>` into `registry.json`, rebuilds `r/` with `shadcn build`, fails the
 release if any in-repo entry is left without exactly that ref, and commits the
 result. The tag points at that commit. A second commit on `main` restores the
@@ -213,10 +216,12 @@ find the last release. A commit cannot contain its own SHA, so the tag name is
 the ref. Tags are immutable by convention, which is what makes that safe.
 
 **When `main` moves during a release.** Direct pushes can land while a Release
-run is in flight. The run starts from the tip of `main`, runs
+run is in flight. The run starts from the tip of `deploy`, the promoted SHA, so
+a newer `main` is never released early. It runs
 `scripts/release/release-with-retry.sh`, and redoes the release up to 3 times if
 semantic-release reports the branch is behind or a release push is rejected as
-a non-fast-forward; each attempt first resets the checkout to `origin/main`.
+a non-fast-forward; each attempt first resets the checkout to `origin/deploy`.
+The version bump is merged into whatever `main` holds when it lands.
 Three failures fail the job with an `::error::` line. A rejection of the pin
 plugin's last push, which comes after the release commit has reached `main`,
 leaves a second release commit and a duplicate CHANGELOG section for the same
