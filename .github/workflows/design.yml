@@ -5,6 +5,12 @@ on:
   push:
     branches: [main]
 
+# A pull request's newer push replaces its older run; a push to main has a group of its
+# own (its SHA), so it is never cancelled (design-system#184).
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.event.pull_request.number || github.sha }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
   detect:
     name: Slop detector

@@ -7,7 +7,34 @@ on:
   push:
     branches: [main, deploy]
 
+# A pull request's newer push replaces its older run. A push to main or deploy gets a
+# group of its own (its SHA), so it is never cancelled and never dropped from a queue:
+# every trunk SHA gets a verdict, and Release starts from the deploy one (design-system#184).
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.event.pull_request.number || github.sha }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
+  # Decides whether the ~4.5 minute geometry gate has to run: only when a file it reads
+  # changed in this push or pull request, and always on a push to deploy. The rule and
+  # the file list are in scripts/ci/geometry-inputs-changed.sh.
+  changes:
+    name: Geometry gate inputs changed
+    runs-on: ${{ fromJSON(vars.CI_RUNS_ON || '"ubuntu-latest"') }}
+    outputs:
+      geometry: ${{ steps.filter.outputs.geometry }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check the gate's inputs
+        id: filter
+        run: bash scripts/ci/geometry-inputs-changed.sh "${BASE_SHA}" "${HEAD_SHA}" >> "${GITHUB_OUTPUT}"
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+
   test:
     name: Component tests
     runs-on: ${{ fromJSON(vars.CI_RUNS_ON || '"ubuntu-latest"') }}
@@ -34,6 +61,8 @@ jobs:
 
   geometry:
     name: Curve geometry gate
+    needs: changes
+    if: needs.changes.outputs.geometry == 'true'
     runs-on: ${{ fromJSON(vars.CI_RUNS_ON || '"ubuntu-latest"') }}
     steps:
       - uses: actions/checkout@v4
