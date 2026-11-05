@@ -19,6 +19,14 @@ in this loop.
 only when that run is green, and releases only when the promoted SHA is still the newest real
 commit on `deploy`. Releases are queued one at a time, never cancelled.
 
+A `workflow_run` event sets `GITHUB_REF` to the default branch (`main`), and semantic-release
+reads its branch from there. The Release step therefore sets `GITHUB_REF: refs/heads/deploy`
+in `release.yml`, and `scripts/release/release-with-retry.sh` sets
+`GITHUB_REF=refs/heads/$RELEASE_BRANCH` (and unsets `GITHUB_HEAD_REF`) as well, so the release
+sees `deploy`. Without it the first promotion logged "only publish from deploy" and published
+nothing (design-system#190). The workflow's value matters first: the script runs from the
+`deploy` checkout, so its copy reaches a release only after the next promotion.
+
 ## What a release does
 
 The release is built from the promoted SHA, never from a newer `main`. It never pushes
@@ -82,7 +90,11 @@ deleted.
 
 `release.yml` has no dispatch: it follows a `Test` run. If the run failed after the tag was
 made nothing is repeated; if the job failed earlier, re-run the failed `Release` run from the
-Actions tab (it re-reads the tip of `deploy`). If the promoted SHA's `Test` run was red, fix
+Actions tab (it re-reads the tip of `deploy`). A re-run keeps the workflow file it started with,
+so to replay a release after a fix to `release.yml`, re-run the `Test` run of the `deploy` push
+instead (`gh run rerun <test-run-id>`): when it finishes green, a new `Release` run starts from
+the current `release.yml`. That is how the run that published nothing because it ran as `main`
+(design-system#190) is replayed, with no new promotion. If the promoted SHA's `Test` run was red, fix
 `main`, then promote the fix.
 
 ## First-time setup (owner, once)
@@ -105,7 +117,7 @@ Nothing below exists until the owner runs it. Agents prepare it and never run it
 `test/semantic-release-pin.test.ts` covers the release plugin against real git repos, both on
 a main that did not move and on one that did. `test/release-catch-up.test.ts` covers the
 catch-up. `test/release-retry.test.ts` and `test/release-gate.test.ts` cover the retry script
-and the Test gate. `test/deploy-branch.test.ts` pins the wiring: `deploy` is the only release
+(including that `env-ci` resolves the branch to `deploy` under a `workflow_run` event) and the Test gate. `test/deploy-branch.test.ts` pins the wiring: `deploy` is the only release
 branch, no plugin pushes it, and no workflow but `release.yml` releases.
 
 ## Gotchas
