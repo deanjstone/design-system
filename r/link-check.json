@@ -4,7 +4,7 @@
   "title": "link-check",
   "description": "Bans myargus.cc and tailnet host literals in code, fails on retired hosts, and checks config and the vendored registry against links.json. Report mode first, then block.",
   "registryDependencies": [
-    "deanjstone/design-system/links-data"
+    "deanjstone/design-system/links-data#v3.18.0"
   ],
   "files": [
     {
