@@ -10,8 +10,8 @@ in this loop.
 
 | Event | Workflow | Result |
 |---|---|---|
-| push to `main` | `test.yml`, `design.yml` | tests, the curve geometry gate, lint, output drift. Nothing is published. |
-| push to `deploy` | `test.yml` | the same checks, on exactly the promoted SHA |
+| push to `main` | `test.yml`, `design.yml` | tests, the curve geometry gate (only when one of its inputs changed), lint, output drift. Nothing is published. |
+| push to `deploy` | `test.yml` | the same checks, on exactly the promoted SHA; the curve geometry gate always runs |
 | green `Test` run of a `deploy` push | `release.yml` | semantic-release cuts `vX.Y.Z` from the commits promoted since the last tag |
 | pull request | `test.yml`, `design.yml` | checks only |
 

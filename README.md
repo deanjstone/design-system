@@ -667,9 +667,14 @@ failing run's files end in `__FAIL`. Attach them to the PR.
 real standalone status-bar style, no keyboard overlap and no dynamic viewport. The
 corner radius is a circle standing in for the real curve, from community data. Those
 are owner checks on the iPhone ([#141](https://github.com/deanjstone/design-system/issues/141)).
-It is not part of `pnpm check` (no browser there), but CI runs it on every push to
-`main` and on every pull request: the `Curve geometry gate` job in
-`.github/workflows/test.yml`. A red run uploads the curve screenshots as the
+It is not part of `pnpm check` (no browser there), but CI runs it when a file it reads
+changed, and always on a push to `deploy`: the `Curve geometry gate` job in
+`.github/workflows/test.yml`, gated by `scripts/ci/geometry-inputs-changed.sh`
+([#184](https://github.com/deanjstone/design-system/issues/184)). The inputs are
+`registry/`, `theme/`, `scripts/geometry-gate/`, `package.json`, the lockfile, the
+workflow itself and the runner actions; a docs-only or test-only push skips the job
+(the run shows it as skipped, which counts as passed) and the last verdict stands.
+Add a new input to the script's list and its test. A red run uploads the curve screenshots as the
 `geometry-gate-curves` artifact. Run it locally before a change to a block's edges,
 and `GATE_REGISTRY=<other checkout>/registry` points it at another tree.
 
