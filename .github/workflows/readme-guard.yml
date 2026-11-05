@@ -1,0 +1,71 @@
+name: README guard
+
+# Fails a change that alters setup, commands, config or deploy (a workflow, a deploy or
+# install script, package.json scripts or bin, an env template, a CLI entry point) but
+# touches no README and has no `README: not needed because ...` line (argus-config#1147).
+# The logic is .github/scripts/readme-guard.sh; this file and that script are vendored
+# byte-for-byte into every active repo, argus-config being the source. A shared reusable
+# workflow was rejected: from a private repo it needs an Actions-access setting on the
+# source repo and ties every repo's CI to this one.
+#
+# GitHub-hosted runner, seconds of work. No required check is set anywhere the plan has no
+# branch protection (private repos on Free); where a repo lists required checks, add this one.
+#
+# A pull request is checked against its body; `edited` re-runs it when the body gains the
+# waiver. A trunk repo has no pull request, so a direct push is checked against its commit
+# messages. The push a PR squash-merge makes (committer web-flow) is skipped: the PR run
+# already judged it.
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, reopened, synchronize, edited]
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.sha }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  readme-guard:
+    if: >-
+      github.event_name == 'pull_request'
+      || github.event.forced
+      || github.event.head_commit.committer.username != 'web-flow'
+    name: README guard
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      # A pull request needs its merge commit and the base tip (depth 2). A push needs the
+      # range it carried, so it fetches the history.
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: ${{ github.event_name == 'push' && 0 || 2 }}
+
+      # The body and the commit messages reach the script through the environment, never
+      # interpolated into the shell text.
+      - name: Check the change against the README
+        env:
+          EVENT: ${{ github.event_name }}
+          PR_BODY: ${{ github.event.pull_request.body }}
+          PUSH_BEFORE: ${{ github.event.before }}
+        run: |
+          if [ "$EVENT" = pull_request ]; then
+            base=HEAD^1
+            text="$PR_BODY"
+          else
+            base="$PUSH_BEFORE"
+            if ! git cat-file -e "${base}^{commit}" 2>/dev/null; then
+              base=HEAD^1
+            fi
+            text=$(git log --format=%B "$base..HEAD")
+          fi
+          git diff --name-only --no-renames "$base" HEAD >"$RUNNER_TEMP/changed"
+          echo "Changed files:"
+          cat "$RUNNER_TEMP/changed"
+          echo
+          README_GUARD_TEXT="$text" README_GUARD_BASE="$base" README_GUARD_HEAD=HEAD \
+            bash .github/scripts/readme-guard.sh <"$RUNNER_TEMP/changed"
