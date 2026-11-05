@@ -11,21 +11,22 @@ in this loop.
 | Event | Workflow | Result |
 |---|---|---|
 | push to `main` | `test.yml`, `design.yml` | tests, the curve geometry gate (only when one of its inputs changed), lint, output drift. Nothing is published. |
-| push to `deploy` | `test.yml` | the same checks, on exactly the promoted SHA; the curve geometry gate always runs |
-| green `Test` run of a `deploy` push | `release.yml` | semantic-release cuts `vX.Y.Z` from the commits promoted since the last tag |
+| push to `deploy` | `release.yml` ("Release") | job 1, `Test before release (component tests, curve geometry gate, lint)`, runs those gates on exactly the promoted SHA, the geometry gate every time. Job 2, `Release`, needs it: semantic-release cuts `vX.Y.Z` from the commits promoted since the last tag. |
+| `workflow_dispatch` of `release.yml` | `release.yml` | the same two jobs, from `deploy` only: the first step fails a run on any other ref |
 | pull request | `test.yml`, `design.yml` | checks only |
 
-`release.yml` starts from the finished `Test` run on the `deploy` push (design-system#159), runs
-only when that run is green, and releases only when the promoted SHA is still the newest real
-commit on `deploy`. Releases are queued one at a time, never cancelled.
+This is the shared release pattern (argus-config#1167, design-system#191): one `Release`
+workflow on `push: [deploy]`, a test job named for what it runs, and a Release job that
+`needs:` it, so a red test means no version (design-system#159). `test.yml` does not run on
+`deploy`; the promotion is tested inside `release.yml`. The Release job still releases only
+when the promoted SHA is still the newest real commit on `deploy`
+(`scripts/release/tested-head.sh`). Releases are queued one at a time, never cancelled.
 
-A `workflow_run` event sets `GITHUB_REF` to the default branch (`main`), and semantic-release
-reads its branch from there. The Release step therefore sets `GITHUB_REF: refs/heads/deploy`
-in `release.yml`, and `scripts/release/release-with-retry.sh` sets
-`GITHUB_REF=refs/heads/$RELEASE_BRANCH` (and unsets `GITHUB_HEAD_REF`) as well, so the release
-sees `deploy`. Without it the first promotion logged "only publish from deploy" and published
-nothing (design-system#190). The workflow's value matters first: the script runs from the
-`deploy` checkout, so its copy reaches a release only after the next promotion.
+There is no `workflow_run` trigger. That event sets `GITHUB_REF` to the default branch
+(`main`), semantic-release reads its branch from there, and the first promotion logged "only
+publish from deploy" and published nothing (design-system#190). On a push to `deploy`
+`GITHUB_REF` is `refs/heads/deploy`, so nothing overrides it. The workflow file used is the one
+at the pushed SHA, so a change to `release.yml` acts at the next promotion that contains it.
 
 ## What a release does
 
@@ -88,21 +89,23 @@ deleted.
 
 ## Replay a release that did not run
 
-`release.yml` has no dispatch: it follows a `Test` run. If the run failed after the tag was
-made nothing is repeated; if the job failed earlier, re-run the failed `Release` run from the
-Actions tab (it re-reads the tip of `deploy`). A re-run keeps the workflow file it started with,
-so to replay a release after a fix to `release.yml`, re-run the `Test` run of the `deploy` push
-instead (`gh run rerun <test-run-id>`): when it finishes green, a new `Release` run starts from
-the current `release.yml`. That is how the run that published nothing because it ran as `main`
-(design-system#190) is replayed, with no new promotion. If the promoted SHA's `Test` run was red, fix
-`main`, then promote the fix.
+Re-run the failed `Release` run from the Actions tab: it re-runs the same workflow file and
+re-reads the tip of `deploy`. If the run failed after the tag was made nothing is repeated. To
+run the current `release.yml` against the tip of `deploy` without a new promotion, dispatch it
+(it refuses any ref but `deploy`):
+
+```bash
+gh workflow run release.yml --ref deploy
+```
+
+If the promoted SHA's `Test before release` job was red, fix `main`, then promote the fix.
 
 ## First-time setup (owner, once)
 
 Nothing below exists until the owner runs it. Agents prepare it and never run it.
 
 1. **Create `deploy`** at the first SHA to promote, from a terminal or approval-required
-   thread: `scripts/promote.sh <sha>`. The first push runs `Test` then `Release` once. Pick a
+   thread: `scripts/promote.sh <sha>`. The first push runs `Release` once (its tests first). Pick a
    `main` SHA that is not a release-bot commit; the script refuses those. Everything since the
    last tag (`v3.17.0` at the time of writing) is released.
 2. **Add `deanjstone/design-system` to the ops hub promotion list**
@@ -117,7 +120,8 @@ Nothing below exists until the owner runs it. Agents prepare it and never run it
 `test/semantic-release-pin.test.ts` covers the release plugin against real git repos, both on
 a main that did not move and on one that did. `test/release-catch-up.test.ts` covers the
 catch-up. `test/release-retry.test.ts` and `test/release-gate.test.ts` cover the retry script
-(including that `env-ci` resolves the branch to `deploy` under a `workflow_run` event) and the Test gate. `test/deploy-branch.test.ts` pins the wiring: `deploy` is the only release
+(including that `env-ci` resolves the branch to `deploy` under a push to `deploy`) and the tested-head gate. `test/release-gate.test.ts` also pins `release.yml`'s shape: a push to
+`deploy`, no `workflow_run`, a `Test before release (...)` job that Release `needs:`. `test/deploy-branch.test.ts` pins the wiring: `deploy` is the only release
 branch, no plugin pushes it, and no workflow but `release.yml` releases.
 
 ## Gotchas
@@ -128,5 +132,5 @@ branch, no plugin pushes it, and no workflow but `release.yml` releases.
 - **A release commit lands on `main` after the promotion**, so `main` is always ahead of
   `deploy` by at least the release bot's commits. That is normal; promote the next real
   commit, not the bot's.
-- **The promoted SHA is re-tested on `deploy`.** A flaky run holds the release; the fix is a
+- **The promoted SHA is re-tested inside Release.** A flaky run holds the release; the fix is a
   new commit on `main` and a new promotion.

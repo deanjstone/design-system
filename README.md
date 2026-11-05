@@ -169,7 +169,10 @@ be overwritten by the next `shadcn add`:
 Releases are cut automatically by semantic-release from Conventional
 Commits, but only when the owner promotes a `main` commit to the `deploy` branch
 ([docs/deploy-branch.md](docs/deploy-branch.md)). A push to `main` runs checks
-and releases nothing; there is no manual tagging step. A `fix:` bumps the
+and releases nothing; there is no manual tagging step. The `Release` workflow
+(`.github/workflows/release.yml`) runs on the push to `deploy`: a
+`Test before release (component tests, curve geometry gate, lint)` job first,
+then `Release`, which needs it, so a red test publishes no version. A `fix:` bumps the
 patch, a `feat:` the minor, and a `BREAKING CHANGE:` footer the major. The
 analyzer here (`conventional-changelog-angular` 8.3.1) does not read a `!` in
 the subject, so a `feat!:` with no footer releases nothing; write both. Every release gets a `vX.Y.Z` tag, a GitHub release, and a CHANGELOG
@@ -441,7 +444,7 @@ alias stays where it is until its owner moves it.
 ## Tests
 
 `pnpm install && pnpm test` renders registry sources in jsdom with Vitest
-(`test/`); the `Test` workflow runs it on every PR. The dev dependencies
+(`test/`); the `Test` workflow runs it on every PR and every push to `main`, and the `Release` workflow's `Test before release` job runs it on every promotion. The dev dependencies
 exist only for this — nothing here is built or published.
 
 **Before a push: `pnpm check`.** It runs the three CI checks locally, in order:
