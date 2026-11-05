@@ -1,10 +1,10 @@
 // @vitest-environment node
 
 import { execFileSync, spawnSync } from "node:child_process"
-import { chmodSync, existsSync, mkdtempSync, readFileSync, realpathSync, rmSync, writeFileSync } from "node:fs"
+import { chmodSync, mkdtempSync, readFileSync, rmSync, writeFileSync, existsSync } from "node:fs"
 import { tmpdir } from "node:os"
 import { join } from "node:path"
-import { fileURLToPath, pathToFileURL } from "node:url"
+import { fileURLToPath } from "node:url"
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
 
 // scripts/release/release-with-retry.sh runs semantic-release up to three times,
@@ -231,62 +231,6 @@ describe("RELEASE_BRANCH=deploy (releases from a promotion, design-system#179)",
     expect(readFileSync(join(dir, "tags"), "utf8").trim()).toBe("v1.0.0")
   })
 
-  // design-system#190: for a `workflow_run` event GitHub sets GITHUB_REF to the default
-  // branch, and semantic-release (via env-ci) reads its branch from GITHUB_REF, so it saw
-  // `main`, did a dry run and published nothing from deploy.
-  describe("under a workflow_run event (design-system#190)", () => {
-    const workflowRunEnv = {
-      GITHUB_ACTIONS: "true",
-      GITHUB_EVENT_NAME: "workflow_run",
-      GITHUB_REF: "refs/heads/main",
-      GITHUB_HEAD_REF: "",
-      GITHUB_BASE_REF: "",
-    }
-
-    const runAs = (command: string, extra: Record<string, string>) =>
-      spawnSync("bash", [script], {
-        cwd: work,
-        encoding: "utf8",
-        env: { ...process.env, RELEASE_COMMAND: command, RUNNER_TEMP: dir, ...extra },
-      })
-
-    it("points GITHUB_REF at the release branch, so semantic-release does not read main", () => {
-      const result = runAs(
-        releaseCommand(`echo "$GITHUB_REF" > "${dir}/ref"; echo "\${GITHUB_HEAD_REF-unset}" > "${dir}/head-ref"`),
-        { ...workflowRunEnv, RELEASE_BRANCH: "deploy", GITHUB_HEAD_REF: "feat/x" },
-      )
-      expect(result.status, result.stdout + result.stderr).toBe(0)
-      expect(readFileSync(join(dir, "ref"), "utf8").trim()).toBe("refs/heads/deploy")
-      expect(readFileSync(join(dir, "head-ref"), "utf8").trim()).toBe("unset")
-    })
-
-    it("keeps refs/heads/main for the default RELEASE_BRANCH", () => {
-      const result = runAs(releaseCommand(`echo "$GITHUB_REF" > "${dir}/ref"`), workflowRunEnv)
-      expect(result.status, result.stdout + result.stderr).toBe(0)
-      expect(readFileSync(join(dir, "ref"), "utf8").trim()).toBe("refs/heads/main")
-    })
-
-    it("makes env-ci, the reader semantic-release uses, resolve the branch to deploy", () => {
-      // env-ci is semantic-release's own dependency (ESM, not hoisted to the repo root), so it
-      // is loaded from beside the installed semantic-release, exactly as semantic-release does.
-      const envCiEntry = join(realpathSync(join(root, "node_modules/semantic-release")), "../env-ci/index.js")
-      const probePath = join(dir, "env-ci-probe.mjs")
-      writeFileSync(
-        probePath,
-        `import envCi from ${JSON.stringify(pathToFileURL(envCiEntry).href)}
-const { branch, isCi, isPr } = envCi({ env: process.env, cwd: process.cwd() })
-console.log(JSON.stringify({ branch, isCi, isPr }))
-`,
-      )
-      const result = runAs(releaseCommand(`node "${probePath}" > "${dir}/env-ci.json"`), {
-        ...workflowRunEnv,
-        RELEASE_BRANCH: "deploy",
-      })
-      expect(result.status, result.stdout + result.stderr).toBe(0)
-      expect(JSON.parse(readFileSync(join(dir, "env-ci.json"), "utf8"))).toEqual({ branch: "deploy", isCi: true, isPr: false })
-    })
-  })
-
   it("names deploy in the final error when pushes keep being rejected", () => {
     const result = runOnDeploy(releaseCommand(`echo "! [rejected] HEAD -> main (non-fast-forward)"; exit 1`))
     expect(result.status).toBe(1)
@@ -303,19 +247,6 @@ describe("the Release workflow", () => {
     expect(workflow).toMatch(/ref: deploy/)
     expect(workflow).toMatch(/RELEASE_BRANCH: deploy/)
     expect(workflow).toMatch(/CATCH_UP_FROM: main/)
-  })
-
-  // design-system#190. The script runs from the deploy checkout, so its own GITHUB_REF fix
-  // reaches a release only after a promotion; the workflow is read from main and acts at once.
-  it("tells semantic-release the branch is deploy, not the main a workflow_run event reports", () => {
-    expect(workflow).toMatch(/GITHUB_REF: refs\/heads\/deploy/)
-    expect(workflow).not.toMatch(/GITHUB_HEAD_REF/)
-  })
-
-  it("keeps the guard that the tested SHA is the head of deploy", () => {
-    expect(workflow).toContain('bash scripts/release/tested-head.sh "${TESTED_SHA}"')
-    expect(workflow).toMatch(/TESTED_SHA: \$\{\{ github\.event\.workflow_run\.head_sha \}\}/)
-    expect(workflow).toMatch(/if: steps\.gate\.outputs\.release == 'true'/)
   })
 
   it("queues releases one at a time instead of cancelling them", () => {

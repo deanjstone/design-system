@@ -80,9 +80,4 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           RELEASE_BRANCH: deploy
-          # On workflow_run GitHub sets GITHUB_REF to main, and semantic-release (env-ci)
-          # reads its branch from it, so it did a dry run (design-system#190). Set here as
-          # well as in the script: the script runs from the deploy checkout, which has the
-          # script fix only after the next promotion; this file is read from main.
-          GITHUB_REF: refs/heads/deploy
           CATCH_UP_FROM: main

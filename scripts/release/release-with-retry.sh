@@ -38,14 +38,6 @@ CATCH_UP_FROM="${CATCH_UP_FROM:-}"
 # Resolved before the first reset: the checkout switches under a running script.
 CATCH_UP_SCRIPT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/catch-up-release-tags.sh"
 RELEASE_COMMAND="${RELEASE_COMMAND:-pnpm exec semantic-release}"
-# semantic-release reads its branch from GITHUB_REF (via env-ci). On a `workflow_run` event
-# GitHub sets that to the default branch, not the branch the Test run was on, so a release
-# from deploy saw `main`, logged "only publish from deploy" and did a dry run
-# (design-system#190). Say which branch this is. GITHUB_HEAD_REF is unset because env-ci
-# prefers it over GITHUB_REF. For the default RELEASE_BRANCH=main this is what a push to
-# main already sets.
-export GITHUB_REF="refs/heads/${RELEASE_BRANCH}"
-unset GITHUB_HEAD_REF
 LOG="${RUNNER_TEMP:-${TMPDIR:-/tmp}}/semantic-release.log"
 MAX_ATTEMPTS=3
 # `[remote rejected]` (a protected branch or a hook) is deliberately not here.
