@@ -10,8 +10,8 @@
 # range, the previous verdict still holds.
 #
 # It fails safe: anything it cannot decide (no base, a base this clone lacks, a diff
-# error, a manual run) says true. A push to deploy is always true, because Release
-# starts from the Test run on that SHA and that run has to include the gate.
+# error, a manual run) says true. A promotion never reaches it: the Release workflow runs
+# the gate itself, unconditionally.
 # A pull request is diffed against its merge base, so a base that moved on does not
 # count as the PR's own change.
 #
@@ -24,7 +24,6 @@ INPUTS='^(registry/|theme/|scripts/geometry-gate/|scripts/ci/geometry-inputs-cha
 base="${1:-}"
 head="${2:-}"
 event="${GITHUB_EVENT_NAME:-push}"
-ref="${GITHUB_REF:-}"
 
 say() { echo "geometry=$1"; exit 0; }
 
@@ -32,8 +31,6 @@ case "${event}" in
   push | pull_request) ;;
   *) say true ;;
 esac
-
-[ "${event}" = push ] && [ "${ref}" = refs/heads/deploy ] && say true
 
 case "${base}" in
   "" | 0000000000000000000000000000000000000000) say true ;;

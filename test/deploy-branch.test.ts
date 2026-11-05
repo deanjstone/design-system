@@ -55,15 +55,15 @@ describe("workflows", () => {
     expect(others.map(({ file }) => file)).toEqual([])
   })
 
-  it("release.yml does not start on a push to main or on any push: it follows Test on deploy", () => {
+  it("release.yml starts on a push to deploy and never on main or through workflow_run", () => {
     const release = read(".github/workflows/release.yml")
-    expect(release).not.toMatch(/^\s*push:/m)
-    expect(release).not.toMatch(/branches:\s*\[?\s*main/)
-    expect(release).toContain("github.event.workflow_run.head_branch == 'deploy'")
+    expect(release).toMatch(/push:\s*\n\s*branches: \[deploy\]/)
+    expect(release).not.toMatch(/branches:\s*\[?[^\]\n]*main/)
+    expect(release).not.toMatch(/^\s*workflow_run:/m)
   })
 
-  it("Test runs on main (CI only) and on deploy (the promoted SHA)", () => {
-    expect(read(".github/workflows/test.yml")).toMatch(/push:\s*\n\s*branches: \[main, deploy\]/)
+  it("Test runs on main (CI only); the promoted SHA is tested inside Release", () => {
+    expect(read(".github/workflows/test.yml")).toMatch(/push:\s*\n\s*branches: \[main\]\s*$/m)
   })
 })
 

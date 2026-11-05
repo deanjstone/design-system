@@ -4,15 +4,22 @@ name: Release
 # (scripts/promote.sh, design-system#179, docs/deploy-branch.md). A push to main
 # runs Test and nothing else.
 #
-# Release starts only when the Test workflow has finished on the deploy push
-# (design-system#159). It used to start on the same push, in parallel, so a red
-# Test could not stop it: v3.6.3 was published from a head whose Test run failed.
-# Test's conclusion is the result of every job in test.yml, the curve geometry
-# gate included.
+# The shared release pattern (argus-config#1167, design-system#191): one workflow, a
+# push to deploy, and two jobs in order. `Test before release (...)` runs the gates on
+# the promoted SHA, named for what it runs so the Actions page reads as a sentence.
+# `Release` needs it, so a red test means no version (design-system#159: v3.6.3 was
+# published from a head whose Test run failed, when the two were separate workflows).
+#
+# There is no workflow_run trigger. GitHub reports that event's branch as the default
+# branch, and semantic-release (env-ci) reads its branch from there: it silently dry-ran
+# (design-system#190). On a push to deploy GITHUB_REF is deploy, so nothing overrides it.
+#
+# This file is read from the pushed SHA, so a change here acts at the next promotion.
 on:
-  workflow_run:
-    workflows: [Test]
-    types: [completed]
+  push:
+    branches: [deploy]
+  # By hand, from deploy only: the first job refuses any other ref.
+  workflow_dispatch:
 
 # One Release at a time, queued rather than cancelled. Every run releases from
 # the tip of deploy (see the checkout below), so when GitHub drops an older pending
@@ -29,11 +36,81 @@ permissions:
   pull-requests: write
 
 jobs:
+  # The same gates as test.yml (component tests, curve geometry gate, lint), all of them
+  # on every promotion: the geometry gate is not skipped by an unchanged-inputs filter
+  # here, because this run is what Release trusts. One job, one install, so a homelab
+  # runner that takes one job at a time does it once. Keep the commands in step with
+  # test.yml; test/release-gate.test.ts fails when they drift.
+  test:
+    name: Test before release (component tests, curve geometry gate, lint)
+    runs-on: ${{ fromJSON(vars.CI_RUNS_ON || '"ubuntu-latest"') }}
+    permissions:
+      contents: read
+    steps:
+      - name: Refuse a run from any ref but deploy
+        if: github.ref != 'refs/heads/deploy'
+        run: |
+          echo "::error::Release runs from deploy only, this run is on ${GITHUB_REF}. Promote a main SHA with scripts/promote.sh instead."
+          exit 1
+
+      # github.sha: the commit that was promoted (or the tip of deploy for a manual run).
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+
+      - uses: pnpm/action-setup@v4
+        if: runner.environment == 'github-hosted'
+
+      - name: Use the host pnpm (self-hosted)
+        if: runner.environment != 'github-hosted'
+        uses: ./.github/actions/host-pnpm
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Run tests
+        run: pnpm test
+
+      # Chromium is downloaded once and reused by every later run (design-system#158),
+      # exactly as in test.yml: outside the workspace, never asking for OS packages.
+      - name: Point Playwright at a persistent browser directory
+        run: |
+          echo "PLAYWRIGHT_BROWSERS_PATH=$HOME/.cache/ms-playwright" >> "$GITHUB_ENV"
+          echo "PLAYWRIGHT_CORE_VERSION=$(node -p "require('playwright-core/package.json').version")" >> "$GITHUB_ENV"
+
+      - name: Restore Chromium
+        if: runner.environment == 'github-hosted'
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-chromium-${{ runner.os }}-${{ runner.arch }}-playwright-core-${{ env.PLAYWRIGHT_CORE_VERSION }}
+
+      - name: Install Chromium
+        run: pnpm exec playwright-core install chromium
+
+      - name: Run the geometry gate
+        run: pnpm gate:geometry
+
+      - name: Upload curve screenshots
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: geometry-gate-curves
+          path: geometry-gate-out/curves/
+          if-no-files-found: ignore
+
+      # Errors fail the job; warnings are reported only.
+      - name: Run oxlint
+        run: pnpm lint
+
   release:
     name: Release
-    # Only a green Test run of a push to deploy. A pull request's or main's Test run
-    # also fires this trigger, and so does a red one; all skip here.
-    if: github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'push' && github.event.workflow_run.head_branch == 'deploy'
+    needs: test
     runs-on: ${{ fromJSON(vars.CI_RUNS_ON || '"ubuntu-latest"') }}
     steps:
       - uses: actions/checkout@v4
@@ -44,14 +121,14 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
 
-      # The checkout above is the tip of deploy, which may be newer than the SHA
-      # Test went green on. Release only if that SHA is still the newest real
-      # commit; a newer promotion gets its own Test run and its own Release.
+      # The checkout above is the tip of deploy, which may be newer than the SHA the
+      # test job went green on. Release only if that SHA is still the newest real
+      # commit; a newer promotion gets its own run, tests and Release.
       - name: Check the tested SHA is the head of deploy
         id: gate
         run: bash scripts/release/tested-head.sh "${TESTED_SHA}" >> "${GITHUB_OUTPUT}"
         env:
-          TESTED_SHA: ${{ github.event.workflow_run.head_sha }}
+          TESTED_SHA: ${{ github.sha }}
 
       - uses: pnpm/action-setup@v4
         if: steps.gate.outputs.release == 'true' && runner.environment == 'github-hosted'
@@ -80,9 +157,4 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           RELEASE_BRANCH: deploy
-          # On workflow_run GitHub sets GITHUB_REF to main, and semantic-release (env-ci)
-          # reads its branch from it, so it did a dry run (design-system#190). Set here as
-          # well as in the script: the script runs from the deploy checkout, which has the
-          # script fix only after the next promotion; this file is read from main.
-          GITHUB_REF: refs/heads/deploy
           CATCH_UP_FROM: main

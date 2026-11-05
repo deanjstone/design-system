@@ -99,12 +99,6 @@ describe("geometry-inputs-changed.sh", () => {
     expect(decide(base, head, "pull_request", "refs/pull/1/merge")).toBe("geometry=false")
   })
 
-  it("is always true on a push to deploy, whatever changed: Release trusts that run", () => {
-    const base = commit({ "README.md": "a" }, "base")
-    const head = commit({ "README.md": "b" }, "docs only")
-    expect(decide(base, head, "push", "refs/heads/deploy")).toBe("geometry=true")
-  })
-
   it("is always true when run by hand (workflow_dispatch or schedule)", () => {
     const base = commit({ "README.md": "a" }, "base")
     const head = commit({ "README.md": "b" }, "docs only")
@@ -147,7 +141,7 @@ describe.each([".github/workflows/test.yml", ".github/workflows/design.yml"])("c
     expect(workflow).toMatch(/cancel-in-progress: \$\{\{ github\.event_name == 'pull_request' \}\}/)
   })
 
-  it("gives each push its own group, so a main or deploy SHA is never cancelled or dropped", () => {
+  it("gives each push its own group, so a main SHA is never cancelled or dropped", () => {
     expect(workflow).toMatch(/group: .*github\.workflow.*github\.event\.pull_request\.number.*github\.sha/)
   })
 })

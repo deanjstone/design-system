@@ -15,8 +15,8 @@ const workflow = read(".github/workflows/test.yml")
 const pkg = JSON.parse(read("package.json")) as { devDependencies: Record<string, string> }
 
 describe("geometry gate job in test.yml", () => {
-  it("runs the gate, with no --url, on pushes to main and to deploy", () => {
-    expect(workflow).toMatch(/push:\s*\n\s*branches: \[main, deploy\]/)
+  it("runs the gate, with no --url, on pushes to main (a promotion runs it inside Release)", () => {
+    expect(workflow).toMatch(/push:\s*\n\s*branches: \[main\]\s*$/m)
     expect(workflow).toMatch(/^\s+geometry:/m)
     expect(workflow).toMatch(/run: pnpm gate:geometry\s*$/m)
     expect(workflow).not.toMatch(/gate:geometry.*--url/)

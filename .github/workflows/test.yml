@@ -2,21 +2,21 @@ name: Test
 
 on:
   pull_request:
-  # deploy too: the Release workflow starts from a green Test run on the promoted SHA
-  # (design-system#179), so a promotion re-runs the checks on exactly what it releases.
+  # Not deploy: a promotion is tested inside the Release workflow ("Test before release"),
+  # on exactly the SHA it releases (design-system#191).
   push:
-    branches: [main, deploy]
+    branches: [main]
 
-# A pull request's newer push replaces its older run. A push to main or deploy gets a
-# group of its own (its SHA), so it is never cancelled and never dropped from a queue:
-# every trunk SHA gets a verdict, and Release starts from the deploy one (design-system#184).
+# A pull request's newer push replaces its older run. A push to main gets a group of its
+# own (its SHA), so it is never cancelled and never dropped from a queue: every trunk SHA
+# gets a verdict (design-system#184).
 concurrency:
   group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.event.pull_request.number || github.sha }}
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   # Decides whether the ~4.5 minute geometry gate has to run: only when a file it reads
-  # changed in this push or pull request, and always on a push to deploy. The rule and
+  # changed in this push or pull request (Release always runs it). The rule and
   # the file list are in scripts/ci/geometry-inputs-changed.sh.
   changes:
     name: Geometry gate inputs changed

@@ -231,15 +231,15 @@ describe("RELEASE_BRANCH=deploy (releases from a promotion, design-system#179)",
     expect(readFileSync(join(dir, "tags"), "utf8").trim()).toBe("v1.0.0")
   })
 
-  // design-system#190: for a `workflow_run` event GitHub sets GITHUB_REF to the default
+  // design-system#190: under a `workflow_run` event GitHub set GITHUB_REF to the default
   // branch, and semantic-release (via env-ci) reads its branch from GITHUB_REF, so it saw
-  // `main`, did a dry run and published nothing from deploy.
-  describe("under a workflow_run event (design-system#190)", () => {
-    const workflowRunEnv = {
+  // `main`, did a dry run and published nothing from deploy. design-system#191 moved Release
+  // to a push to deploy, where GITHUB_REF is deploy already, so the script no longer sets it.
+  describe("under a push to deploy (design-system#191)", () => {
+    const pushEnv = {
       GITHUB_ACTIONS: "true",
-      GITHUB_EVENT_NAME: "workflow_run",
-      GITHUB_REF: "refs/heads/main",
-      GITHUB_HEAD_REF: "",
+      GITHUB_EVENT_NAME: "push",
+      GITHUB_REF: "refs/heads/deploy",
       GITHUB_BASE_REF: "",
     }
 
@@ -250,20 +250,11 @@ describe("RELEASE_BRANCH=deploy (releases from a promotion, design-system#179)",
         env: { ...process.env, RELEASE_COMMAND: command, RUNNER_TEMP: dir, ...extra },
       })
 
-    it("points GITHUB_REF at the release branch, so semantic-release does not read main", () => {
-      const result = runAs(
-        releaseCommand(`echo "$GITHUB_REF" > "${dir}/ref"; echo "\${GITHUB_HEAD_REF-unset}" > "${dir}/head-ref"`),
-        { ...workflowRunEnv, RELEASE_BRANCH: "deploy", GITHUB_HEAD_REF: "feat/x" },
-      )
+    it("leaves GITHUB_REF to the event: it does not override it", () => {
+      const result = runAs(releaseCommand(`echo "$GITHUB_REF" > "${dir}/ref"`), { ...pushEnv, RELEASE_BRANCH: "deploy" })
       expect(result.status, result.stdout + result.stderr).toBe(0)
       expect(readFileSync(join(dir, "ref"), "utf8").trim()).toBe("refs/heads/deploy")
-      expect(readFileSync(join(dir, "head-ref"), "utf8").trim()).toBe("unset")
-    })
-
-    it("keeps refs/heads/main for the default RELEASE_BRANCH", () => {
-      const result = runAs(releaseCommand(`echo "$GITHUB_REF" > "${dir}/ref"`), workflowRunEnv)
-      expect(result.status, result.stdout + result.stderr).toBe(0)
-      expect(readFileSync(join(dir, "ref"), "utf8").trim()).toBe("refs/heads/main")
+      expect(readFileSync(script, "utf8")).not.toMatch(/^\s*export GITHUB_REF=/m)
     })
 
     it("makes env-ci, the reader semantic-release uses, resolve the branch to deploy", () => {
@@ -279,7 +270,7 @@ console.log(JSON.stringify({ branch, isCi, isPr }))
 `,
       )
       const result = runAs(releaseCommand(`node "${probePath}" > "${dir}/env-ci.json"`), {
-        ...workflowRunEnv,
+        ...pushEnv,
         RELEASE_BRANCH: "deploy",
       })
       expect(result.status, result.stdout + result.stderr).toBe(0)
@@ -305,17 +296,14 @@ describe("the Release workflow", () => {
     expect(workflow).toMatch(/CATCH_UP_FROM: main/)
   })
 
-  // design-system#190. The script runs from the deploy checkout, so its own GITHUB_REF fix
-  // reaches a release only after a promotion; the workflow is read from main and acts at once.
-  it("tells semantic-release the branch is deploy, not the main a workflow_run event reports", () => {
-    expect(workflow).toMatch(/GITHUB_REF: refs\/heads\/deploy/)
-    expect(workflow).not.toMatch(/GITHUB_HEAD_REF/)
+  it("keeps the guard that the tested SHA is the head of deploy, in the Release job", () => {
+    expect(workflow).toContain('bash scripts/release/tested-head.sh "${TESTED_SHA}"')
+    expect(workflow).toMatch(/TESTED_SHA: \$\{\{ github\.sha \}\}/)
+    expect(workflow).toMatch(/if: steps\.gate\.outputs\.release == 'true'/)
   })
 
-  it("keeps the guard that the tested SHA is the head of deploy", () => {
-    expect(workflow).toContain('bash scripts/release/tested-head.sh "${TESTED_SHA}"')
-    expect(workflow).toMatch(/TESTED_SHA: \$\{\{ github\.event\.workflow_run\.head_sha \}\}/)
-    expect(workflow).toMatch(/if: steps\.gate\.outputs\.release == 'true'/)
+  it("does not override GITHUB_REF or GITHUB_HEAD_REF: a push to deploy sets them", () => {
+    expect(workflow).not.toMatch(/^\s*GITHUB_(HEAD_)?REF:/m)
   })
 
   it("queues releases one at a time instead of cancelling them", () => {
