@@ -1,3 +1,12 @@
+# [3.18.0](https://github.com/deanjstone/design-system/compare/v3.17.0...v3.18.0) (2026-11-05)
+
+
+### Features
+
+* add a membrane, dust and breathing motion to graph-3d under tone void ([e9b85e6](https://github.com/deanjstone/design-system/commit/e9b85e6b85c8727b624deece3981eb15c78cde66)), closes [#182](https://github.com/deanjstone/design-system/issues/182)
+* per-node heat and a spherical shell layout in graph-3d ([04f2dfa](https://github.com/deanjstone/design-system/commit/04f2dfa2d1a88183c518bbd83155f85683e12b04)), closes [#181](https://github.com/deanjstone/design-system/issues/181)
+* tint graph-3d edges by kind and label neighbours under tone void ([8a9a81c](https://github.com/deanjstone/design-system/commit/8a9a81c647745a5ccbf92c773203ea7191763b51)), closes [#183](https://github.com/deanjstone/design-system/issues/183)
+
 # [3.17.0](https://github.com/deanjstone/design-system/compare/v3.16.0...v3.17.0) (2026-11-04)
 
 
