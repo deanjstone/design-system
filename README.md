@@ -45,6 +45,7 @@ registry/
   lib/link-pill-*.ts, .css  LinkPill core, HTML shell and styles
   lib/highlighter.tsx       Shiki loader behind use-highlighted-code
   lib/graph-3d-*.ts         graph-3d prop mapping and three.js engine (lazy-loaded)
+  lib/page-transition-core.ts  theme tokens to glimm band colours (page-transition, staged: not in registry.json yet)
   base-nova/ui/               46 base-nova style components (Base UI, plus link-pill and graph-3d)
   base-nova/hooks/            use-mobile (pulled by sidebar), use-highlighted-code (pulled by code-block), use-theme-preference
   base-nova/blocks/           v3 layout blocks: app-shell, app-switcher, page-header, empty-page, settings-page, login
@@ -891,6 +892,41 @@ announces the page. `caption` is required and names the table for assistive tech
 is pinned because that is the API the shadcn recipe and its examples use; v9 is a
 different, feature-composed API. For row selection, column visibility or server-side
 paging, call `useReactTable` yourself with the `table` item.
+
+## Page transition (staged, not yet listed)
+
+`page-transition` wraps [glimm](https://glimm.dev) 0.4.1 (MIT): a WebGL band in the theme's colours
+crosses the screen and the new view appears behind it. Evaluation and verdict (adapt):
+[design-system#198](https://github.com/deanjstone/design-system/issues/198). The item is **not in
+`registry.json` yet**, so the shadcn CLI cannot install it: the owner checkpoint
+([design-system#199](https://github.com/deanjstone/design-system/issues/199)) approves the look first.
+Its two entries are staged in `docs/page-transition/registry-entries.json`; listing them is copying
+them into `registry.json` and running `pnpm build:theme`.
+
+```tsx
+<PageTransitionProvider>{children}</PageTransitionProvider>
+
+const { transition } = usePageTransition()
+await transition(() => navigate("/billing"))        // navigate runs behind the band
+await transition(() => setView("billing"), { direction: "rtl", sweepMs: 700 })
+```
+
+- **Opt in per app.** Nothing changes until an app renders `PageTransitionProvider` and wraps a
+  navigation or state change in `transition()`. `glimm/react` is used, not `glimm/next`.
+- **Colours come from the theme**, read when the transition starts: `--primary`, `--chart-5`, `--chart-4`
+  by default (`tokens` prop to change), so a theme or light/dark change between navigations shows. The band
+  is dimmed to 0.8 on `.dark`. glimm's own presets are not used.
+- **Plain cut, never a stuck page**, for each of: `prefers-reduced-motion: reduce`; no WebGL; a lost WebGL
+  context (glimm's provider path has no handler for it, so the item adds one and stays on cuts for the
+  rest of the page's life); theme tokens missing. An error thrown by `navigate` reaches the caller on a cut.
+- **Cost:** `glimm` is pinned exactly (`glimm@0.4.1`). Its source is not public and 0.x changes defaults
+  between minors. Tree-shaken it adds about 13 kB gzip (`GlimmProvider`, `useGlimm`, `accentChain`);
+  measured by `docs/page-transition/smoke-check.mjs`. `pnpm-workspace.yaml` excludes `glimm@0.4.1` from
+  pnpm's release-age gate because it was under a week old when added; remove the exclusion once it has aged.
+- **Try it:** `node docs/page-transition/serve.mjs [--port 4173]` builds the demo and serves it on
+  `127.0.0.1`; add `tailscale serve --bg 4173` to open it from a phone (never `funnel`).
+  `node docs/page-transition/smoke-check.mjs` drives it in one headless tab (sweep, reduced motion, no
+  WebGL, context loss, click timing) and writes `docs/assets/page-transition-*.png`.
 
 ## Style
 
