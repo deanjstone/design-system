@@ -45,7 +45,7 @@ export function parseCssColor(value: string): string | null {
   const hex = HEX.exec(text)
   if (hex) {
     const digits = (hex[1] ?? "").toLowerCase()
-    return `#${digits.length === 3 ? [...digits].map((digit) => digit + digit).join("") : digits}`
+    return `#${digits.length === 3 ? digits.split("").map((digit) => digit + digit).join("") : digits}`
   }
   const rgb = RGB.exec(text)
   if (rgb) {
