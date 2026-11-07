@@ -347,10 +347,12 @@ function FilterBuilder({ fields, value, onValueChange, layout = "auto", labels: 
             <SheetTitle>{labels.filters}</SheetTitle>
             <SheetDescription>{labels.sheetDescription}</SheetDescription>
           </SheetHeader>
-          <div className="flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto overscroll-contain px-4">
-            {rows.length > 0 ? <ul className="m-0 flex list-none flex-col gap-2 p-0">{rows}</ul> : null}
-            {addButton}
-          </div>
+          {rows.length > 0 ? (
+            <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-4">
+              <ul className="m-0 flex list-none flex-col gap-2 p-0">{rows}</ul>
+            </div>
+          ) : null}
+          <div className="flex px-4">{addButton}</div>
           <SheetFooter className="pt-0">
             <Button onClick={() => onOpenChange(false)}>{labels.done}</Button>
             {clearButton}
