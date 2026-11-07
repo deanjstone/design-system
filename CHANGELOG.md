@@ -1,3 +1,10 @@
+# [3.20.0](https://github.com/deanjstone/design-system/compare/v3.19.0...v3.20.0) (2026-11-07)
+
+
+### Features
+
+* list issue-row in registry.json ([f0d91ee](https://github.com/deanjstone/design-system/commit/f0d91eed8bf564c96425405913770abab26a53ae)), closes [#192](https://github.com/deanjstone/design-system/issues/192) [#192](https://github.com/deanjstone/design-system/issues/192)
+
 # [3.19.0](https://github.com/deanjstone/design-system/compare/v3.18.0...v3.19.0) (2026-11-07)
 
 
