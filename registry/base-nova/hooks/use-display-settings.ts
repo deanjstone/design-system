@@ -90,7 +90,7 @@ export function useDisplaySettings(viewId: string, config: DisplayConfig) {
     () => read(key),
     () => null,
   )
-  const settings = React.useMemo(() => parseDisplaySettings(raw, configRef.current), [raw, shape])
+  const settings = React.useMemo(() => parseDisplaySettings(raw, configRef.current), [raw, shape]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const update = React.useCallback(
     (change: (current: DisplaySettings, config: DisplayConfig) => DisplaySettings) => {
