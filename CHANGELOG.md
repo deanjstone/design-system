@@ -1,3 +1,10 @@
+# [3.22.0](https://github.com/deanjstone/design-system/compare/v3.21.0...v3.22.0) (2026-11-07)
+
+
+### Features
+
+* list grouped-list, use-display-settings and list-group-core in registry.json ([989b84e](https://github.com/deanjstone/design-system/commit/989b84eab4af7e59917dca507847a42fbe195252)), closes [#194](https://github.com/deanjstone/design-system/issues/194) [#194](https://github.com/deanjstone/design-system/issues/194)
+
 # [3.21.0](https://github.com/deanjstone/design-system/compare/v3.20.0...v3.21.0) (2026-11-07)
 
 
