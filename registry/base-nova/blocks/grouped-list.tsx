@@ -63,7 +63,7 @@ function GroupedList<Item>({ groups, collapsed, onToggleGroup, getItemKey, rende
             <Heading className="m-0 text-sm font-medium">
               <CollapsibleTrigger
                 data-slot="grouped-list-header"
-                className="group/header flex h-11 w-full touch-manipulation items-center gap-2 border-b bg-muted/40 pl-[max(0.75rem,env(safe-area-inset-left))] pr-[max(0.75rem,env(safe-area-inset-right))] text-left outline-none hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset"
+                className="group/header flex h-11 w-full touch-manipulation items-center gap-2 border-b border-border bg-muted/40 pl-[max(0.75rem,env(safe-area-inset-left))] pr-[max(0.75rem,env(safe-area-inset-right))] text-left outline-none hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset"
               >
                 <ChevronRightIcon
                   aria-hidden="true"
