@@ -8,8 +8,14 @@
 
 ## Test plan
 
-- [ ] Tested locally
+- [ ] `pnpm check` passes (paste its `check: pass <sha>` line)
 - [ ] No regressions in existing features
+
+## README
+
+<!-- One of the two. A change to setup, commands, config or env, deploy or public behaviour updates the README in this PR. -->
+
+README: updated / not needed because …
 
 ## Checklist
 
