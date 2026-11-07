@@ -42,7 +42,7 @@ pnpm install --frozen-lockfile
 | `pnpm build:theme` | Regenerates `theme/tokens.css`, `registry.json` and `r/` from `theme/themes.json` |
 | `npx shadcn@4.19.1 build --output ./r` | Regenerates `r/` alone after a source or `registry.json` edit |
 | `pnpm gate:geometry` | Browser check of safe areas and curves; see [Curve-geometry gate](#curve-geometry-gate) |
-| `node docs/<demo>/smoke-check.mjs` | Builds a demo and checks it in headless Chromium: `data`, `form-inputs`, `layout`, `page-transition`; `docs/card-list/screenshots.mjs` and `docs/issue-row/screenshots.mjs` do the same in headless WebKit; `docs/menus/keyboard-check.mjs` and `docs/graph-3d/{measure,inspect}.mjs` likewise |
+| `node docs/<demo>/smoke-check.mjs` | Builds a demo and checks it in headless Chromium: `data`, `form-inputs`, `layout`, `page-transition`; `docs/card-list/screenshots.mjs`, `docs/issue-row/screenshots.mjs` and `docs/filter-builder/screenshots.mjs` do the same in headless WebKit; `docs/menus/keyboard-check.mjs` and `docs/graph-3d/{measure,inspect}.mjs` likewise |
 
 There is nothing to run as a server: the registry is files. A demo script builds
 and serves its page for the length of its run and then stops.
@@ -107,10 +107,11 @@ registry/
   lib/link-pill-*.ts, .css  LinkPill core, HTML shell and styles
   lib/highlighter.tsx       Shiki loader behind use-highlighted-code
   lib/graph-3d-*.ts         graph-3d prop mapping and three.js engine (lazy-loaded)
+  lib/filter-core.ts, url-state.ts  filter model and one-search-param URL state (filter-builder)
   lib/page-transition-core.ts  theme tokens to glimm band colours (page-transition, staged: not in registry.json yet)
   base-nova/ui/               66 listed base-nova components (Base UI, plus link-pill, graph-3d, chart, data-table) and the unlisted page-transition
-  base-nova/hooks/            use-mobile (pulled by sidebar), use-highlighted-code (pulled by code-block), use-theme-preference
-  base-nova/blocks/           v3 layout blocks: app-shell, app-switcher, page-header, empty-page, settings-page, login, card-list, issue-row
+  base-nova/hooks/            use-mobile (pulled by sidebar), use-highlighted-code (pulled by code-block), use-theme-preference, use-filter-state
+  base-nova/blocks/           v3 layout blocks: app-shell, app-switcher, page-header, empty-page, settings-page, login, card-list, issue-row, filter-builder
   design-check/             scripts and workflow of the design-check item (CI, not UI)
   app-html-head/            iPhone <head> tags snippet (app-html-head item)
   links/                    links.json, its schema, links.sh and the link-check script and workflow (ADR-0004)
@@ -504,7 +505,7 @@ npx shadcn add deanjstone/design-system/app-shell#v3.0.0
 | Type scale | Tailwind's sizes | T3's scale: `text-xs` is 13px/17px (was 12px/16px), `text-xl` 21px, `text-2xl` 26px; `text-2xs` and `text-3xs` are new | Swap `text-xs` for `text-2xs` where the old 12px is wanted |
 | Glass tokens | none | `--glass-surface`, `--glass-fallback`, `--glass-blur`, `--glass-opacity`, `--glass-saturation`; `surface-glass`, `dialog-glass`, `dropdown-glass` utilities | Nothing, unless you want the glass recipe |
 | Theme preference | Per-app | `theme-preference` lib (cookie `ds-theme` on a configurable parent domain, `localStorage` fallback, no-flash `themeInitScript()`) and the `use-theme-preference` hook | Put `themeInitScript()` in `<head>` |
-| Layout blocks | none | `app-shell`, `app-switcher`, `page-header`, `empty-page`, `settings-page`, `login`, `card-list`, `issue-row`, plus the `nav-link` lib | Optional; add the ones you want |
+| Layout blocks | none | `app-shell`, `app-switcher`, `page-header`, `empty-page`, `settings-page`, `login`, `card-list`, `issue-row`, `filter-builder`, plus the `nav-link` lib | Optional; add the ones you want |
 | Radius | `0.625rem` | `0.625rem`, unchanged | Nothing |
 
 Rules for the blocks and the full token map are in
@@ -1103,6 +1104,61 @@ dependencies. It pulls in `context-menu` and `dropdown-menu`.
   `touchstart` held for 650ms, since Playwright has no touch-hold; it is not a physical finger. Screenshots:
   ![390 light](docs/assets/issue-row-390-light.png) ![390 menu](docs/assets/issue-row-390-menu-light.png)
   ![320 dark](docs/assets/issue-row-320-dark.png) ![1280 dark](docs/assets/issue-row-1280-dark.png)
+
+## Filter builder
+
+`filter-builder` is the filter row editor with shareable URL state from [design-system#193](https://github.com/deanjstone/design-system/issues/193):
+subject, operator and value rows ("label is", "label is not", "wave is any of", "mode has all of"), exclusion included, with
+the whole list in one URL search param so a filtered view can be bookmarked and shared. It follows circle's
+`components/data-table-filter/` and `store/filter-store.ts` ([circle](https://github.com/ln-dev7/circle), MIT, Copyright (c)
+2025 lndev-ui | Circle Template; credited in each source header), rebuilt on Base UI and this registry's tokens with none of
+circle's dependencies and no nuqs. Four items: `filter-core` (the model), `url-state` (the URL helper), `use-filter-state`
+(the two joined as a hook) and the `filter-builder` block, which pulls in `badge`, `button`, `checkbox`, `input`,
+`native-select`, `popover`, `sheet` and `use-mobile`.
+`npx shadcn add deanjstone/design-system/filter-builder deanjstone/design-system/use-filter-state`.
+
+```tsx
+const FIELDS: FilterField<Issue>[] = [
+  { id: "label", label: "Label", type: "option", options: [{ value: "bug", label: "Bug" }], accessor: (i) => i.label },
+  { id: "wave", label: "Wave", type: "option", options: WAVES, accessor: (i) => i.wave },
+  { id: "mode", label: "Mode", type: "multiOption", options: MODES, accessor: (i) => i.modes },
+  { id: "title", label: "Title", type: "text", accessor: (i) => i.title },
+  { id: "points", label: "Points", type: "number", accessor: (i) => i.points },
+]
+
+const [filters, setFilters] = useFilterState(FIELDS)          // ?filter=label:is-not:bug;wave:is-any-of:w1,w2
+const shown = applyFilters(issues, filters, FIELDS)
+<FilterBuilder fields={FIELDS} value={filters} onValueChange={setFilters} />
+```
+
+- **Types and operators.** `option` (is, is not, is any of, is none of), `multiOption` (has any of, has all of, has none of),
+  `text` (contains, does not contain, case-insensitive) and `number` (equals, does not equal, greater than, less than).
+  Filters are ANDed. A field appears in one row; "Add filter" starts the next unused field. Dates are not in this first cut.
+- **One param, plain text.** `serializeFilters` writes `field:operator:value,value;...`, each piece percent-encoded, so `:`, `,`
+  and `;` never appear inside a piece. `parseFilters(raw, fields)` checks every segment against `fields` and drops what it cannot
+  trust (unknown field, an operator the type lacks, the wrong shape, a broken escape, a non-number in a number field), never
+  throws, and reads at most 50 segments. A row with no value yet serialises as `label:is:` and filters nothing.
+- **Your router, or none.** `useFilterState(fields, { param, history })` reads and writes the param through the History API
+  (`replace` by default, so typing does not fill the back button; `push` adds an entry per change), follows back and forward,
+  and keeps other params and the hash. With a router that owns the search params, call `parseFilters` and `serializeFilters`
+  yourself and pass `value` and `onValueChange`. Filtering on the server: leave `accessor` out and use the builder to edit the list.
+- **Phone: rows in a bottom sheet.** `layout="auto"` (default) uses `useIsMobile()`: below 768px, and a short coarse-pointer
+  landscape phone, a Filters button with the count opens the rows in a bottom `sheet` (safe areas from the sheet), and the
+  complete filters show as removable chips under the button. Closing the sheet drops rows still empty. `layout="inline"` or
+  `"sheet"` forces one.
+- **Touch.** Field, operator and a single value are native selects, so a phone shows its own picker; several values are a
+  checklist of full-row labels (inline, behind a popover button; in the sheet, listed in place, so no popup opens over a
+  sheet). Under a coarse pointer selects and inputs are 44px tall with 16px text (iOS does not zoom into them), the remove
+  button, chips and checklist rows are 44px. Nothing depends on hover or right-click.
+- **Words are yours.** `labels` takes every visible and spoken string. Each row is a `group` named by its sentence ("Wave is any of
+  Wave 1, Later"); remove buttons say "Remove filter: <sentence>".
+- **Proof.** `node docs/filter-builder/screenshots.mjs` builds the demo and opens it in one headless WebKit page at a time at
+  390, 320, 768 and 1280px, light and dark. It checks no sideways scroll, the seeded URL, the sheet (flush with the bottom, full
+  width), a tap on a checklist row, the count and URL following, a chip removing its filter, and that a reload and a second page
+  opened on the copied URL show the same filters. WebKit headless does not report `pointer: coarse`, so the 44px and 16px checks
+  run in a Chromium page with touch emulation at 390px. Writes `docs/assets/filter-builder-<width>-<theme>.png`,
+  `-sheet-light.png` and `-checklist-light.png`. Screenshots: ![390 sheet](docs/assets/filter-builder-390-sheet-light.png)
+  ![390 dark](docs/assets/filter-builder-390-dark.png) ![1280 checklist](docs/assets/filter-builder-1280-checklist-light.png)
 
 ## Style
 

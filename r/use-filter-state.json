@@ -1,0 +1,16 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "use-filter-state",
+  "registryDependencies": [
+    "deanjstone/design-system/filter-core",
+    "deanjstone/design-system/url-state"
+  ],
+  "files": [
+    {
+      "path": "registry/base-nova/hooks/use-filter-state.ts",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\nimport { parseFilters, serializeFilters, type Filter, type FilterField } from \"@/lib/filter-core\"\nimport { useUrlParam } from \"@/lib/url-state\"\n\ntype UseFilterStateOptions = {\n  /** The search param that carries the filters. Default `filter`. */\n  param?: string\n  /** `replace` (default) rewrites the current history entry; `push` adds one per change. */\n  history?: \"replace\" | \"push\"\n}\n\n/**\n * The filter list as state in the page's own URL: `const [filters, setFilters] = useFilterState(fields)`.\n * The URL is the only store, so reload, back and forward, and a copied link all agree. Pass the pair to\n * `FilterBuilder`. A router that owns the search params can skip this hook and call `parseFilters` and\n * `serializeFilters` itself.\n */\nexport function useFilterState(fields: readonly FilterField[], { param = \"filter\", history = \"replace\" }: UseFilterStateOptions = {}) {\n  const [raw, setRaw] = useUrlParam(param, { history })\n\n  // `fields` is often written inline and is a new array every render; its ids and types decide how a\n  // link parses, so key the parse on those and keep the same list while the URL is unchanged.\n  const shape = fields.map((field) => `${field.id}:${field.type}`).join(\"|\")\n  const filters = React.useMemo(() => parseFilters(raw, fields), [raw, shape]) // eslint-disable-line react-hooks/exhaustive-deps\n\n  const setFilters = React.useCallback((next: Filter[]) => setRaw(serializeFilters(next) || null), [setRaw])\n\n  return [filters, setFilters] as const\n}\n",
+      "type": "registry:hook"
+    }
+  ],
+  "type": "registry:hook"
+}

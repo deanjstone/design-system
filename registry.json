@@ -1029,6 +1029,65 @@
       ]
     },
     {
+      "name": "filter-core",
+      "type": "registry:lib",
+      "files": [
+        {
+          "path": "registry/lib/filter-core.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "url-state",
+      "type": "registry:lib",
+      "files": [
+        {
+          "path": "registry/lib/url-state.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "use-filter-state",
+      "type": "registry:hook",
+      "registryDependencies": [
+        "deanjstone/design-system/filter-core",
+        "deanjstone/design-system/url-state"
+      ],
+      "files": [
+        {
+          "path": "registry/base-nova/hooks/use-filter-state.ts",
+          "type": "registry:hook"
+        }
+      ]
+    },
+    {
+      "name": "filter-builder",
+      "type": "registry:block",
+      "registryDependencies": [
+        "deanjstone/design-system/badge",
+        "deanjstone/design-system/button",
+        "deanjstone/design-system/checkbox",
+        "deanjstone/design-system/input",
+        "deanjstone/design-system/native-select",
+        "deanjstone/design-system/popover",
+        "deanjstone/design-system/sheet",
+        "deanjstone/design-system/use-mobile",
+        "deanjstone/design-system/filter-core"
+      ],
+      "dependencies": [
+        "lucide-react",
+        "cn@^0.5.0"
+      ],
+      "files": [
+        {
+          "path": "registry/base-nova/blocks/filter-builder.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
       "name": "empty-page",
       "type": "registry:block",
       "registryDependencies": [
