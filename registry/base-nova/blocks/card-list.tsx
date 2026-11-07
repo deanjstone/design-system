@@ -91,7 +91,7 @@ function CardListItem({ title, status, branch, check, time, active = false, clas
     props: mergeProps<"div">(
       {
         className: cn(
-          "flex min-h-11 min-w-0 flex-col justify-center gap-1 overflow-hidden rounded-xl border px-3 py-2 text-left text-sm outline-none",
+          "flex min-h-11 w-full min-w-0 flex-col justify-center gap-1 overflow-hidden rounded-xl border px-3 py-2 text-left text-sm outline-none",
           "[a]:cursor-pointer [a]:transition-colors [a]:hover:bg-muted [a]:active:bg-accent",
           "[button]:cursor-pointer [button]:transition-colors [button]:hover:bg-muted [button]:active:bg-accent",
           "focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50",

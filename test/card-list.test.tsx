@@ -159,6 +159,9 @@ describe("CardListItem", () => {
       const card = container.querySelector("[data-slot=card-list-item]")!
       expect(card.className).toContain("min-w-0")
       expect(card.className).toContain("overflow-hidden")
+      // A button sizes to its content, not to its container, so a long title would widen the page
+      // unless the card is told to fill the list item (found in WebKit at 390 px, design-system#188).
+      expect(card.className).toMatch(/(^|\s)w-full(\s|$)/)
       expect(container.querySelector("li")!.className).toContain("min-w-0")
     })
   })
