@@ -42,7 +42,7 @@ pnpm install --frozen-lockfile
 | `pnpm build:theme` | Regenerates `theme/tokens.css`, `registry.json` and `r/` from `theme/themes.json` |
 | `npx shadcn@4.19.1 build --output ./r` | Regenerates `r/` alone after a source or `registry.json` edit |
 | `pnpm gate:geometry` | Browser check of safe areas and curves; see [Curve-geometry gate](#curve-geometry-gate) |
-| `node docs/<demo>/smoke-check.mjs` | Builds a demo and checks it in headless Chromium: `data`, `form-inputs`, `layout`, `page-transition`; `docs/card-list/screenshots.mjs`, `docs/issue-row/screenshots.mjs` and `docs/filter-builder/screenshots.mjs` do the same in headless WebKit; `docs/menus/keyboard-check.mjs` and `docs/graph-3d/{measure,inspect}.mjs` likewise |
+| `node docs/<demo>/smoke-check.mjs` | Builds a demo and checks it in headless Chromium: `data`, `form-inputs`, `layout`, `page-transition`; `docs/card-list/screenshots.mjs`, `docs/issue-row/screenshots.mjs`, `docs/filter-builder/screenshots.mjs` and `docs/grouped-list/screenshots.mjs` do the same in headless WebKit; `docs/menus/keyboard-check.mjs` and `docs/graph-3d/{measure,inspect}.mjs` likewise |
 
 There is nothing to run as a server: the registry is files. A demo script builds
 and serves its page for the length of its run and then stops.
@@ -108,10 +108,11 @@ registry/
   lib/highlighter.tsx       Shiki loader behind use-highlighted-code
   lib/graph-3d-*.ts         graph-3d prop mapping and three.js engine (lazy-loaded)
   lib/filter-core.ts, url-state.ts  filter model and one-search-param URL state (filter-builder)
+  lib/list-group-core.ts    grouping and display-settings model (grouped-list)
   lib/page-transition-core.ts  theme tokens to glimm band colours (page-transition, staged: not in registry.json yet)
   base-nova/ui/               66 listed base-nova components (Base UI, plus link-pill, graph-3d, chart, data-table) and the unlisted page-transition
-  base-nova/hooks/            use-mobile (pulled by sidebar), use-highlighted-code (pulled by code-block), use-theme-preference, use-filter-state
-  base-nova/blocks/           v3 layout blocks: app-shell, app-switcher, page-header, empty-page, settings-page, login, card-list, issue-row, filter-builder
+  base-nova/hooks/            use-mobile (pulled by sidebar), use-highlighted-code (pulled by code-block), use-theme-preference, use-filter-state, use-display-settings
+  base-nova/blocks/           v3 layout blocks: app-shell, app-switcher, page-header, empty-page, settings-page, login, card-list, issue-row, filter-builder, grouped-list
   design-check/             scripts and workflow of the design-check item (CI, not UI)
   app-html-head/            iPhone <head> tags snippet (app-html-head item)
   links/                    links.json, its schema, links.sh and the link-check script and workflow (ADR-0004)
@@ -505,7 +506,7 @@ npx shadcn add deanjstone/design-system/app-shell#v3.0.0
 | Type scale | Tailwind's sizes | T3's scale: `text-xs` is 13px/17px (was 12px/16px), `text-xl` 21px, `text-2xl` 26px; `text-2xs` and `text-3xs` are new | Swap `text-xs` for `text-2xs` where the old 12px is wanted |
 | Glass tokens | none | `--glass-surface`, `--glass-fallback`, `--glass-blur`, `--glass-opacity`, `--glass-saturation`; `surface-glass`, `dialog-glass`, `dropdown-glass` utilities | Nothing, unless you want the glass recipe |
 | Theme preference | Per-app | `theme-preference` lib (cookie `ds-theme` on a configurable parent domain, `localStorage` fallback, no-flash `themeInitScript()`) and the `use-theme-preference` hook | Put `themeInitScript()` in `<head>` |
-| Layout blocks | none | `app-shell`, `app-switcher`, `page-header`, `empty-page`, `settings-page`, `login`, `card-list`, `issue-row`, `filter-builder`, plus the `nav-link` lib | Optional; add the ones you want |
+| Layout blocks | none | `app-shell`, `app-switcher`, `page-header`, `empty-page`, `settings-page`, `login`, `card-list`, `issue-row`, `filter-builder`, `grouped-list`, plus the `nav-link` lib | Optional; add the ones you want |
 | Radius | `0.625rem` | `0.625rem`, unchanged | Nothing |
 
 Rules for the blocks and the full token map are in
@@ -1159,6 +1160,67 @@ const shown = applyFilters(issues, filters, FIELDS)
   run in a Chromium page with touch emulation at 390px. Writes `docs/assets/filter-builder-<width>-<theme>.png`,
   `-sheet-light.png` and `-checklist-light.png`. Screenshots: ![390 sheet](docs/assets/filter-builder-390-sheet-light.png)
   ![390 dark](docs/assets/filter-builder-390-dark.png) ![1280 checklist](docs/assets/filter-builder-1280-checklist-light.png)
+
+## Grouped list
+
+`grouped-list` is the collapsible grouped list with a display menu from [design-system#194](https://github.com/deanjstone/design-system/issues/194):
+items under group headers that show a count and collapse, and a Display button that picks what to group by (status, wave,
+repo, label, whatever the view offers) and which row properties show. The choices are kept per view in localStorage. It follows
+circle's `group-issues.tsx`, `grouped-issues-view.tsx` and `store/display-settings-store.ts` ([circle](https://github.com/ln-dev7/circle),
+MIT, Copyright (c) 2025 lndev-ui | Circle Template; credited in each source header), rebuilt on Base UI and this registry's tokens
+with none of circle's dependencies (no zustand, motion or react-dnd). Three items: `list-group-core` (the model), `use-display-settings`
+(the persisted settings as a hook) and the `grouped-list` block (`GroupedList` and `DisplayMenu`), which pulls in `button`, `checkbox`,
+`collapsible`, `native-select` and `popover`. It takes any row, so `issue-row` is one choice and not a dependency.
+`npx shadcn add deanjstone/design-system/grouped-list deanjstone/design-system/use-display-settings`.
+
+```tsx
+const GROUPINGS: ListGrouping<Issue>[] = [
+  { id: "status", label: "Status", keys: (i) => i.status, groupLabel: (k) => STATUS_NAMES[k], order: ["working", "todo", "done"] },
+  { id: "label", label: "Label", keys: (i) => i.labels },            // a list: an issue with two labels is in both groups
+]
+const CONFIG: DisplayConfig = {
+  groupings: ["status", "label"],
+  properties: [{ id: "labels", label: "Labels" }, { id: "assignee", label: "Assignee", defaultVisible: false }],
+  defaultGroupBy: "status",
+}
+
+const display = useDisplaySettings("pr-queue", CONFIG)       // localStorage key display-settings:pr-queue
+const grouping = GROUPINGS.find((g) => g.id === display.settings.groupBy) ?? null
+<DisplayMenu groupings={GROUPINGS} properties={CONFIG.properties} settings={display.settings}
+  onGroupByChange={display.setGroupBy} onPropertyChange={display.setPropertyVisible} onReset={display.reset} />
+<GroupedList groups={groupItems(issues, grouping)} collapsed={grouping ? (display.settings.collapsed[grouping.id] ?? []) : []}
+  onToggleGroup={display.toggleCollapsed} getItemKey={(i) => i.id}
+  renderItem={(i) => <IssueRow title={i.title} {...pickVisible({ labels: i.labels, assignee: i.assignee }, display.settings)} />} />
+```
+
+- **Grouping.** `groupItems(items, grouping, { noneLabel })` keeps each group's items in their given order. `order` lists the keys that
+  go first; others follow as first seen. A key can be a list, so an item with two labels is drawn in both groups and counted in both
+  (the headers' counts can then add up to more than the items). An item with no key goes in a last "none" group; a group nobody is in
+  is not returned. `groupItems(items, null)` is one group of everything, drawn as a plain list with no header, so grouping off needs no
+  second code path.
+- **Collapse.** A header is a full-width 44px button inside a heading (`headingLevel`, default 3) with `aria-expanded`; the count stays
+  on a collapsed header. `GroupedList` holds no state: pass `collapsed` and `onToggleGroup`. Collapsed groups are kept per grouping,
+  so switching grouping does not carry them over.
+- **Display settings.** `useDisplaySettings(viewId, config)` returns `settings`, `setGroupBy`, `setPropertyVisible`, `toggleCollapsed`,
+  `reset` and `persisted`. Every list on the same view id, and its other tabs, stay in step. Storage access is wrapped in try/catch: where
+  it throws (a private window, blocked site data) the settings still work for the page and `persisted` turns false. Stored text is parsed
+  defensively and never throws: a bad field falls back to its default, a grouping, property or group the config no longer has is dropped,
+  and a property added since takes its default. The server render uses the defaults and the client reads storage on hydration.
+- **Properties.** `pickVisible({ priority, labels, ... }, settings)` returns the cells whose property is on; spread it into `IssueRow`.
+  A cell the settings do not list is dropped. `IssueRow` still hides columns by screen width (`sm`, `lg`); a property switched on shows at
+  the widths its column does.
+- **Touch.** The Display button, a header and a property row are 44px tall under a coarse pointer; the Group by control is a native select
+  (the phone's own picker) with 16px text so iOS does not zoom. The menu is a popover held inside the screen (`max-w-[calc(100vw-1rem)]`).
+  Headers keep clear of the left and right safe areas. Nothing depends on hover or right-click.
+- **Words are yours.** `labels` on `DisplayMenu` takes every visible and spoken string (`display`, `groupBy`, `noGrouping`, `properties`,
+  `reset`); group names come from `groupLabel` and `noneLabel`.
+- **Proof.** `node docs/grouped-list/screenshots.mjs` builds the demo and opens it in one headless WebKit page at a time at 390, 320, 768
+  and 1280px, light and dark. It checks no sideways scroll, 44px headers and rows, a tap collapsing a group and a reload keeping it, the
+  menu opening inside the screen, Repo and Label regrouping, collapsed groups kept per grouping, No grouping, Labels off surviving a reload
+  and Reset. WebKit headless does not report `pointer: coarse`, so the 44px and 16px checks on the menu run in a Chromium page with touch
+  emulation at 390px. Writes `docs/assets/grouped-list-<width>-<theme>.png` and `-menu-light.png`. Screenshots:
+  ![390 menu](docs/assets/grouped-list-390-menu-light.png) ![320 dark](docs/assets/grouped-list-320-dark.png)
+  ![1280 light](docs/assets/grouped-list-1280-light.png)
 
 ## Style
 

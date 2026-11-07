@@ -1088,6 +1088,51 @@
       ]
     },
     {
+      "name": "list-group-core",
+      "type": "registry:lib",
+      "files": [
+        {
+          "path": "registry/lib/list-group-core.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "use-display-settings",
+      "type": "registry:hook",
+      "registryDependencies": [
+        "deanjstone/design-system/list-group-core"
+      ],
+      "files": [
+        {
+          "path": "registry/base-nova/hooks/use-display-settings.ts",
+          "type": "registry:hook"
+        }
+      ]
+    },
+    {
+      "name": "grouped-list",
+      "type": "registry:block",
+      "registryDependencies": [
+        "deanjstone/design-system/button",
+        "deanjstone/design-system/checkbox",
+        "deanjstone/design-system/collapsible",
+        "deanjstone/design-system/native-select",
+        "deanjstone/design-system/popover",
+        "deanjstone/design-system/list-group-core"
+      ],
+      "dependencies": [
+        "lucide-react",
+        "cn@^0.5.0"
+      ],
+      "files": [
+        {
+          "path": "registry/base-nova/blocks/grouped-list.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
       "name": "empty-page",
       "type": "registry:block",
       "registryDependencies": [
