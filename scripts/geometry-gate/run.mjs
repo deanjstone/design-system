@@ -9,7 +9,8 @@ import path from "node:path"
 import { fileURLToPath } from "node:url"
 import { chromium } from "playwright-core"
 
-import { CHECK_SCENARIOS, classify, runChecks, runLoginEdges } from "./checks.mjs"
+import { captureScreenshot } from "./capture.mjs"
+import { CHECK_SCENARIOS,classify, runChecks, runLoginEdges } from "./checks.mjs"
 import { collectGeometry, drawOverlay } from "./collect.mjs"
 import { HARNESS_DIST, VIEWS, buildHarness, openScenario, serve } from "./session.mjs"
 import { DISPLAY_RADIUS, SCENARIOS, findViolations, islandBoxes, protectedBandTop } from "./geometry.mjs"
@@ -65,7 +66,7 @@ const screenshot = async (page, scenario, violations, file) => {
     offenders: violations.filter((violation) => violation.scroll === "top").map((violation) => violation.rect),
   })
   fs.mkdirSync(path.dirname(file), { recursive: true })
-  await page.screenshot({ path: file })
+  await captureScreenshot(page, { path: file })
 }
 
 export const runGeometry = async ({ browser, urlFor, scenarios, views, out, screenshots }) => {

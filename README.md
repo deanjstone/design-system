@@ -723,6 +723,13 @@ a 75% root context for the 16px input minimum; and axe `target-size` and
 does not fail the gate, and a `KNOWN` entry that stops firing fails it until the
 entry is deleted, so the list only shrinks.
 
+**Screenshot flake.** Every capture goes through `captureScreenshot`
+(`scripts/geometry-gate/capture.mjs`): it waits for fonts and two frames, then
+retries once, with a logged line, when headless Chromium answers
+`Page.captureScreenshot` with a `Protocol error`
+([design-system#202](https://github.com/deanjstone/design-system/issues/202)).
+Any other error, or a second protocol error, still fails the gate.
+
 **Running it.**
 
 ```bash

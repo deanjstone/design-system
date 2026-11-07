@@ -6,6 +6,7 @@ import { createRequire } from "node:module"
 import fs from "node:fs"
 import path from "node:path"
 
+import { captureScreenshot } from "./capture.mjs"
 import { MODES, THEME_NAMES, contrastRatio } from "../theme/extract-t3.mjs"
 import { CHROME_CEILING, GLASS_BARS, LOGIN_GUTTER, TOUCH_TARGET, focusObscured, glassLabels, inputFontSize, largeText, loginEdges, motion, reflow, rootFont, sampleBackdrop, sidewaysScroll, targetSize } from "./page-checks.mjs"
 import { openScenario } from "./session.mjs"
@@ -60,7 +61,7 @@ export const glassContrast = async (page, scenario, theme, mode) => {
     const labels = await page.evaluate(glassLabels, GLASS_BARS)
     await hide.evaluate((element) => { element.disabled = false })
     await page.evaluate(() => new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve))))
-    const png = (await page.screenshot()).toString("base64")
+    const png = (await captureScreenshot(page)).toString("base64")
     const grounds = await page.evaluate(sampleBackdrop, { png, scale: 3, rects: labels.map((label) => label.rect) })
     labels.forEach((label, at) => {
       const { r, g, b, a } = label.color
