@@ -1,3 +1,15 @@
+# [3.21.0](https://github.com/deanjstone/design-system/compare/v3.20.0...v3.21.0) (2026-11-07)
+
+
+### Bug Fixes
+
+* retry the geometry gate screenshot once on a protocol error ([73c78df](https://github.com/deanjstone/design-system/commit/73c78dfd608ef788cf2a6e63daea81b2c7c9e9ec)), closes [#202](https://github.com/deanjstone/design-system/issues/202)
+
+
+### Features
+
+* list filter-builder, use-filter-state, filter-core and url-state in registry.json ([640fcdf](https://github.com/deanjstone/design-system/commit/640fcdf8bee77368a7c321c17d518e4497f0e70a)), closes [#193](https://github.com/deanjstone/design-system/issues/193) [#193](https://github.com/deanjstone/design-system/issues/193)
+
 # [3.20.0](https://github.com/deanjstone/design-system/compare/v3.19.0...v3.20.0) (2026-11-07)
 
 
