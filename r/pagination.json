@@ -6,7 +6,7 @@
     "lucide-react"
   ],
   "registryDependencies": [
-    "deanjstone/design-system/button#v3.21.0"
+    "deanjstone/design-system/button"
   ],
   "files": [
     {
