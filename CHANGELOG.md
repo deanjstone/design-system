@@ -1,3 +1,15 @@
+# [3.19.0](https://github.com/deanjstone/design-system/compare/v3.18.0...v3.19.0) (2026-11-07)
+
+
+### Bug Fixes
+
+* make the card-list card fill its row so a button card cannot widen the page ([e25ecd3](https://github.com/deanjstone/design-system/commit/e25ecd3b4eaba46b1e055cd9792fdeb603720807)), closes [#188](https://github.com/deanjstone/design-system/issues/188)
+
+
+### Features
+
+* list card-list in registry.json ([51a81a8](https://github.com/deanjstone/design-system/commit/51a81a8ab5dda127172cb0c0bebbf6f1575aea79)), closes [#188](https://github.com/deanjstone/design-system/issues/188) [#188](https://github.com/deanjstone/design-system/issues/188)
+
 # [3.18.0](https://github.com/deanjstone/design-system/compare/v3.17.0...v3.18.0) (2026-11-05)
 
 
