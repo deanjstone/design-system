@@ -7,9 +7,9 @@
     "cn@^0.5.0"
   ],
   "registryDependencies": [
-    "deanjstone/design-system/button",
-    "deanjstone/design-system/calendar",
-    "deanjstone/design-system/popover"
+    "deanjstone/design-system/button#v3.19.0",
+    "deanjstone/design-system/calendar#v3.19.0",
+    "deanjstone/design-system/popover#v3.19.0"
   ],
   "files": [
     {
