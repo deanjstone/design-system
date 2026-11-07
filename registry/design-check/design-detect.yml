@@ -38,7 +38,9 @@ concurrency:
 jobs:
   detect:
     name: Detect
-    runs-on: ${{ fromJSON(vars.CI_RUNS_ON || '"ubuntu-latest"') }}
+    # A hosted runner on purpose: a runner chosen by a repository variable would put
+    # the check back on a self-hosted slot after the next `shadcn add`. Keep it hosted.
+    runs-on: ubuntu-latest
     steps:
       # The script diffs against the base commit, so the history back to it is needed;
       # blob:none keeps that to commits and trees.

@@ -84,6 +84,15 @@ describe("design-detect.yml", () => {
     expect(text).toContain("'scripts/design-rules.mjs'")
   })
 
+  // design-system#186: a consumer's `shadcn add ... design-check` must not undo the
+  // hosted-runner choice the consumers made (homelab#368). A vars.CI_RUNS_ON form
+  // would put the check back on the homelab JIT slot.
+  it("runs on plain ubuntu-latest, never on a runner picked by a repository variable", () => {
+    const text = workflow()
+    expect(text.match(/^\s*runs-on: .*$/gm)).toEqual(["    runs-on: ubuntu-latest"])
+    expect(text).not.toContain("CI_RUNS_ON")
+  })
+
   it("is read-only and scoped to UI files, DESIGN.md and detector config", () => {
     const text = workflow()
     expect(text).toContain("contents: read")

@@ -887,8 +887,12 @@ PR.
 - **`shadcn add` does not set the executable bit**, so the workflow runs
   `bash scripts/design-detect.sh`.
 
-Needs `jq`, `npx` and `node`, all on GitHub-hosted runners. Rolling it out is a
-follow-up issue per consumer.
+Needs `jq`, `npx` and `node`, all on GitHub-hosted runners. The workflow's
+`runs-on` is plain `ubuntu-latest` ([design-system#186](https://github.com/deanjstone/design-system/issues/186)):
+a consumer, private ones included, keeps it on a hosted runner and does not move
+the check to a self-hosted slot. Re-pulling the item restores that line, so a
+consumer that pins the workflow's shape in a test updates the test when it re-pulls.
+Rolling it out is a follow-up issue per consumer.
 
 ## Design tooling
 
