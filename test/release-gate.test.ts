@@ -81,6 +81,30 @@ describe("release.yml follows the shared release pattern", () => {
     expect(testJob).not.toMatch(/continue-on-error/)
   })
 
+  // design-system#197 (trunk-readiness point 3): the job that lands the version bump on
+  // main must have run every step of scripts/check.sh first, not only tests and lint.
+  // The impeccable detector and the r/ drift check are the two it used to leave out.
+  it("runs the design detector and the r/ drift check too: all of scripts/check.sh before Release", () => {
+    const design = read(".github/workflows/design.yml")
+    const check = read("scripts/check.sh")
+    const pin = (name: string) => check.match(new RegExp(`^${name}=(\\S+)$`, "m"))?.[1]
+    expect(testJob).toContain(`npx --yes impeccable@${pin("IMPECCABLE_VERSION")} detect registry/ theme/`)
+    expect(testJob).toContain(`npx --yes shadcn@${pin("SHADCN_VERSION")} build --output ./r`)
+    expect(design).toContain(`npx --yes impeccable@${pin("IMPECCABLE_VERSION")} detect registry/ theme/`)
+  })
+
+  it("fails the test job on a stale or unadded r/, as check.sh does", () => {
+    expect(testJob).toMatch(/git diff --quiet -- r\//)
+    expect(testJob).toMatch(/git ls-files --others --exclude-standard -- r\//)
+    expect(testJob).toMatch(/exit 1/)
+  })
+
+  it("lists the full check in the job name", () => {
+    const name = testJob.match(/^\s+name: (.*)$/m)?.[1] ?? ""
+    expect(name).toContain("design detector")
+    expect(name).toContain("registry drift")
+  })
+
   it("makes Release need the test job: a red test means no version", () => {
     expect(releaseJob).toMatch(/needs: test\s*$/m)
     expect(releaseJob).toMatch(/^\s+name: Release$/m)

@@ -238,7 +238,8 @@ Commits, but only when the owner promotes a `main` commit to the `deploy` branch
 ([docs/deploy-branch.md](docs/deploy-branch.md)). A push to `main` runs checks
 and releases nothing; there is no manual tagging step. The `Release` workflow
 (`.github/workflows/release.yml`) runs on the push to `deploy`: a
-`Test before release (component tests, curve geometry gate, lint)` job first,
+`Test before release (component tests, design detector, registry drift, curve geometry gate, lint)` job first
+(every step of `scripts/check.sh` plus the geometry gate, so nothing reaches `main` that `pnpm check` would reject),
 then `Release`, which needs it, so a red test publishes no version. A `fix:` bumps the
 patch, a `feat:` the minor, and a `BREAKING CHANGE:` footer the major. The
 analyzer here (`conventional-changelog-angular` 8.3.1) does not read a `!` in

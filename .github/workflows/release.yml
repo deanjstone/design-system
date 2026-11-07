@@ -36,13 +36,17 @@ permissions:
   pull-requests: write
 
 jobs:
-  # The same gates as test.yml (component tests, curve geometry gate, lint), all of them
-  # on every promotion: the geometry gate is not skipped by an unchanged-inputs filter
+  # Every step of scripts/check.sh (component tests, design detector, registry drift, lint)
+  # plus the curve geometry gate, all of them on every promotion (design-system#197: the
+  # job that lands the version bump on main runs the full local check first). The
+  # detector and drift steps repeat design.yml and check.sh, and their pins must match
+  # both (test/release-gate.test.ts). The geometry gate is not skipped by an
+  # unchanged-inputs filter here: the geometry gate is not skipped by an unchanged-inputs filter
   # here, because this run is what Release trusts. One job, one install, so a homelab
   # runner that takes one job at a time does it once. Keep the commands in step with
   # test.yml; test/release-gate.test.ts fails when they drift.
   test:
-    name: Test before release (component tests, curve geometry gate, lint)
+    name: Test before release (component tests, design detector, registry drift, curve geometry gate, lint)
     runs-on: ${{ fromJSON(vars.CI_RUNS_ON || '"ubuntu-latest"') }}
     permissions:
       contents: read
@@ -75,6 +79,22 @@ jobs:
 
       - name: Run tests
         run: pnpm test
+
+      # Pinned as in design.yml and scripts/check.sh.
+      - name: Detect UI anti-patterns
+        run: npx --yes impeccable@3.6.1 detect registry/ theme/
+
+      # Rebuild r/ and fail on a stale file or an untracked one, exactly as check.sh does:
+      # git diff alone cannot see an r/ file the build created and nobody added.
+      - name: Rebuild per-item output and fail if it drifted
+        run: |
+          npx --yes shadcn@4.19.1 build --output ./r
+          if ! git diff --quiet -- r/ || [ -n "$(git ls-files --others --exclude-standard -- r/)" ]; then
+            echo "::error::r/ is out of date. Run 'npx shadcn@4.19.1 build --output ./r' and commit the result."
+            git status --short -- r/
+            exit 1
+          fi
+          echo "r/ matches registry.json and the current sources."
 
       # Chromium is downloaded once and reused by every later run (design-system#158),
       # exactly as in test.yml: outside the workspace, never asking for OS packages.

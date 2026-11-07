@@ -11,7 +11,7 @@ in this loop.
 | Event | Workflow | Result |
 |---|---|---|
 | push to `main` | `test.yml`, `design.yml` | tests, the curve geometry gate (only when one of its inputs changed), lint, output drift. Nothing is published. |
-| push to `deploy` | `release.yml` ("Release") | job 1, `Test before release (component tests, curve geometry gate, lint)`, runs those gates on exactly the promoted SHA, the geometry gate every time. Job 2, `Release`, needs it: semantic-release cuts `vX.Y.Z` from the commits promoted since the last tag. |
+| push to `deploy` | `release.yml` ("Release") | job 1, `Test before release (component tests, design detector, registry drift, curve geometry gate, lint)`, runs those gates on exactly the promoted SHA, the geometry gate every time. Job 2, `Release`, needs it: semantic-release cuts `vX.Y.Z` from the commits promoted since the last tag. |
 | `workflow_dispatch` of `release.yml` | `release.yml` | the same two jobs, from `deploy` only: the first step fails a run on any other ref |
 | pull request | `test.yml`, `design.yml` | checks only |
 
