@@ -12,6 +12,8 @@ export default defineConfig({
     alias: {
       "@/lib/links-core": fileURLToPath(new URL("./registry/lib/links-core.ts", import.meta.url)),
       "@/lib/links": fileURLToPath(new URL("./registry/lib/links.ts", import.meta.url)),
+      "@/lib/filter-core": fileURLToPath(new URL("./registry/lib/filter-core.ts", import.meta.url)),
+      "@/lib/url-state": fileURLToPath(new URL("./registry/lib/url-state.ts", import.meta.url)),
       "@/lib/utils": fileURLToPath(new URL("./registry/lib/utils.ts", import.meta.url)),
       "@/lib/link-pill-core": fileURLToPath(
         new URL("./registry/lib/link-pill-core.ts", import.meta.url),
