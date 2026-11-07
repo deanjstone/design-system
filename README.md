@@ -9,25 +9,87 @@ manifest plus the source files it points to. The shadcn CLI reads
 `registry.json` directly from GitHub, resolves the referenced files, and
 copies them into the consuming project. There's no publish step.
 
+## Quick start
+
+For working **in** this repo. To use the registry from an app, skip to
+[Consuming this registry](#consuming-this-registry-from-another-project).
+
+**Prerequisites**
+
+- Node 22 or later (CI runs 22) and pnpm 12.13.0, the `packageManager` pin
+  (`corepack enable` picks it up). npm is not used here.
+- `git`, `bash` and `jq` (the links and design-check scripts use them).
+- Network: `npx` fetches the pinned `shadcn` and `impeccable` on first use.
+- Chromium, only for `pnpm gate:geometry` and the `docs/*` demo checks:
+  `pnpm exec playwright-core install chromium`. The gate can use another
+  browser through `GATE_CHROMIUM`; the demo scripts read the headless shell from
+  `~/.cache/ms-playwright/` (Linux), so they need Playwright's own install.
+
+**Setup**
+
+```bash
+git clone https://github.com/deanjstone/design-system.git && cd design-system
+pnpm install --frozen-lockfile
+```
+
+**Commands**
+
+| Command | Does |
+|---|---|
+| `pnpm test` | Vitest: renders registry sources in jsdom (`test/`) |
+| `pnpm lint` | oxlint, type-aware |
+| `pnpm check` | `test`, impeccable detector, `r/` drift, `lint`: what CI runs, in one command; run before every push |
+| `pnpm build:theme` | Regenerates `theme/tokens.css`, `registry.json` and `r/` from `theme/themes.json` |
+| `npx shadcn@4.19.1 build --output ./r` | Regenerates `r/` alone after a source or `registry.json` edit |
+| `pnpm gate:geometry` | Browser check of safe areas and curves; see [Curve-geometry gate](#curve-geometry-gate) |
+| `node docs/<demo>/smoke-check.mjs` | Builds a demo and checks it in headless Chromium: `data`, `form-inputs`, `layout`, `page-transition`; `docs/menus/keyboard-check.mjs` and `docs/graph-3d/{measure,inspect}.mjs` likewise |
+
+There is nothing to run as a server: the registry is files. A demo script builds
+and serves its page for the length of its run and then stops.
+
+**Deploy.** Nothing is deployed to a host. A new version is published when the
+owner promotes a `main` commit to the `deploy` branch (`scripts/promote.sh <sha>`,
+or Approve on the ops hub card), which runs the `Release` workflow: tests first, then a
+`vX.Y.Z` tag, GitHub release and CHANGELOG entry. A push to `main` publishes
+nothing. Full flow, rollback and first-time setup: [docs/deploy-branch.md](docs/deploy-branch.md);
+see [Versioning](#versioning).
+
+**Configuration.** The registry itself reads no environment. These are optional
+overrides for the scripts (names only; no value is stored in the repo):
+
+| Variable | Read by | Meaning |
+|---|---|---|
+| `GATE_CHROMIUM` | `pnpm gate:geometry` | Path to a Chromium when Playwright's is not installed |
+| `GATE_REGISTRY`, `GATE_THEME` | `pnpm gate:geometry` | Check another checkout's `registry/` or `theme/` |
+| `GATE_OUT` | `pnpm gate:geometry` | Where the harness page is built (default `node_modules/.cache/geometry-gate/dist`); screenshots always go to `geometry-gate-out/` |
+| `PROMOTE_REMOTE` | `scripts/promote.sh` | Remote to push `deploy` to (default `origin`) |
+| `LINK_CHECK_MODE` | `scripts/link-check.sh` | `report` (default) or `block` |
+| `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID` | `scripts/links/cf-drift.mjs` | Required; read-only token. `CLOUDFLARE_ZONE_ID` and `CLOUDFLARE_TUNNEL_ID` are optional |
+
+**Where to read next:** [DESIGN.md](DESIGN.md) (tokens, themes, blocks),
+[GLOSSARY.md](GLOSSARY.md), [CONTRIBUTING.md](CONTRIBUTING.md) (commit types),
+[docs/adr/](docs/adr/), [docs/deploy-branch.md](docs/deploy-branch.md),
+[docs/graph-3d/README.md](docs/graph-3d/README.md), and `AGENTS.md` for agents.
+
 ## Consumers
 
 This list is how a registry change is checked for downstream breakage, so keep
 it true. Pins are the `@design-system` alias version in each repo's
-`components.json` on `main`, read on 2026-10-29. The alias is where the next
+`components.json` on `main`, read on 2026-11-07. The alias is where the next
 `add` will pull from; the code already in the repo is whatever was last pulled.
 
 | Consumer | Path | Pin | Status |
 |---|---|---|---|
-| `argus` | `apps/email` | v2.5.3 | consuming |
-| `argus` | `apps/ops-hub-web` | v2.8.0 | consuming ([argus#728](https://github.com/deanjstone/argus/issues/728)) |
-| `argus` | `apps/watchtower` | v2.7.0 | consuming ([argus#674](https://github.com/deanjstone/argus/issues/674)) |
-| `homelab` | `services/scan-app/web` | v2.8.0 | consuming ([homelab#181](https://github.com/deanjstone/homelab/issues/181)) |
-| `atto1` | repo root | v2.6.0 | consuming |
-| `quick-capture` | `web` | v2.6.0 | consuming (split out of `homelab` `services/quick-capture/web` in [homelab#228](https://github.com/deanjstone/homelab/issues/228)) |
-| `myargus` | `apps/knowledge`, `apps/reader` | v2.7.0 | consuming ([myargus#296](https://github.com/deanjstone/myargus/issues/296)) |
-| `myargus` | `apps/briefings` | v2.4.1 | consuming |
-| `myargus` | `apps/shell` | v3.0.2 | consuming |
-| `myargus` | `apps/stockade` | v2.7.0 | consuming ([myargus#295](https://github.com/deanjstone/myargus/issues/295)) |
+| `argus` | `apps/email` | v3.18.0 | consuming |
+| `argus` | `apps/ops-hub-web` | v3.18.0 | consuming ([argus#728](https://github.com/deanjstone/argus/issues/728)) |
+| `argus` | `apps/watchtower` | v3.18.0 | consuming ([argus#674](https://github.com/deanjstone/argus/issues/674)) |
+| `homelab` | `services/scan-app/web` | v3.1.0 | consuming ([homelab#181](https://github.com/deanjstone/homelab/issues/181)) |
+| `atto1` | repo root | v3.1.0 | consuming |
+| `quick-capture` | `web` | v3.1.0 | consuming (split out of `homelab` `services/quick-capture/web` in [homelab#228](https://github.com/deanjstone/homelab/issues/228)) |
+| `myargus` | `apps/knowledge`, `apps/reader` | v3.18.0 | consuming ([myargus#296](https://github.com/deanjstone/myargus/issues/296)) |
+| `myargus` | `apps/briefings` | v3.18.0 | consuming |
+| `myargus` | `apps/shell` | v3.18.0 | consuming |
+| `myargus` | `apps/stockade` | v3.18.0 | consuming ([myargus#295](https://github.com/deanjstone/myargus/issues/295)) |
 | `slate-reader` | `apps/server` | v2.7.0 (vendored) | **LinkPill only**: `link-pill-core` and `link-pill-html` are copied in; no `@design-system` alias. The web UI is `apps/client` (Preact, no registry) ([slate-reader#17](https://github.com/deanjstone/slate-reader/issues/17)) |
 | `budget` | `web` | none yet | **pending**: forked `components/ui`, no `components.json` ([budget#271](https://github.com/deanjstone/budget/issues/271)) |
 
@@ -46,7 +108,7 @@ registry/
   lib/highlighter.tsx       Shiki loader behind use-highlighted-code
   lib/graph-3d-*.ts         graph-3d prop mapping and three.js engine (lazy-loaded)
   lib/page-transition-core.ts  theme tokens to glimm band colours (page-transition, staged: not in registry.json yet)
-  base-nova/ui/               46 base-nova style components (Base UI, plus link-pill and graph-3d)
+  base-nova/ui/               66 listed base-nova components (Base UI, plus link-pill, graph-3d, chart, data-table) and the unlisted page-transition
   base-nova/hooks/            use-mobile (pulled by sidebar), use-highlighted-code (pulled by code-block), use-theme-preference
   base-nova/blocks/           v3 layout blocks: app-shell, app-switcher, page-header, empty-page, settings-page, login
   design-check/             scripts and workflow of the design-check item (CI, not UI)
@@ -56,6 +118,10 @@ registry/
 r/                         generated per-item output — what the r/ alias resolves
 theme/tokens.css            same tokens as the "theme" item, as plain CSS
 theme/themes.json           the six T3 themes (light + dark) behind both; see DESIGN.md Themes
+test/                      Vitest suites, one per item, plus ones that pin the scripts and workflows
+docs/                      ADRs, deploy-branch.md, and one demo plus browser check per feature area
+scripts/geometry-gate/     the curve-geometry gate behind pnpm gate:geometry
+scripts/release/           semantic-release plugin and helpers; scripts/promote.sh pushes deploy
 scripts/theme/              extract-t3.mjs reads T3's sheet; build.mjs writes tokens.css and registry.json
 scripts/links/              registry.mjs validates links.json, generate.mjs writes lib/links.ts, cf-drift.mjs diffs Cloudflare
 ```
@@ -406,7 +472,9 @@ adding the items.
 
    Pin a pre-1.0 npm dependency to its minor, e.g. `@shadcn/react@^0.3.1`,
    so a re-run `shadcn add` cannot pull a breaking release.
-3. Commit on a feature branch, open a PR — see `.claude/SYSTEM.md`.
+3. Add its test under `test/`, run `pnpm check`, and commit straight to `main` in small
+   Conventional Commits (this is a trunk repo: no branch, no PR). `main` is not a release:
+   the owner promotes it to `deploy` ([docs/deploy-branch.md](docs/deploy-branch.md)).
 
 ## Themes
 
@@ -445,15 +513,17 @@ alias stays where it is until its owner moves it.
 ## Tests
 
 `pnpm install && pnpm test` renders registry sources in jsdom with Vitest
-(`test/`); the `Test` workflow runs it on every PR and every push to `main`, and the `Release` workflow's `Test before release` job runs it on every promotion. The dev dependencies
-exist only for this — nothing here is built or published.
+(`test/`); the `Test` workflow runs it, `pnpm lint` and the conditional geometry gate on every PR
+and every push to `main`, and the `Release` workflow's `Test before release` job runs all three on every
+promotion. The dev dependencies exist only for the checks and demos — nothing here is built or published.
 
-**Before a push: `pnpm check`.** It runs the three CI checks locally, in order:
-`pnpm test`, the pinned impeccable detector over `registry/` and `theme/`, and
-a `shadcn build` that fails if `r/` changed (or gained an untracked file).
+**Before a push: `pnpm check`.** It runs the four CI checks locally, in order:
+`pnpm test`, the pinned impeccable detector over `registry/` and `theme/`, a
+`shadcn build` that fails if `r/` changed (or gained an untracked file), and
+`pnpm lint` (oxlint).
 Commit first, so `r/` is judged as it will be pushed. A pass prints one line,
 `check: pass <short sha>`; paste it into the issue. A failure names the step
-(`FAIL at step 3/3 ...`) and exits non-zero. A stale `r/` is fixed by
+(`FAIL at step 3/4 ...`) and exits non-zero. A stale `r/` is fixed by
 regenerating it (`npx shadcn@4.19.1 build --output ./r`) and committing the
 result, never by hand-merging. No git hook runs it: it is a step you run, and CI
 is the backstop. Its pins live in `scripts/check.sh`; `test/check-script.test.ts`
@@ -954,21 +1024,24 @@ await transition(() => setView("billing"), { direction: "rtl", sweepMs: 700 })
   PWA/Electron app-shell mechanics (`pt-safe`/`pb-safe`/`pl-safe`/`pr-safe`,
   `--app-titlebar-*` topbar geometry, the `.wco` variant, `.drag-region`) —
   see [DESIGN.md](DESIGN.md#app-shell).
-- **46 components**, two hooks and the `highlighter` lib, all `base-nova` style and Base UI-based, pulled the same
+- **66 UI items**, three hooks and the `highlighter` lib, all `base-nova` style and Base UI-based, pulled the same
   way as `theme`/`button` above:
-  - *Controls* — `button`, `input`, `textarea`, `select`, `checkbox`,
-    `switch`, `slider`, `label`
+  - *Controls* — `button`, `input`, `textarea`, `select`, `native-select`,
+    `combobox`, `checkbox`, `radio-group`, `switch`, `slider`, `input-otp`,
+    `calendar`, `date-picker`, `label`, `kbd`
   - *Surfaces and overlays* — `card`, `dialog`, `alert-dialog`, `sheet`,
-    `drawer`, `popover`, `dropdown-menu`, `collapsible`, `scroll-area`
-  - *Display and feedback* — `badge`, `avatar`, `progress`, `skeleton`,
+    `drawer`, `popover`, `hover-card`, `dropdown-menu`, `context-menu`,
+    `collapsible`, `accordion`, `scroll-area`, `resizable`
+  - *Display and feedback* — `badge`, `alert`, `avatar`, `progress`, `skeleton`,
     `separator`, `tabs`, `table`, `sonner`, `spinner`, `empty`, `tooltip`,
+    `aspect-ratio`, `carousel`, `link-pill` (see [LinkPill](#linkpill)),
     `graph-3d` (a 3D force-graph orb; see [docs/graph-3d](docs/graph-3d/README.md))
   - *Conversation* — `message`, `bubble`, `message-scroller`, `marker`,
     `attachment`
   - *Agent turns* — `trace`, `code-block`, `questionnaire` (see
     [Agent-interface items](#agent-interface-items))
   - *Navigation and lists* — `sidebar` (with the `use-mobile` hook), `item`,
-    `breadcrumb`, `command`
+    `breadcrumb`, `command`, `menubar`, `navigation-menu`, `pagination`
   - *Forms and grouping* — `field`, `input-group`, `toggle`, `toggle-group`,
     `button-group`
   - *Data* — `chart` (recharts, loaded lazily) and `data-table`; see
@@ -977,8 +1050,11 @@ await transition(() => setView("billing"), { direction: "rtl", sweepMs: 700 })
   `tooltip` and `sidebar` need a `TooltipProvider` at the app root.
   `message-scroller` and `questionnaire` add the `@shadcn/react` package;
   `code-block` adds `shiki` (through `use-highlighted-code`); `command` adds `cmdk`;
+  `calendar` adds `react-day-picker` and `date-fns`; `carousel` adds `embla-carousel-react`;
+  `input-otp` adds `input-otp`; `resizable` adds `react-resizable-panels`;
   `graph-3d` adds `three` and `d3-force-3d` (through `graph-3d-engine`, loaded lazily).
 
-  The set is bounded to what the consuming apps actually use — 46 of shadcn's
-  ~65 — rather than shipping the full catalogue. Adding another is mechanical,
-  so ask rather than vendoring a copy locally.
+  The set grows when a consuming app needs an item, not by shipping the whole
+  shadcn catalogue. Adding another is mechanical, so ask rather than vendoring a
+  copy locally. `registry.json` is the list of record; an item missing from it is not
+  published.
