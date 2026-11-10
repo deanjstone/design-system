@@ -4,7 +4,7 @@
   "title": "Aspekta and Azeret Mono font option",
   "description": "An opt-in font option: Aspekta (UI) and Azeret Mono (code), applied where <html data-font=\"aspekta\"> is set and absent otherwise. Ships the stylesheet, an install script that downloads the original SIL OFL font files from their own repositories and checks their sha256, and the licence notices. The font binaries are not in the item (shadcn reads files as text).",
   "registryDependencies": [
-    "deanjstone/design-system/font-preference"
+    "deanjstone/design-system/font-preference#v3.23.0"
   ],
   "files": [
     {
