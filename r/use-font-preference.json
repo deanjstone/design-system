@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "use-font-preference",
+  "registryDependencies": [
+    "deanjstone/design-system/font-preference"
+  ],
+  "files": [
+    {
+      "path": "registry/base-nova/hooks/use-font-preference.ts",
+      "content": "import * as React from \"react\"\n\nimport {\n  DEFAULT_FONT,\n  applyFont,\n  readFont,\n  setFont as storeFont,\n  type Font,\n} from \"@/lib/font-preference\"\n\ntype Options = {\n  /** Parent domain the cookie is shared across: pass COOKIE_DOMAIN from the links registry. Host-only when omitted. */\n  cookieDomain?: string\n}\n\n// The visitor's font choice as React state. The stored choice is read after mount, so the\n// first render matches the server's; `fontInitScript()` in <head> has already applied it.\nexport function useFontPreference({ cookieDomain }: Options = {}) {\n  const [font, setStored] = React.useState<Font>(DEFAULT_FONT)\n\n  React.useEffect(() => {\n    const stored = readFont()\n    setStored(stored)\n    applyFont(stored)\n  }, [])\n\n  const setFont = React.useCallback(\n    (next: Font) => {\n      setStored(next)\n      storeFont(next, { cookieDomain })\n    },\n    [cookieDomain],\n  )\n\n  return { font, setFont }\n}\n",
+      "type": "registry:hook"
+    }
+  ],
+  "type": "registry:hook"
+}

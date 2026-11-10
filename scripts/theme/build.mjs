@@ -14,6 +14,7 @@
 import { readFileSync, writeFileSync } from "node:fs"
 import { fileURLToPath } from "node:url"
 
+import { dsSurfaceCss } from "./ds-theme.mjs"
 import { DERIVED_TOKENS, MODES, THEME_NAMES, TOKEN_MAP } from "./extract-t3.mjs"
 import { STATUS_TOKENS } from "./status.mjs"
 
@@ -101,6 +102,25 @@ export function applyToRegistry(registry, themes) {
   return next
 }
 
+// The opt-in DS theme is its own item, so the `theme` item (and every page that does not
+// install this one) is exactly what it was. It lands straight after `theme` in the manifest.
+export function applyDsTheme(registry) {
+  const next = structuredClone(registry)
+  const item = {
+    name: "theme-ds",
+    type: "registry:theme",
+    title: "DS theme",
+    description:
+      "An opt-in look for the theme item: tinted-neutral scale, hairline edges, a soft sheen on raised surfaces, squircle corners and recessed wells, in light and dark. Choose it with data-theme=\"ds\" (theme-preference lists it in ALL_THEMES); every rule is scoped to that attribute, so a page that never sets it is unchanged.",
+    registryDependencies: ["deanjstone/design-system/theme"],
+    css: dsSurfaceCss(),
+  }
+  const existing = next.items.findIndex((entry) => entry.name === item.name)
+  if (existing !== -1) next.items[existing] = item
+  else next.items.splice(next.items.findIndex((entry) => entry.name === "theme") + 1, 0, item)
+  return next
+}
+
 function readSha() {
   const source = JSON.parse(readFileSync(fileURLToPath(new URL("../../theme/themes.json", import.meta.url)), "utf8"))
   return source.source.sha
@@ -113,7 +133,7 @@ const main = () => {
   writeFileSync(tokensPath, applyToTokensCss(readFileSync(tokensPath, "utf8"), themes, source.sha))
   const registryPath = path("../../registry.json")
   const registry = JSON.parse(readFileSync(registryPath, "utf8"))
-  writeFileSync(registryPath, `${JSON.stringify(applyToRegistry(registry, themes), null, 2)}\n`)
+  writeFileSync(registryPath, `${JSON.stringify(applyDsTheme(applyToRegistry(registry, themes)), null, 2)}\n`)
   console.log("wrote theme/tokens.css and registry.json; now run: npx shadcn build --output ./r")
 }
 

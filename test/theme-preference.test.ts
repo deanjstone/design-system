@@ -1,10 +1,12 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
 
 import {
+  ALL_THEMES,
   COOKIE_NAME,
   DEFAULT_MODE,
   DEFAULT_THEME,
   MODES,
+  OPT_IN_THEMES,
   THEMES,
   applyPreference,
   parsePreference,
@@ -263,5 +265,40 @@ describe("themeInitScript", () => {
   it("is plain ES5 so the oldest consumers can run it", () => {
     const script = themeInitScript()
     expect(script).not.toMatch(/=>|\bconst\b|\blet\b|`/)
+  })
+})
+
+describe("opt-in themes", () => {
+  it("keeps the six T3 themes as the default list and adds DS as an opt-in seventh", () => {
+    expect(THEMES).toEqual(["default", "t3-chat", "grove", "ocean", "ember", "iris"])
+    expect(OPT_IN_THEMES).toEqual(["ds"])
+    expect(ALL_THEMES).toEqual([...THEMES, "ds"])
+    expect(DEFAULT_THEME).toBe("ocean")
+  })
+
+  it.each(MODES)("round-trips ds %s", (mode) => {
+    expect(parsePreference(serializePreference({ theme: "ds", mode }))).toEqual({ theme: "ds", mode })
+  })
+
+  it("applies data-theme=ds and the dark class", () => {
+    const root = document.createElement("html")
+    applyPreference({ theme: "ds", mode: "dark" }, { root, prefersDark: false })
+    expect(root.getAttribute("data-theme")).toBe("ds")
+    expect(root.classList.contains("dark")).toBe(true)
+  })
+
+  it.each([true, false])("lets the init script apply ds (system dark=%s)", (dark) => {
+    const root = document.createElement("html")
+    new Function("document", "localStorage", "window", themeInitScript())(
+      { cookie: `${COOKIE_NAME}=ds.system`, documentElement: root },
+      { getItem: () => null },
+      { matchMedia: () => ({ matches: dark }) },
+    )
+    expect(root.getAttribute("data-theme")).toBe("ds")
+    expect(root.classList.contains("dark")).toBe(dark)
+  })
+
+  it("still falls back to Ocean for a name that is not a theme", () => {
+    expect(parsePreference("ds2.dark")).toEqual({ theme: "ocean", mode: "dark" })
   })
 })

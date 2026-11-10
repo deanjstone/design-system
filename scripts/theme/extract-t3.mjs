@@ -102,7 +102,7 @@ const toHex = (rgb) => `#${rgb.map((v) => Math.round(v).toString(16).padStart(2,
 
 // Mixes `color` toward `target` one percent at a time and stops at the first mix
 // that clears `minimum` against every colour in `against`.
-const liftContrast = (color, target, against, minimum) => {
+export const liftContrast = (color, target, against, minimum) => {
   const from = channels(color)
   const to = channels(target)
   for (let percent = 0; percent <= 100; percent += 1) {

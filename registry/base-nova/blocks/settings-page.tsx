@@ -6,15 +6,24 @@ import { cn } from "cn"
 
 import { PageHeader } from "@/components/page-header"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
+import { FONTS, type Font } from "@/lib/font-preference"
 import { THEMES, type ModePreference, type Theme, type ThemePreference } from "@/lib/theme-preference"
 
-const THEME_LABELS: Record<Theme, string> = {
+const THEME_LABELS: Record<(typeof THEMES)[number], string> = {
   default: "Default",
   "t3-chat": "T3 Chat",
   grove: "Grove",
   ocean: "Ocean",
   ember: "Ember",
   iris: "Iris",
+}
+
+// The six above plus the opt-in themes; an app lists the latter by passing `themes={ALL_THEMES}`.
+const ALL_THEME_LABELS: Record<Theme, string> = { ...THEME_LABELS, ds: "DS" }
+
+const FONT_LABELS: Record<Font, string> = {
+  default: "Default",
+  aspekta: "Aspekta + Azeret Mono",
 }
 
 const MODE_OPTIONS = [
@@ -85,11 +94,24 @@ type AppearanceSectionProps = {
   preference: ThemePreference
   onThemeChange: (theme: Theme) => void
   onModeChange: (mode: ModePreference) => void
+  /** The themes to list; the six T3 themes when omitted. Pass `ALL_THEMES` to offer DS (the `theme-ds` item). */
+  themes?: readonly Theme[]
+  /** With `onFontChange`, adds the Font group (Default, Aspekta + Azeret Mono; the `font-aspekta` item). */
+  font?: Font
+  onFontChange?: (font: Font) => void
 }
 
-// The settings page's Appearance section: pick the theme, and Light / Dark / System.
-// Controlled; `useThemePreference` supplies all three props.
-function AppearanceSection({ preference, onThemeChange, onModeChange }: AppearanceSectionProps) {
+// The settings page's Appearance section: pick the theme, Light / Dark / System and,
+// where the app opts in, the font. Controlled; `useThemePreference` supplies the first
+// three props and `useFontPreference` the font ones.
+function AppearanceSection({
+  preference,
+  onThemeChange,
+  onModeChange,
+  themes = THEMES,
+  font,
+  onFontChange,
+}: AppearanceSectionProps) {
   return (
     <SettingsSection
       title="Appearance"
@@ -108,14 +130,14 @@ function AppearanceSection({ preference, onThemeChange, onModeChange }: Appearan
             if (next && next !== preference.theme) onThemeChange(next)
           }}
         >
-          {THEMES.map((theme) => (
+          {themes.map((theme) => (
             <ToggleGroupItem
               key={theme}
               value={theme}
               className="min-h-11 w-full justify-start gap-3 px-3 data-[pressed]:bg-muted"
             >
               <ThemeSwatch theme={theme} />
-              {THEME_LABELS[theme]}
+              {ALL_THEME_LABELS[theme]}
               {theme === preference.theme ? <CheckIcon aria-hidden="true" className="ml-auto text-primary-text" /> : null}
             </ToggleGroupItem>
           ))}
@@ -142,9 +164,37 @@ function AppearanceSection({ preference, onThemeChange, onModeChange }: Appearan
           ))}
         </ToggleGroup>
       </div>
+      {font && onFontChange ? (
+        <div className="flex flex-col gap-2">
+          <span className="text-sm font-medium">Font</span>
+          <ToggleGroup
+            aria-label="Font"
+            orientation="vertical"
+            spacing={1}
+            className="w-full"
+            value={[font]}
+            onValueChange={(value) => {
+              const next = value[0] as Font | undefined
+              if (next && next !== font) onFontChange(next)
+            }}
+          >
+            {FONTS.map((option) => (
+              <ToggleGroupItem
+                key={option}
+                value={option}
+                className="min-h-11 w-full justify-start gap-3 px-3 data-[pressed]:bg-muted"
+              >
+                {/* Scoping data-font draws the label in its own face. */}
+                <span {...(option === "default" ? {} : { "data-font": option })}>{FONT_LABELS[option]}</span>
+                {option === font ? <CheckIcon aria-hidden="true" className="ml-auto text-primary-text" /> : null}
+              </ToggleGroupItem>
+            ))}
+          </ToggleGroup>
+        </div>
+      ) : null}
     </SettingsSection>
   )
 }
 
-export { AppearanceSection, SettingsPage, SettingsSection, THEME_LABELS }
+export { ALL_THEME_LABELS, AppearanceSection, FONT_LABELS, SettingsPage, SettingsSection, THEME_LABELS }
 export type { AppearanceSectionProps, SettingsPageProps, SettingsSectionProps }

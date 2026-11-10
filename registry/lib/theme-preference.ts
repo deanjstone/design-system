@@ -1,4 +1,8 @@
-// The visitor's theme choice: which of the six themes, and Light / Dark / System.
+// The visitor's theme choice: which theme, and Light / Dark / System.
+//
+// Six themes are always offered. DS is a seventh that an app opts into (it ships as the
+// `theme-ds` item and is listed by passing ALL_THEMES to the settings page), so the
+// default look and the default list are the six they always were.
 //
 // It is stored per device, as a cookie that apps on one parent domain share, with
 // localStorage as the fallback for a host outside that domain. It is applied to
@@ -6,9 +10,11 @@
 // the theme item's tokens.css). Ocean following the system is the default.
 
 export const THEMES = ["default", "t3-chat", "grove", "ocean", "ember", "iris"] as const
+export const OPT_IN_THEMES = ["ds"] as const
+export const ALL_THEMES = [...THEMES, ...OPT_IN_THEMES] as const
 export const MODES = ["light", "dark", "system"] as const
 
-export type Theme = (typeof THEMES)[number]
+export type Theme = (typeof ALL_THEMES)[number]
 export type ModePreference = (typeof MODES)[number]
 export type ThemePreference = { theme: Theme; mode: ModePreference }
 
@@ -43,7 +49,7 @@ export type ApplyOptions = {
   prefersDark: boolean
 }
 
-const isTheme = (value: string): value is Theme => (THEMES as readonly string[]).includes(value)
+const isTheme = (value: string): value is Theme => (ALL_THEMES as readonly string[]).includes(value)
 const isMode = (value: string): value is ModePreference => (MODES as readonly string[]).includes(value)
 
 export const serializePreference = ({ theme, mode }: ThemePreference) => `${theme}.${mode}`
@@ -69,18 +75,18 @@ function defaultStorage(): StorageLike | null {
   }
 }
 
-function readStored(storage: StorageLike | null): string | null {
+function readStored(name: string, storage: StorageLike | null): string | null {
   if (!storage) return null
   try {
-    return storage.getItem(COOKIE_NAME)
+    return storage.getItem(name)
   } catch {
     return null
   }
 }
 
-function readCookie(cookies: CookieJar | undefined): string | null {
+function readCookie(name: string, cookies: CookieJar | undefined): string | null {
   if (!cookies) return null
-  const prefix = `${COOKIE_NAME}=`
+  const prefix = `${name}=`
   const entry = cookies.cookie.split("; ").find((candidate) => candidate.startsWith(prefix))
   if (!entry) return null
   try {
@@ -90,14 +96,22 @@ function readCookie(cookies: CookieJar | undefined): string | null {
   }
 }
 
-export function readPreference({ cookies = defaultCookies(), storage = defaultStorage() }: PreferenceEnvironment = {}) {
-  return parsePreference(readCookie(cookies) ?? readStored(storage))
+/** The raw value stored under `name`: the cookie first, then localStorage. Shared with font-preference. */
+export function readStoredValue(
+  name: string,
+  { cookies = defaultCookies(), storage = defaultStorage() }: PreferenceEnvironment = {},
+) {
+  return readCookie(name, cookies) ?? readStored(name, storage)
 }
 
-// The cookie is the shared copy; localStorage is written too, so a host outside
-// the cookie domain (where the browser drops the cookie) still remembers the choice.
-export function writePreference(
-  preference: ThemePreference,
+/**
+ * The cookie is the shared copy; localStorage is written too, so a host outside the
+ * cookie domain (where the browser drops the cookie) still remembers the choice.
+ * Shared with font-preference.
+ */
+export function writeStoredValue(
+  name: string,
+  value: string,
   {
     cookies = defaultCookies(),
     storage = defaultStorage(),
@@ -105,10 +119,9 @@ export function writePreference(
     secure = typeof location !== "undefined" && location.protocol === "https:",
   }: WriteOptions = {},
 ) {
-  const value = serializePreference(preference)
   if (cookies) {
     const attributes = [
-      `${COOKIE_NAME}=${encodeURIComponent(value)}`,
+      `${name}=${encodeURIComponent(value)}`,
       ...(cookieDomain ? [`Domain=${cookieDomain}`] : []),
       "Path=/",
       `Max-Age=${COOKIE_MAX_AGE_SECONDS}`,
@@ -119,11 +132,19 @@ export function writePreference(
   }
   if (storage) {
     try {
-      storage.setItem(COOKIE_NAME, value)
+      storage.setItem(name, value)
     } catch {
       // Storage full or blocked: the cookie above still carries the choice.
     }
   }
+}
+
+export function readPreference(environment: PreferenceEnvironment = {}) {
+  return parsePreference(readStoredValue(COOKIE_NAME, environment))
+}
+
+export function writePreference(preference: ThemePreference, options: WriteOptions = {}) {
+  writeStoredValue(COOKIE_NAME, serializePreference(preference), options)
 }
 
 export const resolveMode = (mode: ModePreference, prefersDark: boolean): "light" | "dark" =>
@@ -167,7 +188,7 @@ export function watchSystemMode(
  */
 export const themeInitScript = () =>
   `(function(){var d=document,r=d.documentElement,n=${JSON.stringify(COOKIE_NAME)},` +
-  `themes=${JSON.stringify(THEMES)},modes=${JSON.stringify(MODES)},raw=null;` +
+  `themes=${JSON.stringify(ALL_THEMES)},modes=${JSON.stringify(MODES)},raw=null;` +
   `try{var m=d.cookie.match(new RegExp("(?:^|; )"+n+"=([^;]*)"));if(m)raw=decodeURIComponent(m[1])}catch(e){raw=null}` +
   `if(raw===null){try{raw=localStorage.getItem(n)}catch(e){raw=null}}` +
   `var p=(raw||"").split("."),t=p.length===2&&themes.indexOf(p[0])>-1?p[0]:${JSON.stringify(DEFAULT_THEME)},` +

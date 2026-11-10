@@ -1,0 +1,121 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "theme-ds",
+  "title": "DS theme",
+  "description": "An opt-in look for the theme item: tinted-neutral scale, hairline edges, a soft sheen on raised surfaces, squircle corners and recessed wells, in light and dark. Choose it with data-theme=\"ds\" (theme-preference lists it in ALL_THEMES); every rule is scoped to that attribute, so a page that never sets it is unchanged.",
+  "registryDependencies": [
+    "deanjstone/design-system/theme"
+  ],
+  "css": {
+    "[data-theme=\"ds\"]": {
+      "--background": "#f3f4f7",
+      "--card": "#fcfcfe",
+      "--popover": "#fefeff",
+      "--muted": "#e8e9ed",
+      "--secondary": "#e4e6ea",
+      "--accent": "#e0e3e8",
+      "--border": "#d4d6da",
+      "--foreground": "#14161b",
+      "--muted-foreground": "#545860",
+      "--secondary-foreground": "#1d1f24",
+      "--primary": "#2858cd",
+      "--primary-foreground": "#f9fafd",
+      "--input": "#7d8086",
+      "--ring": "#3c6ad3",
+      "--destructive": "#b7191c",
+      "--card-foreground": "#14161b",
+      "--popover-foreground": "#14161b",
+      "--accent-foreground": "#14161b",
+      "--destructive-foreground": "#f3f4f7",
+      "--primary-text": "#2858cd",
+      "--chart-2": "#009966",
+      "--chart-3": "#bb4d00",
+      "--chart-4": "#4f39f6",
+      "--chart-5": "#155dfc",
+      "--chart-1": "#2858cd",
+      "--sidebar": "#f3f4f7",
+      "--sidebar-foreground": "#14161b",
+      "--sidebar-primary": "#2858cd",
+      "--sidebar-primary-foreground": "#f9fafd",
+      "--sidebar-accent": "#e0e3e8",
+      "--sidebar-accent-foreground": "#14161b",
+      "--sidebar-border": "#d4d6da",
+      "--sidebar-ring": "#3c6ad3",
+      "--glass-surface": "rgba(252, 252, 254, 0.78)",
+      "--glass-fallback": "#fcfcfe",
+      "--radius": "0.75rem",
+      "color-scheme": "light",
+      "--ds-sheen": "oklch(1 0 0 / 70%)",
+      "--ds-lit-edge": "oklch(1 0 0 / 90%)",
+      "--ds-well": "oklch(0.25 0.03 264 / 10%)"
+    },
+    "[data-theme=\"ds\"] [data-slot=\"card\"],\n[data-theme=\"ds\"] [data-slot=\"popover-content\"],\n[data-theme=\"ds\"] [data-slot=\"dropdown-menu-content\"],\n[data-theme=\"ds\"] [data-slot=\"select-content\"],\n[data-theme=\"ds\"] [data-slot=\"combobox-content\"],\n[data-theme=\"ds\"] [data-slot=\"dialog-content\"],\n[data-theme=\"ds\"] [data-slot=\"alert-dialog-content\"],\n[data-theme=\"ds\"] [data-slot=\"sheet-content\"],\n[data-theme=\"ds\"] [data-slot=\"hover-card-content\"]": {
+      "background-image": "linear-gradient(to bottom, var(--ds-sheen), transparent 55%)",
+      "box-shadow": "inset 0 1px 0 var(--ds-lit-edge), 0 0 0 1px var(--border)",
+      "border-color": "transparent"
+    },
+    "[data-theme=\"ds\"] [data-slot=\"input\"],\n[data-theme=\"ds\"] [data-slot=\"textarea\"],\n[data-theme=\"ds\"] [data-slot=\"select-trigger\"],\n[data-theme=\"ds\"] [data-slot=\"input-group\"],\n[data-theme=\"ds\"] [data-slot=\"tabs-list\"]": {
+      "background-color": "var(--muted)",
+      "box-shadow": "inset 0 1px 2px var(--ds-well), 0 0 0 1px var(--border)",
+      "border-color": "transparent"
+    },
+    "[data-theme=\"ds\"].dark": {
+      "--background": "#0c0d0f",
+      "--card": "#16171a",
+      "--popover": "#1c1e21",
+      "--muted": "#07080a",
+      "--secondary": "#24262a",
+      "--accent": "#282a2f",
+      "--border": "#2c2e32",
+      "--foreground": "#eff0f3",
+      "--muted-foreground": "#a1a5ac",
+      "--secondary-foreground": "#e2e5e9",
+      "--primary": "#6e9bfb",
+      "--primary-foreground": "#0b0d12",
+      "--input": "#6e7279",
+      "--ring": "#6b95ee",
+      "--destructive": "#fd736d",
+      "--card-foreground": "#eff0f3",
+      "--popover-foreground": "#eff0f3",
+      "--accent-foreground": "#eff0f3",
+      "--destructive-foreground": "#0c0d0f",
+      "--primary-text": "#6e9bfb",
+      "--chart-2": "#00d492",
+      "--chart-3": "#ffb900",
+      "--chart-4": "#a3b3ff",
+      "--chart-5": "#51a2ff",
+      "--chart-1": "#6e9bfb",
+      "--sidebar": "#0c0d0f",
+      "--sidebar-foreground": "#eff0f3",
+      "--sidebar-primary": "#6e9bfb",
+      "--sidebar-primary-foreground": "#0b0d12",
+      "--sidebar-accent": "#282a2f",
+      "--sidebar-accent-foreground": "#eff0f3",
+      "--sidebar-border": "#2c2e32",
+      "--sidebar-ring": "#6b95ee",
+      "--glass-surface": "rgba(22, 23, 26, 0.78)",
+      "--glass-fallback": "#16171a",
+      "--radius": "0.75rem",
+      "color-scheme": "dark",
+      "--ds-sheen": "oklch(1 0 0 / 5%)",
+      "--ds-lit-edge": "oklch(1 0 0 / 9%)",
+      "--ds-well": "oklch(0 0 0 / 35%)"
+    },
+    "[data-theme=\"ds\"].dark [data-slot=\"card\"],\n[data-theme=\"ds\"].dark [data-slot=\"popover-content\"],\n[data-theme=\"ds\"].dark [data-slot=\"dropdown-menu-content\"],\n[data-theme=\"ds\"].dark [data-slot=\"select-content\"],\n[data-theme=\"ds\"].dark [data-slot=\"combobox-content\"],\n[data-theme=\"ds\"].dark [data-slot=\"dialog-content\"],\n[data-theme=\"ds\"].dark [data-slot=\"alert-dialog-content\"],\n[data-theme=\"ds\"].dark [data-slot=\"sheet-content\"],\n[data-theme=\"ds\"].dark [data-slot=\"hover-card-content\"]": {
+      "background-image": "linear-gradient(to bottom, var(--ds-sheen), transparent 55%)",
+      "box-shadow": "inset 0 1px 0 var(--ds-lit-edge), 0 0 0 1px var(--border)",
+      "border-color": "transparent"
+    },
+    "[data-theme=\"ds\"].dark [data-slot=\"input\"],\n[data-theme=\"ds\"].dark [data-slot=\"textarea\"],\n[data-theme=\"ds\"].dark [data-slot=\"select-trigger\"],\n[data-theme=\"ds\"].dark [data-slot=\"input-group\"],\n[data-theme=\"ds\"].dark [data-slot=\"tabs-list\"]": {
+      "background-color": "var(--muted)",
+      "box-shadow": "inset 0 1px 2px var(--ds-well), 0 0 0 1px var(--border)",
+      "border-color": "transparent"
+    },
+    "@supports (corner-shape: squircle)": {
+      "[data-theme=\"ds\"] [data-slot=\"card\"],\n[data-theme=\"ds\"] [data-slot=\"popover-content\"],\n[data-theme=\"ds\"] [data-slot=\"dropdown-menu-content\"],\n[data-theme=\"ds\"] [data-slot=\"select-content\"],\n[data-theme=\"ds\"] [data-slot=\"combobox-content\"],\n[data-theme=\"ds\"] [data-slot=\"dialog-content\"],\n[data-theme=\"ds\"] [data-slot=\"alert-dialog-content\"],\n[data-theme=\"ds\"] [data-slot=\"sheet-content\"],\n[data-theme=\"ds\"] [data-slot=\"hover-card-content\"],\n[data-theme=\"ds\"] [data-slot=\"input\"],\n[data-theme=\"ds\"] [data-slot=\"textarea\"],\n[data-theme=\"ds\"] [data-slot=\"select-trigger\"],\n[data-theme=\"ds\"] [data-slot=\"input-group\"],\n[data-theme=\"ds\"] [data-slot=\"tabs-list\"],\n[data-theme=\"ds\"] [data-slot=\"button\"],\n[data-theme=\"ds\"] [data-slot=\"badge\"],\n[data-theme=\"ds\"] [data-slot=\"card-list-entry\"],\n[data-theme=\"ds\"] [data-slot=\"card-list-group\"]": {
+        "corner-shape": "squircle"
+      }
+    }
+  },
+  "type": "registry:theme"
+}

@@ -16,6 +16,7 @@ export const harnessAliases = [
   { find: "@/lib/utils", replacement: path.join(registry, "lib/utils.ts") },
   { find: "@/lib/nav-link", replacement: path.join(registry, "lib/nav-link.tsx") },
   { find: "@/lib/theme-preference", replacement: path.join(registry, "lib/theme-preference.ts") },
+  { find: "@/lib/font-preference", replacement: path.join(registry, "lib/font-preference.ts") },
   { find: "@/lib/link-pill-core", replacement: path.join(registry, "lib/link-pill-core.ts") },
   { find: "@/lib/highlighter", replacement: path.join(registry, "lib/highlighter.tsx") },
   { find: "@/hooks", replacement: path.join(registry, "base-nova/hooks") },
