@@ -157,10 +157,10 @@ describe("install-ds-fonts.sh", () => {
     for (const dir of scratch.splice(0)) rmSync(dir, { recursive: true, force: true })
   })
 
-  const run = (destination: string, sourceDir?: string) =>
+  const run = (destination: string, sourceDir: string) =>
     spawnSync("bash", [script, destination], {
       encoding: "utf8",
-      env: { ...process.env, ...(sourceDir ? { DS_FONTS_SOURCE_DIR: sourceDir } : {}), DS_FONTS_NO_NETWORK: "1" },
+      env: { ...process.env, DS_FONTS_SOURCE_DIR: sourceDir },
     })
 
   it("parses", () => {

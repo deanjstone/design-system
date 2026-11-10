@@ -70,6 +70,14 @@ typography:
     fontFamily: "IBM Plex Sans Variable, IBM Plex Sans, ui-sans-serif, system-ui, sans-serif"
     fontSize: "0.75rem"
     fontWeight: 500
+  body-aspekta:
+    fontFamily: "Aspekta Variable, ui-sans-serif, system-ui, sans-serif"
+    fontSize: "0.875rem"
+    fontWeight: 400
+  code-azeret-mono:
+    fontFamily: "Azeret Mono, ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
+    fontSize: "0.875rem"
+    fontWeight: 400
 rounded:
   sm: "6px"
   md: "8px"
