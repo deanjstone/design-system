@@ -1,3 +1,10 @@
+# [3.23.0](https://github.com/deanjstone/design-system/compare/v3.22.0...v3.23.0) (2026-11-10)
+
+
+### Features
+
+* offer the DS theme and the Aspekta and Azeret Mono font as opt-in items ([249926a](https://github.com/deanjstone/design-system/commit/249926a37b19628463d293b83671b2e9fc5071a5)), closes [#189](https://github.com/deanjstone/design-system/issues/189)
+
 # [3.22.0](https://github.com/deanjstone/design-system/compare/v3.21.0...v3.22.0) (2026-11-07)
 
 
