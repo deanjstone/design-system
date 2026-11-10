@@ -42,7 +42,7 @@ pnpm install --frozen-lockfile
 | `pnpm build:theme` | Regenerates `theme/tokens.css`, `registry.json` and `r/` from `theme/themes.json` |
 | `npx shadcn@4.19.1 build --output ./r` | Regenerates `r/` alone after a source or `registry.json` edit |
 | `pnpm gate:geometry` | Browser check of safe areas and curves; see [Curve-geometry gate](#curve-geometry-gate) |
-| `node docs/<demo>/smoke-check.mjs` | Builds a demo and checks it in headless Chromium: `data`, `form-inputs`, `layout`, `page-transition`; `docs/card-list/screenshots.mjs`, `docs/issue-row/screenshots.mjs`, `docs/filter-builder/screenshots.mjs` and `docs/grouped-list/screenshots.mjs` do the same in headless WebKit; `docs/menus/keyboard-check.mjs` and `docs/graph-3d/{measure,inspect}.mjs` likewise |
+| `node docs/<demo>/smoke-check.mjs` | Builds a demo and checks it in headless Chromium: `data`, `form-inputs`, `layout`, `page-transition`; `docs/card-list/screenshots.mjs`, `docs/issue-row/screenshots.mjs`, `docs/filter-builder/screenshots.mjs`, `docs/grouped-list/screenshots.mjs` and `docs/ds-theme/screenshots.mjs` do the same in headless WebKit; `docs/menus/keyboard-check.mjs` and `docs/graph-3d/{measure,inspect}.mjs` likewise |
 
 There is nothing to run as a server: the registry is files. A demo script builds
 and serves its page for the length of its run and then stops.
@@ -103,6 +103,8 @@ registry.json              root manifest — one entry per distributable item
 registry/
   lib/utils.ts              re-exports cn() from the cn package
   lib/theme-preference.ts   theme + Light/Dark/System choice: cookie, localStorage, no-flash script
+  lib/font-preference.ts    the font choice (default or Aspekta), kept apart from the theme: data-font, its own cookie, no-flash script
+  fonts/                    the font-aspekta item: ds-fonts.css, install-ds-fonts.sh, and the original OFL font files and notices (fonts.json lists them)
   lib/nav-link.tsx          renderAnchor and the renderLink type the layout blocks share
   lib/link-pill-*.ts, .css  LinkPill core, HTML shell and styles
   lib/highlighter.tsx       Shiki loader behind use-highlighted-code
@@ -111,7 +113,7 @@ registry/
   lib/list-group-core.ts    grouping and display-settings model (grouped-list)
   lib/page-transition-core.ts  theme tokens to glimm band colours (page-transition, staged: not in registry.json yet)
   base-nova/ui/               66 listed base-nova components (Base UI, plus link-pill, graph-3d, chart, data-table) and the unlisted page-transition
-  base-nova/hooks/            use-mobile (pulled by sidebar), use-highlighted-code (pulled by code-block), use-theme-preference, use-filter-state, use-display-settings
+  base-nova/hooks/            use-mobile (pulled by sidebar), use-highlighted-code (pulled by code-block), use-theme-preference, use-font-preference, use-filter-state, use-display-settings
   base-nova/blocks/           v3 layout blocks: app-shell, app-switcher, page-header, empty-page, settings-page, login, card-list, issue-row, filter-builder, grouped-list
   design-check/             scripts and workflow of the design-check item (CI, not UI)
   app-html-head/            iPhone <head> tags snippet (app-html-head item)
@@ -487,6 +489,51 @@ The `theme` item carries six themes (`default`, `t3-chat`, `grove`, `ocean`,
 visitor's choice. Token map, selection rules and the pinned T3 source are in
 [DESIGN.md](DESIGN.md#themes). After editing `theme/themes.json`, run
 `pnpm build:theme` to regenerate `theme/tokens.css`, `registry.json` and `r/`.
+
+### Optional DS theme and font
+
+Two opt-ins sit beside the six themes. Neither changes anything for an app that does
+not install them: the default theme, the default font and the default theme list are
+as they were.
+
+| Option | Item | Switch | Stored (per device) |
+|---|---|---|---|
+| DS look: tinted-neutral scale, hairline edges, sheen on raised surfaces, squircle corners (where the browser has `corner-shape`), recessed wells; light and dark | `theme-ds` | `data-theme="ds"` | `ds-theme` cookie and `localStorage`, with the other themes |
+| Aspekta (UI) and Azeret Mono (code) | `font-aspekta` | `data-font="aspekta"` (no attribute for the default) | `ds-font` cookie and `localStorage`, separate from the theme |
+
+To offer them in an app:
+
+```bash
+npx shadcn add deanjstone/design-system/theme-ds deanjstone/design-system/font-aspekta
+npx shadcn add deanjstone/design-system/use-font-preference
+bash scripts/install-ds-fonts.sh        # downloads the original font files into public/fonts/ds
+```
+
+then import the stylesheet once (`@import "./ds-fonts.css";`, from `src/` as `font-aspekta`
+installs it), put `fontInitScript()` next to `themeInitScript()` in `<head>`, and pass the
+choices to the settings page:
+
+```tsx
+const { preference, setTheme, setMode } = useThemePreference()
+const { font, setFont } = useFontPreference()
+<AppearanceSection preference={preference} onThemeChange={setTheme} onModeChange={setMode}
+  themes={ALL_THEMES} font={font} onFontChange={setFont} />
+```
+
+Leave `themes` and `font` out and the section lists the six themes and no Font group.
+
+**Fonts.** The files are SIL OFL 1.1 and are the unmodified originals from each font's own
+repository (`ivodolenc/aspekta` at `@aspekta/fonts@2.100`, `displaay/Azeret` at a pinned
+commit), listed with their sha256 in `registry/fonts/fonts.json`. Aspekta has a Reserved
+Font Name, so they are never renamed, subsetted or converted. They are not in
+`registry.json`: the shadcn CLI reads files as UTF-8 text and would corrupt a binary, so
+`install-ds-fonts.sh` downloads them and checks each sha256 first (`DS_FONTS_SOURCE_DIR` copies
+them from a checkout offline). The licence notices ship with the item, into `public/fonts/ds`.
+The stylesheet's `src` urls assume `public/` is served from the site root.
+
+Proof: `node docs/ds-theme/screenshots.mjs` (WebKit, 390 and 320 px, every theme, mode and
+font, plus the settings flow and its persistence). Rationale:
+[ADR-0005](docs/adr/0005-optional-ds-theme-and-font.md).
 
 ## Migrating from v2 to v3
 

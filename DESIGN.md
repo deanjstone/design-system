@@ -323,6 +323,27 @@ Edit `themes.json` or the map in `extract-t3.mjs`, never the generated region.
   same-origin file) so there is no flash of the wrong theme.
 - `--radius` stays `0.625rem`. Native controls follow via `color-scheme`.
 
+### The optional DS theme
+
+*Added for design-system#189 (argus#1084).* A seventh look, **DS**, ships as its own
+`theme-ds` item and is chosen with `data-theme="ds"` (`ALL_THEMES` lists it; `THEMES` and
+the default list stay the six). It is not read from T3: `scripts/theme/ds-theme.mjs` writes
+it from an OKLCH ramp at one hue (264, a faint blue), and `pnpm build:theme` puts it in
+`registry.json`. Every selector in the item starts with `[data-theme="ds"]`, so a page
+that never sets the attribute is unchanged (`test/ds-theme.test.ts` pins that).
+
+| Part | Rule |
+|---|---|
+| Tinted neutrals | Dark canvas `oklch(0.16 0.004 264)`; card, popover, secondary and accent step up from it, the recessed well (`--muted`) steps below. Light mirrors it. |
+| Sidebar on the canvas | `--sidebar` is `--background`: no panel of its own. |
+| Raised surfaces | Cards, popovers, menus, dialogs and sheets get a soft top sheen (`--ds-sheen`) and a lit hairline edge (`--ds-lit-edge`) over a 1px `--border` ring. |
+| Recessed wells | Fields, input groups and the tab list sit on `--muted` with an inset shadow (`--ds-well`). The shadow drops while the control is focused or invalid, so its focus ring and error border keep drawing. |
+| Squircle corners | `corner-shape: squircle` under `@supports`, with `--radius` at `0.75rem`. WebKit has no `corner-shape` yet and shows plain rounded corners. |
+| Colour | Same token set as the six themes, and the same contrast tests: AA text pairs, 3:1 for `--input` and `--ring`. Status and chart colours are inherited. |
+
+No DS Code asset, logo, icon or stylesheet is copied; the look is reimplemented from the
+research in argus-config#1149.
+
 ### Token map
 
 | shadcn token | T3 token | Note |
@@ -458,6 +479,17 @@ stylesheet:
 The `theme` item declares `@fontsource-variable/ibm-plex-sans` as a
 dependency so the package installs, but an `@import` has to precede every
 other rule in a file and cannot be injected from a registry `css` block.
+
+### Optional font: Aspekta and Azeret Mono
+
+*Added for design-system#189.* IBM Plex Sans stays the registry's face
+([ADR-0002](docs/adr/0002-registry-owns-the-font-token.md)). An app may also offer **Aspekta**
+(UI) and **Azeret Mono** (code) as a per-device choice, independent of the theme: the
+`font-aspekta` item sets `--font-sans-stack` and `--font-mono` under
+`[data-font="aspekta"]` and nowhere else, and `font-preference` sets that attribute
+(none for the default). Both faces are SIL OFL 1.1 and are used as their original files,
+`font-display: swap`; Aspekta's Reserved Font Name is why they are never renamed or
+modified. Details, install and licences: README, Themes.
 
 ### Hierarchy
 
