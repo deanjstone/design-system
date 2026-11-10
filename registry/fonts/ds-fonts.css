@@ -1,0 +1,63 @@
+/*
+ * Aspekta (UI) and Azeret Mono (code), the font option of the design system. Import this once
+ * from your main stylesheet, after running scripts/install-ds-fonts.sh, and the faces are
+ * used wherever <html data-font="aspekta"> is set (see font-preference). Without that
+ * attribute nothing here changes the page.
+ *
+ * Aspekta Variable: SIL Open Font License 1.1, Copyright (c) 2025 Ivo Dolenc
+ *   <https://github.com/ivodolenc/aspekta>, with Reserved Font Name "Aspekta".
+ * Azeret Mono: SIL Open Font License 1.1, Copyright 2021 The Azeret Project Authors
+ *   <https://github.com/displaay/azeret>.
+ * The licence texts sit next to the font files (public/fonts/ds/). The font files are the
+ * unmodified originals from those repositories: do not rename, subset or convert them, which
+ * the Reserved Font Name forbids for Aspekta.
+ *
+ * The src urls assume the app serves public/ from the site root; if it is served under a
+ * base path, change the urls below to match.
+ */
+
+@font-face {
+  font-family: "Aspekta Variable";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("/fonts/ds/AspektaVF.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Azeret Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/ds/AzeretMono-Regular.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Azeret Mono";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("/fonts/ds/AzeretMono-Medium.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Azeret Mono";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("/fonts/ds/AzeretMono-SemiBold.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Azeret Mono";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/fonts/ds/AzeretMono-Bold.woff2") format("woff2");
+}
+
+/* The doubled attribute outranks the theme's :root rule and any single-attribute theme rule. */
+[data-font="aspekta"][data-font="aspekta"] {
+  --font-sans-stack: "Aspekta Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Azeret Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+}

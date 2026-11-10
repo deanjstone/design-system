@@ -1,0 +1,126 @@
+{
+  "description": "Original, unmodified font files and licence notices, copied byte for byte from each font's own repository at the pinned commit. The files are not renamed, subsetted, converted or re-encoded (Aspekta carries a Reserved Font Name). They are not listed in registry.json: the shadcn CLI reads files as UTF-8 text and would corrupt a binary, so apps install them with scripts/install-ds-fonts.sh, which downloads from the url below and checks the sha256.",
+  "fonts": [
+    {
+      "file": "aspekta/AspektaVF.woff2",
+      "family": "Aspekta Variable",
+      "release": "@aspekta/fonts@2.100",
+      "weight": "100 900",
+      "reservedFontName": "Aspekta",
+      "source": {
+        "repository": "ivodolenc/aspekta",
+        "commit": "cd08efde1a0484c3626818ac59a6933e59f71531",
+        "path": "packages/fonts/variable/AspektaVF.woff2"
+      },
+      "url": "https://raw.githubusercontent.com/ivodolenc/aspekta/cd08efde1a0484c3626818ac59a6933e59f71531/packages/fonts/variable/AspektaVF.woff2",
+      "bytes": 30292,
+      "sha256": "373dc70ab4a1712327ee294dfbfc1b4dfc1f0afc027df62d9b8b0eb4fec01781",
+      "gitBlob": "8a7e88654216bb3e09307111335c00729102c987",
+      "licence": "OFL-1.1"
+    },
+    {
+      "file": "azeret-mono/AzeretMono-Regular.woff2",
+      "family": "Azeret Mono",
+      "weight": "400",
+      "source": {
+        "repository": "displaay/Azeret",
+        "commit": "3d45a6c3e094f08bfc70551b525bd2037cac51ba",
+        "path": "fonts/webfonts/AzeretMono-Regular.woff2"
+      },
+      "url": "https://raw.githubusercontent.com/displaay/Azeret/3d45a6c3e094f08bfc70551b525bd2037cac51ba/fonts/webfonts/AzeretMono-Regular.woff2",
+      "bytes": 30080,
+      "sha256": "f0d847a45bbc123cecbb816402d1a7d9bbadcfe5f4e0a522978b9724486c7cf0",
+      "gitBlob": "363c50feee19cfd2a98c41a36c60be8e647d9627",
+      "licence": "OFL-1.1"
+    },
+    {
+      "file": "azeret-mono/AzeretMono-Medium.woff2",
+      "family": "Azeret Mono",
+      "weight": "500",
+      "source": {
+        "repository": "displaay/Azeret",
+        "commit": "3d45a6c3e094f08bfc70551b525bd2037cac51ba",
+        "path": "fonts/webfonts/AzeretMono-Medium.woff2"
+      },
+      "url": "https://raw.githubusercontent.com/displaay/Azeret/3d45a6c3e094f08bfc70551b525bd2037cac51ba/fonts/webfonts/AzeretMono-Medium.woff2",
+      "bytes": 30188,
+      "sha256": "426e16aabc531defd3929eb947d3e9a788a95080261da86b8136e7fd3cb9516d",
+      "gitBlob": "4bb82069fe17f459f5a4ec33450f08fd1d27c4b2",
+      "licence": "OFL-1.1"
+    },
+    {
+      "file": "azeret-mono/AzeretMono-SemiBold.woff2",
+      "family": "Azeret Mono",
+      "weight": "600",
+      "source": {
+        "repository": "displaay/Azeret",
+        "commit": "3d45a6c3e094f08bfc70551b525bd2037cac51ba",
+        "path": "fonts/webfonts/AzeretMono-SemiBold.woff2"
+      },
+      "url": "https://raw.githubusercontent.com/displaay/Azeret/3d45a6c3e094f08bfc70551b525bd2037cac51ba/fonts/webfonts/AzeretMono-SemiBold.woff2",
+      "bytes": 30140,
+      "sha256": "3af3bf7cd7f32343efd21504cde1c987cf919b404e99368a1f622db54759ace8",
+      "gitBlob": "44c1e4cb7ea199673cc21a641ccd52761dfd78ef",
+      "licence": "OFL-1.1"
+    },
+    {
+      "file": "azeret-mono/AzeretMono-Bold.woff2",
+      "family": "Azeret Mono",
+      "weight": "700",
+      "source": {
+        "repository": "displaay/Azeret",
+        "commit": "3d45a6c3e094f08bfc70551b525bd2037cac51ba",
+        "path": "fonts/webfonts/AzeretMono-Bold.woff2"
+      },
+      "url": "https://raw.githubusercontent.com/displaay/Azeret/3d45a6c3e094f08bfc70551b525bd2037cac51ba/fonts/webfonts/AzeretMono-Bold.woff2",
+      "bytes": 29908,
+      "sha256": "94cdef513e0181d9444b273dd9d235257ec55b4f07a25b1a593b9b77a909e634",
+      "gitBlob": "10aa1281e8b953a77f2f908a8d2c9651c0c6c9db",
+      "licence": "OFL-1.1"
+    }
+  ],
+  "notices": [
+    {
+      "file": "aspekta/LICENSE.txt",
+      "family": "Aspekta",
+      "source": {
+        "repository": "ivodolenc/aspekta",
+        "commit": "cd08efde1a0484c3626818ac59a6933e59f71531",
+        "path": "packages/fonts/LICENSE.txt"
+      },
+      "url": "https://raw.githubusercontent.com/ivodolenc/aspekta/cd08efde1a0484c3626818ac59a6933e59f71531/packages/fonts/LICENSE.txt",
+      "bytes": 4399,
+      "sha256": "16b9f63b7b39b7f134cf5660edd39814376442fa40922bd7609d43d88300f904",
+      "gitBlob": "3b4c78701510d28833b3b9c9798d47f577bb2cf4",
+      "licence": "OFL-1.1"
+    },
+    {
+      "file": "azeret-mono/OFL.txt",
+      "family": "Azeret Mono",
+      "source": {
+        "repository": "displaay/Azeret",
+        "commit": "3d45a6c3e094f08bfc70551b525bd2037cac51ba",
+        "path": "OFL.txt"
+      },
+      "url": "https://raw.githubusercontent.com/displaay/Azeret/3d45a6c3e094f08bfc70551b525bd2037cac51ba/OFL.txt",
+      "bytes": 4383,
+      "sha256": "2a0fd31798d131b38a9fe730a260bc9a1d85452e36cdf79e5fcaf937bf4d9f86",
+      "gitBlob": "5f3e472e15c8278a5017b264089b44fda371bddd",
+      "licence": "OFL-1.1"
+    },
+    {
+      "file": "azeret-mono/AUTHORS.txt",
+      "family": "Azeret Mono",
+      "source": {
+        "repository": "displaay/Azeret",
+        "commit": "3d45a6c3e094f08bfc70551b525bd2037cac51ba",
+        "path": "AUTHORS.txt"
+      },
+      "url": "https://raw.githubusercontent.com/displaay/Azeret/3d45a6c3e094f08bfc70551b525bd2037cac51ba/AUTHORS.txt",
+      "bytes": 41,
+      "sha256": "b8bf1d2b65471155d8e79a8b61a9e366e1ccd70b8262896c4084ec32272a4241",
+      "gitBlob": "96aee30891c69c89da323eefdfb29b7165453dfc",
+      "licence": "OFL-1.1"
+    }
+  ]
+}

@@ -1129,6 +1129,42 @@
       ]
     },
     {
+      "name": "font-aspekta",
+      "type": "registry:file",
+      "title": "Aspekta and Azeret Mono font option",
+      "description": "An opt-in font option: Aspekta (UI) and Azeret Mono (code), applied where <html data-font=\"aspekta\"> is set and absent otherwise. Ships the stylesheet, an install script that downloads the original SIL OFL font files from their own repositories and checks their sha256, and the licence notices. The font binaries are not in the item (shadcn reads files as text).",
+      "registryDependencies": [
+        "deanjstone/design-system/font-preference"
+      ],
+      "files": [
+        {
+          "path": "registry/fonts/ds-fonts.css",
+          "type": "registry:file",
+          "target": "~/src/ds-fonts.css"
+        },
+        {
+          "path": "registry/fonts/install-ds-fonts.sh",
+          "type": "registry:file",
+          "target": "~/scripts/install-ds-fonts.sh"
+        },
+        {
+          "path": "registry/fonts/aspekta/LICENSE.txt",
+          "type": "registry:file",
+          "target": "~/public/fonts/ds/LICENSE-Aspekta.txt"
+        },
+        {
+          "path": "registry/fonts/azeret-mono/OFL.txt",
+          "type": "registry:file",
+          "target": "~/public/fonts/ds/OFL-Azeret-Mono.txt"
+        },
+        {
+          "path": "registry/fonts/azeret-mono/AUTHORS.txt",
+          "type": "registry:file",
+          "target": "~/public/fonts/ds/AUTHORS-Azeret-Mono.txt"
+        }
+      ]
+    },
+    {
       "name": "page-header",
       "type": "registry:block",
       "dependencies": [
