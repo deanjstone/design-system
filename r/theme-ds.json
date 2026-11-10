@@ -4,7 +4,7 @@
   "title": "DS theme",
   "description": "An opt-in look for the theme item: tinted-neutral scale, hairline edges, a soft sheen on raised surfaces, squircle corners and recessed wells, in light and dark. Choose it with data-theme=\"ds\" (theme-preference lists it in ALL_THEMES); every rule is scoped to that attribute, so a page that never sets it is unchanged.",
   "registryDependencies": [
-    "deanjstone/design-system/theme#v3.23.0"
+    "deanjstone/design-system/theme"
   ],
   "css": {
     "[data-theme=\"ds\"]": {

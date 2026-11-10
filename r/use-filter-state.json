@@ -2,8 +2,8 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "use-filter-state",
   "registryDependencies": [
-    "deanjstone/design-system/filter-core#v3.23.0",
-    "deanjstone/design-system/url-state#v3.23.0"
+    "deanjstone/design-system/filter-core",
+    "deanjstone/design-system/url-state"
   ],
   "files": [
     {

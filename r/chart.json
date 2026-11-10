@@ -8,7 +8,7 @@
     "recharts@^3.8.0"
   ],
   "registryDependencies": [
-    "deanjstone/design-system/skeleton#v3.23.0"
+    "deanjstone/design-system/skeleton"
   ],
   "files": [
     {
