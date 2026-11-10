@@ -144,7 +144,10 @@ const RAISED = [
   '[data-slot="sheet-content"]',
   '[data-slot="hover-card-content"]',
 ]
-// Recessed wells: fields and the grouped ground tabs and segmented controls sit in.
+// Recessed wells: fields and the grouped ground tabs and segmented controls sit in. A well
+// only recesses at rest: while focused, or marked invalid, the control's own ring and border
+// keep drawing (the rule below would otherwise replace their box-shadow and border colour).
+const AT_REST = ':not(:focus-visible):not(:focus-within):not([aria-invalid="true"])'
 const WELLS = [
   '[data-slot="input"]',
   '[data-slot="textarea"]',
@@ -157,7 +160,6 @@ const ROUNDED = [
   ...RAISED,
   ...WELLS,
   '[data-slot="button"]',
-  '[data-slot="badge"]',
   '[data-slot="card-list-entry"]',
   '[data-slot="card-list-group"]',
 ]
@@ -186,10 +188,9 @@ export function dsSurfaceCss() {
       "box-shadow": "inset 0 1px 0 var(--ds-lit-edge), 0 0 0 1px var(--border)",
       "border-color": "transparent",
     }
-    css[scoped(WELLS, dark)] = {
-      "background-color": "var(--muted)",
-      "box-shadow": "inset 0 1px 2px var(--ds-well), 0 0 0 1px var(--border)",
-      "border-color": "transparent",
+    css[scoped(WELLS, dark)] = { "background-color": "var(--muted)" }
+    css[scoped(WELLS.map((selector) => `${selector}${AT_REST}`), dark)] = {
+      "box-shadow": "inset 0 1px 2px var(--ds-well)",
     }
   }
   css["@supports (corner-shape: squircle)"] = {

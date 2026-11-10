@@ -125,7 +125,20 @@ describe("DS theme item", () => {
     expect(rules[0][1]).toMatchObject({ "background-image": expect.stringContaining("var(--ds-sheen)") })
     expect(JSON.stringify(rules[0][1])).toContain("var(--ds-lit-edge)")
     const wells = Object.entries(item.css as CssObject).filter(([key]) => key.includes('data-slot="input"') && !key.includes(".dark"))
-    expect(JSON.stringify(wells[0][1])).toContain("inset 0 1px 2px var(--ds-well)")
+    expect(wells).toHaveLength(2)
+    expect(wells.map(([, body]) => JSON.stringify(body)).join()).toContain("inset 0 1px 2px var(--ds-well)")
+  })
+
+  it("recesses a well only at rest, so focus rings and invalid borders keep drawing", () => {
+    const recessed = Object.entries(item.css as CssObject).filter(([, body]) => JSON.stringify(body).includes("inset 0 1px 2px"))
+    expect(recessed).toHaveLength(2)
+    for (const [key] of recessed) {
+      for (const selector of key.split(",\n")) {
+        expect(selector, selector).toContain(":not(:focus-visible):not(:focus-within):not([aria-invalid=\"true\"])")
+      }
+    }
+    const everywhere = JSON.stringify(Object.entries(item.css as CssObject).filter(([key]) => key.includes("input")))
+    expect(everywhere).not.toContain("border-color")
   })
 
   it("leaves the theme item with no trace of DS", () => {
