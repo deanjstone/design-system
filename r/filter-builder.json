@@ -6,15 +6,15 @@
     "cn@^0.5.0"
   ],
   "registryDependencies": [
-    "deanjstone/design-system/badge",
-    "deanjstone/design-system/button",
-    "deanjstone/design-system/checkbox",
-    "deanjstone/design-system/input",
-    "deanjstone/design-system/native-select",
-    "deanjstone/design-system/popover",
-    "deanjstone/design-system/sheet",
-    "deanjstone/design-system/use-mobile",
-    "deanjstone/design-system/filter-core"
+    "deanjstone/design-system/badge#v3.24.0",
+    "deanjstone/design-system/button#v3.24.0",
+    "deanjstone/design-system/checkbox#v3.24.0",
+    "deanjstone/design-system/input#v3.24.0",
+    "deanjstone/design-system/native-select#v3.24.0",
+    "deanjstone/design-system/popover#v3.24.0",
+    "deanjstone/design-system/sheet#v3.24.0",
+    "deanjstone/design-system/use-mobile#v3.24.0",
+    "deanjstone/design-system/filter-core#v3.24.0"
   ],
   "files": [
     {

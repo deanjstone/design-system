@@ -2,7 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "use-display-settings",
   "registryDependencies": [
-    "deanjstone/design-system/list-group-core"
+    "deanjstone/design-system/list-group-core#v3.24.0"
   ],
   "files": [
     {
