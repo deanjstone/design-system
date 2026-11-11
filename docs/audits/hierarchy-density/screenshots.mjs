@@ -3,15 +3,14 @@
 // the run and opens it in ONE headless Chromium page at a time, at 1440x900 (mouse) and 390x844 (touch).
 //
 // Checks:
-//   - proposed.css, below its token block, has no raw colour, no gradient, and no length that is not a
-//     token (0, 1px hairlines and the 2px focus ring aside)
-//   - the five colour tokens meet WCAG contrast where they are paired, in light and dark
-//   - neither version scrolls sideways at either width
-//   - the proposed page draws only token values: every computed colour, font size, weight and radius on
+//   - proposed.css, below its token block, has no raw colour and no length that is not a token (0, 1px
+//     hairlines and the 2px focus ring aside), and every colour it reads is a token theme/tokens.css declares
+//   - neither version scrolls sideways at either width, in light, dark or a second theme
+//   - the proposed page draws only scale values: every computed font size, weight, radius and spacing on
 //     it is one of the tokens
 // Prints a census of the distinct values each version draws (sizes, weights, colours, spacing, radii,
-// control and row heights), which the audit quotes. Writes docs/assets/hierarchy-density-<version>-<width>-<theme>.png.
-// Exits non-zero if a check fails.
+// control and row heights), which the audit quotes. Writes docs/assets/hierarchy-density-<version>-<width>-<theme>.png
+// and hierarchy-density-<version>-1440-grove.png. Exits non-zero if a check fails.
 //
 //   node docs/audits/hierarchy-density/screenshots.mjs
 import { spawnSync } from "node:child_process"
@@ -44,41 +43,20 @@ const rules = css
 const rawColours = rules.match(/#[0-9a-f]{3,8}\b|\b(?:rgba?|hsla?|oklch|oklab|color-mix)\(/gi) ?? []
 const rawLengths = (rules.match(/\b\d*\.?\d+(?:px|rem|em|ch|vw|vh)\b/g) ?? []).filter((length) => !["1px", "2px"].includes(length))
 record("proposed.css: no raw colour below the token block", rawColours.length === 0, rawColours.join(" "))
-record("proposed.css: no gradient", !/gradient/i.test(rules) && !/gradient/i.test(tokenBlock))
 record("proposed.css: no length that is not a token (1px and 2px aside)", rawLengths.length === 0, rawLengths.join(" "))
 
+// Colour is the theme's: every custom property read that is not one of the scale's own must be declared in theme/tokens.css.
+const themeCss = readFileSync(path.join(repo, "theme/tokens.css"), "utf8")
+const themeTokens = new Set([...themeCss.matchAll(/(--[a-z0-9-]+)\s*:/g)].map((match) => match[1]))
+const colourTokens = [...new Set([...rules.matchAll(/var\((--(?!hd-)[a-z0-9-]+)\)/g)].map((match) => match[1]))].sort()
+const unknown = colourTokens.filter((token) => !themeTokens.has(token))
+record("proposed.css: every colour is a theme token", unknown.length === 0, unknown.length ? `not in theme/tokens.css: ${unknown.join(" ")}` : colourTokens.join(" "))
+record("proposed.css: the token block declares no colour", !/#[0-9a-f]{3,8}\b|\b(?:rgba?|hsla?|oklch|oklab)\(/i.test(tokenBlock))
+
 const tokens = (block, pattern) => [...block.matchAll(pattern)].map((match) => match[1])
-const lightBlock = tokenBlock.slice(0, tokenBlock.indexOf(".dark .hd"))
-const darkBlock = tokenBlock.slice(tokenBlock.indexOf(".dark .hd"), tokenBlock.indexOf("@media"))
-const colourNames = tokens(lightBlock, /--hd-([a-z0-9-]+):\s*#/g)
-record("five colour tokens or fewer", colourNames.length <= 5, colourNames.join(", "))
+const lightBlock = tokenBlock
 
-// 2. Contrast of the pairs the sample draws.
-const palette = (block) => Object.fromEntries([...block.matchAll(/--hd-([a-z0-9-]+):\s*(#[0-9a-f]{6})/g)].map((match) => [match[1], match[2]]))
-const luminance = (hex) => {
-  const [r, g, b] = [1, 3, 5].map((start) => parseInt(hex.slice(start, start + 2), 16) / 255).map((channel) => (channel <= 0.03928 ? channel / 12.92 : ((channel + 0.055) / 1.055) ** 2.4))
-  return 0.2126 * r + 0.7152 * g + 0.0722 * b
-}
-const contrast = (a, b) => {
-  const [hi, lo] = [luminance(a), luminance(b)].sort((x, y) => y - x)
-  return (hi + 0.05) / (lo + 0.05)
-}
-const PAIRS = [
-  ["ink", "paper", 4.5, "body text"],
-  ["ink-2", "paper", 4.5, "secondary text"],
-  ["accent", "paper", 4.5, "accent text, and paper text on an accent button"],
-  ["ink-2", "paper", 3, "field and button border"],
-]
-for (const [mode, block] of [["light", lightBlock], ["dark", darkBlock]]) {
-  const colours = palette(block)
-  for (const [foreground, background, floor, use] of PAIRS) {
-    const ratio = contrast(colours[foreground], colours[background])
-    record(`${mode}: ${foreground} on ${background} is ${floor}:1 or more (${use})`, ratio >= floor, `${ratio.toFixed(2)}:1`)
-  }
-  console.log(`INFO ${mode}: line on paper is ${contrast(colours.line, colours.paper).toFixed(2)}:1 (dividers only, never the one cue)`)
-}
-
-// 3. The pages.
+// 2. The pages.
 const build = spawnSync("npx", ["vite", "build", "-c", path.join(here, "vite.config.mjs")], {
   cwd: repo,
   stdio: "inherit",
@@ -95,6 +73,9 @@ const SHOTS = [
   { version: "proposed", theme: "light" },
   { version: "current", theme: "dark" },
   { version: "proposed", theme: "dark" },
+  // A second theme, to show the proposed screen takes its colour from whichever theme is set.
+  { version: "current", theme: "light", palette: "grove", only: 1440 },
+  { version: "proposed", theme: "light", palette: "grove", only: 1440 },
 ]
 
 // Every distinct value the page draws, read from computed styles of the elements that have a box.
@@ -141,8 +122,9 @@ const browser = await chromium.launch()
 const results = {}
 try {
   for (const viewport of VIEWPORTS) {
-    for (const { version, theme } of SHOTS) {
-      const label = `${version} ${viewport.width}px ${theme}`
+    for (const { version, theme, palette, only } of SHOTS) {
+      if (only && only !== viewport.width) continue
+      const label = `${version} ${viewport.width}px ${palette ?? theme}`
       const context = await browser.newContext({
         viewport: { width: viewport.width, height: viewport.height },
         deviceScaleFactor: viewport.mobile ? 2 : 1,
@@ -151,13 +133,13 @@ try {
       })
       const page = await context.newPage()
       try {
-        await page.goto(`${origin}/?v=${version}&theme=${theme}`)
+        await page.goto(`${origin}/?v=${version}&theme=${theme}${palette ? `&palette=${palette}` : ""}`)
         await page.evaluate(() => document.fonts.ready)
         await page.waitForTimeout(200)
         const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth)
         record(`${label}: no sideways scroll`, overflow <= 0, `overflow ${overflow}px`)
-        if (theme === "light") results[`${version}-${viewport.width}`] = { ...(await page.evaluate(census)), pageHeight: await page.evaluate(() => document.documentElement.scrollHeight) }
-        await page.screenshot({ path: path.join(assets, `hierarchy-density-${version}-${viewport.width}-${theme}.png`), fullPage: true })
+        if (theme === "light" && !palette) results[`${version}-${viewport.width}`] = { ...(await page.evaluate(census)), pageHeight: await page.evaluate(() => document.documentElement.scrollHeight) }
+        await page.screenshot({ path: path.join(assets, `hierarchy-density-${version}-${viewport.width}-${palette ?? theme}.png`), fullPage: true })
       } finally {
         await context.close()
       }
@@ -169,7 +151,7 @@ try {
   rmSync(dist, { recursive: true, force: true })
 }
 
-// 4. The proposed page draws token values only.
+// 3. The proposed page draws scale values only.
 const rem = (value) => parseFloat(value) * 16
 const declared = {
   fontSize: tokens(lightBlock, /--hd-t\d:\s*([\d.]+)rem/g).map(rem),
@@ -183,7 +165,7 @@ for (const width of VIEWPORTS.map((viewport) => viewport.width)) {
     const stray = drawn[key].filter((value) => !allowed.includes(value))
     record(`proposed ${width}px: every ${key} is a token`, stray.length === 0, stray.length ? `stray ${stray.join(", ")}` : `${drawn[key].join(", ")}`)
   }
-  record(`proposed ${width}px: five colours or fewer are drawn`, drawn.colour.length <= 5, drawn.colour.join(" | "))
+  console.log(`INFO proposed ${width}px draws ${drawn.colour.length} colours, current ${results[`current-${width}`].colour.length}`)
 }
 
 console.log("\nCensus (light), distinct values drawn:")

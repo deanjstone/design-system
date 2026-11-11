@@ -4,7 +4,8 @@ import { ChevronDownIcon, CircleCheckIcon, CircleDashedIcon, CircleDotIcon, Plus
 import { DESCRIPTION, ISSUES, PRIORITY_LABEL, REPOS, STATUS_LABEL, STATUS_ORDER, type Issue } from "./data"
 
 // The same screen rebuilt on the proposed scale: plain elements and the hd-* classes in proposed.css,
-// which reads nothing but the tokens declared at its top. No registry component is used or changed.
+// which takes space, type and density from the tokens declared at its top and colour from the theme.
+// No registry component is used or changed.
 
 const STATUS_ICON = { todo: CircleDashedIcon, working: CircleDotIcon, done: CircleCheckIcon }
 

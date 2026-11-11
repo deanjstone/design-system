@@ -1,19 +1,14 @@
 /*
  * The proposed scale, and the sample screen built on it (docs/audits/2026-11-12-hierarchy-density.md).
- * Everything below the token block reads these tokens and nothing else: screenshots.mjs fails the run on
- * a raw colour, a gradient, or a length that is not a token (1px hairlines and the 2px focus ring aside).
+ * Space, type and density are the proposal. Colour is not: every colour below is one of the theme's own
+ * tokens (theme/tokens.css), so the screen follows each theme and its dark mode as they are today.
+ * screenshots.mjs fails the run on a raw colour, a colour that is not a theme token, or a length that is
+ * not a token (1px hairlines and the 2px focus ring aside).
  * Scoped to .hd, so it changes nothing for a registry component or a consumer.
  */
 
 /* tokens:begin */
 .hd {
-  /* Colour: 5. The values are Ocean's --background, --border, --foreground, --muted-foreground, --primary. */
-  --hd-paper: #f5f7f8;
-  --hd-line: #cdd4dc;
-  --hd-ink: #241523;
-  --hd-ink-2: #6f6873;
-  --hd-accent: #0a6f75;
-
   /* Space: 7 steps on a 4px base. No half steps. */
   --hd-s1: 0.25rem;
   --hd-s2: 0.5rem;
@@ -47,14 +42,6 @@
   --hd-pad: var(--hd-s2);
 }
 
-.dark .hd {
-  --hd-paper: #17212b;
-  --hd-line: #405567;
-  --hd-ink: #fffaff;
-  --hd-ink-2: #a2a7b0;
-  --hd-accent: #5bd0d6;
-}
-
 @media (pointer: coarse) {
   .hd {
     --hd-pad: var(--hd-s3);
@@ -71,15 +58,15 @@
   min-height: 100dvh;
   margin-inline: auto;
   padding: var(--hd-s5) var(--hd-s4) var(--hd-s6);
-  background: var(--hd-paper);
-  color: var(--hd-ink);
+  background: var(--background);
+  color: var(--foreground);
   font-size: var(--hd-t2);
   line-height: var(--hd-lh2);
   font-weight: var(--hd-regular);
 }
 
 .hd :focus-visible {
-  outline: 2px solid var(--hd-accent);
+  outline: 2px solid var(--ring);
   outline-offset: 2px;
 }
 
@@ -114,7 +101,7 @@
 
 .hd-description {
   margin: 0;
-  color: var(--hd-ink-2);
+  color: var(--muted-foreground);
 }
 
 .hd-actions {
@@ -129,10 +116,10 @@
   box-sizing: border-box;
   min-height: calc(var(--hd-lh2) + 2 * var(--hd-pad) + 2px);
   padding: var(--hd-pad) var(--hd-s3);
-  border: 1px solid var(--hd-ink-2);
+  border: 1px solid var(--input);
   border-radius: var(--hd-radius);
-  background: var(--hd-paper);
-  color: var(--hd-ink);
+  background: var(--background);
+  color: var(--foreground);
   line-height: var(--hd-lh2);
 }
 
@@ -147,24 +134,24 @@
 }
 
 .hd-button[data-variant="primary"] {
-  border-color: var(--hd-accent);
-  background: var(--hd-accent);
-  color: var(--hd-paper);
+  border-color: var(--primary);
+  background: var(--primary);
+  color: var(--primary-foreground);
 }
 
 .hd-button[data-variant="quiet"] {
-  border-color: var(--hd-paper);
-  color: var(--hd-ink-2);
+  border-color: transparent;
+  color: var(--muted-foreground);
 }
 
 @media (hover: hover) {
   .hd-button:hover {
-    border-color: var(--hd-ink);
+    border-color: var(--foreground);
   }
 
   .hd-button[data-variant="quiet"]:hover {
-    border-color: var(--hd-paper);
-    color: var(--hd-ink);
+    border-color: transparent;
+    color: var(--foreground);
   }
 }
 
@@ -177,7 +164,7 @@
 }
 
 .hd-input::placeholder {
-  color: var(--hd-ink-2);
+  color: var(--muted-foreground);
   opacity: 1;
 }
 
@@ -208,7 +195,7 @@ textarea.hd-input {
 }
 
 .hd-hint {
-  color: var(--hd-ink-2);
+  color: var(--muted-foreground);
   font-size: var(--hd-t1);
   line-height: var(--hd-lh1);
 }
@@ -244,7 +231,7 @@ textarea.hd-input {
 
 .hd-toolbar-count {
   margin-inline-start: auto;
-  color: var(--hd-ink-2);
+  color: var(--muted-foreground);
 }
 
 /* The list. A group is a 16px heading over its rows; 24px of space separates groups, not a filled band. */
@@ -256,7 +243,7 @@ textarea.hd-input {
 
 .hd-group-heading {
   margin: 0;
-  border-bottom: 1px solid var(--hd-line);
+  border-bottom: 1px solid var(--border);
 }
 
 .hd-group-toggle {
@@ -276,7 +263,7 @@ textarea.hd-input {
 }
 
 .hd-group-chevron {
-  color: var(--hd-ink-2);
+  color: var(--muted-foreground);
 }
 
 .hd-group-toggle[aria-expanded="false"] .hd-group-chevron {
@@ -284,7 +271,7 @@ textarea.hd-input {
 }
 
 .hd-group-count {
-  color: var(--hd-ink-2);
+  color: var(--muted-foreground);
   font-size: var(--hd-t2);
   font-weight: var(--hd-regular);
   font-variant-numeric: tabular-nums;
@@ -304,17 +291,21 @@ textarea.hd-input {
   column-gap: var(--hd-s2);
   row-gap: var(--hd-s1);
   padding: var(--hd-s2) 0;
-  border-bottom: 1px solid var(--hd-line);
+  border-bottom: 1px solid var(--border);
 }
 
 .hd-row-status {
   width: var(--hd-s4);
   height: var(--hd-lh2);
-  color: var(--hd-ink-2);
+  color: var(--muted-foreground);
 }
 
 .hd-row[data-status="working"] .hd-row-status {
-  color: var(--hd-accent);
+  color: var(--warning);
+}
+
+.hd-row[data-status="done"] .hd-row-status {
+  color: var(--success);
 }
 
 .hd-row-title {
@@ -331,12 +322,12 @@ textarea.hd-input {
 }
 
 .hd-row[data-status="done"] .hd-row-title {
-  color: var(--hd-ink-2);
+  color: var(--muted-foreground);
 }
 
 @media (hover: hover) {
   .hd-row:hover .hd-row-title {
-    color: var(--hd-accent);
+    color: var(--primary-text);
     text-decoration: underline;
   }
 }
@@ -346,7 +337,7 @@ textarea.hd-input {
   display: flex;
   flex-wrap: wrap;
   column-gap: var(--hd-s3);
-  color: var(--hd-ink-2);
+  color: var(--muted-foreground);
   font-size: var(--hd-t1);
   line-height: var(--hd-lh1);
   font-variant-numeric: tabular-nums;
@@ -358,7 +349,7 @@ textarea.hd-input {
 }
 
 .hd-row-meta > [data-strong] {
-  color: var(--hd-ink);
+  color: var(--critical);
   font-weight: var(--hd-strong);
 }
 
@@ -399,7 +390,7 @@ textarea.hd-input {
 
   .hd-rail {
     padding-inline-start: var(--hd-s6);
-    border-inline-start: 1px solid var(--hd-line);
+    border-inline-start: 1px solid var(--border);
   }
 
   .hd-list {
@@ -437,7 +428,7 @@ textarea.hd-input {
 
   .hd-row-meta > * {
     display: block;
-    color: var(--hd-ink-2);
+    color: var(--muted-foreground);
     font-size: var(--hd-t1);
     line-height: var(--hd-lh2);
     font-variant-numeric: tabular-nums;

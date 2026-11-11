@@ -2,7 +2,8 @@
 
 Date: 2026-11-12. Owner-requested. Scope: design-system at `e4ea12c` (`main`, v3.24.0).
 
-**Nothing in the registry changes.** This is a report and a sample. The sample lives in
+**Nothing in the registry changes, and the colour tokens and gradients stay as they are** (owner decision,
+2026-11-12). The proposal covers spacing, type and density only. This is a report and a sample. The sample lives in
 `docs/audits/hierarchy-density/` and is scoped to its own `.hd` class: no component, token, theme or
 `registry.json` entry is touched, so no consumer sees a difference.
 
@@ -18,7 +19,7 @@ Date: 2026-11-12. Owner-requested. Scope: design-system at `e4ea12c` (`main`, v3
   `border-border` base rule `shadcn init` gives a consumer. It overrides no component's size, weight, colour or
   spacing.
 
-Run it: `node docs/audits/hierarchy-density/screenshots.mjs` (30 checks, all pass).
+Run it: `node docs/audits/hierarchy-density/screenshots.mjs` (22 checks, all pass).
 
 ## The five biggest problems
 
@@ -75,24 +76,29 @@ is 21px over 13px and 14px text: one step above the body, not a title.
   says "warning" and means "this row has a date".
 - One row holds four chip treatments: an outlined pill (label), a bordered box (wave), coloured text (due) and
   a filled circle (assignee).
-- Gradients: `tokens.css` has 10 uses; `app-shell.tsx` and `graph-3d.tsx` use them too.
+
+The tokens are not the fault here, and they stay. The fix is in how the components spend them: see the rules
+under the proposed scale.
 
 ## The proposed scale
 
 All of it is in the token block at the top of `docs/audits/hierarchy-density/proposed.css`.
 
-### Colour: 5 tokens
+### Colour: the theme's tokens, unchanged
 
-| Token | Light | Dark | Job | Ocean token it equals |
-|---|---|---|---|---|
-| `paper` | `#f5f7f8` | `#17212b` | every surface | `--background` |
-| `line` | `#cdd4dc` | `#405567` | dividers | `--border` |
-| `ink` | `#241523` | `#fffaff` | text | `--foreground` |
-| `ink-2` | `#6f6873` | `#a2a7b0` | secondary text, control borders | `--muted-foreground` |
-| `accent` | `#0a6f75` | `#5bd0d6` | the primary action, in-progress, focus | `--primary` |
+No colour token is added, removed or revalued, and no gradient is touched. The sample reads twelve existing
+tokens and declares none of its own, so it follows every theme and its dark mode:
 
-Contrast on `paper`: `ink` 16.2:1, `ink-2` 5.0:1, `accent` 5.5:1 (dark: 15.8, 6.7, 8.9). `line` is 1.4:1, so it
-only draws dividers and is never the one cue. No alpha steps, no tints, no gradients.
+`--background`, `--foreground`, `--muted-foreground`, `--border`, `--input`, `--primary`,
+`--primary-foreground`, `--primary-text`, `--ring`, `--warning`, `--success`, `--critical`.
+
+Three rules for spending them, none of which needs a token change:
+
+1. **A signal colour means the signal.** `--warning` is in-progress. `--critical` is overdue or urgent. A due
+   date that is not overdue is `--muted-foreground`.
+2. **One treatment for metadata.** Labels, wave, priority, due date and assignee are plain 12px text, not four
+   kinds of chip.
+3. **No new alpha steps.** A tint is a token, not `muted/40` beside `muted/50`.
 
 ### Space: 7 steps
 
@@ -123,6 +129,7 @@ pointer, not the width, which is the rule DESIGN.md already sets.
 | 390 | ![current, 390](../assets/hierarchy-density-current-390-light.png) | ![proposed, 390](../assets/hierarchy-density-proposed-390-light.png) |
 
 Dark: `docs/assets/hierarchy-density-{current,proposed}-{1440,390}-dark.png`.
+A second theme, Grove: `docs/assets/hierarchy-density-{current,proposed}-1440-grove.png`.
 
 Measured in Chromium, light theme:
 
@@ -130,7 +137,7 @@ Measured in Chromium, light theme:
 |---|---|---|---|---|
 | Font sizes | 4 (13, 14, 16, 26) | 4 (12, 14, 16, 28) | 4 (13, 14, 16, 21) | 4 (12, 14, 16, 28) |
 | Weights | 3 | 2 | 3 | 2 |
-| Colours | 15 | 5 | 14 | 5 |
+| Colours | 15 | 11 | 14 | 11 |
 | Spacing values | 10 | 6 | 9 | 6 |
 | Radii | 4 | 1 | 2 | 1 |
 | Control height | 32 | 38 | 44 | 46 |
@@ -141,28 +148,25 @@ Measured in Chromium, light theme:
 What changed, by problem:
 
 1. **Hierarchy.** Three levels that differ by size: 28 (page), 16/600 (group, section), 14/400 (item). Row titles
-   are regular weight. Finished rows drop to `ink-2`.
+   are regular weight. Finished rows drop to `--muted-foreground`.
 2. **Type.** Metadata is one 12px style. The 13px step is gone.
 3. **Spacing.** 24px of space separates groups in place of a filled band. The form has no card around it: a
    single divider and space.
 4. **Density.** On a desktop the list is one grid, so id, labels, wave, priority, due and assignee are aligned
    columns and no id wraps. Rows are 37px (16% shorter). On a phone a row is two lines, 57px, and shows seven
    fields in place of three.
-5. **Colour.** Status is an icon shape. Accent marks only the primary button, in-progress and focus. A due date
-   is grey until it is overdue, then it is 600-weight ink and says "Overdue". Priority is a word, bold only when
-   urgent.
+5. **Colour.** Same tokens, spent on meaning. Status keeps its amber and green icons. A due date is grey until
+   it is overdue, then it is `--critical`, bold, and says "Overdue". Priority is a word, `--critical` and bold
+   only when urgent. The filled bands, tints and alpha steps are not used, which is where 15 colours become 11.
 
 ## Costs and limits of the proposal
 
 - **The phone page is 19% longer** (1481px against 1244px). That buys four more fields on every row. Labels are
   still hidden on a phone.
 - **Controls get bigger on a desktop**: 38px against 32px.
-- **Five colours leaves no red, amber or green.** The sample replaces them with words and weight ("Overdue",
-  "Urgent"). That works for a list. It is weak for a destructive button or a failed-deploy banner. The registry
-  has `success`, `warning`, `unreachable` and `critical` for those, and a real adoption would keep a small
-  signal set beside the five.
-- **One surface colour** means cards, popovers and sheets separate by a divider or a shadow only. The sample has
-  no overlay, so this is untested.
+- **Colour problems that live in the tokens stay.** The three near-identical tints and the shared
+  background, card and popover value are untouched. The sample avoids them; the registry still has them.
+- **No filled surfaces in the sample** means cards, popovers and sheets are untested. The sample has no overlay.
 - **The sample is one screen.** Charts, the 3D graph, the app shell's glass and the six T3 themes are outside it.
 - **Native selects** are used in the sample. They are not restyled.
 
@@ -170,15 +174,17 @@ What changed, by problem:
 
 None of this is done. Each is additive, and would be its own issue:
 
-1. Ship the scale as an opt-in item (a `theme-compact` or similar), the way `theme-ds` ships. No default changes.
+1. Ship the spacing and type scale as an opt-in item, the way `theme-ds` ships. No default changes, and no
+   theme or colour token changes.
 2. Add a `density` token that the coarse-pointer block sets, and have control and row padding read it. This
    retires the per-slot `min-height` list without changing a size on the day it lands.
 3. `IssueRow`: opt-in props for a two-line phone row and a grid-column desktop row. Defaults stay as they are.
-4. A lint rule in `design-check` for half-step spacing and arbitrary `text-[…]` sizes in new code, warn-only.
+4. A lint rule in `design-check` for half-step spacing, arbitrary `text-[…]` sizes and new alpha steps in new
+   code, warn-only.
 
 ## Files
 
 - `docs/audits/hierarchy-density/proposed.css`: the tokens and the rebuilt screen's styles.
 - `docs/audits/hierarchy-density/proposed.tsx`, `current.tsx`, `data.ts`: the two versions and their shared data.
 - `docs/audits/hierarchy-density/screenshots.mjs`: the build, the checks, the census and the screenshots.
-- `docs/assets/hierarchy-density-*.png`: eight screenshots.
+- `docs/assets/hierarchy-density-*.png`: ten screenshots.
