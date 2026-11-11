@@ -2,7 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "font-preference",
   "registryDependencies": [
-    "deanjstone/design-system/theme-preference#v3.24.0"
+    "deanjstone/design-system/theme-preference"
   ],
   "files": [
     {
