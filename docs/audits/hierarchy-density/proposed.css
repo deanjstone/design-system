@@ -1,0 +1,478 @@
+/*
+ * The proposed scale, and the sample screen built on it (docs/audits/2026-11-12-hierarchy-density.md).
+ * Everything below the token block reads these tokens and nothing else: screenshots.mjs fails the run on
+ * a raw colour, a gradient, or a length that is not a token (1px hairlines and the 2px focus ring aside).
+ * Scoped to .hd, so it changes nothing for a registry component or a consumer.
+ */
+
+/* tokens:begin */
+.hd {
+  /* Colour: 5. The values are Ocean's --background, --border, --foreground, --muted-foreground, --primary. */
+  --hd-paper: #f5f7f8;
+  --hd-line: #cdd4dc;
+  --hd-ink: #241523;
+  --hd-ink-2: #6f6873;
+  --hd-accent: #0a6f75;
+
+  /* Space: 7 steps on a 4px base. No half steps. */
+  --hd-s1: 0.25rem;
+  --hd-s2: 0.5rem;
+  --hd-s3: 0.75rem;
+  --hd-s4: 1rem;
+  --hd-s5: 1.5rem;
+  --hd-s6: 2rem;
+  --hd-s7: 3rem;
+
+  /* Type: 5 sizes, each with one line height, and 2 weights. */
+  --hd-t1: 0.75rem;
+  --hd-lh1: 1rem;
+  --hd-t2: 0.875rem;
+  --hd-lh2: 1.25rem;
+  --hd-t3: 1rem;
+  --hd-lh3: 1.5rem;
+  --hd-t4: 1.25rem;
+  --hd-lh4: 1.75rem;
+  --hd-t5: 1.75rem;
+  --hd-lh5: 2.25rem;
+  --hd-regular: 400;
+  --hd-strong: 600;
+
+  /* Shape and measure. One radius; three widths. */
+  --hd-radius: var(--hd-s2);
+  --hd-page: 90rem;
+  --hd-rail: 20rem;
+  --hd-field: 12rem;
+
+  /* Density: the block padding of a control or a row. The pointer sets it, not the width. */
+  --hd-pad: var(--hd-s2);
+}
+
+.dark .hd {
+  --hd-paper: #17212b;
+  --hd-line: #405567;
+  --hd-ink: #fffaff;
+  --hd-ink-2: #a2a7b0;
+  --hd-accent: #5bd0d6;
+}
+
+@media (pointer: coarse) {
+  .hd {
+    --hd-pad: var(--hd-s3);
+  }
+}
+/* tokens:end */
+
+.hd {
+  display: flex;
+  flex-direction: column;
+  gap: var(--hd-s5);
+  box-sizing: border-box;
+  max-width: var(--hd-page);
+  min-height: 100dvh;
+  margin-inline: auto;
+  padding: var(--hd-s5) var(--hd-s4) var(--hd-s6);
+  background: var(--hd-paper);
+  color: var(--hd-ink);
+  font-size: var(--hd-t2);
+  line-height: var(--hd-lh2);
+  font-weight: var(--hd-regular);
+}
+
+.hd :focus-visible {
+  outline: 2px solid var(--hd-accent);
+  outline-offset: 2px;
+}
+
+.hd-icon {
+  flex: none;
+  width: var(--hd-s4);
+  height: var(--hd-s4);
+}
+
+/* Header: the one 28px line on the page. */
+.hd-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--hd-s4);
+}
+
+.hd-header-text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--hd-s1);
+  min-width: 0;
+}
+
+.hd-title {
+  margin: 0;
+  font-size: var(--hd-t5);
+  line-height: var(--hd-lh5);
+  font-weight: var(--hd-strong);
+}
+
+.hd-description {
+  margin: 0;
+  color: var(--hd-ink-2);
+}
+
+.hd-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--hd-s2);
+}
+
+/* Controls. One height for a button, an input and a select: a 20px line plus the density padding. */
+.hd-button,
+.hd-input {
+  box-sizing: border-box;
+  min-height: calc(var(--hd-lh2) + 2 * var(--hd-pad) + 2px);
+  padding: var(--hd-pad) var(--hd-s3);
+  border: 1px solid var(--hd-ink-2);
+  border-radius: var(--hd-radius);
+  background: var(--hd-paper);
+  color: var(--hd-ink);
+  line-height: var(--hd-lh2);
+}
+
+.hd-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--hd-s2);
+  font-size: var(--hd-t2);
+  font-weight: var(--hd-strong);
+  cursor: pointer;
+}
+
+.hd-button[data-variant="primary"] {
+  border-color: var(--hd-accent);
+  background: var(--hd-accent);
+  color: var(--hd-paper);
+}
+
+.hd-button[data-variant="quiet"] {
+  border-color: var(--hd-paper);
+  color: var(--hd-ink-2);
+}
+
+@media (hover: hover) {
+  .hd-button:hover {
+    border-color: var(--hd-ink);
+  }
+
+  .hd-button[data-variant="quiet"]:hover {
+    border-color: var(--hd-paper);
+    color: var(--hd-ink);
+  }
+}
+
+/* 16px in a field at every width, so iOS never zooms the page on focus. */
+.hd-input {
+  width: 100%;
+  min-width: 0;
+  font-size: var(--hd-t3);
+  font-weight: var(--hd-regular);
+}
+
+.hd-input::placeholder {
+  color: var(--hd-ink-2);
+  opacity: 1;
+}
+
+input.hd-input,
+select.hd-input {
+  height: calc(var(--hd-lh2) + 2 * var(--hd-pad) + 2px);
+}
+
+/* A native select centres its own text in a fixed height; block padding only clips the descenders. */
+select.hd-input {
+  padding-block: 0;
+}
+
+textarea.hd-input {
+  display: block;
+  line-height: var(--hd-lh3);
+  resize: vertical;
+}
+
+.hd-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--hd-s1);
+}
+
+.hd-label {
+  font-weight: var(--hd-strong);
+}
+
+.hd-hint {
+  color: var(--hd-ink-2);
+  font-size: var(--hd-t1);
+  line-height: var(--hd-lh1);
+}
+
+/* Body: the list, then the form. Side by side once there is room for both. */
+.hd-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--hd-s6);
+}
+
+.hd-main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--hd-s4);
+  min-width: 0;
+}
+
+.hd-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--hd-s2);
+}
+
+.hd-toolbar-search {
+  flex: 1 1 var(--hd-field);
+}
+
+.hd-toolbar-repo {
+  flex: 0 1 var(--hd-field);
+}
+
+.hd-toolbar-count {
+  margin-inline-start: auto;
+  color: var(--hd-ink-2);
+}
+
+/* The list. A group is a 16px heading over its rows; 24px of space separates groups, not a filled band. */
+.hd-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--hd-s5);
+}
+
+.hd-group-heading {
+  margin: 0;
+  border-bottom: 1px solid var(--hd-line);
+}
+
+.hd-group-toggle {
+  display: flex;
+  align-items: center;
+  gap: var(--hd-s2);
+  width: 100%;
+  padding: var(--hd-pad) 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font-size: var(--hd-t3);
+  line-height: var(--hd-lh3);
+  font-weight: var(--hd-strong);
+  text-align: start;
+  cursor: pointer;
+}
+
+.hd-group-chevron {
+  color: var(--hd-ink-2);
+}
+
+.hd-group-toggle[aria-expanded="false"] .hd-group-chevron {
+  rotate: -90deg;
+}
+
+.hd-group-count {
+  color: var(--hd-ink-2);
+  font-size: var(--hd-t2);
+  font-weight: var(--hd-regular);
+  font-variant-numeric: tabular-nums;
+}
+
+.hd-rows {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* A row on a narrow screen: the title on the first line, every other field on the second. */
+.hd-row {
+  position: relative;
+  display: grid;
+  grid-template-columns: var(--hd-s4) minmax(0, 1fr);
+  column-gap: var(--hd-s2);
+  row-gap: var(--hd-s1);
+  padding: var(--hd-s2) 0;
+  border-bottom: 1px solid var(--hd-line);
+}
+
+.hd-row-status {
+  width: var(--hd-s4);
+  height: var(--hd-lh2);
+  color: var(--hd-ink-2);
+}
+
+.hd-row[data-status="working"] .hd-row-status {
+  color: var(--hd-accent);
+}
+
+.hd-row-title {
+  color: inherit;
+  text-decoration: none;
+  overflow-wrap: anywhere;
+}
+
+/* The whole row opens the issue. */
+.hd-row-title::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+.hd-row[data-status="done"] .hd-row-title {
+  color: var(--hd-ink-2);
+}
+
+@media (hover: hover) {
+  .hd-row:hover .hd-row-title {
+    color: var(--hd-accent);
+    text-decoration: underline;
+  }
+}
+
+.hd-row-meta {
+  grid-column: 2;
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: var(--hd-s3);
+  color: var(--hd-ink-2);
+  font-size: var(--hd-t1);
+  line-height: var(--hd-lh1);
+  font-variant-numeric: tabular-nums;
+}
+
+.hd-row-meta > :empty,
+.hd-row-labels {
+  display: none;
+}
+
+.hd-row-meta > [data-strong] {
+  color: var(--hd-ink);
+  font-weight: var(--hd-strong);
+}
+
+.hd-rail {
+  display: flex;
+  flex-direction: column;
+  gap: var(--hd-s4);
+}
+
+.hd-rail-heading {
+  display: flex;
+  flex-direction: column;
+  gap: var(--hd-s1);
+}
+
+.hd-section-title {
+  margin: 0;
+  font-size: var(--hd-t3);
+  line-height: var(--hd-lh3);
+  font-weight: var(--hd-strong);
+}
+
+/* Wide: the rail moves beside the list, and the rows become one table whose columns line up across groups. */
+@media (min-width: 64rem) {
+  .hd {
+    padding: var(--hd-s6);
+  }
+
+  .hd-toolbar-search {
+    max-width: var(--hd-rail);
+  }
+
+  .hd-body {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) var(--hd-rail);
+    align-items: start;
+  }
+
+  .hd-rail {
+    padding-inline-start: var(--hd-s6);
+    border-inline-start: 1px solid var(--hd-line);
+  }
+
+  .hd-list {
+    display: grid;
+    grid-template-columns: var(--hd-s4) max-content minmax(0, 1fr) repeat(5, max-content);
+    column-gap: var(--hd-s4);
+    row-gap: var(--hd-s5);
+  }
+
+  .hd-group,
+  .hd-rows,
+  .hd-row {
+    display: grid;
+    grid-column: 1 / -1;
+    grid-template-columns: subgrid;
+  }
+
+  .hd-group-heading {
+    grid-column: 1 / -1;
+  }
+
+  .hd-row {
+    column-gap: var(--hd-s4);
+    padding: var(--hd-pad) 0;
+  }
+
+  .hd-row > *,
+  .hd-row-meta > * {
+    grid-row: 1;
+  }
+
+  .hd-row-meta {
+    display: contents;
+  }
+
+  .hd-row-meta > * {
+    display: block;
+    color: var(--hd-ink-2);
+    font-size: var(--hd-t1);
+    line-height: var(--hd-lh2);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  .hd-row-status {
+    grid-column: 1;
+  }
+
+  .hd-row-id {
+    grid-column: 2;
+  }
+
+  .hd-row-title {
+    grid-column: 3;
+  }
+
+  .hd-row-labels {
+    grid-column: 4;
+  }
+
+  .hd-row-wave {
+    grid-column: 5;
+  }
+
+  .hd-row-priority {
+    grid-column: 6;
+  }
+
+  .hd-row-due {
+    grid-column: 7;
+  }
+
+  .hd-row-assignee {
+    grid-column: 8;
+  }
+}
