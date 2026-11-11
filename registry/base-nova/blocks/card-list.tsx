@@ -48,7 +48,7 @@ function CardListGroup({
         data-slot="card-list-group-heading"
         className="flex min-w-0 items-baseline gap-2 px-1 text-sm font-medium"
       >
-        <span className="min-w-0 truncate">{heading}</span>
+        <span className="min-w-0 wrap-anywhere">{heading}</span>
         {count !== undefined ? (
           <span data-slot="card-list-group-count" className="shrink-0 text-xs font-normal text-muted-foreground tabular-nums">
             {count}
@@ -69,7 +69,7 @@ function CardListGroup({
 }
 
 type CardListItemProps = Omit<useRender.ComponentProps<"div">, "title"> & {
-  /** First row. One line, cut with an ellipsis when it does not fit. */
+  /** First row. Wraps onto more lines when it does not fit, and breaks a token with no spaces, so nothing is cut off. */
   title: React.ReactNode
   /** Second row, in this order: status, branch, check, time. Leave out what a card does not have. */
   status?: React.ReactNode
@@ -80,8 +80,9 @@ type CardListItemProps = Omit<useRender.ComponentProps<"div">, "title"> & {
   active?: boolean
 }
 
-// A two-row card: the title, then status, branch, check and time. Only the branch gives way when the
-// row is tight (320 px), so the other three stay readable. A div by default; pass `render={<a href />}`
+// A two-row card: the title, then status, branch, check and time. Text wraps (design-system#205): the
+// title and the branch wrap onto more lines, and only the branch gives way when the row is tight (320 px),
+// so the other three stay readable. A div by default; pass `render={<a href />}`
 // or `render={<button />}` to make the whole card the tap target.
 function CardListItem({ title, status, branch, check, time, active = false, className, render, ...props }: CardListItemProps) {
   const hasDetails = status != null || branch != null || check != null || time != null
@@ -107,8 +108,7 @@ function CardListItem({ title, status, branch, check, time, active = false, clas
             <span data-slot="card-list-item-row" className="flex min-w-0 items-center">
               <span
                 data-slot="card-list-item-title"
-                title={typeof title === "string" ? title : undefined}
-                className="min-w-0 flex-1 truncate font-medium"
+                className="min-w-0 flex-1 font-medium wrap-anywhere"
               >
                 {title}
               </span>
@@ -116,7 +116,7 @@ function CardListItem({ title, status, branch, check, time, active = false, clas
             {hasDetails ? (
               <span
                 data-slot="card-list-item-row"
-                className="flex min-w-0 items-center gap-x-2 text-xs text-muted-foreground"
+                className="flex min-w-0 items-start gap-x-2 text-xs text-muted-foreground"
               >
                 {status != null ? (
                   <span data-slot="card-list-item-status" className="shrink-0">
@@ -124,7 +124,7 @@ function CardListItem({ title, status, branch, check, time, active = false, clas
                   </span>
                 ) : null}
                 {branch != null ? (
-                  <span data-slot="card-list-item-branch" className="min-w-0 truncate font-mono">
+                  <span data-slot="card-list-item-branch" className="min-w-0 font-mono wrap-anywhere">
                     {branch}
                   </span>
                 ) : null}

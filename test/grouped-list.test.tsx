@@ -53,14 +53,14 @@ describe("GroupedList", () => {
     expect(screen.getAllByRole("heading", { level: 2 })).toHaveLength(2)
   })
 
-  it("makes each header a 44px button that says whether its group is open", () => {
+  it("makes each header a button at least 44px tall that says whether its group is open", () => {
     render(<GroupedList groups={groups} collapsed={["done"]} onToggleGroup={vi.fn()} getItemKey={(issue) => issue.id} renderItem={renderItem} />)
 
     const open = header(/^Todo/)
     const shut = header(/^Done/)
     expect(open.getAttribute("aria-expanded")).toBe("true")
     expect(shut.getAttribute("aria-expanded")).toBe("false")
-    expect(open.className).toContain("h-11")
+    expect(open.className).toContain("min-h-11")
     expect(open.className).toContain("w-full")
   })
 
@@ -115,11 +115,13 @@ describe("GroupedList", () => {
     expect(screen.getByText("Nothing here")).toBeTruthy()
   })
 
-  it("cuts a long group name with an ellipsis instead of wrapping it, and keeps clear of the safe areas", () => {
+  it("wraps a long group name instead of cutting it, and keeps clear of the safe areas", () => {
     render(<GroupedList groups={groups} collapsed={[]} onToggleGroup={vi.fn()} getItemKey={(issue) => issue.id} renderItem={renderItem} />)
 
     const button = header(/^Todo/)
-    expect(button.querySelector("[data-slot=grouped-list-label]")!.className).toContain("truncate")
+    const label = button.querySelector("[data-slot=grouped-list-label]")!
+    expect(label.className).toContain("wrap-anywhere")
+    expect(label.className).not.toMatch(/\btruncate\b/)
     expect(button.className).toContain("env(safe-area-inset-left)")
     expect(button.className).toContain("env(safe-area-inset-right)")
   })

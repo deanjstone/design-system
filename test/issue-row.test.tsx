@@ -10,7 +10,7 @@ afterEach(() => {
 })
 
 const LONG_TITLE =
-  "A very long issue title that keeps going well past the width of a 320 pixel phone screen and must be cut, never wrapped"
+  "A very long issue title that keeps going well past the width of a 320 pixel phone screen and must wrap, never be cut"
 
 const actions = (onSelect = vi.fn()) => [
   { id: "assign", label: "Assign to me", onSelect },
@@ -42,12 +42,12 @@ describe("IssueRowList", () => {
 })
 
 describe("IssueRow: opening the item", () => {
-  it("is a 44px row", () => {
+  it("is at least a 44px row, and grows when the title wraps", () => {
     const { container } = render(<IssueRow title="T" />)
 
     const row = container.querySelector("[data-slot=issue-row]")!
     expect(row.tagName).toBe("LI")
-    expect(row.className).toContain("h-11")
+    expect(row.className).toContain("min-h-11")
   })
 
   it("makes the title a link when given an href, and names the row by its title", () => {
@@ -136,14 +136,15 @@ describe("IssueRow: columns drop away by priority", () => {
     }
   })
 
-  it("cuts the title with an ellipsis and never lets it shrink the other columns' room", () => {
+  it("wraps the title in full and never lets it shrink the other columns' room", () => {
     const { container } = render(full)
 
     const title = cell(container, "title")!
     expect(title.className).toContain("min-w-0")
-    expect(title.className).toContain("truncate")
+    expect(title.className).toContain("wrap-anywhere")
+    expect(title.className).not.toMatch(/\btruncate\b/)
     expect(title.className).toContain("flex-1")
-    expect(title.getAttribute("title")).toBe(LONG_TITLE)
+    expect(title.getAttribute("title")).toBeNull()
   })
 
   it("keeps every column except the title at its own width", () => {

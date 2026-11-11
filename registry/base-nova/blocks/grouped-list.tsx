@@ -63,13 +63,13 @@ function GroupedList<Item>({ groups, collapsed, onToggleGroup, getItemKey, rende
             <Heading className="m-0 text-sm font-medium">
               <CollapsibleTrigger
                 data-slot="grouped-list-header"
-                className="group/header flex h-11 w-full touch-manipulation items-center gap-2 border-b border-border bg-muted/40 pl-[max(0.75rem,env(safe-area-inset-left))] pr-[max(0.75rem,env(safe-area-inset-right))] text-left outline-none hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset"
+                className="group/header flex min-h-11 w-full touch-manipulation items-center py-1 gap-2 border-b border-border bg-muted/40 pl-[max(0.75rem,env(safe-area-inset-left))] pr-[max(0.75rem,env(safe-area-inset-right))] text-left outline-none hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset"
               >
                 <ChevronRightIcon
                   aria-hidden="true"
                   className="size-4 shrink-0 text-muted-foreground transition-transform group-data-panel-open/header:rotate-90 motion-reduce:transition-none"
                 />
-                <span data-slot="grouped-list-label" className="min-w-0 flex-1 truncate">
+                <span data-slot="grouped-list-label" className="min-w-0 flex-1 wrap-anywhere">
                   {group.label}
                 </span>
                 <span data-slot="grouped-list-count" className="shrink-0 text-muted-foreground tabular-nums">
@@ -174,7 +174,7 @@ function DisplayMenu({ groupings, properties, settings, onGroupByChange, onPrope
                     checked={settings.properties[property.id] === true}
                     onCheckedChange={(checked) => onPropertyChange(property.id, checked)}
                   />
-                  <span className="min-w-0 truncate">{property.label}</span>
+                  <span className="min-w-0 wrap-anywhere">{property.label}</span>
                 </label>
               ))}
             </fieldset>

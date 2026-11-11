@@ -3,10 +3,10 @@
 // the run and opens it in ONE headless WebKit page at a time, at 390x844, 320x844, 768x900 and
 // 1280x800, light and dark. Checks, per view:
 //   - the page does not scroll sideways (documentElement.scrollWidth <= innerWidth)
-//   - every row is 44px tall and sits inside the viewport
+//   - every row is at least 44px tall (taller when its title wraps) and sits inside the viewport
 //   - the columns drop away by priority: below sm (640) only the priority, status and title show; at
 //     sm the id, due date and assignee join; at lg (1024) the labels and the project join
-//   - the long title is cut, and at 320px the title keeps at least 120px
+//   - the long title wraps in full (not clipped), and at 320px the title keeps at least 120px
 //   - the more button is 44x44, and a hit test at its centre lands on it while a hit test over the
 //     title area lands on the stretched title link (so a tap anywhere else opens the item)
 //   - a tap (touch) or click on the title opens the item
@@ -81,7 +81,7 @@ const measure = () => {
       return box.left < 0 || box.right > window.innerWidth
     }).length,
     columns: Object.fromEntries(["priority", "identifier", "status", "labels", "project", "due-date", "assignee"].map((slot) => [slot, shown(first, slot)])),
-    titleCut: longTitle ? longTitle.scrollWidth > longTitle.clientWidth : false,
+    titleCut: longTitle ? longTitle.scrollWidth > longTitle.clientWidth + 1 : true,
     longTitleWidth: titleBoxOfLong ? titleBoxOfLong.width : 0,
     moreSize: [moreBox.width, moreBox.height],
     moreHit: probe(moreBox.left + moreBox.width / 2, moreBox.top + moreBox.height / 2),
@@ -125,13 +125,13 @@ try {
       const m = await page.evaluate(measure)
       record(`${label}: no sideways scroll`, m.overflowX <= 0, `overflow ${m.overflowX}px`)
       record(`${label}: five rows inside the viewport`, m.rowCount === 5 && m.outside === 0, `${m.rowCount} rows`)
-      record(`${label}: rows are 44px`, m.heights.every((h) => Math.abs(h - 44) < 0.6), m.heights.map((h) => Math.round(h * 10) / 10).join(","))
+      record(`${label}: rows are at least 44px`, m.heights.every((h) => h >= 43.4) && m.heights.some((h) => Math.abs(h - 44) < 0.6), m.heights.map((h) => Math.round(h * 10) / 10).join(","))
       const sm = viewport.width >= 640
       const lg = viewport.width >= 1024
       const expected = { priority: true, status: true, identifier: sm, "due-date": sm, assignee: sm, labels: lg, project: lg }
       const wrong = Object.entries(expected).filter(([slot, want]) => m.columns[slot] !== want).map(([slot]) => slot)
       record(`${label}: columns ${lg ? "all show" : sm ? "stop short of labels and project" : "are priority, status, title"}`, wrong.length === 0, wrong.length ? `wrong: ${wrong.join(",")}` : "")
-      record(`${label}: long title is cut and keeps room`, m.titleCut && m.longTitleWidth >= 120, `cut ${m.titleCut}, ${Math.round(m.longTitleWidth)}px wide`)
+      record(`${label}: long title wraps in full and keeps room`, !m.titleCut && m.longTitleWidth >= 120, `cut ${m.titleCut}, ${Math.round(m.longTitleWidth)}px wide`)
       record(`${label}: more button is 44x44`, Math.abs(m.moreSize[0] - 44) < 0.6 && Math.abs(m.moreSize[1] - 44) < 0.6, m.moreSize.join("x"))
       record(`${label}: a hit on the more button lands on it`, m.moreHit === "issue-row-more", String(m.moreHit))
       record(`${label}: a hit over the title area lands on the title link`, m.titleHit === "issue-row-title", String(m.titleHit))

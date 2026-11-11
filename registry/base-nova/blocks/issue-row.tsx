@@ -40,7 +40,7 @@ type IssueRowAction = {
 }
 
 type IssueRowProps = Omit<React.ComponentProps<"li">, "title" | "children"> & {
-  /** One line, cut with an ellipsis. It is the row's name and its open target. */
+  /** Wraps when it does not fit, so no title is cut off. It is the row's name and its open target. */
   title: React.ReactNode
   /** Makes the title a link. */
   href?: string
@@ -95,9 +95,8 @@ function IssueRow({
       href,
       type: href == null && onOpen != null ? "button" : undefined,
       onClick: onOpen,
-      title: titleText,
       className: cn(
-        "min-w-0 flex-1 truncate text-left text-xs font-medium sm:text-sm sm:font-semibold",
+        "min-w-0 flex-1 py-1 text-left text-xs font-medium wrap-anywhere sm:text-sm sm:font-semibold",
         interactive &&
           "cursor-pointer outline-none after:absolute after:inset-0 after:z-[1] after:content-[''] focus-visible:after:ring-2 focus-visible:after:ring-ring focus-visible:after:ring-inset",
       ),
@@ -107,7 +106,7 @@ function IssueRow({
   })
 
   const rowClassName = cn(
-    "relative flex h-11 w-full min-w-0 items-center gap-2 select-none [-webkit-touch-callout:none]",
+    "relative flex min-h-11 w-full min-w-0 items-center gap-2 select-none [-webkit-touch-callout:none]",
     "pl-[max(0.75rem,env(safe-area-inset-left))]",
     hasActions ? "pr-[max(0.25rem,env(safe-area-inset-right))]" : "pr-[max(0.75rem,env(safe-area-inset-right))]",
     "hover:bg-muted/50 active:bg-muted/50 data-popup-open:bg-muted/50",
@@ -124,7 +123,7 @@ function IssueRow({
       {identifier != null ? (
         <span
           data-slot="issue-row-identifier"
-          className="hidden w-16 shrink-0 truncate text-sm font-medium text-muted-foreground tabular-nums sm:inline-block"
+          className="hidden w-16 shrink-0 text-sm font-medium wrap-anywhere text-muted-foreground tabular-nums sm:inline-block"
         >
           {identifier}
         </span>
@@ -143,7 +142,7 @@ function IssueRow({
       {project != null ? (
         <span
           data-slot="issue-row-project"
-          className="hidden max-w-32 shrink-0 truncate rounded-md border px-1.5 py-0.5 text-xs text-muted-foreground lg:inline-block"
+          className="hidden max-w-32 shrink-0 rounded-md border wrap-anywhere px-1.5 py-0.5 text-xs text-muted-foreground lg:inline-block"
         >
           {project}
         </span>

@@ -4,7 +4,8 @@
 // Checks, per view:
 //   - the page does not scroll sideways (documentElement.scrollWidth <= innerWidth)
 //   - every card is at least 44px tall and sits inside the viewport
-//   - the long title and the long branch are cut (their scrollWidth exceeds their clientWidth)
+//   - the long title and the long branch wrap in full: they are not clipped (scrollWidth <= clientWidth) and
+//     take more than one line (design-system#205)
 //   - the active card is raised: it has a box-shadow and aria-current
 // Writes docs/assets/card-list-<width>-<theme>.png plus card-list-before-<width>-light.png, the
 // single-row list the cards replace. Exits non-zero if a check fails.
@@ -58,8 +59,10 @@ const measure = () => {
       const box = card.getBoundingClientRect()
       return box.left < 0 || box.right > window.innerWidth
     }).length,
-    titleCut: longTitle ? longTitle.scrollWidth > longTitle.clientWidth : false,
-    branchCut: longBranch ? longBranch.scrollWidth > longBranch.clientWidth : false,
+    titleCut: longTitle ? longTitle.scrollWidth > longTitle.clientWidth + 1 : true,
+    branchCut: longBranch ? longBranch.scrollWidth > longBranch.clientWidth + 1 : true,
+    titleLines: longTitle ? Math.round(longTitle.getBoundingClientRect().height / parseFloat(getComputedStyle(longTitle).lineHeight)) : 0,
+    branchLines: longBranch ? Math.round(longBranch.getBoundingClientRect().height / parseFloat(getComputedStyle(longBranch).lineHeight)) : 0,
     activeShadow: active ? getComputedStyle(active).boxShadow : "none",
     emptyGroups: document.querySelectorAll('[data-slot="card-list-group-empty"]').length,
   }
@@ -82,7 +85,7 @@ try {
       record(`${label}: no sideways scroll`, m.overflowX <= 0, `overflow ${m.overflowX}px`)
       record(`${label}: cards inside the viewport`, m.outside === 0 && m.cardCount === 6, `${m.cardCount} cards`)
       record(`${label}: cards at least 44px tall`, m.shortest >= 44, `shortest ${m.shortest}px`)
-      record(`${label}: long title and branch are cut`, m.titleCut && m.branchCut, `title ${m.titleCut}, branch ${m.branchCut}`)
+      record(`${label}: long title and branch wrap in full`, !m.titleCut && !m.branchCut && m.titleLines >= 2 && m.branchLines >= 2, `title ${m.titleLines} lines, branch ${m.branchLines} lines`)
       record(`${label}: active card is raised`, m.activeShadow !== "none", m.activeShadow.slice(0, 40))
       record(`${label}: empty group says so`, m.emptyGroups === 1)
       await page.screenshot({ path: path.join(assets, `card-list-${viewport.width}-${theme}.png`), fullPage: true })

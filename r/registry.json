@@ -1194,6 +1194,35 @@
       ]
     },
     {
+      "name": "diff-core",
+      "type": "registry:lib",
+      "files": [
+        {
+          "path": "registry/lib/diff-core.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "file-diff",
+      "type": "registry:block",
+      "registryDependencies": [
+        "deanjstone/design-system/button",
+        "deanjstone/design-system/collapsible",
+        "deanjstone/design-system/diff-core"
+      ],
+      "dependencies": [
+        "lucide-react",
+        "cn@^0.5.0"
+      ],
+      "files": [
+        {
+          "path": "registry/base-nova/blocks/file-diff.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
       "name": "issue-row",
       "type": "registry:block",
       "registryDependencies": [

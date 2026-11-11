@@ -99,7 +99,7 @@ function Checklist({ field, filter, legend, onChange }: ChecklistProps) {
           className="flex min-h-9 cursor-pointer items-center gap-2.5 rounded-md px-2 text-sm hover:bg-muted pointer-coarse:min-h-11 pointer-coarse:text-base"
         >
           <Checkbox checked={filter.values.includes(option.value)} onCheckedChange={(checked) => toggle(option.value, checked)} />
-          <span className="min-w-0 truncate">{option.label}</span>
+          <span className="min-w-0 wrap-anywhere">{option.label}</span>
         </label>
       ))}
     </fieldset>

@@ -114,7 +114,7 @@ registry/
   lib/page-transition-core.ts  theme tokens to glimm band colours (page-transition, staged: not in registry.json yet)
   base-nova/ui/               66 listed base-nova components (Base UI, plus link-pill, graph-3d, chart, data-table) and the unlisted page-transition
   base-nova/hooks/            use-mobile (pulled by sidebar), use-highlighted-code (pulled by code-block), use-theme-preference, use-font-preference, use-filter-state, use-display-settings
-  base-nova/blocks/           v3 layout blocks: app-shell, app-switcher, page-header, empty-page, settings-page, login, card-list, issue-row, filter-builder, grouped-list
+  base-nova/blocks/           v3 layout blocks: app-shell, app-switcher, page-header, empty-page, settings-page, login, card-list, issue-row, filter-builder, grouped-list, file-diff
   design-check/             scripts and workflow of the design-check item (CI, not UI)
   app-html-head/            iPhone <head> tags snippet (app-html-head item)
   links/                    links.json, its schema, links.sh and the link-check script and workflow (ADR-0004)
@@ -553,7 +553,7 @@ npx shadcn add deanjstone/design-system/app-shell#v3.0.0
 | Type scale | Tailwind's sizes | T3's scale: `text-xs` is 13px/17px (was 12px/16px), `text-xl` 21px, `text-2xl` 26px; `text-2xs` and `text-3xs` are new | Swap `text-xs` for `text-2xs` where the old 12px is wanted |
 | Glass tokens | none | `--glass-surface`, `--glass-fallback`, `--glass-blur`, `--glass-opacity`, `--glass-saturation`; `surface-glass`, `dialog-glass`, `dropdown-glass` utilities | Nothing, unless you want the glass recipe |
 | Theme preference | Per-app | `theme-preference` lib (cookie `ds-theme` on a configurable parent domain, `localStorage` fallback, no-flash `themeInitScript()`) and the `use-theme-preference` hook | Put `themeInitScript()` in `<head>` |
-| Layout blocks | none | `app-shell`, `app-switcher`, `page-header`, `empty-page`, `settings-page`, `login`, `card-list`, `issue-row`, `filter-builder`, `grouped-list`, plus the `nav-link` lib | Optional; add the ones you want |
+| Layout blocks | none | `app-shell`, `app-switcher`, `page-header`, `empty-page`, `settings-page`, `login`, `card-list`, `issue-row`, `filter-builder`, `grouped-list`, `file-diff`, plus the `nav-link` lib | Optional; add the ones you want |
 | Radius | `0.625rem` | `0.625rem`, unchanged | Nothing |
 
 Rules for the blocks and the full token map are in
@@ -622,6 +622,41 @@ default (root 16px, scale unset off iOS; scale 1 gives 100%) and the maths of th
 scale, not WebKit. The device check is [#141](https://github.com/deanjstone/design-system/issues/141).
 **If it fails, revert the one commit that enabled this** (`feat: follow iOS Larger
 Text through a guarded root font and a measured scale`).
+
+## Wrap by default
+
+[design-system#205](https://github.com/deanjstone/design-system/issues/205). Text in a card, a row or a diff wraps: nothing is
+cut off with an ellipsis and nothing scrolls sideways. The rule is `wrap-anywhere` (`overflow-wrap: anywhere`), which lets
+a long token with no spaces (a path, a branch, a hash) break so it cannot widen its container. `truncate` and `line-clamp`
+are for one-line navigation and chrome only: the app bar, tab labels, the app switcher, select triggers and fixed-height
+buttons.
+
+What changed for a consumer who updates, with no opt-in:
+
+- `ItemTitle` and `ItemDescription` no longer clamp to one and two lines.
+- `card-list`: the group heading, the card title and the branch wrap. The card still clips what it holds and stays
+  `min-h-11`, and the `title` tooltip on the title is gone because nothing is cut.
+- `issue-row`: the title wraps (the row is `min-h-11`, not `h-11`, so it grows), and so do the id and the project chip.
+  The `title` tooltip on the title is gone.
+- `grouped-list`: the group header's label wraps and the header is `min-h-11`; the display menu's property labels wrap.
+- `filter-builder`'s checklist labels and `attachment`'s name and description wrap.
+- New `file-diff` block, below.
+
+To cut one component's text again, pass `truncate` or `line-clamp-N` in its `className` (or in the slot's selector, for
+example `[&_[data-slot=card-list-item-title]]:truncate`): the defaults changed, what you can do did not.
+
+Every `truncate` and `line-clamp` still in `registry/base-nova`, with its reason. `test/wrap-default.test.ts` is this list:
+a new one anywhere else fails the test.
+
+| File | Kept | Why |
+|---|---|---|
+| `blocks/app-shell.tsx` | 2 | Tab bar labels and the More tab: one-line navigation, icon-only past 200% |
+| `blocks/app-switcher.tsx` | 4 | The app name in the header and the trigger, and each app's name and description in the switcher menu |
+| `blocks/filter-builder.tsx` | 2 | The value button's summary (a select trigger) and an active-filter chip's label (a fixed-height button) |
+| `ui/code-block.tsx` | 1 | The header title: the one-line chrome bar above the code, beside its action buttons |
+| `ui/select.tsx` | 1 | The select trigger's value |
+| `ui/sidebar.tsx` | 2 | Sidebar menu button labels: navigation |
+| `ui/trace.tsx` | 1 | The trace line's title: a one-line collapsible trigger |
 
 ## Safe areas (iPhone)
 
@@ -1088,13 +1123,13 @@ cards of two rows, the title, then status, branch, check and relative time. The 
 - **A card is a `div` until `render` says otherwise.** `render={<a href />}` or `render={<button />}` makes the
   whole card the tap target (the app's router `Link` works too). `active` sets `aria-current="true"`,
   `data-active` and a raised look (`bg-card`, `shadow-md`, a hairline ring); the others sit flat on `bg-muted/50`.
-- **Touch and width.** Every card is `min-h-11` (44px) and `w-full`, and clips what it holds. The title is one line
-  with an ellipsis (and a `title` tooltip when it is text). The branch is the only second-row item that shrinks, so
+- **Touch and width.** Every card is `min-h-11` (44px) and `w-full`, and clips what it holds. The title wraps in
+  full ([wrap by default](#wrap-by-default)), and so do the heading and the branch. The branch is the only second-row item that shrinks, so
   status, check and time stay readable at 320px. Never widens the page: a `<button>` sizes to its content, which
   `w-full` prevents (the WebKit check found this; jsdom cannot).
 - **Proof.** `node docs/card-list/screenshots.mjs` builds the demo and opens it in one headless WebKit page at a
   time at 390×844, 320×844 and 1280×800, light and dark. It checks no sideways scroll, cards inside the viewport and
-  at least 44px tall, the long title and branch cut, the active card raised, the empty group present, and writes
+  at least 44px tall, the long title and branch wrapping in full, the active card raised, the empty group present, and writes
   `docs/assets/card-list-<width>-<theme>.png` and `card-list-before-<width>-light.png` (the single-row list the
   cards replace). Screenshots: ![390 light](docs/assets/card-list-390-light.png)
   ![390 dark](docs/assets/card-list-390-dark.png) ![320 dark](docs/assets/card-list-320-dark.png)
@@ -1130,7 +1165,7 @@ dependencies. It pulls in `context-menu` and `dropdown-menu`.
 
 - **Columns drop away, the title never squeezes.** Below `sm` (640px) a row is the priority, the status, the title and
   the more button. At `sm` the id, due date and assignee join; at `lg` (1024px) the labels and the project or wave.
-  The title takes what is left and is cut with an ellipsis (a `title` tooltip when it is text); every other column keeps
+  The title takes what is left and wraps in full, so the row grows past 44px ([wrap by default](#wrap-by-default)); every other column keeps
   its width. Leave out a column and no empty slot is rendered, so give the rows of one list the same columns if you
   want their titles to line up.
 - **Tap anywhere opens the item.** The title is the link (`href`), a button (`onOpen`) or your router's `Link`
@@ -1145,7 +1180,7 @@ dependencies. It pulls in `context-menu` and `dropdown-menu`.
 - **Accessible names are yours to give.** Priority, status and assignee are usually icons or avatars: pass an
   `aria-label` or `sr-only` text with each. The row itself is a list item named by its title.
 - **Proof.** `node docs/issue-row/screenshots.mjs` builds the demo and opens it in one headless WebKit page at a time at
-  390, 320, 768 and 1280px, light and dark. It checks no sideways scroll, 44px rows, the column tiers, the title cut
+  390, 320, 768 and 1280px, light and dark. It checks no sideways scroll, rows of at least 44px, the column tiers, the title wrapping in full
   (at 320px it keeps at least 120px), the 44px more button, hit tests (a hit on the avatar lands on the title link: the
   check found the avatar swallowing the tap), tap, the menu actions, long-press and right-click, and writes
   `docs/assets/issue-row-<width>-<theme>.png` and `issue-row-<width>-menu-light.png`. The long-press is a dispatched
@@ -1268,6 +1303,44 @@ const grouping = GROUPINGS.find((g) => g.id === display.settings.groupBy) ?? nul
   emulation at 390px. Writes `docs/assets/grouped-list-<width>-<theme>.png` and `-menu-light.png`. Screenshots:
   ![390 menu](docs/assets/grouped-list-390-menu-light.png) ![320 dark](docs/assets/grouped-list-320-dark.png)
   ![1280 light](docs/assets/grouped-list-1280-light.png)
+
+## File diff
+
+`file-diff` is one changed file with its diff, moved from ops-hub's `file-diff.tsx`
+([design-system#205](https://github.com/deanjstone/design-system/issues/205)). It pulls in `button`, `collapsible` and the
+`diff-core` lib (the unified-diff parser, `parsePatch`). `npx shadcn add deanjstone/design-system/file-diff`.
+
+```tsx
+// `file` is GitHub's "list pull request files" shape; ops-hub's PullFile fits as it is.
+<Card>
+  <CardHeader><CardTitle>Files changed</CardTitle></CardHeader>
+  <CardContent className="flex flex-col gap-2">
+    {files.map((file) => (
+      <FileDiff key={file.filename} file={file} bleed className="max-md:-mx-4" />
+    ))}
+  </CardContent>
+</Card>
+```
+
+- **Everything wraps.** The file path, the hunk headers and every code line wrap (`whitespace-pre-wrap` keeps the
+  indentation, `wrap-anywhere` breaks a token with no spaces). There is no sideways scroll at any width.
+- **The sign has its own column.** The `+` or `−` sits in a narrow column apart from the code, so a wrapped line stays
+  indented under its code.
+- **One line-number column on phones.** From `md` up there are two (old, new). Below `md` there is one: the new line
+  number, or the old one on a deleted line, which has no new one.
+- **Edge to edge on phones.** `bleed` drops the block's side borders and rounded corners below `md` and keeps its body
+  clear of the safe areas (`max-md:pl-safe max-md:pr-safe`). The block cannot know the padding of the card around it, so
+  pair `bleed` with a negative margin that matches: `className="max-md:-mx-4"` inside a `p-4` card.
+- **Collapsed past 400 lines**, or when the file has no patch (binary, too large, or a pure rename), which says why once
+  opened. `defaultOpen` overrides it either way. Other props of `Collapsible` pass through.
+- **Data attributes.** `data-slot="file-diff"` and `data-file` on the root; each line is `data-slot="file-diff-line"` with
+  `data-line` of `hunk`, `add`, `del`, `context` or `note`.
+- **Proof.** `node docs/file-diff/screenshots.mjs` builds the demo and opens it in one headless WebKit page at a time at
+  390 (light and dark), 320 and 1280px. It checks no sideways scroll, nothing in a diff clipped or outside the viewport,
+  the long code line and the long path wrapping in full, one line-number column below `md` and two above, and the diff
+  running edge to edge in its card on phones. Writes `docs/assets/file-diff-<width>-<theme>.png`. Screenshots:
+  ![390 light](docs/assets/file-diff-390-light.png) ![390 dark](docs/assets/file-diff-390-dark.png)
+  ![320 light](docs/assets/file-diff-320-light.png)
 
 ## Style
 

@@ -621,6 +621,33 @@ cascade layer, and unlayered styles win over layered ones regardless of
 specificity — which is how the 44px touch floor outranks a `min-w-0` shrink
 utility on the same element.
 
+### Wrap by default
+
+*Rule: [#205](https://github.com/deanjstone/design-system/issues/205).*
+
+Text wraps. In a card, a list row, a menu checklist or a diff, a long title,
+branch, path or code line breaks onto the next line, so nothing is cut off with
+an ellipsis and nothing scrolls sideways.
+
+- **How.** `wrap-anywhere` (`overflow-wrap: anywhere`), so a token with no
+  spaces (a path, a branch, a hash) breaks too and cannot widen its card. `Card`
+  already did this; `item`, `card-list`, `issue-row`, `grouped-list` and
+  `file-diff` now do.
+- **Where `truncate` and `line-clamp` stay.** One-line navigation and chrome
+  only: the app bar and its app name, tab labels, the app switcher, select
+  triggers, fixed-height buttons and chips, a code block's title bar, a trace
+  line and sidebar menu buttons. A label there has one fixed-height line and
+  nowhere to grow.
+- **A new `truncate` is a decision.** `test/wrap-default.test.ts` lists every one
+  kept, with its reason, and fails on any other.
+- **A row grows when its text wraps.** `issue-row` and the `grouped-list` header
+  are `min-h-11`: 44px is the floor, not the height.
+- **A consumer can still cut one.** Pass `truncate` or `line-clamp-N` in a
+  `className`. The default changed; what a consumer can do did not.
+- **Code wraps as code.** `whitespace-pre-wrap` keeps the indentation, and the
+  `+`/`−` sign sits in its own narrow column so a wrapped line stays indented
+  under its code. Below `md` a diff shows one line-number column, not two.
+
 ### Named Rules
 
 **The Capability Rule.** Adapt to what the device can do, not how wide it is.
@@ -994,6 +1021,9 @@ the indicator. Applied on `focus-visible`, so pointer users never see it.
 - **Background:** `card` on `card-foreground` with a 1px hairline border.
 - **Structure:** Header, Title, Description, Action, Content and Footer, with
   the header growing a second column only when an Action is present.
+- **Text wraps.** Title, description and anything a card holds wrap with
+  `wrap-anywhere`; see [Wrap by default](#wrap-by-default). The `item`,
+  `card-list` and `file-diff` blocks follow the same rule.
 
 ### Inputs
 
@@ -1155,6 +1185,8 @@ catalogue decision rather than pushed out by the registry.
   gap affecting every consuming application, not a slot to fill in passing.
 - **Don't** assume choosing a gradient accent changes anything else. The
   gradients are additive utilities and leave the flat tokens untouched.
+- **Don't** `truncate` or `line-clamp` text in a card, a row or a diff. Wrap it
+  with `wrap-anywhere`; cutting is for one-line navigation and chrome.
 - **Don't** reach for a width breakpoint to solve a touch or hover problem.
   Use `pointer` and `hover` capability queries; a wide screen is not a mouse.
 - **Don't** apply an opacity modifier to `ring`, `input`, or any other token

@@ -6,7 +6,7 @@ import { CardList, CardListGroup, CardListItem } from "../registry/base-nova/blo
 afterEach(cleanup)
 
 const LONG_TITLE =
-  "A very long card title that keeps going well past the width of a 320 pixel phone screen and must be cut, never wrapped, never widening the page"
+  "A very long card title that keeps going well past the width of a 320 pixel phone screen and must wrap, never be cut, never widening the page"
 
 describe("CardList", () => {
   it("is a plain container that keeps its children inside the page width", () => {
@@ -119,12 +119,13 @@ describe("CardListItem", () => {
     expect(container.querySelector("[data-slot=card-list-item-time]")).toBeNull()
   })
 
-  it("sets the branch in monospace and lets it shrink", () => {
+  it("sets the branch in monospace and lets it shrink and wrap", () => {
     render(<CardListItem title="T" branch="feat/188-grouped-two-row-card" />)
 
     const branch = screen.getByText("feat/188-grouped-two-row-card")
     expect(branch.className).toContain("font-mono")
-    expect(branch.className).toContain("truncate")
+    expect(branch.className).toContain("wrap-anywhere")
+    expect(branch.className).not.toMatch(/\btruncate\b/)
     expect(branch.className).toContain("min-w-0")
   })
 
@@ -138,19 +139,28 @@ describe("CardListItem", () => {
     expect(time.className).toContain("ml-auto")
   })
 
-  describe("truncation", () => {
-    it("cuts a long title to one line without widening its card", () => {
+  describe("wrapping (design-system#205)", () => {
+    it("wraps a long title in full, and breaks a token with no spaces, without widening its card", () => {
       render(<CardListItem title={LONG_TITLE} />)
 
       const title = screen.getByText(LONG_TITLE)
-      expect(title.className).toContain("truncate")
+      expect(title.className).toContain("wrap-anywhere")
       expect(title.className).toContain("min-w-0")
+      expect(title.className).not.toMatch(/\btruncate\b|line-clamp/)
     })
 
-    it("offers the full title as a tooltip when the title is text", () => {
+    it("sets no tooltip on the title, because nothing is cut off", () => {
       render(<CardListItem title={LONG_TITLE} />)
 
-      expect(screen.getByText(LONG_TITLE).getAttribute("title")).toBe(LONG_TITLE)
+      expect(screen.getByText(LONG_TITLE).getAttribute("title")).toBeNull()
+    })
+
+    it("wraps a long group heading", () => {
+      render(<CardListGroup heading={LONG_TITLE} />)
+
+      const heading = screen.getByText(LONG_TITLE)
+      expect(heading.className).toContain("wrap-anywhere")
+      expect(heading.className).not.toMatch(/\btruncate\b/)
     })
 
     it("clips the card itself, so nothing inside can push the page wider", () => {

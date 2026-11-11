@@ -1,0 +1,12 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "diff-core",
+  "files": [
+    {
+      "path": "registry/lib/diff-core.ts",
+      "content": "// The unified-diff reader behind `file-diff` (design-system#205), moved here from ops-hub's pulls lib so the\n// block carries it. No React, no DOM: it turns one file's patch into lines.\n\n/** One changed file, in the shape GitHub's \"list pull request files\" gives. A `PullFile` fits as it is. */\ntype FileDiffFile = {\n  filename: string\n  /** Set on a rename: the path the file had before. */\n  previousFilename?: string | null\n  /** GitHub's status, for example `modified` or `renamed`. Only `renamed` changes what the block says. */\n  status?: string\n  additions: number\n  deletions: number\n  /** The unified-diff patch, or `null` when there is none to show (binary, too large, or a pure rename). */\n  patch: string | null\n}\n\ntype DiffLine = {\n  kind: \"hunk\" | \"context\" | \"add\" | \"del\" | \"note\"\n  /** The line's text without its leading + or - sign. A hunk header keeps its `@@`. */\n  text: string\n  oldLine: number | null\n  newLine: number | null\n}\n\nconst HUNK_HEADER = /^@@ -(\\d+)(?:,\\d+)? \\+(\\d+)(?:,\\d+)? @@/\n\n/** A unified-diff patch as GitHub sends it per file, one entry per line with its line numbers. */\nfunction parsePatch(patch: string): DiffLine[] {\n  let oldLine = 0\n  let newLine = 0\n  return patch.split(\"\\n\").map((line): DiffLine => {\n    const hunk = HUNK_HEADER.exec(line)\n    if (hunk) {\n      oldLine = Number(hunk[1])\n      newLine = Number(hunk[2])\n      return { kind: \"hunk\", text: line, oldLine: null, newLine: null }\n    }\n    if (line.startsWith(\"\\\\\")) return { kind: \"note\", text: line.slice(1).trim(), oldLine: null, newLine: null }\n    if (line.startsWith(\"+\")) return { kind: \"add\", text: line.slice(1), oldLine: null, newLine: newLine++ }\n    if (line.startsWith(\"-\")) return { kind: \"del\", text: line.slice(1), oldLine: oldLine++, newLine: null }\n    return { kind: \"context\", text: line.slice(1), oldLine: oldLine++, newLine: newLine++ }\n  })\n}\n\nexport { parsePatch }\nexport type { DiffLine, FileDiffFile }\n",
+      "type": "registry:lib"
+    }
+  ],
+  "type": "registry:lib"
+}
