@@ -7,9 +7,9 @@ import { describe, expect, it } from "vitest"
 
 // The wiring of design-system#179 (map argus-config#1048): a release is cut only
 // when the owner promotes a main SHA to `deploy`. The behaviour is tested in
-// promote.test.ts, semantic-release-pin.test.ts, release-catch-up.test.ts and
-// release-retry.test.ts; these cases pin the configuration that would otherwise
-// fail silently, a release back on a push to main or a plugin that pushes deploy.
+// promote.test.ts, release-gate.test.ts and release-tag.test.ts; these cases pin the
+// configuration that would otherwise fail silently, a release back on a push to main or
+// a plugin that pushes a branch (design-system#203).
 
 const root = fileURLToPath(new URL("../", import.meta.url))
 const read = (path: string) => readFileSync(join(root, path), "utf8")
@@ -24,24 +24,21 @@ describe("semantic-release config", () => {
     expect(releaseConfig.branches).toEqual(["deploy"])
   })
 
-  it("has no plugin that pushes the release branch: deploy must stay a fast-forward of main", () => {
-    expect(releaseConfig.plugins.map(pluginName)).not.toContain("@semantic-release/git")
-  })
-
-  it("commits the release files itself and lands them on main", () => {
-    const pin = releaseConfig.plugins.find((plugin) => pluginName(plugin).endsWith("semantic-release-pin.mjs"))
-    expect(Array.isArray(pin) ? pin[1] : undefined).toMatchObject({
-      releaseFiles: ["CHANGELOG.md", "package.json"],
-      targetBranch: "main",
-    })
-  })
-
-  it("runs the pin plugin after the plugins that write the release files", () => {
+  // design-system#203: the release commits nothing, so no plugin may write or push a branch.
+  it("has no plugin that commits or pushes: deploy stays a fast-forward of main and main gains nothing", () => {
     const names = releaseConfig.plugins.map(pluginName)
-    const pin = names.findIndex((name) => name.endsWith("semantic-release-pin.mjs"))
-    expect(pin).toBe(names.length - 1)
-    expect(names.indexOf("@semantic-release/changelog")).toBeLessThan(pin)
-    expect(names.indexOf("@semantic-release/npm")).toBeLessThan(pin)
+    expect(names).toEqual([
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      "@semantic-release/github",
+    ])
+  })
+
+  it("does not depend on the plugins it dropped", () => {
+    const manifest = JSON.parse(read("package.json")) as { devDependencies: Record<string, string> }
+    for (const name of ["@semantic-release/git", "@semantic-release/changelog", "@semantic-release/npm"]) {
+      expect(manifest.devDependencies).not.toHaveProperty(name)
+    }
   })
 })
 
@@ -51,7 +48,7 @@ describe("workflows", () => {
     .map((file) => ({ file, text: read(`.github/workflows/${file}`) }))
 
   it("only release.yml runs semantic-release", () => {
-    const others = workflows.filter(({ file }) => file !== "release.yml" && /semantic-release|release-with-retry/.test(read(`.github/workflows/${file}`)))
+    const others = workflows.filter(({ file }) => file !== "release.yml" && /semantic-release/.test(read(`.github/workflows/${file}`)))
     expect(others.map(({ file }) => file)).toEqual([])
   })
 
@@ -70,7 +67,7 @@ describe("workflows", () => {
 describe("promotion", () => {
   it("ships an executable promote.sh and the doc that explains it", () => {
     expect(statSync(join(root, "scripts/promote.sh")).mode & 0o111).not.toBe(0)
-    expect(statSync(join(root, "scripts/release/catch-up-release-tags.sh")).mode & 0o111).not.toBe(0)
+    expect(statSync(join(root, "scripts/release/release-needed.sh")).mode & 0o111).not.toBe(0)
     expect(read("docs/deploy-branch.md")).toContain("scripts/promote.sh")
   })
 })

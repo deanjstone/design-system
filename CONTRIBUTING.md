@@ -2,7 +2,7 @@
 
 ## Commit messages
 
-This repo uses [Conventional Commits](https://www.conventionalcommits.org/) to drive automated versioning via [semantic-release](https://semantic-release.gitbook.io/). The commits promoted to `deploy` are scanned by the `Release` workflow (`.github/workflows/release.yml`, a push to `deploy`; its `Test before release (...)` job must pass first) to decide the next version, changelog entry, and GitHub release.
+This repo uses [Conventional Commits](https://www.conventionalcommits.org/) to drive automated versioning via [semantic-release](https://semantic-release.gitbook.io/). The commits promoted to `deploy` are scanned by the `Release` workflow (`.github/workflows/release.yml`, a push to `deploy`; its `Test before release (...)` job must pass first) to decide the next version and the GitHub release. The release commits nothing: the `vX.Y.Z` tag lands on the promoted commit, and `CHANGELOG.md` is frozen at 3.24.0 (the GitHub release notes carry the history).
 
 Format:
 
@@ -29,4 +29,4 @@ The squash subject must keep the type prefix. A plain subject such as `Lower the
 
 ## When a release happens
 
-`Release` never runs from a red head (design-system#159, design-system#191). It starts on a push to `deploy` (the owner's promotion, `docs/deploy-branch.md`) and runs two jobs in order: `Test before release (component tests, design detector, registry drift, curve geometry gate, lint)` on the promoted SHA, then `Release`, which `needs:` it. It then publishes only if the promoted SHA is still the newest commit on `deploy` that is not a `chore(release):` commit. If a newer promotion has landed, this run does nothing and the newer promotion's own run follows. A real commit that skipped CI blocks the release the same way, until a later promotion goes green. The `Design` workflow is separate and does not gate a release.
+`Release` never runs from a red head (design-system#159, design-system#191). It starts on a push to `deploy` (the owner's promotion, `docs/deploy-branch.md`) and runs two jobs in order: `Test before release (component tests, design detector, registry drift, curve geometry gate, lint)` on the promoted SHA, then `Release`, which `needs:` it. The test job first checks whether any `feat`, `fix`, `perf`, `revert` or breaking commit has landed since the last tag (`scripts/release/release-needed.sh`); with none, the run ends green with no test and no version. It then publishes only if the promoted SHA is still the tip of `deploy`. If a newer promotion has landed, this run does nothing and the newer promotion's own run follows. The `Design` workflow is separate and does not gate a release.

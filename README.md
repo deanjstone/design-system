@@ -50,7 +50,8 @@ and serves its page for the length of its run and then stops.
 **Deploy.** Nothing is deployed to a host. A new version is published when the
 owner promotes a `main` commit to the `deploy` branch (`scripts/promote.sh <sha>`,
 or Approve on the ops hub card), which runs the `Release` workflow: tests first, then a
-`vX.Y.Z` tag, GitHub release and CHANGELOG entry. A push to `main` publishes
+`vX.Y.Z` tag on the promoted commit and a GitHub release (nothing at all when the
+promotion carries no `feat`, `fix`, `perf` or breaking commit). A push to `main` publishes
 nothing. Full flow, rollback and first-time setup: [docs/deploy-branch.md](docs/deploy-branch.md);
 see [Versioning](#versioning).
 
@@ -125,7 +126,7 @@ theme/themes.json           the six T3 themes (light + dark) behind both; see DE
 test/                      Vitest suites, one per item, plus ones that pin the scripts and workflows
 docs/                      ADRs, deploy-branch.md, and one demo plus browser check per feature area
 scripts/geometry-gate/     the curve-geometry gate behind pnpm gate:geometry
-scripts/release/           semantic-release plugin and helpers; scripts/promote.sh pushes deploy
+scripts/release/           release-needed.sh (anything to release?) and tested-head.sh (tag only the promoted SHA); scripts/promote.sh pushes deploy
 scripts/theme/              extract-t3.mjs reads T3's sheet; build.mjs writes tokens.css and registry.json
 scripts/links/              registry.mjs validates links.json, generate.mjs writes lib/links.ts, cf-drift.mjs diffs Cloudflare
 ```
@@ -243,12 +244,15 @@ Commits, but only when the owner promotes a `main` commit to the `deploy` branch
 and releases nothing; there is no manual tagging step. The `Release` workflow
 (`.github/workflows/release.yml`) runs on the push to `deploy`: a
 `Test before release (component tests, design detector, registry drift, curve geometry gate, lint)` job first
-(every step of `scripts/check.sh` plus the geometry gate, so nothing reaches `main` that `pnpm check` would reject),
-then `Release`, which needs it, so a red test publishes no version. A `fix:` bumps the
+(it asks `scripts/release/release-needed.sh` whether anything would ship and ends green with no test and no version
+when nothing would; otherwise every step of `scripts/check.sh` plus the geometry gate, so nothing is tagged that
+`pnpm check` would reject), then `Release`, which needs it, so a red test publishes no version. A `fix:` bumps the
 patch, a `feat:` the minor, and a `BREAKING CHANGE:` footer the major. The
 analyzer here (`conventional-changelog-angular` 8.3.1) does not read a `!` in
-the subject, so a `feat!:` with no footer releases nothing; write both. Every release gets a `vX.Y.Z` tag, a GitHub release, and a CHANGELOG
-entry.
+the subject, so a `feat!:` with no footer releases nothing; write both. Every release gets a `vX.Y.Z` tag on the promoted commit and a GitHub release whose notes
+carry the history. The release commits and pushes nothing, so `main` gains no bot commit and the tag is always
+in `deploy`'s history (design-system#203). `CHANGELOG.md` is frozen at 3.24.0, the last entry the old release wrote;
+read the GitHub releases for anything newer.
 
 An unpinned `shadcn add deanjstone/design-system/<item>` pulls whatever
 `main` holds at that moment, so an `add` re-run can pull a breaking change
@@ -261,48 +265,41 @@ how every consumer looks.
 
 ### Pinning to a release
 
-**From the release that ships design-system#65, a tag pins its dependencies
-too.** Every in-repo `registryDependencies` entry in a tagged `registry.json`
-and `r/*.json` carries that tag's ref, for example
-`deanjstone/design-system/button#v4.0.0`, so shadcn fetches each dependency
-from the same tag as the item you named. shadcn does not carry a ref across
-dependencies on its own: "Refs are not inherited across dependencies. If a
-dependency should be pinned, include its own ref." ([GitHub
-Registries](https://ui.shadcn.com/docs/registry/github), read 2026-10-08), so
-the release writes the ref into each entry. `main` keeps the unversioned form
-(`deanjstone/design-system/<name>`), so an unpinned install still floats.
+**A tag is the promoted commit on `deploy`.** The release stamps nothing and commits
+nothing (design-system#203, the owner's decision of 9 Nov 2026 on argus-config#1259), so the
+tag's `registry.json` and `r/*.json` are exactly what `main` held at that SHA, and the tag is
+reachable from `deploy`. Pin to it: `git merge-base --is-ancestor <tag> origin/deploy` holds
+for every release made from this one on.
 
-**Older tags do not.** Before that release, a pin fixed only the item you
-named: every `registryDependencies` entry was an unversioned address and
-resolved from `main`. If you pin to an older tag, read the "In practice"
-paragraph below. Entries from other registries are never stamped. Only `theme`,
+**The named item comes from the tag; its in-repo dependencies still float.** An item's
+`registryDependencies` entries are written without a ref (`deanjstone/design-system/utils`), and
+shadcn does not carry a ref across dependencies ("Refs are not inherited across
+dependencies. If a dependency should be pinned, include its own ref." [GitHub
+Registries](https://ui.shadcn.com/docs/registry/github), read 2026-10-08). So
+`add deanjstone/design-system/sidebar#v3.25.0` fetches `sidebar` from the tag and its
+dependencies from `main` (the table below measured this on a tag with unversioned
+dependencies). Releases from `v3.1.0` to `v3.24.0` stamped `#<tag>` into each entry and
+did pin them (design-system#65); that stamp-and-restore commit pair is retired, and a tag
+no longer does that. Entries from other registries are never rewritten. Only `theme`,
 `utils`, `use-mobile`, `highlighter`, `link-pill-core` and `link-pill-css` have no
-registry dependencies. Almost every other item depends on at least `utils`.
+registry dependencies; almost every other item depends on at least `utils`.
 
-**What the release does.** semantic-release's `prepare` step runs
-`scripts/release/semantic-release-pin.mjs` after the changelog and version files
-are written (the plugin commits them itself, on top of the promoted SHA). It stamps
-`#<tag>` into `registry.json`, rebuilds `r/` with `shadcn build`, fails the
-release if any in-repo entry is left without exactly that ref, and commits the
-result. The tag points at that commit. A second commit on `main` restores the
-unversioned `registry.json` and `r/`, so `main`'s tree is the release commit's
-tree. The tag stays reachable from `main`, which semantic-release needs to
-find the last release. A commit cannot contain its own SHA, so the tag name is
-the ref. Tags are immutable by convention, which is what makes that safe.
+**For a reproducible install, pin the tag and review what the CLI writes.** `shadcn add`
+copies source into the consumer's repo, so the committed code is the real pin. After an `add`
+from a tag, read the diff of the dependency files (`utils`, `button`, ...) as you would any
+dependency upgrade, or add only the leaf items listed above. Do not rely on `#ref` for a
+dependency: the dependency's `main` copy wins (see the table below).
 
-**When `main` moves during a release.** Direct pushes can land while a Release
-run is in flight. The run starts from the tip of `deploy`, the promoted SHA, so
-a newer `main` is never released early. It runs
-`scripts/release/release-with-retry.sh`, and redoes the release up to 3 times if
-semantic-release reports the branch is behind or a release push is rejected as
-a non-fast-forward; each attempt first resets the checkout to `origin/deploy`.
-The version bump is merged into whatever `main` holds when it lands.
-Three failures fail the job with an `::error::` line. A rejection of the pin
-plugin's last push, which comes after the release commit has reached `main`,
-leaves a second release commit and a duplicate CHANGELOG section for the same
-version after the redo; the tag and `r/` pin are still made once.
-The `Registry output current` check runs on `main` and pull requests only, so
-it never sees the stamped form.
+**What a release does.** `Release` runs `semantic-release` on a checkout of the tip of
+`deploy`. It picks the version from the commits since the last tag, creates the `vX.Y.Z` tag on that
+commit, which the gate proved is the promoted SHA, and publishes the GitHub release.
+It pushes no branch (`.releaserc.json` has no plugin that commits), so a promotion's
+tag is the only thing it adds, plus semantic-release's own
+`refs/notes/semantic-release-*` ref, which is not a branch. Two promotions in quick
+succession release in order (the `release` concurrency group queues, never cancels); a run whose
+tested SHA is no longer the tip of `deploy` releases nothing, and the newer promotion's run
+covers every commit since the last tag.
+The `Registry output current` check runs on `main` and pull requests only.
 
 **Option 1: a `#ref` on the item address (preferred).** shadcn 4.x accepts
 a branch, tag or commit SHA after `#`:
@@ -351,18 +348,16 @@ shorthand only to track `main` on purpose.
 **What this means in practice.** `shadcn add` copies source into the
 consumer's repo, so the code you commit is the real pin. A later `add`
 changes nothing until it runs. Review its diff the way you would review any
-dependency upgrade. On a tag from the release that ships design-system#65 or
-later, files pulled in as dependencies come from the same tag. A dependency
-added to `main` after the tag is never installed by a tagged address. On an
-older tag, dependencies come from `main`, and passing each one with its own
-`#ref` in the same command does **not** work around that: the dependency's
-`main` copy wins (see below). For a fully reproducible install from an older
-tag, pin and add only leaf items (`theme`, `utils`, `use-mobile`), or inspect
-the dependency files the CLI writes. A tooling script that reads
-`registryDependencies` from a tagged build sees the `#ref` suffix.
+dependency upgrade. On a tag from `v3.1.0` to `v3.24.0`, files pulled in as
+dependencies come from the same tag, because those releases stamped it in. On any
+other tag, including every release from design-system#203 on, dependencies come from
+`main`, and passing each one with its own `#ref` in the same command does **not** work
+around that: the dependency's `main` copy wins (see below). For a fully reproducible
+install, pin and add only leaf items (`theme`, `utils`, `use-mobile`), or inspect
+the dependency files the CLI writes.
 
-Verified 2026-10-08 with `shadcn@4.21.4` against a tag from before the stamping
-above, in a fresh Vite app with `init -b base -p nova`. Every `fetch` and `git` call the CLI made was logged
+Verified 2026-10-08 with `shadcn@4.21.4` against a tag whose dependencies were
+unversioned (the form every tag has again from design-system#203), in a fresh Vite app with `init -b base -p nova`. Every `fetch` and `git` call the CLI made was logged
 (design-system#59):
 
 | Command | Named item from | Dependencies from |
@@ -472,8 +467,8 @@ adding the items.
    A `registryDependencies` entry naming another item in this repo must use
    its full address, `deanjstone/design-system/<name>`. A bare name such as
    `button` means shadcn's built-in item, not ours, so the consumer silently
-   gets upstream's copy (design-system#57). Write it without a ref: the
-   release stamps `#<tag>` into tagged builds itself.
+   gets upstream's copy (design-system#57). Write it without a ref: no release
+   stamps one in any more (design-system#203).
 
    Pin a pre-1.0 npm dependency to its minor, e.g. `@shadcn/react@^0.3.1`,
    so a re-run `shadcn add` cannot pull a breaking release.
