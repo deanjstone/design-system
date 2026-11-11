@@ -1,3 +1,10 @@
+# [3.24.0](https://github.com/deanjstone/design-system/compare/v3.23.0...v3.24.0) (2026-11-11)
+
+
+### Features
+
+* wrap card text and diffs by default, and add the file-diff block ([162ebfe](https://github.com/deanjstone/design-system/commit/162ebfe88bc5bbcd75738d6fd8e395ac159c378b)), closes [#205](https://github.com/deanjstone/design-system/issues/205)
+
 # [3.23.0](https://github.com/deanjstone/design-system/compare/v3.22.0...v3.23.0) (2026-11-10)
 
 
