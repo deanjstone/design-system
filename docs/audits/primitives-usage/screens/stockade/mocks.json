@@ -1,0 +1,104 @@
+[
+  {
+    "url": "**/auth/v1/user**",
+    "status": 200,
+    "json": { "id": "00000000-0000-4000-8000-000000000001", "aud": "authenticated", "role": "authenticated", "email": "owner@example.test", "app_metadata": {}, "user_metadata": { "name": "Owner" }, "created_at": "2026-01-01T00:00:00Z" }
+  },
+  {
+    "url": "**/auth/v1/**",
+    "status": 200,
+    "json": {}
+  },
+  {
+    "url": "**/realtime/**",
+    "status": 204,
+    "body": ""
+  },
+  {
+    "url": "**/rest/v1/shopping_list**completed_at=is.null**",
+    "status": 200,
+    "json": [
+      { "product_id": "prod-rice" },
+      { "product_id": "prod-aa" },
+      { "product_id": "prod-milk" },
+      { "product_id": "prod-bulbs" },
+      { "product_id": "prod-pasta" }
+    ]
+  },
+  {
+    "url": "**/rest/v1/shopping_list**",
+    "status": 200,
+    "json": [
+      { "id": "shop-oil", "user_id": "00000000-0000-4000-8000-000000000001", "product_id": "prod-oil", "quantity_needed": 1, "completed_at": "2026-11-10T09:15:00Z", "created_at": "2026-11-08T12:00:00Z", "products": { "name": "Olive oil, extra virgin", "unit": "bottle", "barcode": null } },
+      { "id": "shop-soap", "user_id": "00000000-0000-4000-8000-000000000001", "product_id": "prod-soap", "quantity_needed": 2, "completed_at": "2026-11-10T09:16:00Z", "created_at": "2026-11-08T12:05:00Z", "products": { "name": "Hand soap refill", "unit": "bottle", "barcode": null } },
+      { "id": "shop-coffee", "user_id": "00000000-0000-4000-8000-000000000001", "product_id": "prod-coffee", "quantity_needed": 1, "completed_at": "2026-11-10T09:17:00Z", "created_at": "2026-11-08T12:10:00Z", "products": { "name": "Ground coffee, medium roast", "unit": "bag", "barcode": null } },
+      { "id": "shop-rice", "user_id": "00000000-0000-4000-8000-000000000001", "product_id": "prod-rice", "quantity_needed": 2, "completed_at": null, "created_at": "2026-11-09T18:00:00Z", "products": { "name": "Jasmine rice", "unit": "kg", "barcode": "9310000000011" } },
+      { "id": "shop-aa", "user_id": "00000000-0000-4000-8000-000000000001", "product_id": "prod-aa", "quantity_needed": 4, "completed_at": null, "created_at": "2026-11-09T18:01:00Z", "products": { "name": "AA batteries, pack of 8", "unit": "pack", "barcode": "9310000000028" } },
+      { "id": "shop-milk", "user_id": "00000000-0000-4000-8000-000000000001", "product_id": "prod-milk", "quantity_needed": 2, "completed_at": null, "created_at": "2026-11-09T18:02:00Z", "products": { "name": "Long-life milk, full cream", "unit": "litre", "barcode": null } },
+      { "id": "shop-bulbs", "user_id": "00000000-0000-4000-8000-000000000001", "product_id": "prod-bulbs", "quantity_needed": 2, "completed_at": null, "created_at": "2026-11-10T07:30:00Z", "products": { "name": "LED bulbs, warm white, E27", "unit": "pack", "barcode": null } },
+      { "id": "shop-pasta", "user_id": "00000000-0000-4000-8000-000000000001", "product_id": "prod-pasta", "quantity_needed": 2, "completed_at": null, "created_at": "2026-11-10T07:31:00Z", "products": { "name": "Dried spaghetti, 500 g", "unit": "packet", "barcode": null } }
+    ]
+  },
+  {
+    "url": "**/rest/v1/items**",
+    "status": 200,
+    "json": [
+      { "id": "item-robot", "user_id": "00000000-0000-4000-8000-000000000001", "name": "Robot vacuum with the spare brush roll and charging dock", "category_id": "cat-appliances", "location_id": "loc-house", "serial_number": "RV-88014", "purchase_date": "2026-05-16", "purchase_price": 499, "warranty_date": "2028-05-16", "notes": "Spare brush roll is in the hall cupboard", "created_at": "2026-11-10T08:12:00Z", "updated_at": "2026-11-10T08:12:00Z" },
+      { "id": "item-kettle", "user_id": "00000000-0000-4000-8000-000000000001", "name": "Electric kettle, 1.7 L", "category_id": "cat-appliances", "location_id": "loc-kitchen", "serial_number": null, "purchase_date": "2026-06-02", "purchase_price": 59.9, "warranty_date": null, "notes": "Descaled in September", "created_at": "2026-11-08T19:40:00Z", "updated_at": "2026-11-08T19:40:00Z" },
+      { "id": "item-charger", "user_id": "00000000-0000-4000-8000-000000000001", "name": "Laptop charger, 65 W USB-C", "category_id": "cat-electronics", "location_id": "loc-house", "serial_number": "USB65-0931", "purchase_date": "2025-08-20", "purchase_price": 39, "warranty_date": "2026-08-20", "notes": "Keep with the travel bag", "created_at": "2026-11-07T07:05:00Z", "updated_at": "2026-11-07T07:05:00Z" },
+      { "id": "item-airfryer", "user_id": "00000000-0000-4000-8000-000000000001", "name": "Air fryer with two drawers", "category_id": "cat-appliances", "location_id": "loc-kitchen", "serial_number": "AF-22083", "purchase_date": "2025-12-01", "purchase_price": 169, "warranty_date": "2026-12-01", "notes": "Drawers are dishwasher safe", "created_at": "2026-11-06T12:30:00Z", "updated_at": "2026-11-06T12:30:00Z" },
+      { "id": "item-smoke", "user_id": "00000000-0000-4000-8000-000000000001", "name": "Smoke alarm with ten-year sealed battery", "category_id": "cat-electronics", "location_id": "loc-house", "serial_number": null, "purchase_date": "2025-02-02", "purchase_price": 49.95, "warranty_date": "2035-02-02", "notes": "Test monthly, next test in November", "created_at": "2026-11-05T18:22:00Z", "updated_at": "2026-11-05T18:22:00Z" },
+      { "id": "item-mixer", "user_id": "00000000-0000-4000-8000-000000000001", "name": "Stand mixer with the dough hook and whisk", "category_id": "cat-appliances", "location_id": "loc-kitchen", "serial_number": "SM-7741-B", "purchase_date": "2024-11-29", "purchase_price": 449.95, "warranty_date": "2026-11-29", "notes": null, "created_at": "2026-11-04T09:00:00Z", "updated_at": "2026-11-04T09:00:00Z" },
+      { "id": "item-drill", "user_id": "00000000-0000-4000-8000-000000000001", "name": "Cordless drill with two batteries and a charger", "category_id": "cat-tools", "location_id": "loc-garage", "serial_number": "DR-20481", "purchase_date": "2025-03-14", "purchase_price": 189, "warranty_date": "2028-03-14", "notes": "Two batteries live in the case", "created_at": "2026-11-02T10:45:00Z", "updated_at": "2026-11-02T10:45:00Z" },
+      { "id": "item-pressure", "user_id": "00000000-0000-4000-8000-000000000001", "name": "Pressure washer, electric, 1800 W", "category_id": "cat-tools", "location_id": "loc-garage", "serial_number": "PW-5519", "purchase_date": "2024-04-18", "purchase_price": 279, "warranty_date": "2026-04-18", "notes": "Hose reel is sold separately", "created_at": "2026-10-31T16:10:00Z", "updated_at": "2026-10-31T16:10:00Z" },
+      { "id": "item-hose", "user_id": "00000000-0000-4000-8000-000000000001", "name": "Garden hose, 30 metres, with fittings and spray nozzle", "category_id": "cat-tools", "location_id": "loc-garage", "serial_number": null, "purchase_date": "2025-10-04", "purchase_price": 64.2, "warranty_date": null, "notes": "Store coiled in the shed", "created_at": "2026-10-30T08:55:00Z", "updated_at": "2026-10-30T08:55:00Z" },
+      { "id": "item-ladder", "user_id": "00000000-0000-4000-8000-000000000001", "name": "Step ladder, six treads, aluminium", "category_id": "cat-tools", "location_id": "loc-garage", "serial_number": null, "purchase_date": null, "purchase_price": null, "warranty_date": null, "notes": null, "created_at": "2026-10-29T14:20:00Z", "updated_at": "2026-10-29T14:20:00Z" },
+      { "id": "item-toaster", "user_id": "00000000-0000-4000-8000-000000000001", "name": "Two-slice toaster", "category_id": "cat-appliances", "location_id": "loc-kitchen", "serial_number": null, "purchase_date": "2022-09-30", "purchase_price": 35, "warranty_date": null, "notes": null, "created_at": "2026-10-28T11:00:00Z", "updated_at": "2026-10-28T11:00:00Z" },
+      { "id": "item-pump", "user_id": "00000000-0000-4000-8000-000000000001", "name": "Bicycle pump with pressure gauge", "category_id": "cat-tools", "location_id": "loc-garage", "serial_number": null, "purchase_date": "2023-05-11", "purchase_price": 24.5, "warranty_date": null, "notes": null, "created_at": "2026-10-27T09:30:00Z", "updated_at": "2026-10-27T09:30:00Z" },
+      { "id": "item-keys", "user_id": "00000000-0000-4000-8000-000000000001", "name": "Spare keys for the back gate and shed", "category_id": null, "location_id": null, "serial_number": null, "purchase_date": null, "purchase_price": null, "warranty_date": null, "notes": "Copies are with the neighbour", "created_at": "2026-10-27T08:00:00Z", "updated_at": "2026-10-27T08:00:00Z" },
+      { "id": "item-label", "user_id": "00000000-0000-4000-8000-000000000001", "name": "Label maker with 12 mm tape", "category_id": "cat-electronics", "location_id": "loc-house", "serial_number": null, "purchase_date": "2026-01-09", "purchase_price": 42, "warranty_date": null, "notes": null, "created_at": "2026-10-26T15:45:00Z", "updated_at": "2026-10-26T15:45:00Z" }
+    ]
+  },
+  {
+    "url": "**/rest/v1/products**",
+    "status": 200,
+    "json": [
+      { "id": "prod-aa", "user_id": "00000000-0000-4000-8000-000000000001", "name": "AA batteries, pack of 8", "category_id": "cat-electronics", "location_id": "loc-garage", "barcode": "9310000000028", "quantity": 2, "unit": "pack", "min_quantity": 4, "expiry_date": "2026-11-20", "notes": null, "created_at": "2026-10-05T09:00:00Z", "updated_at": "2026-11-09T18:01:00Z" },
+      { "id": "prod-bags", "user_id": "00000000-0000-4000-8000-000000000001", "name": "Bin liners, 60 litre", "category_id": "cat-cleaning", "location_id": "loc-kitchen", "barcode": null, "quantity": 1, "unit": "roll", "min_quantity": 2, "expiry_date": null, "notes": "Fits the under-sink bin", "created_at": "2026-10-06T09:00:00Z", "updated_at": "2026-11-07T10:20:00Z" },
+      { "id": "prod-tablets", "user_id": "00000000-0000-4000-8000-000000000001", "name": "Dishwasher tablets, all-in-one", "category_id": "cat-cleaning", "location_id": "loc-kitchen", "barcode": null, "quantity": 30, "unit": null, "min_quantity": null, "expiry_date": null, "notes": null, "created_at": "2026-10-07T09:00:00Z", "updated_at": "2026-10-07T09:00:00Z" },
+      { "id": "prod-pasta", "user_id": "00000000-0000-4000-8000-000000000001", "name": "Dried spaghetti, 500 g", "category_id": "cat-groceries", "location_id": "loc-pantry", "barcode": null, "quantity": 5, "unit": "packet", "min_quantity": 3, "expiry_date": "2028-06-01", "notes": null, "created_at": "2026-10-08T09:00:00Z", "updated_at": "2026-11-10T07:31:00Z" },
+      { "id": "prod-coffee", "user_id": "00000000-0000-4000-8000-000000000001", "name": "Ground coffee, medium roast", "category_id": "cat-groceries", "location_id": "loc-pantry", "barcode": null, "quantity": 2, "unit": "bag", "min_quantity": 1, "expiry_date": "2027-03-30", "notes": null, "created_at": "2026-10-09T09:00:00Z", "updated_at": "2026-11-08T12:10:00Z" },
+      { "id": "prod-soap", "user_id": "00000000-0000-4000-8000-000000000001", "name": "Hand soap refill", "category_id": "cat-cleaning", "location_id": "loc-kitchen", "barcode": null, "quantity": 3, "unit": "bottle", "min_quantity": 2, "expiry_date": null, "notes": null, "created_at": "2026-10-10T09:00:00Z", "updated_at": "2026-11-08T12:05:00Z" },
+      { "id": "prod-rice", "user_id": "00000000-0000-4000-8000-000000000001", "name": "Jasmine rice", "category_id": "cat-groceries", "location_id": "loc-pantry", "barcode": "9310000000011", "quantity": 1, "unit": "kg", "min_quantity": 2, "expiry_date": "2027-02-01", "notes": null, "created_at": "2026-10-11T09:00:00Z", "updated_at": "2026-11-09T18:00:00Z" },
+      { "id": "prod-bulbs", "user_id": "00000000-0000-4000-8000-000000000001", "name": "LED bulbs, warm white, E27", "category_id": "cat-electronics", "location_id": "loc-house", "barcode": null, "quantity": 4, "unit": "pack", "min_quantity": 2, "expiry_date": null, "notes": null, "created_at": "2026-10-12T09:00:00Z", "updated_at": "2026-11-10T07:30:00Z" },
+      { "id": "prod-milk", "user_id": "00000000-0000-4000-8000-000000000001", "name": "Long-life milk, full cream", "category_id": "cat-groceries", "location_id": "loc-pantry", "barcode": null, "quantity": 6, "unit": "litre", "min_quantity": 4, "expiry_date": "2026-11-18", "notes": null, "created_at": "2026-10-13T09:00:00Z", "updated_at": "2026-11-09T18:02:00Z" },
+      { "id": "prod-oil", "user_id": "00000000-0000-4000-8000-000000000001", "name": "Olive oil, extra virgin", "category_id": "cat-groceries", "location_id": "loc-pantry", "barcode": null, "quantity": 3, "unit": "bottle", "min_quantity": 1, "expiry_date": null, "notes": "Cold pressed", "created_at": "2026-10-14T09:00:00Z", "updated_at": "2026-11-10T09:15:00Z" }
+    ]
+  },
+  {
+    "url": "**/rest/v1/locations**",
+    "status": 200,
+    "json": [
+      { "id": "loc-garage", "user_id": "00000000-0000-4000-8000-000000000001", "name": "Garage", "parent_id": "loc-house", "icon": null, "created_at": "2026-10-01T09:00:00Z" },
+      { "id": "loc-house", "user_id": "00000000-0000-4000-8000-000000000001", "name": "House", "parent_id": null, "icon": "🏠", "created_at": "2026-10-01T09:00:00Z" },
+      { "id": "loc-kitchen", "user_id": "00000000-0000-4000-8000-000000000001", "name": "Kitchen", "parent_id": "loc-house", "icon": "🍳", "created_at": "2026-10-01T09:00:00Z" },
+      { "id": "loc-pantry", "user_id": "00000000-0000-4000-8000-000000000001", "name": "Pantry", "parent_id": "loc-kitchen", "icon": null, "created_at": "2026-10-01T09:00:00Z" }
+    ]
+  },
+  {
+    "url": "**/rest/v1/categories**",
+    "status": 200,
+    "json": [
+      { "id": "cat-appliances", "user_id": "00000000-0000-4000-8000-000000000001", "name": "Appliances", "type": "item", "created_at": "2026-10-01T09:00:00Z" },
+      { "id": "cat-cleaning", "user_id": "00000000-0000-4000-8000-000000000001", "name": "Cleaning", "type": "product", "created_at": "2026-10-01T09:00:00Z" },
+      { "id": "cat-electronics", "user_id": "00000000-0000-4000-8000-000000000001", "name": "Electronics", "type": "both", "created_at": "2026-10-01T09:00:00Z" },
+      { "id": "cat-groceries", "user_id": "00000000-0000-4000-8000-000000000001", "name": "Groceries", "type": "product", "created_at": "2026-10-01T09:00:00Z" },
+      { "id": "cat-tools", "user_id": "00000000-0000-4000-8000-000000000001", "name": "Tools", "type": "item", "created_at": "2026-10-01T09:00:00Z" }
+    ]
+  },
+  {
+    "url": "**/rest/v1/attachments**",
+    "status": 406,
+    "json": { "code": "PGRST116", "details": "The result contains 0 rows", "hint": null, "message": "JSON object requested, multiple (or no) rows returned" }
+  }
+]
