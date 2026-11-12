@@ -197,7 +197,8 @@ export function measure(options) {
       const alike = strips.filter((child) => {
         const height = child.getBoundingClientRect().height
         const ownText = [...child.querySelectorAll("*")].some((el) => !el.closest("button,[role=tab],select,input") && [...el.childNodes].some((node) => node.nodeType === 3 && node.textContent.trim().length > 1))
-        return height >= median * 0.6 && height <= median * 1.7 && (ownText || child.matches("a,li,tr"))
+        // A row can be one big button; a toolbar is several.
+        return height >= median * 0.6 && height <= median * 1.7 && (ownText || child.matches("a,li,tr") || child.querySelectorAll("button,[role=tab]").length <= 2)
       })
       if (alike.length >= 3) rows.push(...alike)
     }

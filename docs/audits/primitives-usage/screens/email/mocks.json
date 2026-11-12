@@ -1,0 +1,248 @@
+[
+  {
+    "url": "**/api/threads/1001**",
+    "method": "GET",
+    "status": 200,
+    "json": {
+      "thread": {
+        "id": 1001,
+        "mailbox_id": 1,
+        "mailbox_address": "agents@example.test",
+        "mailbox_color": "#4f46e5",
+        "mailbox_agent_mode": "draft",
+        "subject": "Question about the invoice schedule for the Q4 retainer",
+        "snippet": "Before I approve the November invoice I need to confirm whether the second instalment moves to 15 December.",
+        "status": "open",
+        "is_read": 1,
+        "message_count": 3,
+        "pending_draft_count": 1,
+        "draft_run_status": "ready",
+        "draft_run_error": null,
+        "latest_inbound_is_auto_submitted": 0,
+        "last_message_direction": "inbound",
+        "last_message_at": "2026-11-10T09:12:00Z",
+        "last_from": "Priya Raman",
+        "last_from_address": "priya.raman@example.test",
+        "labels": [{ "id": 1, "name": "Billing" }]
+      },
+      "messages": [
+        {
+          "id": 3001,
+          "thread_id": 1001,
+          "direction": "inbound",
+          "sent_by": "external",
+          "from_address": "priya.raman@example.test",
+          "from_name": "Priya Raman",
+          "to_addresses": "[\"agents@example.test\"]",
+          "reply_to_addresses": "[\"priya.raman@example.test\"]",
+          "subject": "Question about the invoice schedule for the Q4 retainer",
+          "text_body": "Hi team,\n\nWe received invoice AG-2026-0412 for the Q4 retainer and it looks correct, but the payment schedule in the statement shows the second instalment on 1 December. Our finance calendar had it on 15 December when we signed the renewal in September.\n\nCould you confirm which date applies? If the schedule did change, I would like the revised dates in writing so we can close the purchase order.\n\nThanks,\nPriya",
+          "html_body": null,
+          "is_auto_submitted": 0,
+          "created_at": "2026-11-08T10:02:00Z",
+          "attachments": []
+        },
+        {
+          "id": 3002,
+          "thread_id": 1001,
+          "direction": "outbound",
+          "sent_by": "human",
+          "from_address": "agents@example.test",
+          "from_name": null,
+          "to_addresses": "[\"priya.raman@example.test\"]",
+          "reply_to_addresses": "[\"agents@example.test\"]",
+          "subject": "Re: Question about the invoice schedule for the Q4 retainer",
+          "text_body": "Hi Priya,\n\nThanks for catching this. The schedule was updated when the retainer moved to quarterly billing, and the 1 December date is correct under the current order form.\n\nWe can keep the 15 December date for this cycle as a one-off if that suits your finance calendar. I will confirm with billing before anything changes on your account.\n\nRegards,\nAgents team",
+          "html_body": null,
+          "is_auto_submitted": 0,
+          "created_at": "2026-11-08T15:40:00Z",
+          "attachments": []
+        },
+        {
+          "id": 3003,
+          "thread_id": 1001,
+          "direction": "inbound",
+          "sent_by": "external",
+          "from_address": "priya.raman@example.test",
+          "from_name": "Priya Raman",
+          "to_addresses": "[\"agents@example.test\"]",
+          "reply_to_addresses": "[\"priya.raman@example.test\"]",
+          "subject": "Re: Question about the invoice schedule for the Q4 retainer",
+          "text_body": "Hi again,\n\nThat works for us, thank you. Before I approve the November invoice I need one thing confirmed: will the second instalment be moved to 15 December in the system, or only for this cycle?\n\nIf it is only for this cycle, please send the December schedule so our accounts team can book it against the right quarter.\n\nPriya",
+          "html_body": null,
+          "is_auto_submitted": 0,
+          "created_at": "2026-11-10T09:12:00Z",
+          "attachments": []
+        }
+      ],
+      "drafts": [
+        {
+          "id": 501,
+          "thread_id": 1001,
+          "text_body": "Hi Priya,\n\nThe change applies to this cycle only. Billing will issue the revised December schedule by end of day Thursday 12 November, and I will copy you on it.\n\nRegards,\nAgents team",
+          "created_by": "agent",
+          "agent_notes": "Drafted from the billing playbook. Confirm the Thursday date with billing before sending.",
+          "playbook_id": 4,
+          "playbook_name": "Invoice and billing schedule questions",
+          "status": "pending",
+          "created_at": "2026-11-10T09:14:00Z"
+        }
+      ],
+      "draft_run": {
+        "id": 88,
+        "thread_id": 1001,
+        "inbound_message_id": 3003,
+        "status": "ready",
+        "attempt_count": 1,
+        "draft_id": 501,
+        "error": null,
+        "created_at": "2026-11-10T09:12:30Z",
+        "started_at": "2026-11-10T09:12:31Z",
+        "finished_at": "2026-11-10T09:13:55Z"
+      }
+    }
+  },
+  {
+    "url": "**/api/threads/*/read**",
+    "method": "POST",
+    "status": 200,
+    "json": { "ok": true }
+  },
+  {
+    "url": "**/api/threads**",
+    "method": "GET",
+    "status": 200,
+    "json": [
+      {
+        "id": 1001, "mailbox_id": 1, "mailbox_address": "agents@example.test", "mailbox_color": "#4f46e5", "mailbox_agent_mode": "draft",
+        "subject": "Question about the invoice schedule for the Q4 retainer",
+        "snippet": "Before I approve the November invoice I need to confirm whether the second instalment moves to 15 December.",
+        "status": "open", "is_read": 0, "message_count": 3, "pending_draft_count": 1, "draft_run_status": "ready", "draft_run_error": null,
+        "latest_inbound_is_auto_submitted": 0, "last_message_direction": "inbound", "last_message_at": "2026-11-10T09:12:00Z",
+        "last_from": "Priya Raman", "last_from_address": "priya.raman@example.test", "labels": [{ "id": 1, "name": "Billing" }]
+      },
+      {
+        "id": 1002, "mailbox_id": 2, "mailbox_address": "support@example.test", "mailbox_color": "#0d9488", "mailbox_agent_mode": "off",
+        "subject": "Your order has shipped, but the tracking link returns a 404",
+        "snippet": "The courier email says it left the depot on Monday, yet the link in it shows no record. Can you check which parcel that is?",
+        "status": "open", "is_read": 0, "message_count": 2, "pending_draft_count": 0, "draft_run_status": null, "draft_run_error": null,
+        "latest_inbound_is_auto_submitted": 0, "last_message_direction": "inbound", "last_message_at": "2026-11-10T08:47:00Z",
+        "last_from": "Marcus Ellery", "last_from_address": "marcus.ellery@example.test", "labels": []
+      },
+      {
+        "id": 1003, "mailbox_id": 1, "mailbox_address": "agents@example.test", "mailbox_color": "#4f46e5", "mailbox_agent_mode": "draft",
+        "subject": "Can we move Thursday's onboarding call to the following week?",
+        "snippet": "Our team lead is travelling on Thursday, so would the week of 23 November work for the onboarding walkthrough instead?",
+        "status": "open", "is_read": 0, "message_count": 1, "pending_draft_count": 1, "draft_run_status": "ready", "draft_run_error": null,
+        "latest_inbound_is_auto_submitted": 0, "last_message_direction": "inbound", "last_message_at": "2026-11-10T07:30:00Z",
+        "last_from": "Dana Okafor", "last_from_address": "dana.okafor@example.test", "labels": []
+      },
+      {
+        "id": 1004, "mailbox_id": 1, "mailbox_address": "agents@example.test", "mailbox_color": "#4f46e5", "mailbox_agent_mode": "draft",
+        "subject": "Re: Renewal terms for the 2027 seat licence, with two questions about the SSO add-on and data residency",
+        "snippet": "Thanks for the revised quote. Two things block our sign-off: whether SSO is included in the Business tier, and where backups are stored.",
+        "status": "open", "is_read": 0, "message_count": 4, "pending_draft_count": 0, "draft_run_status": "superseded", "draft_run_error": null,
+        "latest_inbound_is_auto_submitted": 0, "last_message_direction": "inbound", "last_message_at": "2026-11-09T16:05:00Z",
+        "last_from": "Tomasz Lindqvist", "last_from_address": "tomasz.lindqvist@example.test", "labels": []
+      },
+      {
+        "id": 1005, "mailbox_id": 2, "mailbox_address": "support@example.test", "mailbox_color": "#0d9488", "mailbox_agent_mode": "off",
+        "subject": "Refund request for a duplicate card charge on 3 November",
+        "snippet": "We were charged twice for order 88213. The second charge is still pending on our statement; please refund it to the original card.",
+        "status": "open", "is_read": 1, "message_count": 3, "pending_draft_count": 0, "draft_run_status": null, "draft_run_error": null,
+        "latest_inbound_is_auto_submitted": 0, "last_message_direction": "outbound", "last_message_at": "2026-11-09T11:20:00Z",
+        "last_from": "Ines Caldera", "last_from_address": "ines.caldera@example.test", "labels": []
+      },
+      {
+        "id": 1006, "mailbox_id": 1, "mailbox_address": "agents@example.test", "mailbox_color": "#4f46e5", "mailbox_agent_mode": "draft",
+        "subject": "Welcome to the pilot programme: next steps and your access checklist",
+        "snippet": "Thanks for joining the pilot. Here is what happens next, and the three things we need from your team before the kickoff.",
+        "status": "open", "is_read": 1, "message_count": 2, "pending_draft_count": 0, "draft_run_status": null, "draft_run_error": null,
+        "latest_inbound_is_auto_submitted": 0, "last_message_direction": "outbound", "last_message_at": "2026-11-08T14:00:00Z",
+        "last_from": "Ruth Halvorsen", "last_from_address": "ruth.halvorsen@example.test", "labels": []
+      },
+      {
+        "id": 1007, "mailbox_id": 2, "mailbox_address": "support@example.test", "mailbox_color": "#0d9488", "mailbox_agent_mode": "off",
+        "subject": "Accessibility feedback on the checkout form from a screen reader user",
+        "snippet": "The address fields announce as unlabelled when I tab into them with VoiceOver on iOS. Happy to test a fix on the beta build.",
+        "status": "open", "is_read": 1, "message_count": 1, "pending_draft_count": 0, "draft_run_status": null, "draft_run_error": null,
+        "latest_inbound_is_auto_submitted": 0, "last_message_direction": "inbound", "last_message_at": "2026-11-08T10:15:00Z",
+        "last_from": "Sam Whitcombe", "last_from_address": "sam.whitcombe@example.test", "labels": []
+      },
+      {
+        "id": 1008, "mailbox_id": 1, "mailbox_address": "agents@example.test", "mailbox_color": "#4f46e5", "mailbox_agent_mode": "draft",
+        "subject": "Invitation: quarterly review on 18 November at 10:00 AEDT",
+        "snippet": "You are invited to the quarterly account review. The agenda covers usage, the Q1 roadmap and open support escalations.",
+        "status": "open", "is_read": 1, "message_count": 1, "pending_draft_count": 0, "draft_run_status": null, "draft_run_error": null,
+        "latest_inbound_is_auto_submitted": 0, "last_message_direction": "inbound", "last_message_at": "2026-11-07T22:40:00Z",
+        "last_from": "Kofi Mensah", "last_from_address": "kofi.mensah@example.test", "labels": []
+      },
+      {
+        "id": 1009, "mailbox_id": 2, "mailbox_address": "support@example.test", "mailbox_color": "#0d9488", "mailbox_agent_mode": "off",
+        "subject": "Delivery failed: ops@partner.example.test",
+        "snippet": "Your message could not be delivered because the mailbox is full. The original message is attached for reference.",
+        "status": "open", "is_read": 1, "message_count": 1, "pending_draft_count": 0, "draft_run_status": null, "draft_run_error": null,
+        "latest_inbound_is_auto_submitted": 1, "last_message_direction": "inbound", "last_message_at": "2026-11-07T06:02:00Z",
+        "last_from": "Mail Delivery System", "last_from_address": "mailer-daemon@example.test", "labels": [{ "id": 3, "name": "Automated" }]
+      },
+      {
+        "id": 1010, "mailbox_id": 2, "mailbox_address": "support@example.test", "mailbox_color": "#0d9488", "mailbox_agent_mode": "off",
+        "subject": "Thanks, the updated brochure arrived safely",
+        "snippet": "Received the revised brochure this morning, it looks great. We will share it with the regional team on Monday.",
+        "status": "open", "is_read": 1, "message_count": 2, "pending_draft_count": 0, "draft_run_status": null, "draft_run_error": null,
+        "latest_inbound_is_auto_submitted": 0, "last_message_direction": "inbound", "last_message_at": "2026-11-06T13:25:00Z",
+        "last_from": "Hana Virtanen", "last_from_address": "hana.virtanen@example.test", "labels": []
+      }
+    ]
+  },
+  {
+    "url": "**/api/settings/general**",
+    "method": "GET",
+    "status": 200,
+    "json": {
+      "browser_notifications_enabled": false,
+      "browser_notifications_configured": false,
+      "push_subscription_count": 0,
+      "vapid_public_key": null,
+      "ai_model": null
+    }
+  },
+  {
+    "url": "**/api/mailboxes**",
+    "method": "GET",
+    "status": 200,
+    "json": [
+      { "id": 1, "address": "agents@example.test", "color": "#4f46e5", "agent_mode": "draft", "agent_instructions": "Answer billing and scheduling questions from the playbooks. Never promise refunds.", "unread_count": 3, "has_received": true },
+      { "id": 2, "address": "support@example.test", "color": "#0d9488", "agent_mode": "off", "agent_instructions": null, "unread_count": 1, "has_received": true }
+    ]
+  },
+  {
+    "url": "**/api/domains**",
+    "method": "GET",
+    "status": 200,
+    "json": [
+      { "id": 1, "name": "example.test", "status": "active", "inbox_count": 2, "created_at": "2026-09-14T03:12:00Z", "activated_at": "2026-09-14T04:01:00Z" }
+    ]
+  },
+  {
+    "url": "**/api/labels**",
+    "method": "GET",
+    "status": 200,
+    "json": [
+      { "id": 1, "mailbox_id": 1, "name": "Billing", "condition": "The message asks about invoices, payments, or renewal pricing.", "created_at": "2026-09-20T09:00:00Z", "updated_at": "2026-09-20T09:00:00Z" },
+      { "id": 2, "mailbox_id": 1, "name": "Follow-up", "condition": "The sender is waiting for a reply from our team.", "created_at": "2026-09-22T10:30:00Z", "updated_at": "2026-09-22T10:30:00Z" },
+      { "id": 3, "mailbox_id": 2, "name": "Automated", "condition": "The message is an automatic reply, bounce, or notification.", "created_at": "2026-09-25T08:15:00Z", "updated_at": "2026-09-25T08:15:00Z" }
+    ]
+  },
+  {
+    "url": "**/api/playbooks**",
+    "method": "GET",
+    "status": 200,
+    "json": []
+  },
+  {
+    "url": "**/events**",
+    "status": 204,
+    "body": ""
+  }
+]
