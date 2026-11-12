@@ -1,0 +1,387 @@
+[
+ {
+  "url": "**/realtime/**",
+  "status": 204,
+  "body": ""
+ },
+ {
+  "url": "http://127.0.0.1:59005/**",
+  "status": 503,
+  "json": {
+   "error": "not used by the library or article screens"
+  }
+ },
+ {
+  "url": "**/auth/v1/**",
+  "status": 200,
+  "json": {
+   "id": "00000000-0000-4000-8000-000000000001",
+   "aud": "authenticated",
+   "role": "authenticated",
+   "email": "owner@example.test",
+   "app_metadata": {},
+   "user_metadata": {
+    "name": "Owner"
+   },
+   "created_at": "2026-01-01T00:00:00Z"
+  }
+ },
+ {
+  "url": "**/rest/v1/articles**id=eq.a-1001**",
+  "method": "GET",
+  "status": 200,
+  "json": {
+   "id": "a-1001",
+   "url": "https://notes.example.test/long-articles",
+   "title": "Why the long article is still worth the evening it takes to finish properly",
+   "author": "Ada Example",
+   "published_at": "2026-11-03T08:00:00Z",
+   "reading_time_mins": 4,
+   "content_html": "<p>Saving an article takes a few seconds. Finishing it takes a quiet half hour, and that gap is where most read-later lists go wrong. Items pile up faster than anyone reads them, and after a few months the list stops being a shelf of useful things and becomes a small source of guilt. The problem is rarely the number of saved links. It is the lack of a clear reason to open any one of them on a given evening.</p><p>The fix is not a better save button. A saved article needs three things to stay useful: a reason it was kept, a sense of how long it will take, and a place where the reading can pick up again without effort. Most apps provide the second and third and leave the first to memory. Over time the reason fades, and the article looks like every other unread item in the queue.</p><p>It helps to think about reading as a series of short decisions rather than one big commitment. When a person opens an article, they are asking whether it is worth the next ten minutes. A short estimate answers that question better than a headline does. Nine minutes is a choice that can be made between two other tasks. Forty minutes is a choice that waits for the weekend, and the article quietly waits with it.</p><h2>Keeping the reason attached</h2><p>The most useful habit is small. When an article is saved, write down in one sentence why it was kept. The sentence does not have to be clever. It can be as plain as for the packing list, or the argument about caching that a colleague mentioned. Later, that line is what makes the article recognisable. Without it, the title alone has to carry the whole memory, and titles are often written to attract a click rather than to be remembered.</p><p>Labels can do part of this work, but only when there are few of them. A small set of categories, used consistently, is more helpful than a long list of tags that each appear once. A label such as to try tells a future reader what kind of attention the article needs. A label such as design tells them where it belongs. Three or four labels cover most reading, and anything more usually stops being used within a month.</p><p>Progress markers help as well. A percentage shown next to an article is a quiet reminder that the reading is partly done, and it gives a reason to return that is more specific than a general wish to catch up. The marker should be honest. If a person has read half of an article and skipped the rest, the app should say so rather than pretend the whole thing was read.</p><blockquote><p>A queue that never empties is not a failure of discipline. It is a sign that the saving and the reading were designed as two separate habits, and only one of them was ever given a place to live.</p></blockquote><h2>What a reading app should do</h2><p>A reading app earns its place by getting out of the way. The page should load quickly, keep the text at a comfortable width, and avoid the banners and pop-ups that make an ordinary article feel like an advertisement. Text should be easy to resize, and the background should be easy to change between light and dark without losing the layout. None of this is novel, but it is easy to get wrong when the app is busy trying to do other things.</p><p>Offline reading is the other obvious requirement. Trains, planes and weak mobile signal are where most long articles get read, and an app that fails in those places fails at its main job. Caching the text of each article when it is saved, rather than when it is opened, means the reading is already available by the time the person needs it. The cache should be small, honest about what it holds, and easy to clear.</p><p>Search matters more than it first appears. A library of a few hundred articles is only useful if a half-remembered phrase finds the right one in a second or two. Full-text search over titles, descriptions and bodies covers most cases, and it works best when the results show enough context to tell similar articles apart. A result that shows only a title is a guess. A result that shows the first line of the description is a decision.</p><ul><li>Save the article in full at the moment it is kept, not later.</li><li>Show a reading time that is honest about the length of the text.</li><li>Keep the reason for saving visible next to the title.</li><li>Mark progress so that partly read articles are easy to find again.</li><li>Make archiving a single tap, so that dropping an article feels cheap.</li></ul><p>Archiving is not deleting, and it should never feel like a loss. An archive keeps the article searchable and out of the way. The routine that works best is short. Once a week, open the unread list and read the first few titles. Archive anything that no longer matters, and open the one article that still does. Ten minutes is enough. The point is not to empty the list but to make sure that the list still reflects what the person actually wants to read. A list that is reviewed regularly is smaller, more accurate and far less stressful than one that is only ever added to.</p><p>Over a few months this routine changes how saving feels. Saving becomes a way of marking something for later rather than a promise to read it. Reading becomes a deliberate choice rather than a race against the queue.</p>",
+   "word_count": 900,
+   "is_favorite": true,
+   "is_archived": false,
+   "site_name": "Example Notes"
+  }
+ },
+ {
+  "url": "**/rest/v1/articles**",
+  "method": "PATCH",
+  "status": 204,
+  "body": ""
+ },
+ {
+  "url": "**/rest/v1/articles**is_archived=eq.false**read_at=is.null**",
+  "method": "GET",
+  "status": 200,
+  "json": [
+   {
+    "id": "a-1001",
+    "url": "https://notes.example.test/long-articles",
+    "title": "Why the long article is still worth the evening it takes to finish properly",
+    "author": "Ada Example",
+    "description": "A short case for finishing the long pieces, and for keeping the reason you saved them.",
+    "word_count": 900,
+    "reading_time_mins": 4,
+    "reading_progress": 0,
+    "saved_at": "2026-11-09T07:40:00Z",
+    "read_at": null,
+    "is_archived": false,
+    "is_favorite": true,
+    "site_name": "Example Notes",
+    "cover_image_url": null
+   },
+   {
+    "id": "a-1002",
+    "url": "https://www.sample.example.test/offline-first",
+    "title": "A field guide to offline-first apps, with notes on what to cache and when to stop trying",
+    "author": null,
+    "description": "Caching, sync and the awkward middle: what to store, and when to give up on the network.",
+    "word_count": 3300,
+    "reading_time_mins": 14,
+    "reading_progress": 35,
+    "saved_at": "2026-11-08T21:15:00Z",
+    "read_at": null,
+    "is_archived": false,
+    "is_favorite": false,
+    "site_name": "Sample Journal",
+    "cover_image_url": null
+   },
+   {
+    "id": "a-1003",
+    "url": "https://journal.example.test/inventory",
+    "title": "Notes on keeping a household inventory that does not fall apart after the first year",
+    "author": "Ben Example",
+    "description": "What to record, what to skip, and how to keep the list current without a weekend project.",
+    "word_count": 1250,
+    "reading_time_mins": 5,
+    "reading_progress": 0,
+    "saved_at": "2026-11-08T06:10:00Z",
+    "read_at": null,
+    "is_archived": false,
+    "is_favorite": false,
+    "site_name": "Journal Example",
+    "cover_image_url": null
+   },
+   {
+    "id": "a-1004",
+    "url": "https://plain.example.test/plain-text",
+    "title": "The quiet case for plain text, and why files outlast the formats built on top of them",
+    "author": null,
+    "description": "Files outlast formats. A defence of the boring option.",
+    "word_count": 1500,
+    "reading_time_mins": 6,
+    "reading_progress": 0,
+    "saved_at": "2026-11-06T18:30:00Z",
+    "read_at": null,
+    "is_archived": false,
+    "is_favorite": false,
+    "site_name": "Plain Example",
+    "cover_image_url": null
+   },
+   {
+    "id": "a-1005",
+    "url": "https://design.example.test/themes",
+    "title": "Light and dark themes are one design, not two, as long as the palette holds in both",
+    "author": null,
+    "description": "A short note on keeping the colour system honest across modes.",
+    "word_count": 2600,
+    "reading_time_mins": 11,
+    "reading_progress": 0,
+    "saved_at": "2026-10-30T09:00:00Z",
+    "read_at": null,
+    "is_archived": false,
+    "is_favorite": false,
+    "site_name": "Design Example",
+    "cover_image_url": null
+   },
+   {
+    "id": "a-1006",
+    "url": "https://security.example.test/passkeys",
+    "title": "Passkeys for people who never read the spec and never want to",
+    "author": "Cy Example",
+    "description": "Face ID, Touch ID and the one step that still confuses everyone.",
+    "word_count": 1750,
+    "reading_time_mins": 7,
+    "reading_progress": 0,
+    "saved_at": "2026-10-29T09:00:00Z",
+    "read_at": null,
+    "is_archived": false,
+    "is_favorite": true,
+    "site_name": "Security Example",
+    "cover_image_url": null
+   },
+   {
+    "id": "a-1007",
+    "url": "https://garden.example.test/small-spaces",
+    "title": "A finished read about gardening in small spaces, and the containers that actually work",
+    "author": null,
+    "description": null,
+    "word_count": 1900,
+    "reading_time_mins": 8,
+    "reading_progress": 0,
+    "saved_at": "2026-10-24T09:00:00Z",
+    "read_at": null,
+    "is_archived": false,
+    "is_favorite": false,
+    "site_name": "Garden Example",
+    "cover_image_url": null
+   },
+   {
+    "id": "a-1008",
+    "url": "https://budget.example.test/keeping-it-up",
+    "title": "Designing a budget tool that a household can still be using in December",
+    "author": "Dee Example",
+    "description": "Monthly habits, the forms people abandon, and what a small review ritual changes.",
+    "word_count": 2400,
+    "reading_time_mins": 10,
+    "reading_progress": 0,
+    "saved_at": "2026-10-21T09:00:00Z",
+    "read_at": null,
+    "is_archived": false,
+    "is_favorite": true,
+    "site_name": "Budget Example",
+    "cover_image_url": null
+   }
+  ]
+ },
+ {
+  "url": "**/rest/v1/articles**read_at=not.is.null**",
+  "method": "GET",
+  "status": 200,
+  "json": [
+   {
+    "id": "a-1005",
+    "url": "https://design.example.test/themes",
+    "title": "Light and dark themes are one design, not two, as long as the palette holds in both",
+    "author": null,
+    "description": "A short note on keeping the colour system honest across modes.",
+    "word_count": 2600,
+    "reading_time_mins": 11,
+    "reading_progress": 100,
+    "saved_at": "2026-10-30T09:00:00Z",
+    "read_at": "2026-11-04T20:12:00Z",
+    "is_archived": false,
+    "is_favorite": false,
+    "site_name": "Design Example",
+    "cover_image_url": null
+   },
+   {
+    "id": "a-1006",
+    "url": "https://security.example.test/passkeys",
+    "title": "Passkeys for people who never read the spec and never want to",
+    "author": "Cy Example",
+    "description": "Face ID, Touch ID and the one step that still confuses everyone.",
+    "word_count": 1750,
+    "reading_time_mins": 7,
+    "reading_progress": 100,
+    "saved_at": "2026-10-29T09:00:00Z",
+    "read_at": "2026-11-06T07:45:00Z",
+    "is_archived": false,
+    "is_favorite": true,
+    "site_name": "Security Example",
+    "cover_image_url": null
+   },
+   {
+    "id": "a-1007",
+    "url": "https://garden.example.test/small-spaces",
+    "title": "A finished read about gardening in small spaces, and the containers that actually work",
+    "author": null,
+    "description": null,
+    "word_count": 1900,
+    "reading_time_mins": 8,
+    "reading_progress": 100,
+    "saved_at": "2026-10-24T09:00:00Z",
+    "read_at": "2026-10-31T19:05:00Z",
+    "is_archived": false,
+    "is_favorite": false,
+    "site_name": "Garden Example",
+    "cover_image_url": null
+   },
+   {
+    "id": "a-1008",
+    "url": "https://budget.example.test/keeping-it-up",
+    "title": "Designing a budget tool that a household can still be using in December",
+    "author": "Dee Example",
+    "description": "Monthly habits, the forms people abandon, and what a small review ritual changes.",
+    "word_count": 2400,
+    "reading_time_mins": 10,
+    "reading_progress": 100,
+    "saved_at": "2026-10-21T09:00:00Z",
+    "read_at": "2026-11-02T08:30:00Z",
+    "is_archived": false,
+    "is_favorite": true,
+    "site_name": "Budget Example",
+    "cover_image_url": null
+   }
+  ]
+ },
+ {
+  "url": "**/rest/v1/articles**is_favorite=eq.true**",
+  "method": "GET",
+  "status": 200,
+  "json": [
+   {
+    "id": "a-1001",
+    "url": "https://notes.example.test/long-articles",
+    "title": "Why the long article is still worth the evening it takes to finish properly",
+    "author": "Ada Example",
+    "description": "A short case for finishing the long pieces, and for keeping the reason you saved them.",
+    "word_count": 900,
+    "reading_time_mins": 4,
+    "reading_progress": 0,
+    "saved_at": "2026-11-09T07:40:00Z",
+    "read_at": null,
+    "is_archived": false,
+    "is_favorite": true,
+    "site_name": "Example Notes",
+    "cover_image_url": null
+   },
+   {
+    "id": "a-1006",
+    "url": "https://security.example.test/passkeys",
+    "title": "Passkeys for people who never read the spec and never want to",
+    "author": "Cy Example",
+    "description": "Face ID, Touch ID and the one step that still confuses everyone.",
+    "word_count": 1750,
+    "reading_time_mins": 7,
+    "reading_progress": 100,
+    "saved_at": "2026-10-29T09:00:00Z",
+    "read_at": "2026-11-06T07:45:00Z",
+    "is_archived": false,
+    "is_favorite": true,
+    "site_name": "Security Example",
+    "cover_image_url": null
+   },
+   {
+    "id": "a-1008",
+    "url": "https://budget.example.test/keeping-it-up",
+    "title": "Designing a budget tool that a household can still be using in December",
+    "author": "Dee Example",
+    "description": "Monthly habits, the forms people abandon, and what a small review ritual changes.",
+    "word_count": 2400,
+    "reading_time_mins": 10,
+    "reading_progress": 100,
+    "saved_at": "2026-10-21T09:00:00Z",
+    "read_at": "2026-11-02T08:30:00Z",
+    "is_archived": false,
+    "is_favorite": true,
+    "site_name": "Budget Example",
+    "cover_image_url": null
+   }
+  ]
+ },
+ {
+  "url": "**/rest/v1/articles**is_archived=eq.true**",
+  "method": "GET",
+  "status": 200,
+  "json": [
+   {
+    "id": "a-1009",
+    "url": "https://sheets.example.test/archive",
+    "title": "An archived piece on spreadsheets, kept for the formula tips and little else",
+    "author": null,
+    "description": null,
+    "word_count": 1450,
+    "reading_time_mins": 6,
+    "reading_progress": 0,
+    "saved_at": "2026-10-15T09:00:00Z",
+    "read_at": null,
+    "is_archived": true,
+    "is_favorite": false,
+    "site_name": "Sheets Example",
+    "cover_image_url": null
+   },
+   {
+    "id": "a-1010",
+    "url": "https://tools.example.test/review",
+    "title": "A long review of a note-taking tool that we looked at closely and decided not to switch to",
+    "author": "Eve Example",
+    "description": "Where it was strong, where it got in the way, and why the old habit won.",
+    "word_count": 2950,
+    "reading_time_mins": 12,
+    "reading_progress": 0,
+    "saved_at": "2026-10-12T09:00:00Z",
+    "read_at": null,
+    "is_archived": true,
+    "is_favorite": false,
+    "site_name": "Tools Example",
+    "cover_image_url": null
+   }
+  ]
+ },
+ {
+  "url": "**/rest/v1/articles**",
+  "method": "GET",
+  "status": 200,
+  "json": []
+ },
+ {
+  "url": "**/rest/v1/labels**",
+  "method": "GET",
+  "status": 200,
+  "json": [
+   {
+    "id": "l1",
+    "name": "Design",
+    "color": "#8b5cf6"
+   },
+   {
+    "id": "l2",
+    "name": "Tools",
+    "color": "#14b8a6"
+   },
+   {
+    "id": "l3",
+    "name": "To try",
+    "color": "#eab308"
+   }
+  ]
+ },
+ {
+  "url": "**/rest/v1/**",
+  "method": "GET",
+  "status": 200,
+  "json": []
+ }
+]

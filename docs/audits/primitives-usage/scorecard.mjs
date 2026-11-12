@@ -27,6 +27,7 @@ export function measure(options) {
   const vw = window.innerWidth
   const vh = window.innerHeight
   const round = (value) => Math.round(value * 10) / 10
+  const clampPercent = (value) => Math.max(0, Math.min(100, value))
 
   // --- colour ---------------------------------------------------------------
   const canvas = document.createElement("canvas")
@@ -158,6 +159,22 @@ export function measure(options) {
   }
   const firstTexts = texts.filter((text) => inFirst(text.box) && !text.covered)
   const coveredTexts = texts.filter((text) => inFirst(text.box) && text.covered)
+
+  // Text cut short with an ellipsis or a clip: the words are in the page but not on show.
+  const cut = []
+  const seenCut = new Set()
+  for (const text of firstTexts) {
+    for (let node = text.el, depth = 0; node && depth < 3; node = node.parentElement, depth += 1) {
+      const style = styleOf(node)
+      const clipsX = style.overflowX !== "visible" && node.scrollWidth > node.clientWidth + 1 && (style.textOverflow === "ellipsis" || style.whiteSpace === "nowrap")
+      const clamped = style.webkitLineClamp !== "none" && style.webkitLineClamp !== "" && node.scrollHeight > node.clientHeight + 1
+      if ((clipsX || clamped) && !seenCut.has(node)) {
+        seenCut.add(node)
+        cut.push({ text: node.textContent.trim().replace(/\s+/g, " ").slice(0, 50), shown: Math.round((node.clientWidth / node.scrollWidth) * 100), inRow: false, node })
+        break
+      }
+    }
+  }
 
   // --- hierarchy ------------------------------------------------------------
   const sizeChars = {}
@@ -395,6 +412,7 @@ export function measure(options) {
     state: { statusTokens: statusTokens.map((entry) => `${entry.name} ${hex(entry.colour)}`), statusColoured, offToken: [...offToken.values()].sort((a, b) => b.count - a.count).slice(0, 8), colourOnly, colourOnlySamples, countsInHeadings: groupLabels.filter((text) => /\d/.test(text)).length, progressText: firstTexts.filter((text) => /\b\d+\s*(?:of|\/)\s*\d+\b|\b\d+(?:\.\d+)?\s?%/.test(text.content)).length, usesSafeTokens: root.getPropertyValue("--safe-t").trim().length > 0, progressElements: document.querySelectorAll('progress,meter,[role="progressbar"],[data-slot="progress"]').length, empties: empties.map((el) => ({ text: label(el), actions: el.querySelectorAll(INTERACTIVE).length })) },
     reading: { bodySize: bodySize ? Number(bodySize[0]) : null, lines, contrastChecked, contrastUnknown, contrastFails: contrastFails.slice(0, 12), contrastFailCount: contrastFails.length, overflowX: document.documentElement.scrollWidth - vw, runningAnimations: animations },
     textRuns: texts.length,
+    truncated: { count: cut.length, inRows: cut.filter((entry) => rows.some((row) => row.contains(entry.node))).length, sample: cut.slice(0, 8).map((entry) => `${entry.text} (${clampPercent(entry.shown)}% shown)`) },
     covered: { runs: coveredTexts.length, sample: coveredTexts.slice(0, 6).map((text) => `${text.content.slice(0, 30)} (${text.size}px at ${Math.round(text.box.top)})`) },
   }
 }
@@ -437,6 +455,7 @@ export function score(screen, variants) {
       noNestedBorders: rows.count === 0 ? NA("no rows") : result(rows.nested === 0, `${rows.nested} rows`),
       chipsPerRowDesktop: !wide || wide.rows.count === 0 ? NA("no rows") : result(wide.rows.maxChips <= RULES.chipsPerRow, `max ${wide.rows.maxChips} in ${wide.rows.count} rows`),
       coloursPerRowDesktop: !wide || wide.rows.count === 0 ? NA("no rows") : result(wide.rows.maxColours <= RULES.coloursPerRow, `max ${wide.rows.maxColours}`),
+      nothingCutOff: phone.truncated ? result(phone.truncated.count === 0, `${phone.truncated.count} texts cut short, ${phone.truncated.inRows} of them in list rows`) : NA("not measured"),
       interactiveCount: result(interactive.firstViewport <= RULES.interactiveInFirstViewport, String(interactive.firstViewport)),
       alphaSteps: result(phone.alphaSteps.length <= RULES.alphaSteps, `${phone.alphaSteps.length}: ${phone.alphaSteps.join(", ")}`),
     },
