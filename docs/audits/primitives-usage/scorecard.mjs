@@ -92,9 +92,21 @@ export function measure(options) {
     const box = el.getBoundingClientRect()
     if (box.width < 2 || box.height < 2) return false
     for (let node = el; node && node !== document.documentElement; node = node.parentElement) {
-      if (Number(styleOf(node).opacity) === 0 || node.getAttribute("aria-hidden") === "true") return false
+      const up = styleOf(node)
+      if (Number(up.opacity) === 0 || node.getAttribute("aria-hidden") === "true") return false
+      // Screen-reader-only text: clipped to a pixel.
+      const clip = node.getBoundingClientRect()
+      if ((up.overflow !== "visible" || up.clipPath !== "none") && (clip.width <= 2 || clip.height <= 2)) return false
     }
     return true
+  }
+  // The fixed or sticky layer an element is drawn in, if any.
+  const layerOf = (el) => {
+    for (let node = el; node && node !== document.body; node = node.parentElement) {
+      const position = styleOf(node).position
+      if (position === "fixed" || position === "sticky") return node
+    }
+    return null
   }
   const inFirst = (box) => box.bottom > 0 && box.top < vh && box.right > 0 && box.left < vw
   const label = (el) => (el.getAttribute("aria-label") || el.textContent || el.getAttribute("title") || el.getAttribute("placeholder") || el.tagName).trim().replace(/\s+/g, " ").slice(0, 40)
@@ -131,9 +143,21 @@ export function measure(options) {
     let opacity = 1
     for (let up = el; up; up = up.parentElement) opacity *= Number(styleOf(up).opacity)
     const colour = parse(style.color)
-    texts.push({ el, box, content, size: round(parseFloat(style.fontSize)), weight: Number(style.fontWeight), colour: { ...colour, a: colour.a * opacity }, font: style.font })
+    // Text another element is drawn over (a floating header or tab bar) is not there to be read.
+    let covered = false
+    const x = box.left + box.width / 2
+    const y = box.top + box.height / 2
+    if (x >= 0 && x < vw && y >= 0 && y < vh && style.pointerEvents !== "none") {
+      // Covered means another fixed or sticky layer is on top; a stretched link over a card is
+      // in the same layer as the card's text and hides nothing.
+      const hit = document.elementFromPoint(x, y)
+      const layer = hit ? layerOf(hit) : null
+      covered = Boolean(layer) && layer !== layerOf(el) && !layer.contains(el)
+    }
+    texts.push({ el, box, content, covered, size: round(parseFloat(style.fontSize)), weight: Number(style.fontWeight), colour: { ...colour, a: colour.a * opacity }, font: style.font })
   }
-  const firstTexts = texts.filter((text) => inFirst(text.box))
+  const firstTexts = texts.filter((text) => inFirst(text.box) && !text.covered)
+  const coveredTexts = texts.filter((text) => inFirst(text.box) && text.covered)
 
   // --- hierarchy ------------------------------------------------------------
   const sizeChars = {}
@@ -144,7 +168,7 @@ export function measure(options) {
   // A heading is as big and as heavy as the text drawn inside it, which a button in the heading
   // can set apart from the heading element's own style.
   const headingInfo = headings.map((el) => {
-    const inside = texts.filter((text) => el.contains(text.el))
+    const inside = texts.filter((text) => el.contains(text.el) && !text.covered)
     return { tag: el.tagName.toLowerCase(), text: label(el), size: Math.max(0, ...inside.map((text) => text.size)), weight: Math.max(0, ...inside.map((text) => text.weight)), top: round(el.getBoundingClientRect().top) }
   }).filter((heading) => heading.size > 0)
 
@@ -367,6 +391,7 @@ export function measure(options) {
     state: { statusTokens: statusTokens.map((entry) => `${entry.name} ${hex(entry.colour)}`), statusColoured, offToken: [...offToken.values()].sort((a, b) => b.count - a.count).slice(0, 8), colourOnly, colourOnlySamples, countsInHeadings: groupLabels.filter((text) => /\d/.test(text)).length, progressText: firstTexts.filter((text) => /\b\d+\s*(?:of|\/)\s*\d+\b|\b\d+(?:\.\d+)?\s?%/.test(text.content)).length, usesSafeTokens: root.getPropertyValue("--safe-t").trim().length > 0, progressElements: document.querySelectorAll('progress,meter,[role="progressbar"],[data-slot="progress"]').length, empties: empties.map((el) => ({ text: label(el), actions: el.querySelectorAll(INTERACTIVE).length })) },
     reading: { bodySize: bodySize ? Number(bodySize[0]) : null, lines, contrastChecked, contrastUnknown, contrastFails: contrastFails.slice(0, 12), contrastFailCount: contrastFails.length, overflowX: document.documentElement.scrollWidth - vw, runningAnimations: animations },
     textRuns: texts.length,
+    covered: { runs: coveredTexts.length, sample: coveredTexts.slice(0, 6).map((text) => `${text.content.slice(0, 30)} (${text.size}px at ${Math.round(text.box.top)})`) },
   }
 }
 
@@ -397,6 +422,7 @@ export function score(screen, variants) {
     hierarchy: {
       oneLargest: result(hierarchy.largest.elements <= RULES.largestElements && ratio >= RULES.largestRatio, `${hierarchy.largest.size}px ×${hierarchy.largest.elements} "${hierarchy.largest.text}", next ${hierarchy.largest.nextSize}px`),
       fontSizes: result(hierarchy.fontSizes.length <= RULES.fontSizesInFirstViewport, hierarchy.fontSizes.map((entry) => entry.size).join("/")),
+      pageTitleVisible: result(hierarchy.headings.some((heading) => heading.tag === "h1"), hierarchy.headings.find((heading) => heading.tag === "h1") ? `h1 "${hierarchy.headings.find((heading) => heading.tag === "h1").text}"` : "no h1 on show in the first viewport"),
       headingVisible: result(hierarchy.headings.length > 0, hierarchy.headings[0] ? `${hierarchy.headings[0].tag} "${hierarchy.headings[0].text}" at ${hierarchy.headings[0].top}px` : "no heading in the first viewport"),
       headingOutweighsRows: rows.count === 0 || headingWeights.length === 0 ? NA("no rows or no heading") : result(Math.min(...headingWeights) >= rows.titleWeightMax, `heading ${headingWeights.join("/")}, row title ${rows.titleWeightMax}`),
       headingOutweighsRowsDesktop: !wide || wide.rows.count === 0 || wide.headings.length === 0 ? NA("no rows or no heading") : result(Math.min(...wide.headings) >= wide.rows.titleWeightMax, `heading ${wide.headings.join("/")}, row title ${wide.rows.titleWeightMax}`),

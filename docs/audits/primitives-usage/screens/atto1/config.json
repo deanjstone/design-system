@@ -1,0 +1,19 @@
+{
+  "app": "atto1",
+  "repo": "atto1",
+  "sha": "6e82034",
+  "baseUrl": "http://127.0.0.1:4323",
+  "base": "/",
+  "mocksFile": "mocks.json",
+  "initScriptFile": "init.js",
+  "screens": [
+    {
+      "name": "dashboard",
+      "path": "/",
+      "waitFor": "h1,h2,main",
+      "primaryAction": "auto",
+      "expectsProgress": true,
+      "why": "The only route (src/App.tsx:44): the vehicle dashboard, with an add-entry action."
+    }
+  ]
+}

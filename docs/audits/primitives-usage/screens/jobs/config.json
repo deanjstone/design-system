@@ -1,0 +1,19 @@
+{
+  "app": "jobs",
+  "repo": "myargus",
+  "sha": "eaeb830",
+  "baseUrl": "http://127.0.0.1:4316",
+  "base": "/jobs/",
+  "mocksFile": "mocks.json",
+  "initScriptFile": "init.js",
+  "screens": [
+    {
+      "name": "roles",
+      "path": "/jobs/",
+      "waitFor": "h1,h2,main",
+      "primaryAction": null,
+      "expectsProgress": true,
+      "why": "The only screen after sign-in (src/App.tsx:40): the roles table."
+    }
+  ]
+}

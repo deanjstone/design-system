@@ -1,0 +1,35 @@
+{
+  "app": "email",
+  "repo": "email",
+  "sha": "8be4107",
+  "baseUrl": "http://127.0.0.1:4313",
+  "base": "/",
+  "mocksFile": "mocks.json",
+  "initScriptFile": "init.js",
+  "screens": [
+    {
+      "name": "inbox",
+      "path": "/inbox",
+      "waitFor": "h1,h2,main",
+      "primaryAction": null,
+      "expectsProgress": true,
+      "why": "The default route (`/` redirects to `/inbox`, src/web/App.tsx:76): the thread list, the app's home."
+    },
+    {
+      "name": "thread",
+      "path": "/inbox/t-1001",
+      "waitFor": "h1,h2,main",
+      "primaryAction": null,
+      "expectsProgress": false,
+      "why": "The reading view every row opens (`/inbox/:threadId`)."
+    },
+    {
+      "name": "settings",
+      "path": "/settings/general",
+      "waitFor": "h1,h2,main",
+      "primaryAction": null,
+      "expectsProgress": false,
+      "why": "The settings landing page (`/settings` redirects here): the app's form screen."
+    }
+  ]
+}

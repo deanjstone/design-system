@@ -1,0 +1,19 @@
+{
+  "app": "briefings",
+  "repo": "myargus",
+  "sha": "eaeb830",
+  "baseUrl": "http://127.0.0.1:4315",
+  "base": "/briefings/",
+  "mocksFile": "mocks.json",
+  "initScriptFile": "init.js",
+  "screens": [
+    {
+      "name": "briefing",
+      "path": "/briefings/",
+      "waitFor": "h1,h2,main",
+      "primaryAction": null,
+      "expectsProgress": false,
+      "why": "The only route: the latest daily briefing (src/App.tsx)."
+    }
+  ]
+}

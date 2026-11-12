@@ -1,0 +1,27 @@
+{
+  "app": "reader",
+  "repo": "myargus",
+  "sha": "eaeb830",
+  "baseUrl": "http://127.0.0.1:4318",
+  "base": "/reader/",
+  "mocksFile": "mocks.json",
+  "initScriptFile": "init.js",
+  "screens": [
+    {
+      "name": "library",
+      "path": "/reader/",
+      "waitFor": "h1,h2,main",
+      "primaryAction": null,
+      "expectsProgress": true,
+      "why": "The index route: the article library, the app's home."
+    },
+    {
+      "name": "article",
+      "path": "/reader/article/a-1001",
+      "waitFor": "h1,h2,main",
+      "primaryAction": null,
+      "expectsProgress": false,
+      "why": "The reading view (`/article/:id`): the app's purpose."
+    }
+  ]
+}

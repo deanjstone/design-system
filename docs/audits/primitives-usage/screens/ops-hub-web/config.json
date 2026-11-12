@@ -1,0 +1,35 @@
+{
+  "app": "ops-hub-web",
+  "repo": "ops-hub",
+  "sha": "b3b5c3b",
+  "baseUrl": "http://127.0.0.1:4312",
+  "mocksFile": "mocks.json",
+  "initScriptFile": "init.js",
+  "screens": [
+    {
+      "name": "home",
+      "path": "/",
+      "waitFor": "h1",
+      "primaryAction": null,
+      "expectsProgress": true,
+      "why": "The default route and first nav item, titled 'Needs you' (src/App.tsx, src/components/nav.ts): the owner's inbox of things to act on."
+    },
+    {
+      "name": "dashboard",
+      "path": "/dashboard",
+      "waitFor": "h1",
+      "primaryAction": null,
+      "expectsProgress": true,
+      "why": "Second nav item: the backlog as grouped issue rows, the app's main list and the screen design-system#207's IssueRow work is aimed at."
+    },
+    {
+      "name": "issue",
+      "path": "/issues/deanjstone/design-system/207",
+      "waitFor": "h1",
+      "primaryAction": null,
+      "expectsProgress": false,
+      "why": "The detail page every row opens (route.ts PAGE): long-form reading plus the write actions."
+    }
+  ],
+  "base": "/"
+}

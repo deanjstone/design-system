@@ -1,0 +1,35 @@
+{
+  "app": "knowledge",
+  "repo": "myargus",
+  "sha": "eaeb830",
+  "baseUrl": "http://127.0.0.1:4317",
+  "base": "/knowledge/",
+  "mocksFile": "mocks.json",
+  "initScriptFile": "init.js",
+  "screens": [
+    {
+      "name": "search",
+      "path": "/knowledge/",
+      "waitFor": "h1,h2,main",
+      "primaryAction": null,
+      "expectsProgress": false,
+      "why": "The index route (src/App.tsx:84): search and recent chats, the app's home."
+    },
+    {
+      "name": "live-notes",
+      "path": "/knowledge/live-notes",
+      "waitFor": "h1,h2,main",
+      "primaryAction": null,
+      "expectsProgress": true,
+      "why": "A nav section with status per row (running, failing, auto-paused)."
+    },
+    {
+      "name": "chat",
+      "path": "/knowledge/chat/c-1001",
+      "waitFor": "h1,h2,main",
+      "primaryAction": null,
+      "expectsProgress": false,
+      "why": "The reading view (`/chat/:id`): long-form text."
+    }
+  ]
+}

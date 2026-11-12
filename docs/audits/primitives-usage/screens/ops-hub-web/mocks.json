@@ -1,0 +1,108 @@
+[
+  { "url": "**/api/events**", "method": "GET", "status": 204, "body": "" },
+  { "url": "**/api/board/events**", "method": "GET", "status": 204, "body": "" },
+  { "url": "**/api/github/events**", "method": "GET", "status": 204, "body": "" },
+  { "url": "**/api/passkey**", "method": "GET", "status": 200, "json": { "enrolled": true, "created_at": "2026-10-02T04:11:00Z" } },
+  { "url": "**/api/push**", "method": "GET", "status": 200, "json": { "publicKey": "" } },
+  { "url": "**/api/items**", "method": "GET", "status": 200, "json": { "items": [
+    { "kind": "issue", "repo": "deanjstone/design-system", "number": 207, "title": "Adopt the audit's type, spacing and density scale as opt-in registry items", "state": "open" },
+    { "kind": "issue", "repo": "deanjstone/ops-hub", "number": 1042, "title": "Stop the Needs you feed from showing a red CI row for a PR that has since been re-run green", "state": "open" },
+    { "kind": "pull", "repo": "deanjstone/design-system", "number": 212, "title": "feat: adopt the grouped two-row card in the dashboard repo page", "state": "open" }
+  ] } },
+  { "url": "**/api/github/feed**", "method": "GET", "status": 200, "json": {
+    "current": "W1",
+    "next": "W2",
+    "tiles": { "redCi": 1, "currentOpen": 7, "takeable": 2, "noMode": 2 },
+    "sections": [
+      { "key": "red-ci", "count": 1, "items": [
+        { "kind": "pull", "repo": "deanjstone/design-system", "number": 212, "ref": "design-system/212", "title": "feat: adopt the grouped two-row card in the dashboard repo page and keep every long repository name wrapping inside its column", "url": "https://github.com/deanjstone/design-system/pull/212", "state": "open", "author": "deanjstone", "draft": false, "wave": "W1", "mode": "AFK", "linked": true, "checks": "failure", "failed": ["ci / visual (webkit)"], "mergeable": "mergeable", "category": "red", "stack": null }
+      ] },
+      { "key": "takeable", "count": 2, "items": [
+        { "kind": "issue", "repo": "deanjstone/design-system", "number": 198, "ref": "design-system/198", "title": "Document the primitive usage audit reading scorecard and how the WebKit render harness reports blocked requests", "url": "https://github.com/deanjstone/design-system/issues/198", "state": "open", "wave": "W1", "mode": "AFK", "type": "task", "status": "backlog", "statusReason": "open, no assignee", "takeable": true, "assignees": [], "mine": false, "parent": null },
+        { "kind": "issue", "repo": "deanjstone/argus-config", "number": 102, "ref": "argus-config/102", "title": "Trim the stale CI status fixtures from the homelab smoke suite so the nightly run reflects current workflows", "url": "https://github.com/deanjstone/argus-config/issues/102", "state": "open", "wave": "W1", "mode": "AFK", "type": "chore", "status": "backlog", "statusReason": "open, no assignee", "takeable": true, "assignees": [], "mine": false, "parent": null }
+      ] },
+      { "key": "ready", "count": 1, "items": [
+        { "kind": "pull", "repo": "deanjstone/ops-hub", "number": 1063, "ref": "ops-hub/1063", "title": "fix: keep the issue page Triage controls showing the pressed state in dark mode", "url": "https://github.com/deanjstone/ops-hub/pull/1063", "state": "open", "author": "deanjstone", "draft": false, "wave": "W1", "mode": "AFK", "linked": true, "checks": "success", "failed": [], "mergeable": "mergeable", "category": "ready", "stack": null }
+      ] },
+      { "key": "no-mode", "count": 2, "items": [
+        { "kind": "issue", "repo": "deanjstone/ops-hub", "number": 1060, "ref": "ops-hub/1060", "title": "Collapse the three duplicate status chips on the issue page into one derived status line", "url": "https://github.com/deanjstone/ops-hub/issues/1060", "state": "open", "wave": "W3", "mode": null, "type": "task", "status": "backlog", "statusReason": "open, no assignee", "takeable": false, "assignees": [], "mine": false, "parent": null },
+        { "kind": "issue", "repo": "deanjstone/ops-hub", "number": 1072, "ref": "ops-hub/1072", "title": "Name the empty state of the Waves view after the current wave so an owner can see what is left to take", "url": "https://github.com/deanjstone/ops-hub/issues/1072", "state": "open", "wave": "W2", "mode": null, "type": "task", "status": "backlog", "statusReason": "open, no assignee", "takeable": false, "assignees": [], "mine": false, "parent": null }
+      ] },
+      { "key": "inbox", "count": 1, "items": [
+        { "id": "msg_01J9ZQ4K2M", "repo_key": "github.com/deanjstone/argus-config", "kind": "question", "to": "*", "from": "loop-afk", "body": "The session-tasks heartbeat shows two memory refusals. Should the reconciler keep retrying them overnight, or wait for an owner decision on each one?", "importance": "normal", "ack_required": true, "state": "queued", "attempts": 0, "device": "homelab", "session_id": null, "host": "dell-server", "lease_until": null, "created_at": "2026-11-10T06:12:00Z", "claimed_at": null, "acked_at": null, "expires_at": "2026-11-17T06:12:00Z" }
+      ] }
+    ]
+  } },
+  { "url": "**/api/github/dashboard**", "method": "GET", "status": 200, "json": {
+    "settledDays": 7,
+    "repos": [
+      { "repo": "deanjstone/design-system", "bucket": "active", "counts": { "active": 1, "working": 1, "snoozed": 0, "settled": 1 }, "headline": "Dashboard repo page: grouped two-row card in review", "at": "2026-11-10T05:40:00Z" },
+      { "repo": "deanjstone/ops-hub", "bucket": "active", "counts": { "active": 2, "working": 0, "snoozed": 0, "settled": 1 }, "headline": "Promotion card diverged from main after the last deploy", "at": "2026-11-10T04:10:00Z" },
+      { "repo": "deanjstone/argus-config", "bucket": "active", "counts": { "active": 1, "working": 0, "snoozed": 1, "settled": 1 }, "headline": "Memory reconciler has two refusals waiting on the owner", "at": "2026-11-10T06:12:00Z" },
+      { "repo": "deanjstone/homelab", "bucket": null, "counts": { "active": 0, "working": 0, "snoozed": 0, "settled": 0 }, "headline": null, "at": null }
+    ],
+    "items": [
+      { "key": "deanjstone/design-system#212", "kind": "pull", "repo": "deanjstone/design-system", "number": 212, "bucket": "active", "reason": "red check: ci / visual (webkit)", "at": "2026-11-10T05:40:00Z", "row": { "kind": "pull", "repo": "deanjstone/design-system", "number": 212, "ref": "design-system/212", "title": "feat: adopt the grouped two-row card in the dashboard repo page and keep every long repository name wrapping inside its column", "url": "https://github.com/deanjstone/design-system/pull/212", "state": "open", "author": "deanjstone", "draft": false, "wave": "W1", "mode": "AFK", "linked": true, "checks": "failure", "failed": ["ci / visual (webkit)"], "mergeable": "mergeable", "category": "red", "stack": null } },
+      { "key": "deanjstone/design-system#207", "kind": "issue", "repo": "deanjstone/design-system", "number": 207, "bucket": "working", "reason": "in progress", "at": "2026-11-10T03:22:00Z", "row": { "kind": "issue", "repo": "deanjstone/design-system", "number": 207, "ref": "design-system/207", "title": "Adopt the audit's type, spacing and density scale as opt-in registry items", "url": "https://github.com/deanjstone/design-system/issues/207", "state": "open", "wave": "W1", "mode": "AFK", "type": "task", "status": "in-progress", "statusReason": "assigned, branch open", "takeable": false, "assignees": ["deanjstone"], "mine": true, "parent": null } },
+      { "key": "deanjstone/design-system#211", "kind": "issue", "repo": "deanjstone/design-system", "number": 211, "bucket": "settled", "reason": "closed", "at": "2026-11-09T22:05:00Z", "row": { "kind": "issue", "repo": "deanjstone/design-system", "number": 211, "ref": "design-system/211", "title": "Write the dark-mode token pairs for the status colours so warning and danger text pass 4.5:1 on both surfaces", "url": "https://github.com/deanjstone/design-system/issues/211", "state": "closed", "wave": "W2", "mode": "AFK", "type": "task", "status": "done", "statusReason": "closed", "takeable": false, "assignees": [], "mine": false, "parent": null } },
+      { "key": "deanjstone/ops-hub#1042", "kind": "issue", "repo": "deanjstone/ops-hub", "number": 1042, "bucket": "active", "reason": "needs:owner", "at": "2026-11-10T04:10:00Z", "row": { "kind": "issue", "repo": "deanjstone/ops-hub", "number": 1042, "ref": "ops-hub/1042", "title": "Stop the Needs you feed from showing a red CI row for a PR that has since been re-run green", "url": "https://github.com/deanjstone/ops-hub/issues/1042", "state": "open", "wave": "W1", "mode": "HITL", "type": "bug", "status": "blocked", "statusReason": "blocked by ops-hub/1038", "takeable": false, "assignees": [], "mine": false, "parent": null } },
+      { "key": "promotion:deanjstone/ops-hub", "kind": "promotion", "repo": "deanjstone/ops-hub", "number": null, "bucket": "active", "reason": "deploy has diverged from main", "at": null, "promotion": { "state": "diverged", "flagged": false, "deploying": false } },
+      { "key": "deanjstone/ops-hub#1057", "kind": "issue", "repo": "deanjstone/ops-hub", "number": 1057, "bucket": "settled", "reason": "closed", "at": "2026-11-09T18:30:00Z", "row": { "kind": "issue", "repo": "deanjstone/ops-hub", "number": 1057, "ref": "ops-hub/1057", "title": "Keep the dashboard repo cards readable on a 375 px phone when a repo name is longer than the card title column", "url": "https://github.com/deanjstone/ops-hub/issues/1057", "state": "closed", "wave": "W1", "mode": "AFK", "type": "task", "status": "done", "statusReason": "closed", "takeable": false, "assignees": [], "mine": false, "parent": null } },
+      { "key": "deanjstone/argus-config#91", "kind": "issue", "repo": "deanjstone/argus-config", "number": 91, "bucket": "active", "reason": "needs:owner", "at": "2026-11-10T06:12:00Z", "row": { "kind": "issue", "repo": "deanjstone/argus-config", "number": 91, "ref": "argus-config/91", "title": "Decide whether the notice board keeps acknowledgements after a message expires, and for how long", "url": "https://github.com/deanjstone/argus-config/issues/91", "state": "open", "wave": "W1", "mode": "HITL", "type": "decision", "status": "backlog", "statusReason": "waiting on owner", "takeable": false, "assignees": [], "mine": false, "parent": null } },
+      { "key": "deanjstone/argus-config#97", "kind": "issue", "repo": "deanjstone/argus-config", "number": 97, "bucket": "snoozed", "reason": "wave:held", "at": "2026-11-08T11:00:00Z", "row": { "kind": "issue", "repo": "deanjstone/argus-config", "number": 97, "ref": "argus-config/97", "title": "Hold the memory graph export until the reconciler refusal count is zero for a full week", "url": "https://github.com/deanjstone/argus-config/issues/97", "state": "open", "wave": "Held", "mode": "HITL", "type": "task", "status": "backlog", "statusReason": "held by owner", "takeable": false, "assignees": [], "mine": false, "parent": null } },
+      { "key": "deanjstone/argus-config#95", "kind": "issue", "repo": "deanjstone/argus-config", "number": 95, "bucket": "settled", "reason": "closed", "at": "2026-11-09T09:14:00Z", "row": { "kind": "issue", "repo": "deanjstone/argus-config", "number": 95, "ref": "argus-config/95", "title": "Add a retry budget to the session-tasks timer so a failed run does not stack duplicate PRs in the inbox", "url": "https://github.com/deanjstone/argus-config/issues/95", "state": "closed", "wave": "W1", "mode": "AFK", "type": "task", "status": "done", "statusReason": "closed", "takeable": false, "assignees": [], "mine": false, "parent": null } }
+    ],
+    "gaps": [
+      { "bucket": "active", "missing": "a parked slot (loop-state is not reachable from the hub)" },
+      { "bucket": "working", "missing": "a running slot (loop-state is not reachable from the hub)" },
+      { "bucket": "snoozed", "missing": "repo_holds (loop-state is not reachable from the hub)" },
+      { "bucket": "settled", "missing": "closed issues and PRs the hub no longer holds" }
+    ]
+  } },
+  { "url": "**/api/github/repos", "method": "GET", "status": 200, "json": { "repos": [
+    { "repo": "deanjstone/design-system", "syncedAt": "2026-11-10T05:55:00Z", "attemptedAt": "2026-11-10T05:55:00Z", "error": null },
+    { "repo": "deanjstone/ops-hub", "syncedAt": "2026-11-10T05:55:00Z", "attemptedAt": "2026-11-10T05:55:00Z", "error": null },
+    { "repo": "deanjstone/argus-config", "syncedAt": "2026-11-10T05:55:00Z", "attemptedAt": "2026-11-10T05:55:00Z", "error": null }
+  ] } },
+  { "url": "**/api/github/pulls**", "method": "GET", "status": 200, "json": { "queue": [], "stacks": [], "staleDays": 14 } },
+  { "url": "**/api/github/waves**", "method": "GET", "status": 200, "json": { "current": "W1", "next": "W2", "groups": [] } },
+  { "url": "**/api/github/mine**", "method": "GET", "status": 200, "json": { "items": [] } },
+  { "url": "**/api/github/maps**", "method": "GET", "status": 200, "json": { "maps": [] } },
+  { "url": "**/api/github/promotions**", "method": "GET", "status": 200, "json": { "enabled": ["ops-hub"], "promotions": [] } },
+  { "url": "**/api/board/repos/**/messages**", "method": "GET", "status": 200, "json": { "messages": [] } },
+  { "url": "**/api/board/repos**", "method": "GET", "status": 200, "json": { "repos": [
+    { "repo_key": "github.com/deanjstone/argus-config", "queued": 1, "claimed": 0, "acked": 0, "expired": 0, "dead": 0, "last_message_at": "2026-11-10T06:12:00Z" }
+  ] } },
+  { "url": "**/api/github/issues/deanjstone/design-system/207/comments**", "method": "GET", "status": 200, "json": { "comments": [
+    { "id": 4410001, "author": "deanjstone", "body": "Pulled the type scale out of the audit. The ramp is still too wide for the dense table rows, so the first pass only covers headings and body text.", "url": "https://github.com/deanjstone/design-system/issues/207#issuecomment-4410001", "createdAt": "2026-11-09T21:14:00Z", "updatedAt": "2026-11-09T21:14:00Z" },
+    { "id": 4410002, "author": "deanjstone", "body": "Agreed on keeping it opt-in. The registry item should ship without touching the default tokens, and the phone screenshots should show the new spacing before anything is promoted.", "url": "https://github.com/deanjstone/design-system/issues/207#issuecomment-4410002", "createdAt": "2026-11-10T02:40:00Z", "updatedAt": "2026-11-10T02:40:00Z" }
+  ] } },
+  { "url": "**/api/github/issues/deanjstone/design-system/207", "method": "GET", "status": 200, "json": {
+    "issue": {
+      "kind": "issue", "repo": "deanjstone/design-system", "number": 207,
+      "title": "Adopt the audit's type, spacing and density scale as opt-in registry items",
+      "state": "open", "author": "deanjstone",
+      "url": "https://github.com/deanjstone/design-system/issues/207",
+      "body": "The primitives usage audit found that the frontends pick type sizes, gaps and row heights from many near-identical values. This issue turns the audit's proposed scale into registry items that a frontend can opt into one at a time, so nothing changes for an app until it asks for the scale.\n\n## What the audit found\n\nAcross the frontends the audit read, the same handful of visual decisions appear in dozens of forms. Body text sits at four sizes that differ by a pixel or two. Vertical rhythm uses gaps of 6, 10, 14 and 18 pixels in places that want the same step. Dense list rows and roomy card rows share one padding value that suits neither.\n\nThe proposed scale collapses these into a short ramp. The audit's sample page shows the ramp at phone width and at desktop width, in light and dark, and it is the reference for what each step should look like.\n\n## Proposed items\n\n- A type ramp with five steps, each with a line height and a weight, exposed as registry items.\n- A spacing scale built on a four pixel base, with named steps for row, card and section gaps.\n- A density token pair, comfortable and compact, that a list picks by name rather than by pixel value.\n- A short migration note for each item saying which screens change and which do not.\n\nEach item stays opt-in. A frontend that does not import the item keeps its current values, so the rollout can go screen by screen and stop at any point.\n\n## Acceptance\n\nThe items land in the design system with tests for the token values and a sample page that renders each step. One pilot app adopts the ramp for its issue detail page first, and its phone screenshots are attached to the pull request before any other app is asked to adopt it.\n\nNothing in this issue changes the default tokens. A later issue decides whether the scale becomes the default, once at least two frontends have run it for a week without a regression on the phone widths.\n\n## Out of scope\n\nColour is not part of this issue. The status colour pairs are tracked separately, and the dark-mode contrast work is already in review.\n\n- No change to the default theme.\n- No change to existing component APIs.\n- No new runtime dependency.\n\nThe audit's reading scorecard counts how many of the frontend's values map onto the new ramp. Its target for the pilot is a clear majority of the type and spacing values on the issue page, with the remainder listed by name so a reviewer can see what was left out on purpose.",
+      "labels": ["mode:afk", "wave:w1", "type:task", "area:design-system"],
+      "assignees": ["deanjstone"],
+      "createdAt": "2026-11-07T04:20:00Z", "updatedAt": "2026-11-10T02:40:00Z", "closedAt": null,
+      "parent": null, "subIssues": [], "blockedBy": [], "blocking": []
+    },
+    "derived": {
+      "wave": "W1", "waveLabels": ["wave:w1"], "mode": "AFK", "type": "task",
+      "status": { "status": "in-progress", "reason": "assigned, branch open" },
+      "takeable": { "takeable": false, "reason": "assigned to deanjstone" },
+      "mine": true, "current": "W1", "next": "W2"
+    },
+    "pulls": [
+      { "repo": "deanjstone/design-system", "number": 212, "title": "feat: adopt the grouped two-row card in the dashboard repo page", "state": "open" }
+    ]
+  } },
+  { "url": "**/api/github/issues/deanjstone/ops-hub/1042", "method": "GET", "status": 200, "json": {
+    "issue": { "kind": "issue", "repo": "deanjstone/ops-hub", "number": 1042, "title": "Stop the Needs you feed from showing a red CI row for a PR that has since been re-run green", "state": "open", "author": "deanjstone", "url": "https://github.com/deanjstone/ops-hub/issues/1042", "body": "The feed keeps a red CI row after a re-run goes green.", "labels": ["mode:hitl", "wave:w1", "type:bug"], "assignees": [], "createdAt": "2026-11-08T10:00:00Z", "updatedAt": "2026-11-10T04:10:00Z", "closedAt": null, "parent": null, "subIssues": [], "blockedBy": [{ "repo": "deanjstone/ops-hub", "number": 1038, "state": "open" }], "blocking": [] },
+    "derived": { "wave": "W1", "waveLabels": ["wave:w1"], "mode": "HITL", "type": "bug", "status": { "status": "blocked", "reason": "blocked by ops-hub/1038" }, "takeable": { "takeable": false, "reason": "blocked" }, "mine": false, "current": "W1", "next": "W2" },
+    "pulls": []
+  } },
+  { "url": "**/api/github/issues/deanjstone/**", "method": "GET", "status": 404, "json": { "error": "not in the fixture set", "is": null } }
+]

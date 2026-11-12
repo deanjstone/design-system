@@ -1,0 +1,19 @@
+{
+  "app": "scan-app",
+  "repo": "homelab",
+  "sha": "b8fe404",
+  "baseUrl": "http://127.0.0.1:4321",
+  "base": "/",
+  "mocksFile": "mocks.json",
+  "initScriptFile": "init.js",
+  "screens": [
+    {
+      "name": "scan",
+      "path": "/",
+      "waitFor": "h1,h2,main",
+      "primaryAction": "auto",
+      "expectsProgress": false,
+      "why": "The only screen (src/App.tsx): start a scan and see recent scans."
+    }
+  ]
+}

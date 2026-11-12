@@ -1,0 +1,35 @@
+{
+  "app": "budget",
+  "repo": "budget",
+  "sha": "b222c98",
+  "baseUrl": "http://127.0.0.1:4324",
+  "base": "/",
+  "mocksFile": "mocks.json",
+  "initScriptFile": "init.js",
+  "screens": [
+    {
+      "name": "home",
+      "path": "/home",
+      "waitFor": "h1,h2,main",
+      "primaryAction": null,
+      "expectsProgress": true,
+      "why": "The signed-in landing route (web/src/router.tsx:88)."
+    },
+    {
+      "name": "activity",
+      "path": "/activity",
+      "waitFor": "h1,h2,main",
+      "primaryAction": null,
+      "expectsProgress": true,
+      "why": "The transactions list: the app's main list screen."
+    },
+    {
+      "name": "budget",
+      "path": "/budget",
+      "waitFor": "h1,h2,main",
+      "primaryAction": null,
+      "expectsProgress": true,
+      "why": "The budget overview: progress against limits."
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "app": "watchtower",
+  "repo": "argus",
+  "sha": "755a09b",
+  "baseUrl": "http://127.0.0.1:4314",
+  "base": "/",
+  "mocksFile": "mocks.json",
+  "initScriptFile": "init.js",
+  "screens": [
+    {
+      "name": "dashboard",
+      "path": "/",
+      "waitFor": "h1,h2,main",
+      "primaryAction": null,
+      "expectsProgress": true,
+      "why": "The only screen after sign-in (src/App.tsx:48): service health cards."
+    }
+  ]
+}

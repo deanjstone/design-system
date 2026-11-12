@@ -1,0 +1,35 @@
+{
+  "app": "shell",
+  "repo": "myargus",
+  "sha": "eaeb830",
+  "baseUrl": "http://127.0.0.1:4319",
+  "base": "/",
+  "mocksFile": "mocks.json",
+  "initScriptFile": "init.js",
+  "screens": [
+    {
+      "name": "home",
+      "path": "/",
+      "waitFor": "h1,h2,main",
+      "primaryAction": null,
+      "expectsProgress": false,
+      "why": "The portal home (src/App.tsx:93)."
+    },
+    {
+      "name": "plans",
+      "path": "/plans",
+      "waitFor": "h1,h2,main",
+      "primaryAction": null,
+      "expectsProgress": true,
+      "why": "The plans list: implementation plans with progress."
+    },
+    {
+      "name": "plan",
+      "path": "/plans/audit-follow-ups",
+      "waitFor": "h1,h2,main",
+      "primaryAction": null,
+      "expectsProgress": true,
+      "why": "A plan's detail page (`/plans/:slug`): a checklist with progress."
+    }
+  ]
+}

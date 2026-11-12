@@ -1,0 +1,35 @@
+{
+  "app": "stockade",
+  "repo": "myargus",
+  "sha": "eaeb830",
+  "baseUrl": "http://127.0.0.1:4320",
+  "base": "/",
+  "mocksFile": "mocks.json",
+  "initScriptFile": "init.js",
+  "screens": [
+    {
+      "name": "items",
+      "path": "/#items",
+      "waitFor": "h1,h2,main",
+      "primaryAction": "auto",
+      "expectsProgress": false,
+      "why": "The default route and first tab (src/lib/nav.ts): the inventory list."
+    },
+    {
+      "name": "lowstock",
+      "path": "/#lowstock",
+      "waitFor": "h1,h2,main",
+      "primaryAction": null,
+      "expectsProgress": true,
+      "why": "Third tab: the state screen (what is running out)."
+    },
+    {
+      "name": "shopping",
+      "path": "/#shopping",
+      "waitFor": "h1,h2,main",
+      "primaryAction": "auto",
+      "expectsProgress": true,
+      "why": "Fourth tab: the checklist used in the shop."
+    }
+  ]
+}
