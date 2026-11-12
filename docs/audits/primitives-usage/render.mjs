@@ -74,6 +74,7 @@ if (process.argv.includes("--rescore")) {
 const glob = (pattern) => new RegExp("^" + pattern.replace(/[.+^${}()|[\]\\?]/g, "\\$&").replace(/\*\*/g, "\u0000").replace(/\*/g, "[^/?]*").replace(/\u0000/g, ".*") + "$")
 const mocks = (config.mocks ?? []).map((mock) => ({ ...mock, pattern: glob(mock.url), hits: 0 }))
 const blocked = new Map()
+const unmocked = new Map()
 
 // A service worker would answer requests the route handler never sees, so none may register.
 const PHONE = { viewport: { width: 390, height: 844 }, deviceScaleFactor: 3, isMobile: true, hasTouch: true, serviceWorkers: "block" }
@@ -99,7 +100,15 @@ async function route(context) {
       const body = mock.file ? readFileSync(beside(mock.file), "utf8") : mock.json !== undefined ? JSON.stringify(mock.json) : (mock.body ?? "")
       return request.fulfill({ status: mock.status ?? 200, contentType: mock.contentType ?? "application/json", headers: { "access-control-allow-origin": "*", ...mock.headers }, body })
     }
-    if (new URL(url).origin === origin) return request.continue()
+    if (new URL(url).origin === origin) {
+      // A data call to the app's own origin that no mock answers gets the static server's
+      // reply, which is not what the app expects: list it so a fixture can be written.
+      if (["fetch", "xhr", "eventsource"].includes(request.request().resourceType())) {
+        const local = `${request.request().method()} ${url.replace(origin, "")}`
+        unmocked.set(local, (unmocked.get(local) ?? 0) + 1)
+      }
+      return request.continue()
+    }
     const key = `${request.request().method()} ${url.split("?")[0]}`
     blocked.set(key, (blocked.get(key) ?? 0) + 1)
     return request.abort()
@@ -161,6 +170,7 @@ try {
 
 output.mocks = mocks.map((mock) => ({ url: mock.url, method: mock.method ?? "any", hits: mock.hits }))
 output.blocked = [...blocked].map(([request, count]) => ({ request, count })).sort((a, b) => b.count - a.count)
+output.unmockedLocal = [...unmocked].map(([request, count]) => ({ request, count })).sort((a, b) => b.count - a.count)
 writeFileSync(path.join(config.out, only ? `scorecard-${only}.json` : "scorecard.json"), JSON.stringify(output, null, 1) + "\n")
 
 for (const screen of output.screens) {
@@ -172,3 +182,4 @@ for (const screen of output.screens) {
   console.log(`\n${config.app} / ${screen.name}\n  ${lines.join("\n  ")}`)
 }
 if (output.blocked.length > 0) console.log(`\nblocked (not mocked, not local):\n  ${output.blocked.map((entry) => `${entry.count}× ${entry.request}`).join("\n  ")}`)
+if (output.unmockedLocal.length > 0) console.log(`\nsame-origin data calls with no mock:\n  ${output.unmockedLocal.map((entry) => `${entry.count}× ${entry.request}`).join("\n  ")}`)

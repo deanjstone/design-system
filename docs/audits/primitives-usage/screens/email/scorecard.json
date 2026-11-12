@@ -50,30 +50,30 @@
       "detail": "no rows or no heading"
      },
      "headingOutweighsRowsDesktop": {
-      "pass": null,
-      "detail": "no rows or no heading"
+      "pass": true,
+      "detail": "heading 600, row title 600"
      }
     },
     "clutter": {
      "chipsPerRow": {
-      "pass": null,
-      "detail": "no rows"
+      "pass": true,
+      "detail": "max 1 in 10 rows"
      },
      "coloursPerRow": {
-      "pass": null,
-      "detail": "no rows"
+      "pass": true,
+      "detail": "max 1"
      },
      "noNestedBorders": {
-      "pass": null,
-      "detail": "no rows"
+      "pass": true,
+      "detail": "0 rows"
      },
      "chipsPerRowDesktop": {
-      "pass": null,
-      "detail": "no rows"
+      "pass": true,
+      "detail": "max 1 in 10 rows"
      },
      "coloursPerRowDesktop": {
-      "pass": null,
-      "detail": "no rows"
+      "pass": true,
+      "detail": "max 1"
      },
      "interactiveCount": {
       "pass": false,
@@ -123,7 +123,7 @@
     "reading": {
      "bodyText": {
       "pass": false,
-      "detail": "nullpx"
+      "detail": "12.5px"
      },
      "lineLength": {
       "pass": true,
@@ -131,7 +131,7 @@
      },
      "contrast": {
       "pass": false,
-      "detail": "iphone-light 0, iphone-dark 0, desktop-light 3, desktop-dark 3"
+      "detail": "iphone-light 0, iphone-dark 0, desktop-light 3, desktop-dark 4"
      },
      "noSidewaysScroll": {
       "pass": true,
@@ -191,13 +191,96 @@
       "headings": []
      },
      "rows": {
-      "count": 0,
-      "sample": [],
-      "maxChips": 0,
-      "maxColours": 0,
+      "count": 10,
+      "sample": [
+       {
+        "height": 117,
+        "chips": 1,
+        "chipTexts": [
+         "Billing"
+        ],
+        "colours": 1,
+        "colourValues": [
+         "#59466f"
+        ],
+        "nested": 0,
+        "titleWeight": 600,
+        "titleSize": 13,
+        "titleText": "Priya Raman"
+       },
+       {
+        "height": 112,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 1,
+        "colourValues": [
+         "#3d4c6e"
+        ],
+        "nested": 0,
+        "titleWeight": 600,
+        "titleSize": 13,
+        "titleText": "Marcus Ellery"
+       },
+       {
+        "height": 117,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 1,
+        "colourValues": [
+         "#3d4c6e"
+        ],
+        "nested": 0,
+        "titleWeight": 600,
+        "titleSize": 13,
+        "titleText": "Dana Okafor"
+       },
+       {
+        "height": 112,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 1,
+        "colourValues": [
+         "#3d4c6e"
+        ],
+        "nested": 0,
+        "titleWeight": 600,
+        "titleSize": 13,
+        "titleText": "Tomasz Lindqvist"
+       },
+       {
+        "height": 112,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 13,
+        "titleText": "Ines Caldera"
+       },
+       {
+        "height": 112,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 1,
+        "colourValues": [
+         "#6e4d32"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 13,
+        "titleText": "Ruth Halvorsen"
+       }
+      ],
+      "maxChips": 1,
+      "maxColours": 1,
       "nested": 0,
-      "heights": [],
-      "titleWeightMax": 0
+      "heights": [
+       112,
+       113,
+       117
+      ],
+      "titleWeightMax": 600
      },
      "interactive": {
       "firstViewport": 17,
@@ -509,7 +592,7 @@
       "empties": []
      },
      "reading": {
-      "bodySize": null,
+      "bodySize": 12.5,
       "lines": [],
       "contrastChecked": 73,
       "contrastUnknown": 0,
@@ -579,13 +662,96 @@
       "headings": []
      },
      "rows": {
-      "count": 0,
-      "sample": [],
-      "maxChips": 0,
-      "maxColours": 0,
+      "count": 10,
+      "sample": [
+       {
+        "height": 117,
+        "chips": 1,
+        "chipTexts": [
+         "Billing"
+        ],
+        "colours": 1,
+        "colourValues": [
+         "#59466f"
+        ],
+        "nested": 0,
+        "titleWeight": 600,
+        "titleSize": 13,
+        "titleText": "Priya Raman"
+       },
+       {
+        "height": 112,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 1,
+        "colourValues": [
+         "#3d4c6e"
+        ],
+        "nested": 0,
+        "titleWeight": 600,
+        "titleSize": 13,
+        "titleText": "Marcus Ellery"
+       },
+       {
+        "height": 117,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 1,
+        "colourValues": [
+         "#3d4c6e"
+        ],
+        "nested": 0,
+        "titleWeight": 600,
+        "titleSize": 13,
+        "titleText": "Dana Okafor"
+       },
+       {
+        "height": 112,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 1,
+        "colourValues": [
+         "#3d4c6e"
+        ],
+        "nested": 0,
+        "titleWeight": 600,
+        "titleSize": 13,
+        "titleText": "Tomasz Lindqvist"
+       },
+       {
+        "height": 112,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 13,
+        "titleText": "Ines Caldera"
+       },
+       {
+        "height": 112,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 1,
+        "colourValues": [
+         "#6e4d32"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 13,
+        "titleText": "Ruth Halvorsen"
+       }
+      ],
+      "maxChips": 1,
+      "maxColours": 1,
       "nested": 0,
-      "heights": [],
-      "titleWeightMax": 0
+      "heights": [
+       112,
+       113,
+       117
+      ],
+      "titleWeightMax": 600
      },
      "interactive": {
       "firstViewport": 17,
@@ -897,7 +1063,7 @@
       "empties": []
      },
      "reading": {
-      "bodySize": null,
+      "bodySize": 12.5,
       "lines": [],
       "contrastChecked": 73,
       "contrastUnknown": 0,
@@ -983,13 +1149,96 @@
       ]
      },
      "rows": {
-      "count": 0,
-      "sample": [],
-      "maxChips": 0,
-      "maxColours": 0,
+      "count": 10,
+      "sample": [
+       {
+        "height": 117,
+        "chips": 1,
+        "chipTexts": [
+         "Billing"
+        ],
+        "colours": 1,
+        "colourValues": [
+         "#59466f"
+        ],
+        "nested": 0,
+        "titleWeight": 600,
+        "titleSize": 13,
+        "titleText": "Priya Raman"
+       },
+       {
+        "height": 112,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 1,
+        "colourValues": [
+         "#3d4c6e"
+        ],
+        "nested": 0,
+        "titleWeight": 600,
+        "titleSize": 13,
+        "titleText": "Marcus Ellery"
+       },
+       {
+        "height": 117,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 1,
+        "colourValues": [
+         "#3d4c6e"
+        ],
+        "nested": 0,
+        "titleWeight": 600,
+        "titleSize": 13,
+        "titleText": "Dana Okafor"
+       },
+       {
+        "height": 112,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 1,
+        "colourValues": [
+         "#3d4c6e"
+        ],
+        "nested": 0,
+        "titleWeight": 600,
+        "titleSize": 13,
+        "titleText": "Tomasz Lindqvist"
+       },
+       {
+        "height": 112,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 13,
+        "titleText": "Ines Caldera"
+       },
+       {
+        "height": 112,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 1,
+        "colourValues": [
+         "#6e4d32"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 13,
+        "titleText": "Ruth Halvorsen"
+       }
+      ],
+      "maxChips": 1,
+      "maxColours": 1,
       "nested": 0,
-      "heights": [],
-      "titleWeightMax": 0
+      "heights": [
+       112,
+       113,
+       117
+      ],
+      "titleWeightMax": 600
      },
      "interactive": {
       "firstViewport": 24,
@@ -1541,7 +1790,7 @@
        },
        {
         "size": 14,
-        "chars": 734
+        "chars": 372
        },
        {
         "size": 13.5,
@@ -1586,13 +1835,96 @@
       ]
      },
      "rows": {
-      "count": 0,
-      "sample": [],
-      "maxChips": 0,
-      "maxColours": 0,
+      "count": 10,
+      "sample": [
+       {
+        "height": 117,
+        "chips": 1,
+        "chipTexts": [
+         "Billing"
+        ],
+        "colours": 1,
+        "colourValues": [
+         "#59466f"
+        ],
+        "nested": 0,
+        "titleWeight": 600,
+        "titleSize": 13,
+        "titleText": "Priya Raman"
+       },
+       {
+        "height": 112,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 1,
+        "colourValues": [
+         "#3d4c6e"
+        ],
+        "nested": 0,
+        "titleWeight": 600,
+        "titleSize": 13,
+        "titleText": "Marcus Ellery"
+       },
+       {
+        "height": 117,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 1,
+        "colourValues": [
+         "#3d4c6e"
+        ],
+        "nested": 0,
+        "titleWeight": 600,
+        "titleSize": 13,
+        "titleText": "Dana Okafor"
+       },
+       {
+        "height": 112,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 1,
+        "colourValues": [
+         "#3d4c6e"
+        ],
+        "nested": 0,
+        "titleWeight": 600,
+        "titleSize": 13,
+        "titleText": "Tomasz Lindqvist"
+       },
+       {
+        "height": 112,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 13,
+        "titleText": "Ines Caldera"
+       },
+       {
+        "height": 112,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 1,
+        "colourValues": [
+         "#6e4d32"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 13,
+        "titleText": "Ruth Halvorsen"
+       }
+      ],
+      "maxChips": 1,
+      "maxColours": 1,
       "nested": 0,
-      "heights": [],
-      "titleWeightMax": 0
+      "heights": [
+       112,
+       113,
+       117
+      ],
+      "titleWeightMax": 600
      },
      "interactive": {
       "firstViewport": 24,
@@ -2110,16 +2442,25 @@
         "size": 11,
         "colour": "#a2a7b0",
         "on": "#324e66"
+       },
+       {
+        "text": "Send reply",
+        "ratio": 2.91,
+        "size": 14,
+        "colour": "#3f727c",
+        "on": "#5bd0d6"
        }
       ],
-      "contrastFailCount": 3,
+      "contrastFailCount": 4,
       "overflowX": 0,
       "runningAnimations": 0
      },
      "textRuns": 108,
      "covered": {
-      "runs": 0,
-      "sample": []
+      "runs": 1,
+      "sample": [
+       "Hi Priya,\n\nThanks for catching (14px at -115)"
+      ]
      },
      "waitForSeen": true,
      "pageErrors": [],
@@ -2172,13 +2513,97 @@
       "headings": []
      },
      "rows": {
-      "count": 0,
-      "sample": [],
-      "maxChips": 0,
-      "maxColours": 0,
+      "count": 10,
+      "sample": [
+       {
+        "height": 143,
+        "chips": 1,
+        "chipTexts": [
+         "Billing"
+        ],
+        "colours": 1,
+        "colourValues": [
+         "#59466f"
+        ],
+        "nested": 0,
+        "titleWeight": 600,
+        "titleSize": 13,
+        "titleText": "Priya Raman"
+       },
+       {
+        "height": 112,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 1,
+        "colourValues": [
+         "#3d4c6e"
+        ],
+        "nested": 0,
+        "titleWeight": 600,
+        "titleSize": 13,
+        "titleText": "Marcus Ellery"
+       },
+       {
+        "height": 117,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 1,
+        "colourValues": [
+         "#3d4c6e"
+        ],
+        "nested": 0,
+        "titleWeight": 600,
+        "titleSize": 13,
+        "titleText": "Dana Okafor"
+       },
+       {
+        "height": 112,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 1,
+        "colourValues": [
+         "#3d4c6e"
+        ],
+        "nested": 0,
+        "titleWeight": 600,
+        "titleSize": 13,
+        "titleText": "Tomasz Lindqvist"
+       },
+       {
+        "height": 112,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 13,
+        "titleText": "Ines Caldera"
+       },
+       {
+        "height": 112,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 1,
+        "colourValues": [
+         "#6e4d32"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 13,
+        "titleText": "Ruth Halvorsen"
+       }
+      ],
+      "maxChips": 1,
+      "maxColours": 1,
       "nested": 0,
-      "heights": [],
-      "titleWeightMax": 0
+      "heights": [
+       112,
+       113,
+       117,
+       143
+      ],
+      "titleWeightMax": 600
      },
      "interactive": {
       "firstViewport": 17,
@@ -2490,7 +2915,7 @@
       "empties": []
      },
      "reading": {
-      "bodySize": null,
+      "bodySize": 12.5,
       "lines": [],
       "contrastChecked": 73,
       "contrastUnknown": 0,
@@ -2558,13 +2983,96 @@
       "headings": []
      },
      "rows": {
-      "count": 0,
-      "sample": [],
-      "maxChips": 0,
-      "maxColours": 0,
+      "count": 10,
+      "sample": [
+       {
+        "height": 117,
+        "chips": 1,
+        "chipTexts": [
+         "Billing"
+        ],
+        "colours": 1,
+        "colourValues": [
+         "#59466f"
+        ],
+        "nested": 0,
+        "titleWeight": 600,
+        "titleSize": 13,
+        "titleText": "Priya Raman"
+       },
+       {
+        "height": 112,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 1,
+        "colourValues": [
+         "#3d4c6e"
+        ],
+        "nested": 0,
+        "titleWeight": 600,
+        "titleSize": 13,
+        "titleText": "Marcus Ellery"
+       },
+       {
+        "height": 117,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 1,
+        "colourValues": [
+         "#3d4c6e"
+        ],
+        "nested": 0,
+        "titleWeight": 600,
+        "titleSize": 13,
+        "titleText": "Dana Okafor"
+       },
+       {
+        "height": 112,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 1,
+        "colourValues": [
+         "#3d4c6e"
+        ],
+        "nested": 0,
+        "titleWeight": 600,
+        "titleSize": 13,
+        "titleText": "Tomasz Lindqvist"
+       },
+       {
+        "height": 112,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 13,
+        "titleText": "Ines Caldera"
+       },
+       {
+        "height": 112,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 1,
+        "colourValues": [
+         "#6e4d32"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 13,
+        "titleText": "Ruth Halvorsen"
+       }
+      ],
+      "maxChips": 1,
+      "maxColours": 1,
       "nested": 0,
-      "heights": [],
-      "titleWeightMax": 0
+      "heights": [
+       112,
+       113,
+       117
+      ],
+      "titleWeightMax": 600
      },
      "interactive": {
       "firstViewport": 17,
@@ -2876,7 +3384,7 @@
       "empties": []
      },
      "reading": {
-      "bodySize": null,
+      "bodySize": 12.5,
       "lines": [],
       "contrastChecked": 73,
       "contrastUnknown": 0,
@@ -2946,13 +3454,96 @@
       "headings": []
      },
      "rows": {
-      "count": 0,
-      "sample": [],
-      "maxChips": 0,
-      "maxColours": 0,
+      "count": 10,
+      "sample": [
+       {
+        "height": 117,
+        "chips": 1,
+        "chipTexts": [
+         "Billing"
+        ],
+        "colours": 1,
+        "colourValues": [
+         "#59466f"
+        ],
+        "nested": 0,
+        "titleWeight": 600,
+        "titleSize": 13,
+        "titleText": "Priya Raman"
+       },
+       {
+        "height": 112,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 1,
+        "colourValues": [
+         "#3d4c6e"
+        ],
+        "nested": 0,
+        "titleWeight": 600,
+        "titleSize": 13,
+        "titleText": "Marcus Ellery"
+       },
+       {
+        "height": 117,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 1,
+        "colourValues": [
+         "#3d4c6e"
+        ],
+        "nested": 0,
+        "titleWeight": 600,
+        "titleSize": 13,
+        "titleText": "Dana Okafor"
+       },
+       {
+        "height": 112,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 1,
+        "colourValues": [
+         "#3d4c6e"
+        ],
+        "nested": 0,
+        "titleWeight": 600,
+        "titleSize": 13,
+        "titleText": "Tomasz Lindqvist"
+       },
+       {
+        "height": 112,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 13,
+        "titleText": "Ines Caldera"
+       },
+       {
+        "height": 112,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 1,
+        "colourValues": [
+         "#6e4d32"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 13,
+        "titleText": "Ruth Halvorsen"
+       }
+      ],
+      "maxChips": 1,
+      "maxColours": 1,
       "nested": 0,
-      "heights": [],
-      "titleWeightMax": 0
+      "heights": [
+       112,
+       113,
+       117
+      ],
+      "titleWeightMax": 600
      },
      "interactive": {
       "firstViewport": 17,
@@ -3187,8 +3778,8 @@
       {
        "what": "Compose",
        "tag": "button",
-       "top": 686,
-       "bottom": 742,
+       "top": 686.3,
+       "bottom": 742.3,
        "left": 305.2,
        "inFirstViewport": true,
        "centreAt": 0.8,
@@ -3264,7 +3855,7 @@
       "empties": []
      },
      "reading": {
-      "bodySize": null,
+      "bodySize": 12.5,
       "lines": [],
       "contrastChecked": 73,
       "contrastUnknown": 0,
@@ -3312,7 +3903,7 @@
   },
   {
    "name": "thread",
-   "path": "/inbox/t-1001",
+   "path": "/inbox/1001",
    "why": "The reading view every row opens (`/inbox/:threadId`).",
    "primaryAction": null,
    "expectsProgress": false,
@@ -3320,27 +3911,27 @@
     "hierarchy": {
      "oneLargest": {
       "pass": false,
-      "detail": "16px ×1 \"Argus Email\", next 15px"
+      "detail": "15px ×1 \"Question about the invoice schedule for \", next 14px"
      },
      "fontSizes": {
       "pass": false,
-      "detail": "16/15/13/12.5/12/11.5/11"
+      "detail": "15/14/13.5/13/12"
      },
      "pageTitleVisible": {
-      "pass": false,
-      "detail": "no h1 on show in the first viewport"
+      "pass": true,
+      "detail": "h1 \"Question about the invoice schedule for \""
      },
      "headingVisible": {
-      "pass": false,
-      "detail": "no heading in the first viewport"
+      "pass": true,
+      "detail": "h1 \"Question about the invoice schedule for \" at 36.8px"
      },
      "headingOutweighsRows": {
       "pass": null,
       "detail": "no rows or no heading"
      },
      "headingOutweighsRowsDesktop": {
-      "pass": null,
-      "detail": "no rows or no heading"
+      "pass": true,
+      "detail": "heading 600, row title 600"
      }
     },
     "clutter": {
@@ -3357,20 +3948,20 @@
       "detail": "no rows"
      },
      "chipsPerRowDesktop": {
-      "pass": null,
-      "detail": "no rows"
+      "pass": true,
+      "detail": "max 1 in 10 rows"
      },
      "coloursPerRowDesktop": {
-      "pass": null,
-      "detail": "no rows"
+      "pass": true,
+      "detail": "max 1"
      },
      "interactiveCount": {
-      "pass": false,
-      "detail": "17"
+      "pass": true,
+      "detail": "8"
      },
      "alphaSteps": {
-      "pass": false,
-      "detail": "6: 0.5, 0.6, 0.7, 0.74, 0.75, 0.8"
+      "pass": true,
+      "detail": "3: 0.4, 0.7, 0.8"
      }
     },
     "action": {
@@ -3384,7 +3975,7 @@
      },
      "tapTargets": {
       "pass": true,
-      "detail": "0 of 21 under 44px"
+      "detail": "0 of 8 under 44px"
      },
      "inputText": {
       "pass": true,
@@ -3412,7 +4003,7 @@
     "reading": {
      "bodyText": {
       "pass": false,
-      "detail": "nullpx"
+      "detail": "14px"
      },
      "lineLength": {
       "pass": true,
@@ -3442,42 +4033,42 @@
      "hierarchy": {
       "fontSizes": [
        {
-        "size": 16,
+        "size": 15,
+        "chars": 55
+       },
+       {
+        "size": 14,
+        "chars": 700
+       },
+       {
+        "size": 13.5,
         "chars": 11
        },
        {
-        "size": 15,
-        "chars": 15
-       },
-       {
         "size": 13,
-        "chars": 474
-       },
-       {
-        "size": 12.5,
-        "chars": 614
+        "chars": 14
        },
        {
         "size": 12,
-        "chars": 60
-       },
-       {
-        "size": 11.5,
-        "chars": 77
-       },
-       {
-        "size": 11,
-        "chars": 17
+        "chars": 137
        }
       ],
       "largest": {
-       "size": 16,
+       "size": 15,
        "elements": 1,
        "weight": 600,
-       "text": "Argus Email",
-       "nextSize": 15
+       "text": "Question about the invoice schedule for ",
+       "nextSize": 14
       },
-      "headings": []
+      "headings": [
+       {
+        "tag": "h1",
+        "text": "Question about the invoice schedule for ",
+        "size": 15,
+        "weight": 600,
+        "top": 36.8
+       }
+      ]
      },
      "rows": {
       "count": 0,
@@ -3489,8 +4080,8 @@
       "titleWeightMax": 0
      },
      "interactive": {
-      "firstViewport": 17,
-      "measured": 21,
+      "firstViewport": 8,
+      "measured": 8,
       "small": 0,
       "smallSample": [],
       "inputs": 1,
@@ -3498,285 +4089,113 @@
      },
      "controls": [
       {
-       "what": "Argus Email",
+       "what": "Back to conversations",
        "tag": "button",
-       "top": 10,
-       "bottom": 54,
-       "left": 17,
-       "inFirstViewport": true,
-       "centreAt": 0,
-       "pinnedToBottom": false,
-       "primaryFill": false,
-       "width": 126.5,
-       "height": 44
-      },
-      {
-       "what": "Choose inbox",
-       "tag": "button",
-       "top": 81,
-       "bottom": 125,
-       "left": 8,
+       "top": 35,
+       "bottom": 79,
+       "left": 12,
        "inFirstViewport": true,
        "centreAt": 0.1,
-       "pinnedToBottom": false,
-       "primaryFill": false,
-       "width": 139,
-       "height": 44
-      },
-      {
-       "what": "Search conversations",
-       "tag": "input",
-       "top": 131,
-       "bottom": 175,
-       "left": 16,
-       "inFirstViewport": true,
-       "centreAt": 0.2,
-       "pinnedToBottom": false,
-       "primaryFill": false,
-       "width": 358,
-       "height": 44
-      },
-      {
-       "what": "Select all conversations",
-       "tag": "span",
-       "top": 193,
-       "bottom": 209,
-       "left": 24,
-       "inFirstViewport": true,
-       "centreAt": 0.2,
        "pinnedToBottom": false,
        "primaryFill": false,
        "width": 44,
        "height": 44
       },
       {
-       "what": "All",
+       "what": "Mark conversation as unread",
        "tag": "button",
-       "top": 179,
-       "bottom": 223,
-       "left": 59,
+       "top": 35,
+       "bottom": 79,
+       "left": 274,
        "inFirstViewport": true,
-       "centreAt": 0.2,
+       "centreAt": 0.1,
        "pinnedToBottom": false,
        "primaryFill": false,
-       "width": 59.3,
+       "width": 44,
        "height": 44
       },
       {
-       "what": "Unread4",
+       "what": "Archive conversation",
        "tag": "button",
-       "top": 179,
-       "bottom": 223,
-       "left": 118.3,
+       "top": 35,
+       "bottom": 79,
+       "left": 330,
        "inFirstViewport": true,
-       "centreAt": 0.2,
+       "centreAt": 0.1,
        "pinnedToBottom": false,
        "primaryFill": false,
-       "width": 59.3,
+       "width": 44,
        "height": 44
       },
       {
-       "what": "Filter by label",
+       "what": "Revise",
        "tag": "button",
-       "top": 179,
-       "bottom": 223,
-       "left": 280.8,
-       "inFirstViewport": true,
-       "centreAt": 0.2,
-       "pinnedToBottom": false,
-       "primaryFill": false,
-       "width": 93.2,
-       "height": 44
-      },
-      {
-       "what": "Unread conversation. PPriya RamanNov 10Q",
-       "tag": "button",
-       "top": 228,
-       "bottom": 344,
-       "left": 0,
-       "inFirstViewport": true,
-       "centreAt": 0.3,
-       "pinnedToBottom": false,
-       "primaryFill": false,
-       "width": 382,
-       "height": 116
-      },
-      {
-       "what": "Unread conversation. MMarcus ElleryNov 1",
-       "tag": "button",
-       "top": 345,
-       "bottom": 456,
-       "left": 0,
-       "inFirstViewport": true,
-       "centreAt": 0.5,
-       "pinnedToBottom": false,
-       "primaryFill": false,
-       "width": 382,
-       "height": 111
-      },
-      {
-       "what": "Unread conversation. DDana OkaforNov 10C",
-       "tag": "button",
-       "top": 457,
-       "bottom": 573,
-       "left": 0,
+       "top": 518,
+       "bottom": 562,
+       "left": 30,
        "inFirstViewport": true,
        "centreAt": 0.6,
        "pinnedToBottom": false,
        "primaryFill": false,
-       "width": 382,
-       "height": 116
+       "width": 73.2,
+       "height": 44
       },
       {
-       "what": "Unread conversation. TTomasz LindqvistNo",
+       "what": "Discard",
        "tag": "button",
-       "top": 574,
-       "bottom": 685,
-       "left": 0,
+       "top": 518,
+       "bottom": 562,
+       "left": 107.2,
        "inFirstViewport": true,
-       "centreAt": 0.7,
+       "centreAt": 0.6,
        "pinnedToBottom": false,
        "primaryFill": false,
-       "width": 382,
-       "height": 111
+       "width": 63.1,
+       "height": 44
       },
       {
-       "what": "IInes CalderaNov 9Refund request for a d",
+       "what": "Reply",
+       "tag": "textarea",
+       "top": 567,
+       "bottom": 767,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.8,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 200
+      },
+      {
+       "what": "Attach files",
        "tag": "button",
-       "top": 686,
-       "bottom": 797,
-       "left": 0,
+       "top": 767,
+       "bottom": 811,
+       "left": 199.7,
+       "inFirstViewport": true,
+       "centreAt": 0.9,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Send reply",
+       "tag": "button",
+       "top": 767,
+       "bottom": 811,
+       "left": 249.7,
        "inFirstViewport": true,
        "centreAt": 0.9,
        "pinnedToBottom": false,
-       "primaryFill": false,
-       "width": 382,
-       "height": 111
-      },
-      {
-       "what": "RRuth HalvorsenNov 9Welcome to the pilot",
-       "tag": "button",
-       "top": 798,
-       "bottom": 909,
-       "left": 0,
-       "inFirstViewport": false,
-       "centreAt": 1,
-       "pinnedToBottom": false,
-       "primaryFill": false,
-       "width": 382,
-       "height": 111
-      },
-      {
-       "what": "SSam WhitcombeNov 8Accessibility feedbac",
-       "tag": "button",
-       "top": 910,
-       "bottom": 1021,
-       "left": 0,
-       "inFirstViewport": false,
-       "centreAt": 1.1,
-       "pinnedToBottom": false,
-       "primaryFill": false,
-       "width": 382,
-       "height": 111
-      },
-      {
-       "what": "KKofi MensahNov 8Invitation: quarterly r",
-       "tag": "button",
-       "top": 1022,
-       "bottom": 1133,
-       "left": 0,
-       "inFirstViewport": false,
-       "centreAt": 1.3,
-       "pinnedToBottom": false,
-       "primaryFill": false,
-       "width": 382,
-       "height": 111
-      },
-      {
-       "what": "MMail Delivery SystemNov 7Delivery faile",
-       "tag": "button",
-       "top": 1134,
-       "bottom": 1246,
-       "left": 0,
-       "inFirstViewport": false,
-       "centreAt": 1.4,
-       "pinnedToBottom": false,
-       "primaryFill": false,
-       "width": 382,
-       "height": 112
-      },
-      {
-       "what": "HHana VirtanenNov 7Thanks, the updated b",
-       "tag": "button",
-       "top": 1247,
-       "bottom": 1358,
-       "left": 0,
-       "inFirstViewport": false,
-       "centreAt": 1.5,
-       "pinnedToBottom": false,
-       "primaryFill": false,
-       "width": 382,
-       "height": 111
-      },
-      {
-       "what": "Compose",
-       "tag": "button",
-       "top": 708,
-       "bottom": 764,
-       "left": 313.2,
-       "inFirstViewport": true,
-       "centreAt": 0.9,
-       "pinnedToBottom": true,
        "primaryFill": true,
-       "width": 56,
-       "height": 56
-      },
-      {
-       "what": "Inbox",
-       "tag": "a",
-       "top": 781,
-       "bottom": 831,
-       "left": 25.8,
-       "inFirstViewport": true,
-       "centreAt": 1,
-       "pinnedToBottom": true,
-       "primaryFill": false,
-       "width": 110.1,
-       "height": 50
-      },
-      {
-       "what": "Archive",
-       "tag": "a",
-       "top": 781,
-       "bottom": 831,
-       "left": 139.9,
-       "inFirstViewport": true,
-       "centreAt": 1,
-       "pinnedToBottom": true,
-       "primaryFill": false,
-       "width": 110.1,
-       "height": 50
-      },
-      {
-       "what": "Settings",
-       "tag": "a",
-       "top": 781,
-       "bottom": 831,
-       "left": 254.1,
-       "inFirstViewport": true,
-       "centreAt": 1,
-       "pinnedToBottom": true,
-       "primaryFill": false,
-       "width": 110.1,
-       "height": 50
+       "width": 112.3,
+       "height": 44
       }
      ],
      "alphaSteps": [
-      0.5,
-      0.6,
+      0.4,
       0.7,
-      0.74,
-      0.75,
       0.8
      ],
      "state": {
@@ -3798,28 +4217,39 @@
       "empties": []
      },
      "reading": {
-      "bodySize": null,
-      "lines": [],
-      "contrastChecked": 73,
+      "bodySize": 14,
+      "lines": [
+       {
+        "ch": 38,
+        "size": 14,
+        "sample": "Hi team,\n\nWe received invoice "
+       },
+       {
+        "ch": 38,
+        "size": 14,
+        "sample": "Hi Priya,\n\nThanks for catching"
+       },
+       {
+        "ch": 38,
+        "size": 14,
+        "sample": "Hi again,\n\nThat works for us, "
+       }
+      ],
+      "contrastChecked": 18,
       "contrastUnknown": 0,
       "contrastFails": [],
       "contrastFailCount": 0,
       "overflowX": 0,
       "runningAnimations": 0
      },
-     "textRuns": 73,
+     "textRuns": 28,
      "covered": {
-      "runs": 4,
-      "sample": [
-       "support@example.test (11.5px at 768)",
-       "R (12px at 821)",
-       "Ruth Halvorsen (13px at 811)",
-       "Nov 9 (12px at 812)"
-      ]
+      "runs": 0,
+      "sample": []
      },
      "waitForSeen": true,
      "pageErrors": [],
-     "url": "/inbox/t-1001"
+     "url": "/inbox/1001"
     },
     "iphone-dark": {
      "viewport": [
@@ -3830,42 +4260,42 @@
      "hierarchy": {
       "fontSizes": [
        {
-        "size": 16,
+        "size": 15,
+        "chars": 55
+       },
+       {
+        "size": 14,
+        "chars": 700
+       },
+       {
+        "size": 13.5,
         "chars": 11
        },
        {
-        "size": 15,
-        "chars": 15
-       },
-       {
         "size": 13,
-        "chars": 474
-       },
-       {
-        "size": 12.5,
-        "chars": 614
+        "chars": 14
        },
        {
         "size": 12,
-        "chars": 60
-       },
-       {
-        "size": 11.5,
-        "chars": 77
-       },
-       {
-        "size": 11,
-        "chars": 17
+        "chars": 137
        }
       ],
       "largest": {
-       "size": 16,
+       "size": 15,
        "elements": 1,
        "weight": 600,
-       "text": "Argus Email",
-       "nextSize": 15
+       "text": "Question about the invoice schedule for ",
+       "nextSize": 14
       },
-      "headings": []
+      "headings": [
+       {
+        "tag": "h1",
+        "text": "Question about the invoice schedule for ",
+        "size": 15,
+        "weight": 600,
+        "top": 36.8
+       }
+      ]
      },
      "rows": {
       "count": 0,
@@ -3877,8 +4307,8 @@
       "titleWeightMax": 0
      },
      "interactive": {
-      "firstViewport": 17,
-      "measured": 21,
+      "firstViewport": 8,
+      "measured": 8,
       "small": 0,
       "smallSample": [],
       "inputs": 1,
@@ -3886,285 +4316,114 @@
      },
      "controls": [
       {
-       "what": "Argus Email",
+       "what": "Back to conversations",
        "tag": "button",
-       "top": 10,
-       "bottom": 54,
-       "left": 17,
-       "inFirstViewport": true,
-       "centreAt": 0,
-       "pinnedToBottom": false,
-       "primaryFill": false,
-       "width": 126.5,
-       "height": 44
-      },
-      {
-       "what": "Choose inbox",
-       "tag": "button",
-       "top": 81,
-       "bottom": 125,
-       "left": 8,
+       "top": 35,
+       "bottom": 79,
+       "left": 12,
        "inFirstViewport": true,
        "centreAt": 0.1,
-       "pinnedToBottom": false,
-       "primaryFill": false,
-       "width": 139,
-       "height": 44
-      },
-      {
-       "what": "Search conversations",
-       "tag": "input",
-       "top": 131,
-       "bottom": 175,
-       "left": 16,
-       "inFirstViewport": true,
-       "centreAt": 0.2,
-       "pinnedToBottom": false,
-       "primaryFill": false,
-       "width": 358,
-       "height": 44
-      },
-      {
-       "what": "Select all conversations",
-       "tag": "span",
-       "top": 193,
-       "bottom": 209,
-       "left": 24,
-       "inFirstViewport": true,
-       "centreAt": 0.2,
        "pinnedToBottom": false,
        "primaryFill": false,
        "width": 44,
        "height": 44
       },
       {
-       "what": "All",
+       "what": "Mark conversation as unread",
        "tag": "button",
-       "top": 179,
-       "bottom": 223,
-       "left": 59,
+       "top": 35,
+       "bottom": 79,
+       "left": 274,
        "inFirstViewport": true,
-       "centreAt": 0.2,
+       "centreAt": 0.1,
        "pinnedToBottom": false,
        "primaryFill": false,
-       "width": 59.3,
+       "width": 44,
        "height": 44
       },
       {
-       "what": "Unread4",
+       "what": "Archive conversation",
        "tag": "button",
-       "top": 179,
-       "bottom": 223,
-       "left": 118.3,
+       "top": 35,
+       "bottom": 79,
+       "left": 330,
        "inFirstViewport": true,
-       "centreAt": 0.2,
+       "centreAt": 0.1,
        "pinnedToBottom": false,
        "primaryFill": false,
-       "width": 59.3,
+       "width": 44,
        "height": 44
       },
       {
-       "what": "Filter by label",
+       "what": "Revise",
        "tag": "button",
-       "top": 179,
-       "bottom": 223,
-       "left": 280.8,
-       "inFirstViewport": true,
-       "centreAt": 0.2,
-       "pinnedToBottom": false,
-       "primaryFill": false,
-       "width": 93.2,
-       "height": 44
-      },
-      {
-       "what": "Unread conversation. PPriya RamanNov 10Q",
-       "tag": "button",
-       "top": 228,
-       "bottom": 344,
-       "left": 0,
-       "inFirstViewport": true,
-       "centreAt": 0.3,
-       "pinnedToBottom": false,
-       "primaryFill": false,
-       "width": 382,
-       "height": 116
-      },
-      {
-       "what": "Unread conversation. MMarcus ElleryNov 1",
-       "tag": "button",
-       "top": 345,
-       "bottom": 456,
-       "left": 0,
-       "inFirstViewport": true,
-       "centreAt": 0.5,
-       "pinnedToBottom": false,
-       "primaryFill": false,
-       "width": 382,
-       "height": 111
-      },
-      {
-       "what": "Unread conversation. DDana OkaforNov 10C",
-       "tag": "button",
-       "top": 457,
-       "bottom": 573,
-       "left": 0,
+       "top": 518,
+       "bottom": 562,
+       "left": 30,
        "inFirstViewport": true,
        "centreAt": 0.6,
        "pinnedToBottom": false,
        "primaryFill": false,
-       "width": 382,
-       "height": 116
+       "width": 73.2,
+       "height": 44
       },
       {
-       "what": "Unread conversation. TTomasz LindqvistNo",
+       "what": "Discard",
        "tag": "button",
-       "top": 574,
-       "bottom": 685,
-       "left": 0,
+       "top": 518,
+       "bottom": 562,
+       "left": 107.2,
        "inFirstViewport": true,
-       "centreAt": 0.7,
+       "centreAt": 0.6,
        "pinnedToBottom": false,
        "primaryFill": false,
-       "width": 382,
-       "height": 111
+       "width": 63.1,
+       "height": 44
       },
       {
-       "what": "IInes CalderaNov 9Refund request for a d",
+       "what": "Reply",
+       "tag": "textarea",
+       "top": 567,
+       "bottom": 767,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.8,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 200
+      },
+      {
+       "what": "Attach files",
        "tag": "button",
-       "top": 686,
-       "bottom": 797,
-       "left": 0,
+       "top": 767,
+       "bottom": 811,
+       "left": 199.7,
+       "inFirstViewport": true,
+       "centreAt": 0.9,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Send reply",
+       "tag": "button",
+       "top": 767,
+       "bottom": 811,
+       "left": 249.7,
        "inFirstViewport": true,
        "centreAt": 0.9,
        "pinnedToBottom": false,
-       "primaryFill": false,
-       "width": 382,
-       "height": 111
-      },
-      {
-       "what": "RRuth HalvorsenNov 9Welcome to the pilot",
-       "tag": "button",
-       "top": 798,
-       "bottom": 909,
-       "left": 0,
-       "inFirstViewport": false,
-       "centreAt": 1,
-       "pinnedToBottom": false,
-       "primaryFill": false,
-       "width": 382,
-       "height": 111
-      },
-      {
-       "what": "SSam WhitcombeNov 8Accessibility feedbac",
-       "tag": "button",
-       "top": 910,
-       "bottom": 1021,
-       "left": 0,
-       "inFirstViewport": false,
-       "centreAt": 1.1,
-       "pinnedToBottom": false,
-       "primaryFill": false,
-       "width": 382,
-       "height": 111
-      },
-      {
-       "what": "KKofi MensahNov 8Invitation: quarterly r",
-       "tag": "button",
-       "top": 1022,
-       "bottom": 1133,
-       "left": 0,
-       "inFirstViewport": false,
-       "centreAt": 1.3,
-       "pinnedToBottom": false,
-       "primaryFill": false,
-       "width": 382,
-       "height": 111
-      },
-      {
-       "what": "MMail Delivery SystemNov 7Delivery faile",
-       "tag": "button",
-       "top": 1134,
-       "bottom": 1246,
-       "left": 0,
-       "inFirstViewport": false,
-       "centreAt": 1.4,
-       "pinnedToBottom": false,
-       "primaryFill": false,
-       "width": 382,
-       "height": 112
-      },
-      {
-       "what": "HHana VirtanenNov 7Thanks, the updated b",
-       "tag": "button",
-       "top": 1247,
-       "bottom": 1358,
-       "left": 0,
-       "inFirstViewport": false,
-       "centreAt": 1.5,
-       "pinnedToBottom": false,
-       "primaryFill": false,
-       "width": 382,
-       "height": 111
-      },
-      {
-       "what": "Compose",
-       "tag": "button",
-       "top": 708,
-       "bottom": 764,
-       "left": 313.2,
-       "inFirstViewport": true,
-       "centreAt": 0.9,
-       "pinnedToBottom": true,
        "primaryFill": true,
-       "width": 56,
-       "height": 56
-      },
-      {
-       "what": "Inbox",
-       "tag": "a",
-       "top": 781,
-       "bottom": 831,
-       "left": 25.8,
-       "inFirstViewport": true,
-       "centreAt": 1,
-       "pinnedToBottom": true,
-       "primaryFill": false,
-       "width": 110.1,
-       "height": 50
-      },
-      {
-       "what": "Archive",
-       "tag": "a",
-       "top": 781,
-       "bottom": 831,
-       "left": 139.9,
-       "inFirstViewport": true,
-       "centreAt": 1,
-       "pinnedToBottom": true,
-       "primaryFill": false,
-       "width": 110.1,
-       "height": 50
-      },
-      {
-       "what": "Settings",
-       "tag": "a",
-       "top": 781,
-       "bottom": 831,
-       "left": 254.1,
-       "inFirstViewport": true,
-       "centreAt": 1,
-       "pinnedToBottom": true,
-       "primaryFill": false,
-       "width": 110.1,
-       "height": 50
+       "width": 112.3,
+       "height": 44
       }
      ],
      "alphaSteps": [
       0.3,
-      0.6,
+      0.4,
       0.7,
-      0.74,
-      0.75,
       0.8
      ],
      "state": {
@@ -4186,28 +4445,39 @@
       "empties": []
      },
      "reading": {
-      "bodySize": null,
-      "lines": [],
-      "contrastChecked": 73,
+      "bodySize": 14,
+      "lines": [
+       {
+        "ch": 38,
+        "size": 14,
+        "sample": "Hi team,\n\nWe received invoice "
+       },
+       {
+        "ch": 38,
+        "size": 14,
+        "sample": "Hi Priya,\n\nThanks for catching"
+       },
+       {
+        "ch": 38,
+        "size": 14,
+        "sample": "Hi again,\n\nThat works for us, "
+       }
+      ],
+      "contrastChecked": 18,
       "contrastUnknown": 0,
       "contrastFails": [],
       "contrastFailCount": 0,
       "overflowX": 0,
       "runningAnimations": 0
      },
-     "textRuns": 73,
+     "textRuns": 28,
      "covered": {
-      "runs": 4,
-      "sample": [
-       "support@example.test (11.5px at 768)",
-       "R (12px at 821)",
-       "Ruth Halvorsen (13px at 811)",
-       "Nov 9 (12px at 812)"
-      ]
+      "runs": 0,
+      "sample": []
      },
      "waitForSeen": true,
      "pageErrors": [],
-     "url": "/inbox/t-1001"
+     "url": "/inbox/1001"
     },
     "desktop-light": {
      "viewport": [
@@ -4272,13 +4542,96 @@
       ]
      },
      "rows": {
-      "count": 0,
-      "sample": [],
-      "maxChips": 0,
-      "maxColours": 0,
+      "count": 10,
+      "sample": [
+       {
+        "height": 117,
+        "chips": 1,
+        "chipTexts": [
+         "Billing"
+        ],
+        "colours": 1,
+        "colourValues": [
+         "#59466f"
+        ],
+        "nested": 0,
+        "titleWeight": 600,
+        "titleSize": 13,
+        "titleText": "Priya Raman"
+       },
+       {
+        "height": 112,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 1,
+        "colourValues": [
+         "#3d4c6e"
+        ],
+        "nested": 0,
+        "titleWeight": 600,
+        "titleSize": 13,
+        "titleText": "Marcus Ellery"
+       },
+       {
+        "height": 117,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 1,
+        "colourValues": [
+         "#3d4c6e"
+        ],
+        "nested": 0,
+        "titleWeight": 600,
+        "titleSize": 13,
+        "titleText": "Dana Okafor"
+       },
+       {
+        "height": 112,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 1,
+        "colourValues": [
+         "#3d4c6e"
+        ],
+        "nested": 0,
+        "titleWeight": 600,
+        "titleSize": 13,
+        "titleText": "Tomasz Lindqvist"
+       },
+       {
+        "height": 112,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 13,
+        "titleText": "Ines Caldera"
+       },
+       {
+        "height": 112,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 1,
+        "colourValues": [
+         "#6e4d32"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 13,
+        "titleText": "Ruth Halvorsen"
+       }
+      ],
+      "maxChips": 1,
+      "maxColours": 1,
       "nested": 0,
-      "heights": [],
-      "titleWeightMax": 0
+      "heights": [
+       112,
+       113,
+       117
+      ],
+      "titleWeightMax": 600
      },
      "interactive": {
       "firstViewport": 24,
@@ -4875,13 +5228,96 @@
       ]
      },
      "rows": {
-      "count": 0,
-      "sample": [],
-      "maxChips": 0,
-      "maxColours": 0,
+      "count": 10,
+      "sample": [
+       {
+        "height": 117,
+        "chips": 1,
+        "chipTexts": [
+         "Billing"
+        ],
+        "colours": 1,
+        "colourValues": [
+         "#59466f"
+        ],
+        "nested": 0,
+        "titleWeight": 600,
+        "titleSize": 13,
+        "titleText": "Priya Raman"
+       },
+       {
+        "height": 112,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 1,
+        "colourValues": [
+         "#3d4c6e"
+        ],
+        "nested": 0,
+        "titleWeight": 600,
+        "titleSize": 13,
+        "titleText": "Marcus Ellery"
+       },
+       {
+        "height": 117,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 1,
+        "colourValues": [
+         "#3d4c6e"
+        ],
+        "nested": 0,
+        "titleWeight": 600,
+        "titleSize": 13,
+        "titleText": "Dana Okafor"
+       },
+       {
+        "height": 112,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 1,
+        "colourValues": [
+         "#3d4c6e"
+        ],
+        "nested": 0,
+        "titleWeight": 600,
+        "titleSize": 13,
+        "titleText": "Tomasz Lindqvist"
+       },
+       {
+        "height": 112,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 13,
+        "titleText": "Ines Caldera"
+       },
+       {
+        "height": 112,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 1,
+        "colourValues": [
+         "#6e4d32"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 13,
+        "titleText": "Ruth Halvorsen"
+       }
+      ],
+      "maxChips": 1,
+      "maxColours": 1,
       "nested": 0,
-      "heights": [],
-      "titleWeightMax": 0
+      "heights": [
+       112,
+       113,
+       117
+      ],
+      "titleWeightMax": 600
      },
      "interactive": {
       "firstViewport": 24,
@@ -5425,42 +5861,42 @@
      "hierarchy": {
       "fontSizes": [
        {
-        "size": 16,
+        "size": 15,
+        "chars": 55
+       },
+       {
+        "size": 14,
+        "chars": 338
+       },
+       {
+        "size": 13.5,
         "chars": 11
        },
        {
-        "size": 15,
-        "chars": 15
-       },
-       {
         "size": 13,
-        "chars": 420
-       },
-       {
-        "size": 12.5,
-        "chars": 614
+        "chars": 14
        },
        {
         "size": 12,
-        "chars": 60
-       },
-       {
-        "size": 11.5,
-        "chars": 77
-       },
-       {
-        "size": 11,
-        "chars": 17
+        "chars": 137
        }
       ],
       "largest": {
-       "size": 16,
+       "size": 15,
        "elements": 1,
        "weight": 600,
-       "text": "Argus Email",
-       "nextSize": 15
+       "text": "Question about the invoice schedule for ",
+       "nextSize": 14
       },
-      "headings": []
+      "headings": [
+       {
+        "tag": "h1",
+        "text": "Question about the invoice schedule for ",
+        "size": 15,
+        "weight": 600,
+        "top": 36.8
+       }
+      ]
      },
      "rows": {
       "count": 0,
@@ -5472,8 +5908,8 @@
       "titleWeightMax": 0
      },
      "interactive": {
-      "firstViewport": 17,
-      "measured": 21,
+      "firstViewport": 8,
+      "measured": 8,
       "small": 0,
       "smallSample": [],
       "inputs": 1,
@@ -5481,285 +5917,113 @@
      },
      "controls": [
       {
-       "what": "Argus Email",
+       "what": "Back to conversations",
        "tag": "button",
-       "top": 10,
-       "bottom": 54,
-       "left": 17,
-       "inFirstViewport": true,
-       "centreAt": 0,
-       "pinnedToBottom": false,
-       "primaryFill": false,
-       "width": 126.5,
-       "height": 44
-      },
-      {
-       "what": "Choose inbox",
-       "tag": "button",
-       "top": 81,
-       "bottom": 125,
-       "left": 8,
+       "top": 35,
+       "bottom": 79,
+       "left": 12,
        "inFirstViewport": true,
        "centreAt": 0.1,
-       "pinnedToBottom": false,
-       "primaryFill": false,
-       "width": 139,
-       "height": 44
-      },
-      {
-       "what": "Search conversations",
-       "tag": "input",
-       "top": 131,
-       "bottom": 175,
-       "left": 16,
-       "inFirstViewport": true,
-       "centreAt": 0.2,
-       "pinnedToBottom": false,
-       "primaryFill": false,
-       "width": 288,
-       "height": 44
-      },
-      {
-       "what": "Select all conversations",
-       "tag": "span",
-       "top": 193,
-       "bottom": 209,
-       "left": 24,
-       "inFirstViewport": true,
-       "centreAt": 0.2,
        "pinnedToBottom": false,
        "primaryFill": false,
        "width": 44,
        "height": 44
       },
       {
-       "what": "All",
+       "what": "Mark conversation as unread",
        "tag": "button",
-       "top": 179,
-       "bottom": 223,
-       "left": 59,
+       "top": 35,
+       "bottom": 79,
+       "left": 204,
        "inFirstViewport": true,
-       "centreAt": 0.2,
+       "centreAt": 0.1,
        "pinnedToBottom": false,
        "primaryFill": false,
-       "width": 59.3,
+       "width": 44,
        "height": 44
       },
       {
-       "what": "Unread4",
+       "what": "Archive conversation",
        "tag": "button",
-       "top": 179,
-       "bottom": 223,
-       "left": 118.3,
+       "top": 35,
+       "bottom": 79,
+       "left": 260,
        "inFirstViewport": true,
-       "centreAt": 0.2,
+       "centreAt": 0.1,
        "pinnedToBottom": false,
        "primaryFill": false,
-       "width": 59.3,
+       "width": 44,
        "height": 44
       },
       {
-       "what": "Filter by label",
+       "what": "Revise",
        "tag": "button",
-       "top": 179,
-       "bottom": 223,
-       "left": 210.8,
-       "inFirstViewport": true,
-       "centreAt": 0.2,
-       "pinnedToBottom": false,
-       "primaryFill": false,
-       "width": 93.2,
-       "height": 44
-      },
-      {
-       "what": "Unread conversation. PPriya RamanNov 10Q",
-       "tag": "button",
-       "top": 228,
-       "bottom": 370,
-       "left": 0,
-       "inFirstViewport": true,
-       "centreAt": 0.4,
-       "pinnedToBottom": false,
-       "primaryFill": false,
-       "width": 312,
-       "height": 142
-      },
-      {
-       "what": "Unread conversation. MMarcus ElleryNov 1",
-       "tag": "button",
-       "top": 371,
-       "bottom": 482,
-       "left": 0,
-       "inFirstViewport": true,
-       "centreAt": 0.5,
-       "pinnedToBottom": false,
-       "primaryFill": false,
-       "width": 312,
-       "height": 111
-      },
-      {
-       "what": "Unread conversation. DDana OkaforNov 10C",
-       "tag": "button",
-       "top": 483,
-       "bottom": 599,
-       "left": 0,
+       "top": 518,
+       "bottom": 562,
+       "left": 30,
        "inFirstViewport": true,
        "centreAt": 0.6,
        "pinnedToBottom": false,
        "primaryFill": false,
-       "width": 312,
-       "height": 116
+       "width": 73.2,
+       "height": 44
       },
       {
-       "what": "Unread conversation. TTomasz LindqvistNo",
+       "what": "Discard",
        "tag": "button",
-       "top": 600,
-       "bottom": 711,
-       "left": 0,
+       "top": 518,
+       "bottom": 562,
+       "left": 107.2,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 63.1,
+       "height": 44
+      },
+      {
+       "what": "Reply",
+       "tag": "textarea",
+       "top": 567,
+       "bottom": 767,
+       "left": 16,
        "inFirstViewport": true,
        "centreAt": 0.8,
        "pinnedToBottom": false,
        "primaryFill": false,
-       "width": 312,
-       "height": 111
+       "width": 288,
+       "height": 200
       },
       {
-       "what": "IInes CalderaNov 9Refund request for a d",
+       "what": "Attach files",
        "tag": "button",
-       "top": 712,
-       "bottom": 823,
-       "left": 0,
+       "top": 767,
+       "bottom": 811,
+       "left": 129.7,
        "inFirstViewport": true,
        "centreAt": 0.9,
        "pinnedToBottom": false,
        "primaryFill": false,
-       "width": 312,
-       "height": 111
+       "width": 44,
+       "height": 44
       },
       {
-       "what": "RRuth HalvorsenNov 9Welcome to the pilot",
+       "what": "Send reply",
        "tag": "button",
-       "top": 824,
-       "bottom": 935,
-       "left": 0,
-       "inFirstViewport": false,
-       "centreAt": 1,
-       "pinnedToBottom": false,
-       "primaryFill": false,
-       "width": 312,
-       "height": 111
-      },
-      {
-       "what": "SSam WhitcombeNov 8Accessibility feedbac",
-       "tag": "button",
-       "top": 936,
-       "bottom": 1047,
-       "left": 0,
-       "inFirstViewport": false,
-       "centreAt": 1.2,
-       "pinnedToBottom": false,
-       "primaryFill": false,
-       "width": 312,
-       "height": 111
-      },
-      {
-       "what": "KKofi MensahNov 8Invitation: quarterly r",
-       "tag": "button",
-       "top": 1048,
-       "bottom": 1159,
-       "left": 0,
-       "inFirstViewport": false,
-       "centreAt": 1.3,
-       "pinnedToBottom": false,
-       "primaryFill": false,
-       "width": 312,
-       "height": 111
-      },
-      {
-       "what": "MMail Delivery SystemNov 7Delivery faile",
-       "tag": "button",
-       "top": 1160,
-       "bottom": 1272,
-       "left": 0,
-       "inFirstViewport": false,
-       "centreAt": 1.4,
-       "pinnedToBottom": false,
-       "primaryFill": false,
-       "width": 312,
-       "height": 112
-      },
-      {
-       "what": "HHana VirtanenNov 7Thanks, the updated b",
-       "tag": "button",
-       "top": 1273,
-       "bottom": 1384,
-       "left": 0,
-       "inFirstViewport": false,
-       "centreAt": 1.6,
-       "pinnedToBottom": false,
-       "primaryFill": false,
-       "width": 312,
-       "height": 111
-      },
-      {
-       "what": "Compose",
-       "tag": "button",
-       "top": 708,
-       "bottom": 764,
-       "left": 243.2,
+       "top": 767,
+       "bottom": 811,
+       "left": 179.7,
        "inFirstViewport": true,
        "centreAt": 0.9,
-       "pinnedToBottom": true,
+       "pinnedToBottom": false,
        "primaryFill": true,
-       "width": 56,
-       "height": 56
-      },
-      {
-       "what": "Inbox",
-       "tag": "a",
-       "top": 781,
-       "bottom": 831,
-       "left": 25.8,
-       "inFirstViewport": true,
-       "centreAt": 1,
-       "pinnedToBottom": true,
-       "primaryFill": false,
-       "width": 86.8,
-       "height": 50
-      },
-      {
-       "what": "Archive",
-       "tag": "a",
-       "top": 781,
-       "bottom": 831,
-       "left": 116.6,
-       "inFirstViewport": true,
-       "centreAt": 1,
-       "pinnedToBottom": true,
-       "primaryFill": false,
-       "width": 86.8,
-       "height": 50
-      },
-      {
-       "what": "Settings",
-       "tag": "a",
-       "top": 781,
-       "bottom": 831,
-       "left": 207.4,
-       "inFirstViewport": true,
-       "centreAt": 1,
-       "pinnedToBottom": true,
-       "primaryFill": false,
-       "width": 86.8,
-       "height": 50
+       "width": 112.3,
+       "height": 44
       }
      ],
      "alphaSteps": [
-      0.5,
-      0.6,
+      0.4,
       0.7,
-      0.74,
-      0.75,
       0.8
      ],
      "state": {
@@ -5781,26 +6045,39 @@
       "empties": []
      },
      "reading": {
-      "bodySize": null,
-      "lines": [],
-      "contrastChecked": 73,
+      "bodySize": 14,
+      "lines": [
+       {
+        "ch": 30,
+        "size": 14,
+        "sample": "Hi team,\n\nWe received invoice "
+       },
+       {
+        "ch": 30,
+        "size": 14,
+        "sample": "Hi Priya,\n\nThanks for catching"
+       },
+       {
+        "ch": 30,
+        "size": 14,
+        "sample": "Hi again,\n\nThat works for us, "
+       }
+      ],
+      "contrastChecked": 17,
       "contrastUnknown": 0,
       "contrastFails": [],
       "contrastFailCount": 0,
       "overflowX": 0,
       "runningAnimations": 0
      },
-     "textRuns": 73,
+     "textRuns": 28,
      "covered": {
-      "runs": 2,
-      "sample": [
-       "Nov 9 (12px at 726)",
-       "support@example.test (11.5px at 794)"
-      ]
+      "runs": 0,
+      "sample": []
      },
      "waitForSeen": true,
      "pageErrors": [],
-     "url": "/inbox/t-1001"
+     "url": "/inbox/1001"
     },
     "iphone-reduced-motion": {
      "viewport": [
@@ -5811,42 +6088,42 @@
      "hierarchy": {
       "fontSizes": [
        {
-        "size": 16,
+        "size": 15,
+        "chars": 55
+       },
+       {
+        "size": 14,
+        "chars": 700
+       },
+       {
+        "size": 13.5,
         "chars": 11
        },
        {
-        "size": 15,
-        "chars": 15
-       },
-       {
         "size": 13,
-        "chars": 474
-       },
-       {
-        "size": 12.5,
-        "chars": 614
+        "chars": 14
        },
        {
         "size": 12,
-        "chars": 60
-       },
-       {
-        "size": 11.5,
-        "chars": 77
-       },
-       {
-        "size": 11,
-        "chars": 17
+        "chars": 137
        }
       ],
       "largest": {
-       "size": 16,
+       "size": 15,
        "elements": 1,
        "weight": 600,
-       "text": "Argus Email",
-       "nextSize": 15
+       "text": "Question about the invoice schedule for ",
+       "nextSize": 14
       },
-      "headings": []
+      "headings": [
+       {
+        "tag": "h1",
+        "text": "Question about the invoice schedule for ",
+        "size": 15,
+        "weight": 600,
+        "top": 36.8
+       }
+      ]
      },
      "rows": {
       "count": 0,
@@ -5858,8 +6135,8 @@
       "titleWeightMax": 0
      },
      "interactive": {
-      "firstViewport": 17,
-      "measured": 21,
+      "firstViewport": 8,
+      "measured": 8,
       "small": 0,
       "smallSample": [],
       "inputs": 1,
@@ -5867,285 +6144,113 @@
      },
      "controls": [
       {
-       "what": "Argus Email",
+       "what": "Back to conversations",
        "tag": "button",
-       "top": 10,
-       "bottom": 54,
-       "left": 17,
-       "inFirstViewport": true,
-       "centreAt": 0,
-       "pinnedToBottom": false,
-       "primaryFill": false,
-       "width": 126.5,
-       "height": 44
-      },
-      {
-       "what": "Choose inbox",
-       "tag": "button",
-       "top": 81,
-       "bottom": 125,
-       "left": 8,
+       "top": 35,
+       "bottom": 79,
+       "left": 12,
        "inFirstViewport": true,
        "centreAt": 0.1,
-       "pinnedToBottom": false,
-       "primaryFill": false,
-       "width": 139,
-       "height": 44
-      },
-      {
-       "what": "Search conversations",
-       "tag": "input",
-       "top": 131,
-       "bottom": 175,
-       "left": 16,
-       "inFirstViewport": true,
-       "centreAt": 0.2,
-       "pinnedToBottom": false,
-       "primaryFill": false,
-       "width": 358,
-       "height": 44
-      },
-      {
-       "what": "Select all conversations",
-       "tag": "span",
-       "top": 193,
-       "bottom": 209,
-       "left": 24,
-       "inFirstViewport": true,
-       "centreAt": 0.2,
        "pinnedToBottom": false,
        "primaryFill": false,
        "width": 44,
        "height": 44
       },
       {
-       "what": "All",
+       "what": "Mark conversation as unread",
        "tag": "button",
-       "top": 179,
-       "bottom": 223,
-       "left": 59,
+       "top": 35,
+       "bottom": 79,
+       "left": 274,
        "inFirstViewport": true,
-       "centreAt": 0.2,
+       "centreAt": 0.1,
        "pinnedToBottom": false,
        "primaryFill": false,
-       "width": 59.3,
+       "width": 44,
        "height": 44
       },
       {
-       "what": "Unread4",
+       "what": "Archive conversation",
        "tag": "button",
-       "top": 179,
-       "bottom": 223,
-       "left": 118.3,
+       "top": 35,
+       "bottom": 79,
+       "left": 330,
        "inFirstViewport": true,
-       "centreAt": 0.2,
+       "centreAt": 0.1,
        "pinnedToBottom": false,
        "primaryFill": false,
-       "width": 59.3,
+       "width": 44,
        "height": 44
       },
       {
-       "what": "Filter by label",
+       "what": "Revise",
        "tag": "button",
-       "top": 179,
-       "bottom": 223,
-       "left": 280.8,
-       "inFirstViewport": true,
-       "centreAt": 0.2,
-       "pinnedToBottom": false,
-       "primaryFill": false,
-       "width": 93.2,
-       "height": 44
-      },
-      {
-       "what": "Unread conversation. PPriya RamanNov 10Q",
-       "tag": "button",
-       "top": 228,
-       "bottom": 344,
-       "left": 0,
-       "inFirstViewport": true,
-       "centreAt": 0.3,
-       "pinnedToBottom": false,
-       "primaryFill": false,
-       "width": 382,
-       "height": 116
-      },
-      {
-       "what": "Unread conversation. MMarcus ElleryNov 1",
-       "tag": "button",
-       "top": 345,
-       "bottom": 456,
-       "left": 0,
-       "inFirstViewport": true,
-       "centreAt": 0.5,
-       "pinnedToBottom": false,
-       "primaryFill": false,
-       "width": 382,
-       "height": 111
-      },
-      {
-       "what": "Unread conversation. DDana OkaforNov 10C",
-       "tag": "button",
-       "top": 457,
-       "bottom": 573,
-       "left": 0,
+       "top": 518,
+       "bottom": 562,
+       "left": 30,
        "inFirstViewport": true,
        "centreAt": 0.6,
        "pinnedToBottom": false,
        "primaryFill": false,
-       "width": 382,
-       "height": 116
+       "width": 73.2,
+       "height": 44
       },
       {
-       "what": "Unread conversation. TTomasz LindqvistNo",
+       "what": "Discard",
        "tag": "button",
-       "top": 574,
-       "bottom": 685,
-       "left": 0,
+       "top": 518,
+       "bottom": 562,
+       "left": 107.2,
        "inFirstViewport": true,
-       "centreAt": 0.7,
+       "centreAt": 0.6,
        "pinnedToBottom": false,
        "primaryFill": false,
-       "width": 382,
-       "height": 111
+       "width": 63.1,
+       "height": 44
       },
       {
-       "what": "IInes CalderaNov 9Refund request for a d",
+       "what": "Reply",
+       "tag": "textarea",
+       "top": 567,
+       "bottom": 767,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.8,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 200
+      },
+      {
+       "what": "Attach files",
        "tag": "button",
-       "top": 686,
-       "bottom": 797,
-       "left": 0,
+       "top": 767,
+       "bottom": 811,
+       "left": 199.7,
+       "inFirstViewport": true,
+       "centreAt": 0.9,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Send reply",
+       "tag": "button",
+       "top": 767,
+       "bottom": 811,
+       "left": 249.7,
        "inFirstViewport": true,
        "centreAt": 0.9,
        "pinnedToBottom": false,
-       "primaryFill": false,
-       "width": 382,
-       "height": 111
-      },
-      {
-       "what": "RRuth HalvorsenNov 9Welcome to the pilot",
-       "tag": "button",
-       "top": 798,
-       "bottom": 909,
-       "left": 0,
-       "inFirstViewport": false,
-       "centreAt": 1,
-       "pinnedToBottom": false,
-       "primaryFill": false,
-       "width": 382,
-       "height": 111
-      },
-      {
-       "what": "SSam WhitcombeNov 8Accessibility feedbac",
-       "tag": "button",
-       "top": 910,
-       "bottom": 1021,
-       "left": 0,
-       "inFirstViewport": false,
-       "centreAt": 1.1,
-       "pinnedToBottom": false,
-       "primaryFill": false,
-       "width": 382,
-       "height": 111
-      },
-      {
-       "what": "KKofi MensahNov 8Invitation: quarterly r",
-       "tag": "button",
-       "top": 1022,
-       "bottom": 1133,
-       "left": 0,
-       "inFirstViewport": false,
-       "centreAt": 1.3,
-       "pinnedToBottom": false,
-       "primaryFill": false,
-       "width": 382,
-       "height": 111
-      },
-      {
-       "what": "MMail Delivery SystemNov 7Delivery faile",
-       "tag": "button",
-       "top": 1134,
-       "bottom": 1246,
-       "left": 0,
-       "inFirstViewport": false,
-       "centreAt": 1.4,
-       "pinnedToBottom": false,
-       "primaryFill": false,
-       "width": 382,
-       "height": 112
-      },
-      {
-       "what": "HHana VirtanenNov 7Thanks, the updated b",
-       "tag": "button",
-       "top": 1247,
-       "bottom": 1358,
-       "left": 0,
-       "inFirstViewport": false,
-       "centreAt": 1.5,
-       "pinnedToBottom": false,
-       "primaryFill": false,
-       "width": 382,
-       "height": 111
-      },
-      {
-       "what": "Compose",
-       "tag": "button",
-       "top": 708,
-       "bottom": 764,
-       "left": 313.2,
-       "inFirstViewport": true,
-       "centreAt": 0.9,
-       "pinnedToBottom": true,
        "primaryFill": true,
-       "width": 56,
-       "height": 56
-      },
-      {
-       "what": "Inbox",
-       "tag": "a",
-       "top": 781,
-       "bottom": 831,
-       "left": 25.8,
-       "inFirstViewport": true,
-       "centreAt": 1,
-       "pinnedToBottom": true,
-       "primaryFill": false,
-       "width": 110.1,
-       "height": 50
-      },
-      {
-       "what": "Archive",
-       "tag": "a",
-       "top": 781,
-       "bottom": 831,
-       "left": 139.9,
-       "inFirstViewport": true,
-       "centreAt": 1,
-       "pinnedToBottom": true,
-       "primaryFill": false,
-       "width": 110.1,
-       "height": 50
-      },
-      {
-       "what": "Settings",
-       "tag": "a",
-       "top": 781,
-       "bottom": 831,
-       "left": 254.1,
-       "inFirstViewport": true,
-       "centreAt": 1,
-       "pinnedToBottom": true,
-       "primaryFill": false,
-       "width": 110.1,
-       "height": 50
+       "width": 112.3,
+       "height": 44
       }
      ],
      "alphaSteps": [
-      0.5,
-      0.6,
+      0.4,
       0.7,
-      0.74,
-      0.75,
       0.8
      ],
      "state": {
@@ -6167,28 +6272,39 @@
       "empties": []
      },
      "reading": {
-      "bodySize": null,
-      "lines": [],
-      "contrastChecked": 73,
+      "bodySize": 14,
+      "lines": [
+       {
+        "ch": 38,
+        "size": 14,
+        "sample": "Hi team,\n\nWe received invoice "
+       },
+       {
+        "ch": 38,
+        "size": 14,
+        "sample": "Hi Priya,\n\nThanks for catching"
+       },
+       {
+        "ch": 38,
+        "size": 14,
+        "sample": "Hi again,\n\nThat works for us, "
+       }
+      ],
+      "contrastChecked": 18,
       "contrastUnknown": 0,
       "contrastFails": [],
       "contrastFailCount": 0,
       "overflowX": 0,
       "runningAnimations": 0
      },
-     "textRuns": 73,
+     "textRuns": 28,
      "covered": {
-      "runs": 4,
-      "sample": [
-       "support@example.test (11.5px at 768)",
-       "R (12px at 821)",
-       "Ruth Halvorsen (13px at 811)",
-       "Nov 9 (12px at 812)"
-      ]
+      "runs": 0,
+      "sample": []
      },
      "waitForSeen": true,
      "pageErrors": [],
-     "url": "/inbox/t-1001"
+     "url": "/inbox/1001"
     }
    }
   },
@@ -9591,12 +9707,12 @@
   {
    "url": "**/api/threads/1001**",
    "method": "GET",
-   "hits": 4
+   "hits": 8
   },
   {
    "url": "**/api/threads/*/read**",
    "method": "POST",
-   "hits": 0
+   "hits": 6
   },
   {
    "url": "**/api/threads**",
@@ -9637,39 +9753,39 @@
  "blocked": [
   {
    "request": "GET https://unavatar.io/email/priya.raman%40example.test",
-   "count": 16
+   "count": 14
   },
   {
    "request": "GET https://unavatar.io/email/marcus.ellery%40example.test",
-   "count": 13
+   "count": 9
   },
   {
    "request": "GET https://unavatar.io/email/dana.okafor%40example.test",
-   "count": 13
+   "count": 9
   },
   {
    "request": "GET https://unavatar.io/email/tomasz.lindqvist%40example.test",
-   "count": 13
+   "count": 9
   },
   {
    "request": "GET https://unavatar.io/email/ines.caldera%40example.test",
-   "count": 13
+   "count": 9
   },
   {
    "request": "GET https://unavatar.io/email/ruth.halvorsen%40example.test",
-   "count": 13
+   "count": 9
   },
   {
    "request": "GET https://unavatar.io/email/sam.whitcombe%40example.test",
-   "count": 13
+   "count": 9
   },
   {
    "request": "GET https://unavatar.io/email/kofi.mensah%40example.test",
-   "count": 13
+   "count": 9
   },
   {
    "request": "GET https://unavatar.io/email/mailer-daemon%40example.test",
-   "count": 13
+   "count": 9
   },
   {
    "request": "GET https://unavatar.io/email/hana.virtanen%40example.test",

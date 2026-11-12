@@ -347,6 +347,9 @@ export function measure(options) {
   // --- reading comfort ------------------------------------------------------
   const prose = firstTexts.filter((text) => !text.el.closest('button,input,select,textarea,nav,[role="tablist"],[role="tab"],h1,h2,h3,h4'))
   const proseChars = {}
+  // Where every word on the screen sits inside a control (a list of button rows), the body
+  // text is whatever those rows are set in.
+  if (prose.length === 0) prose.push(...firstTexts.filter((text) => !text.el.closest('nav,[role="tablist"],[role="tab"],input,select,textarea')))
   for (const text of prose) proseChars[text.size] = (proseChars[text.size] ?? 0) + text.content.length
   const bodySize = Object.entries(proseChars).sort((a, b) => b[1] - a[1])[0]
   const lines = []
