@@ -1,7 +1,7 @@
 {
   "app": "quick-capture",
   "repo": "quick-capture",
-  "sha": "51617b8",
+  "sha": "0980f64",
   "baseUrl": "http://127.0.0.1:4322",
   "base": "/",
   "mocksFile": "mocks.json",

@@ -560,7 +560,7 @@
    "repo": "argus",
    "path": "apps/email",
    "mirrorOf": "email/email",
-   "sha": "755a09b",
+   "sha": "077d1ff",
    "pin": "v3.18.0",
    "style": "base-nova",
    "hasComponentsJson": true,
@@ -1728,7 +1728,7 @@
    "repo": "argus",
    "path": "apps/watchtower",
    "mirrorOf": null,
-   "sha": "755a09b",
+   "sha": "077d1ff",
    "pin": "v3.18.0",
    "style": "base-nova",
    "hasComponentsJson": true,
@@ -3625,7 +3625,7 @@
    "repo": "ops-hub",
    "path": "apps/ops-hub-web",
    "mirrorOf": null,
-   "sha": "3a9e15f",
+   "sha": "ce5b725",
    "pin": "v3.22.0",
    "style": "base-nova",
    "hasComponentsJson": true,
@@ -4530,7 +4530,7 @@
     },
     {
      "name": "PullRowItem",
-     "where": "ops-hub/apps/ops-hub-web/src/components/backlog-row.tsx:133"
+     "where": "ops-hub/apps/ops-hub-web/src/components/backlog-row.tsx:138"
     },
     {
      "name": "BoardMessage",
@@ -5062,19 +5062,19 @@
     },
     {
      "name": "FilterSelect",
-     "where": "ops-hub/apps/ops-hub-web/src/views/table.tsx:58"
+     "where": "ops-hub/apps/ops-hub-web/src/views/table.tsx:59"
     },
     {
      "name": "SortHeader",
-     "where": "ops-hub/apps/ops-hub-web/src/views/table.tsx:89"
+     "where": "ops-hub/apps/ops-hub-web/src/views/table.tsx:91"
     },
     {
      "name": "ItemRow",
-     "where": "ops-hub/apps/ops-hub-web/src/views/table.tsx:102"
+     "where": "ops-hub/apps/ops-hub-web/src/views/table.tsx:104"
     },
     {
      "name": "TableView",
-     "where": "ops-hub/apps/ops-hub-web/src/views/table.tsx:142"
+     "where": "ops-hub/apps/ops-hub-web/src/views/table.tsx:145"
     },
     {
      "name": "ThreadView",
@@ -5207,7 +5207,7 @@
     },
     {
      "kind": "component",
-     "where": "ops-hub/apps/ops-hub-web/src/views/table.tsx:102",
+     "where": "ops-hub/apps/ops-hub-web/src/views/table.tsx:104",
      "element": "ItemRow",
      "classes": "font-mono text-2xs whitespace-nowrap",
      "text": [
@@ -5259,7 +5259,7 @@
     "authored": {
      "fontSize": {
       "11": 1,
-      "12": 40,
+      "12": 41,
       "13": 9,
       "14": 79,
       "16": 7,
@@ -5311,7 +5311,7 @@
      },
      "fontWeightLiteral": {},
      "radiusLiteral": {},
-     "semanticColourClasses": 224,
+     "semanticColourClasses": 225,
      "paletteColourClasses": 4,
      "arbitraryLiteral": {
       "text": 2,
@@ -5550,7 +5550,7 @@
    "offScaleFiles": 21,
    "offScale": {
     "type": {
-     "on": 126,
+     "on": 127,
      "off": 17,
      "neutral": 0,
      "offValues": {
@@ -10949,7 +10949,7 @@
    "repo": "homelab",
    "path": "services/scan-app/web",
    "mirrorOf": null,
-   "sha": "b8fe404",
+   "sha": "68d95a9",
    "pin": "v3.1.0",
    "style": "base-nova",
    "hasComponentsJson": true,
@@ -11590,7 +11590,7 @@
    "repo": "quick-capture",
    "path": "web",
    "mirrorOf": null,
-   "sha": "51617b8",
+   "sha": "0980f64",
    "pin": "v3.1.0",
    "style": "base-nova",
    "hasComponentsJson": true,
@@ -11981,7 +11981,7 @@
    "repo": "atto1",
    "path": ".",
    "mirrorOf": null,
-   "sha": "7e63f1b",
+   "sha": "6e82034",
    "pin": "v3.1.0",
    "style": "base-nova",
    "hasComponentsJson": true,
@@ -18269,7 +18269,7 @@
      {
       "app": "ops-hub/ops-hub-web",
       "name": "ItemRow",
-      "where": "ops-hub/apps/ops-hub-web/src/views/table.tsx:102"
+      "where": "ops-hub/apps/ops-hub-web/src/views/table.tsx:104"
      },
      {
       "app": "homelab/scan-app",
@@ -18814,7 +18814,7 @@
      {
       "app": "ops-hub/ops-hub-web",
       "name": "SortHeader",
-      "where": "ops-hub/apps/ops-hub-web/src/views/table.tsx:89"
+      "where": "ops-hub/apps/ops-hub-web/src/views/table.tsx:91"
      },
      {
       "app": "budget/web",

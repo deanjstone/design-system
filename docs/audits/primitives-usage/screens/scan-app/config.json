@@ -1,7 +1,7 @@
 {
   "app": "scan-app",
   "repo": "homelab",
-  "sha": "b8fe404",
+  "sha": "68d95a9",
   "baseUrl": "http://127.0.0.1:4321",
   "base": "/",
   "mocksFile": "mocks.json",

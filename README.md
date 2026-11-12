@@ -76,23 +76,26 @@ overrides for the scripts (names only; no value is stored in the repo):
 
 This list is how a registry change is checked for downstream breakage, so keep
 it true. Pins are the `@design-system` alias version in each repo's
-`components.json` on `main`, read on 2026-11-07. The alias is where the next
-`add` will pull from; the code already in the repo is whatever was last pulled.
+`components.json` on `main`, read on 2026-11-12 by
+`node docs/audits/primitives-usage/collect.mjs`, which re-reads all of them
+([the audit](docs/audits/2026-11-12-primitives-usage.md)). The alias is where the
+next `add` will pull from; the code already in the repo is whatever was last
+pulled, and in ten of these apps some of it is older than the pin (the audit's
+drift table).
 
 | Consumer | Path | Pin | Status |
 |---|---|---|---|
-| `argus` | `apps/email` | v3.18.0 | consuming |
-| `argus` | `apps/ops-hub-web` | v3.18.0 | consuming ([argus#728](https://github.com/deanjstone/argus/issues/728)) |
 | `argus` | `apps/watchtower` | v3.18.0 | consuming ([argus#674](https://github.com/deanjstone/argus/issues/674)) |
+| `argus` | `apps/email` | v3.18.0 | consuming; the same app as `email` `apps/email`, still present in both repos |
+| `email` | `apps/email` | v3.18.0 | consuming (split out of `argus` on 9 Nov 2026) |
+| `ops-hub` | `apps/ops-hub-web` | v3.22.0 | consuming (moved out of `argus` on 10 Nov 2026; [argus#728](https://github.com/deanjstone/argus/issues/728)) |
+| `myargus` | `apps/briefings`, `apps/jobs`, `apps/knowledge`, `apps/reader`, `apps/shell`, `apps/stockade` | v3.22.0 | consuming ([myargus#295](https://github.com/deanjstone/myargus/issues/295), [myargus#296](https://github.com/deanjstone/myargus/issues/296)) |
 | `homelab` | `services/scan-app/web` | v3.1.0 | consuming ([homelab#181](https://github.com/deanjstone/homelab/issues/181)) |
-| `atto1` | repo root | v3.1.0 | consuming |
 | `quick-capture` | `web` | v3.1.0 | consuming (split out of `homelab` `services/quick-capture/web` in [homelab#228](https://github.com/deanjstone/homelab/issues/228)) |
-| `myargus` | `apps/knowledge`, `apps/reader` | v3.18.0 | consuming ([myargus#296](https://github.com/deanjstone/myargus/issues/296)) |
-| `myargus` | `apps/briefings` | v3.18.0 | consuming |
-| `myargus` | `apps/shell` | v3.18.0 | consuming |
-| `myargus` | `apps/stockade` | v3.18.0 | consuming ([myargus#295](https://github.com/deanjstone/myargus/issues/295)) |
-| `slate-reader` | `apps/server` | v2.7.0 (vendored) | **LinkPill only**: `link-pill-core` and `link-pill-html` are copied in; no `@design-system` alias. The web UI is `apps/client` (Preact, no registry) ([slate-reader#17](https://github.com/deanjstone/slate-reader/issues/17)) |
-| `budget` | `web` | none yet | **pending**: forked `components/ui`, no `components.json` ([budget#271](https://github.com/deanjstone/budget/issues/271)) |
+| `atto1` | repo root | v3.1.0 | consuming |
+| `sparky` | repo root | none | **tokens only**: `src/design-system/tokens.css` is a copy of `theme/tokens.css` (identical to v3.24.0); no registry components, no `components.json` |
+| `slate-reader` | `apps/server` | none (vendored) | **LinkPill only**: `link-pill-core` (identical to v3.24.0) and `link-pill-html` are copied in; its `components.json` has no `@design-system` alias. The web UI is `apps/client` (Preact, no registry). The repo is archived ([slate-reader#17](https://github.com/deanjstone/slate-reader/issues/17)) |
+| `budget` | `web` | none yet | **pending**: forked `components/ui` (Radix, from v1), no `components.json` ([budget#271](https://github.com/deanjstone/budget/issues/271)) |
 
 Move a pending row to consuming only once a `components.json` with the alias
 is on that repo's `main`.
