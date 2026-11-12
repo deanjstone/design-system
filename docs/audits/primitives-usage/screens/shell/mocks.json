@@ -1,0 +1,301 @@
+[
+  {
+    "url": "**/auth/v1/passkeys**",
+    "method": "GET",
+    "status": 200,
+    "json": [
+      { "id": "c0000000-0000-4000-8000-000000000001", "friendly_name": "Laptop", "created_at": "2026-09-02T18:00:00Z", "last_used_at": "2026-11-10T07:12:00Z" }
+    ]
+  },
+  {
+    "url": "**/auth/v1/**",
+    "status": 200,
+    "json": {}
+  },
+  {
+    "url": "**/rest/v1/plans**slug=eq.audit-follow-ups**",
+    "status": 200,
+    "json": {
+      "id": "a0000000-0000-4000-8000-000000000101",
+      "slug": "audit-follow-ups",
+      "title": "Follow up the primitives usage audit before the next design system release",
+      "subtitle": "Three phases: fix the shared primitives, adopt them in the shell, then re-run the audit",
+      "created_at": "2026-11-04T09:15:00Z",
+      "updated_at": "2026-11-10T08:42:00Z",
+      "plan_steps": [
+        {
+          "id": "b0000000-0000-4000-8000-000000000101",
+          "plan_id": "a0000000-0000-4000-8000-000000000101",
+          "position": 1,
+          "kind": "predone",
+          "title": "Inventory every shell component that bypasses the Card primitive",
+          "badge": "generic",
+          "check_label": null,
+          "content": "<p><strong>Phase 1: Shared primitives</strong></p><p>Grep the shell for hand-built card wrappers and list each one with its file and line in the audit log.</p>",
+          "done_note": "Done before publish: the inventory ran during the audit pass.",
+          "completed_at": "2026-11-04T10:02:00Z",
+          "created_at": "2026-11-04T09:15:00Z",
+          "updated_at": "2026-11-04T10:02:00Z"
+        },
+        {
+          "id": "b0000000-0000-4000-8000-000000000102",
+          "plan_id": "a0000000-0000-4000-8000-000000000101",
+          "position": 2,
+          "kind": "user",
+          "title": "Replace the hand-built card wrappers on Home and Plans with the Card primitive",
+          "badge": "wsl",
+          "check_label": "Home and Plans show the same card padding in light and dark themes",
+          "content": "<p>Use <code>Card</code>, <code>CardHeader</code> and <code>CardContent</code>. Keep the existing class names only where they carry layout.</p>",
+          "done_note": null,
+          "completed_at": "2026-11-06T16:30:00Z",
+          "created_at": "2026-11-04T09:15:00Z",
+          "updated_at": "2026-11-06T16:30:00Z"
+        },
+        {
+          "id": "b0000000-0000-4000-8000-000000000103",
+          "plan_id": "a0000000-0000-4000-8000-000000000101",
+          "position": 3,
+          "kind": "user",
+          "title": "Align the Button size variants with the design tokens",
+          "badge": "generic",
+          "check_label": "Button sizes match the tokens table in DESIGN.md",
+          "content": "<p>The <span class=\"inline-code\">sm</span> variant uses a hard-coded height. Read the token and remove the literal value.</p>",
+          "done_note": null,
+          "completed_at": "2026-11-07T11:20:00Z",
+          "created_at": "2026-11-04T09:15:00Z",
+          "updated_at": "2026-11-07T11:20:00Z"
+        },
+        {
+          "id": "b0000000-0000-4000-8000-000000000104",
+          "plan_id": "a0000000-0000-4000-8000-000000000101",
+          "position": 4,
+          "kind": "user",
+          "title": "Decide whether the unused Badge variants stay in the component",
+          "badge": null,
+          "check_label": "Each unused Badge variant is either removed or justified in the component doc",
+          "content": null,
+          "done_note": null,
+          "completed_at": null,
+          "created_at": "2026-11-04T09:15:00Z",
+          "updated_at": "2026-11-04T09:15:00Z"
+        },
+        {
+          "id": "b0000000-0000-4000-8000-000000000105",
+          "plan_id": "a0000000-0000-4000-8000-000000000101",
+          "position": 5,
+          "kind": "user",
+          "title": "Move the plan step checkbox onto the Checkbox primitive",
+          "badge": "wsl",
+          "check_label": "A step toggles on a phone and on desktop with the same focus ring",
+          "content": "<p><strong>Phase 2: Shell adoption</strong></p><p>The step checkbox still carries its own focus ring. Confirm it matches the Checkbox primitive once the step card moves over.</p>",
+          "done_note": null,
+          "completed_at": "2026-11-08T09:05:00Z",
+          "created_at": "2026-11-04T09:15:00Z",
+          "updated_at": "2026-11-08T09:05:00Z"
+        },
+        {
+          "id": "b0000000-0000-4000-8000-000000000106",
+          "plan_id": "a0000000-0000-4000-8000-000000000101",
+          "position": 6,
+          "kind": "user",
+          "title": "Replace the progress pill on the Plans list with the Badge primitive",
+          "badge": "generic",
+          "check_label": "Each progress state renders with one Badge variant on Plans and on the plan page",
+          "content": "<p>The pill repeats Badge styling by hand. Keep the three progress states visually distinct: not started, in progress and complete.</p>",
+          "done_note": null,
+          "completed_at": null,
+          "created_at": "2026-11-04T09:15:00Z",
+          "updated_at": "2026-11-04T09:15:00Z"
+        },
+        {
+          "id": "b0000000-0000-4000-8000-000000000107",
+          "plan_id": "a0000000-0000-4000-8000-000000000101",
+          "position": 7,
+          "kind": "user",
+          "title": "Retire the PageHeader description fallback for plain strings",
+          "badge": null,
+          "check_label": "No caller passes a plain string where JSX is expected",
+          "content": "<p>Only the plan page passes JSX as the description. Confirm every other caller passes a string, then drop the fallback branch.</p>",
+          "done_note": null,
+          "completed_at": null,
+          "created_at": "2026-11-04T09:15:00Z",
+          "updated_at": "2026-11-04T09:15:00Z"
+        },
+        {
+          "id": "b0000000-0000-4000-8000-000000000108",
+          "plan_id": "a0000000-0000-4000-8000-000000000101",
+          "position": 8,
+          "kind": "user",
+          "title": "Run the shell test suite on the branch after each adoption change",
+          "badge": "wsl",
+          "check_label": "The shell test suite passes on the branch after each adoption commit",
+          "content": "<p>Run the suite on the branch, not only on <code>main</code>, so a failing snapshot is caught before review.</p>",
+          "done_note": null,
+          "completed_at": null,
+          "created_at": "2026-11-04T09:15:00Z",
+          "updated_at": "2026-11-04T09:15:00Z"
+        },
+        {
+          "id": "b0000000-0000-4000-8000-000000000109",
+          "plan_id": "a0000000-0000-4000-8000-000000000101",
+          "position": 9,
+          "kind": "user",
+          "title": "Re-render the shell screens in WebKit and compare them with the Phase 1 baseline",
+          "badge": "win",
+          "check_label": "Home, Plans and the plan page match the baseline within the agreed tolerance",
+          "content": "<p><strong>Phase 3: Re-run and close</strong></p><p>Use the render harness on the audit branch. Save the new screenshots beside the baseline and note any difference that is more than a pixel of drift.</p>",
+          "done_note": null,
+          "completed_at": "2026-11-09T14:48:00Z",
+          "created_at": "2026-11-04T09:15:00Z",
+          "updated_at": "2026-11-09T14:48:00Z"
+        },
+        {
+          "id": "b0000000-0000-4000-8000-000000000110",
+          "plan_id": "a0000000-0000-4000-8000-000000000101",
+          "position": 10,
+          "kind": "user",
+          "title": "Re-run the primitives usage scorecard and record the new totals in the audit log",
+          "badge": "generic",
+          "check_label": "The scorecard totals for the shell appear in the audit log",
+          "content": "<p>Use the same scorecard columns as the baseline so the before and after counts line up row for row.</p>",
+          "done_note": null,
+          "completed_at": null,
+          "created_at": "2026-11-04T09:15:00Z",
+          "updated_at": "2026-11-04T09:15:00Z"
+        },
+        {
+          "id": "b0000000-0000-4000-8000-000000000111",
+          "plan_id": "a0000000-0000-4000-8000-000000000101",
+          "position": 11,
+          "kind": "user",
+          "title": "Leave a Resolution comment on each follow-up issue once its change is merged",
+          "badge": null,
+          "check_label": "Every follow-up issue has a Resolution comment that names its merged commit",
+          "content": null,
+          "done_note": null,
+          "completed_at": null,
+          "created_at": "2026-11-04T09:15:00Z",
+          "updated_at": "2026-11-04T09:15:00Z"
+        },
+        {
+          "id": "b0000000-0000-4000-8000-000000000112",
+          "plan_id": "a0000000-0000-4000-8000-000000000101",
+          "position": 12,
+          "kind": "user",
+          "title": "Publish the before and after summary to the plans view",
+          "badge": "generic",
+          "check_label": "The summary page links each finding to the commit that closed it",
+          "content": "<p>Keep the summary to one page. Put the before and after counts side by side and link every finding to its closing commit.</p>",
+          "done_note": null,
+          "completed_at": null,
+          "created_at": "2026-11-04T09:15:00Z",
+          "updated_at": "2026-11-04T09:15:00Z"
+        }
+      ]
+    }
+  },
+  {
+    "url": "**/rest/v1/plans**",
+    "status": 200,
+    "json": [
+      {
+        "id": "a0000000-0000-4000-8000-000000000101",
+        "slug": "audit-follow-ups",
+        "title": "Follow up the primitives usage audit before the next design system release",
+        "subtitle": "Three phases: fix the shared primitives, adopt them in the shell, then re-run the audit",
+        "created_at": "2026-11-04T09:15:00Z",
+        "updated_at": "2026-11-10T08:42:00Z",
+        "plan_steps": [
+          { "completed_at": "2026-11-04T10:02:00Z" },
+          { "completed_at": "2026-11-06T16:30:00Z" },
+          { "completed_at": "2026-11-07T11:20:00Z" },
+          { "completed_at": null },
+          { "completed_at": "2026-11-08T09:05:00Z" },
+          { "completed_at": null },
+          { "completed_at": null },
+          { "completed_at": null },
+          { "completed_at": "2026-11-09T14:48:00Z" },
+          { "completed_at": null },
+          { "completed_at": null },
+          { "completed_at": null }
+        ]
+      },
+      {
+        "id": "a0000000-0000-4000-8000-000000000102",
+        "slug": "jobs-role-review-filters",
+        "title": "Filter APS job roles by review status and by the date each role closes",
+        "subtitle": null,
+        "created_at": "2026-10-26T10:30:00Z",
+        "updated_at": "2026-11-10T06:10:00Z",
+        "plan_steps": [
+          { "completed_at": "2026-10-27T15:40:00Z" },
+          { "completed_at": null }
+        ]
+      },
+      {
+        "id": "a0000000-0000-4000-8000-000000000103",
+        "slug": "stockade-barcode-intake",
+        "title": "Add barcode lookup to the Stockade intake form so items fill in from a scan",
+        "subtitle": null,
+        "created_at": "2026-10-29T13:00:00Z",
+        "updated_at": "2026-11-09T17:25:00Z",
+        "plan_steps": [
+          { "completed_at": null },
+          { "completed_at": null },
+          { "completed_at": null },
+          { "completed_at": null },
+          { "completed_at": null },
+          { "completed_at": null },
+          { "completed_at": null }
+        ]
+      },
+      {
+        "id": "a0000000-0000-4000-8000-000000000104",
+        "slug": "budget-category-rules",
+        "title": "Move category rules into the shared ledger schema and retire the local copy",
+        "subtitle": "Rules run in the database, so every client sees the same categories",
+        "created_at": "2026-10-20T08:20:00Z",
+        "updated_at": "2026-11-07T12:05:00Z",
+        "plan_steps": [
+          { "completed_at": "2026-10-22T09:12:00Z" },
+          { "completed_at": "2026-10-29T18:44:00Z" },
+          { "completed_at": null },
+          { "completed_at": null },
+          { "completed_at": null }
+        ]
+      },
+      {
+        "id": "a0000000-0000-4000-8000-000000000105",
+        "slug": "ops-notice-retention",
+        "title": "Expire read notice-board messages after thirty days",
+        "subtitle": null,
+        "created_at": "2026-11-01T11:00:00Z",
+        "updated_at": "2026-11-05T14:30:00Z",
+        "plan_steps": [
+          { "completed_at": null },
+          { "completed_at": null },
+          { "completed_at": null }
+        ]
+      },
+      {
+        "id": "a0000000-0000-4000-8000-000000000106",
+        "slug": "reader-queue-plans",
+        "title": "Show the reader's saved article queue on the plans page",
+        "subtitle": null,
+        "created_at": "2026-10-12T16:45:00Z",
+        "updated_at": "2026-11-03T19:20:00Z",
+        "plan_steps": [
+          { "completed_at": "2026-10-14T10:00:00Z" },
+          { "completed_at": "2026-10-18T13:25:00Z" },
+          { "completed_at": "2026-10-23T08:50:00Z" },
+          { "completed_at": "2026-11-03T19:20:00Z" }
+        ]
+      }
+    ]
+  },
+  {
+    "url": "**/realtime/**",
+    "status": 204,
+    "body": ""
+  }
+]
