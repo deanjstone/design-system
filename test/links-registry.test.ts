@@ -32,7 +32,7 @@ describe("registry/links/links.json", () => {
       "myargus.cc", "budget.myargus.cc", "stockade.myargus.cc", "ops.myargus.cc", "mail.myargus.cc",
       "watchtower.myargus.cc", "capture.myargus.cc", "taskview.myargus.cc", "t3.myargus.cc", "atto1.myargus.cc",
       "board.myargus.cc", "knowledge.myargus.cc", "read.myargus.cc", "edms.myargus.cc", "api.read.myargus.cc",
-      "api.myargus.cc", "mcp.myargus.cc", "memory.myargus.cc", "vault.myargus.cc",
+      "api.myargus.cc", "mcp.myargus.cc", "memory.myargus.cc",
     ]) {
       expect(hosts, host).toContain(host)
     }

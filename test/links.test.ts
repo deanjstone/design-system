@@ -101,7 +101,6 @@ describe("apiUrl and mcpUrl", () => {
 
   it("emit an MCP server's current location until its host moves (decision 7)", () => {
     expect(mcpUrl("memory")).toBe("https://memory.myargus.cc/mcp")
-    expect(mcpUrl("vault")).toBe("https://vault.myargus.cc/mcp")
   })
 
   it("refuse the wrong kind of id", () => {

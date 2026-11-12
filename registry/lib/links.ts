@@ -6,7 +6,7 @@ import { createLinks } from "@/lib/links-core"
 export const VENDORED_BY = "link-check:vendored"
 
 export const REGISTRY = {
-  "revision": 2,
+  "revision": 3,
   "domain": "myargus.cc",
   "cookieDomain": ".myargus.cc",
   "tailnetHost": "homelab.tail00500e.ts.net",
@@ -417,27 +417,6 @@ export const REGISTRY = {
         "path": "/memory"
       },
       "note": "Decision 7: moves to mcp.myargus.cc/memory; the old host stays as an alias for a window."
-    },
-    {
-      "id": "vault",
-      "name": "Vault MCP",
-      "description": "The CONTEXT vault agent, relayed",
-      "bucket": "mcp",
-      "status": "live",
-      "host": "vault.myargus.cc",
-      "path": "/mcp",
-      "hosting": "worker",
-      "access": false,
-      "switcher": false,
-      "routes": [],
-      "probe": {
-        "status": 401
-      },
-      "moveTo": {
-        "host": "mcp.myargus.cc",
-        "path": "/vault"
-      },
-      "note": "Decision 7: moves to mcp.myargus.cc/vault; the old host stays as an alias for a window."
     },
     {
       "id": "t3-tailnet",

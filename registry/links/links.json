@@ -1,7 +1,7 @@
 {
   "$comment": "link-check:vendored The myargus links registry (design-system ADR-0004). Edit it in deanjstone/design-system only; consumers vendor it with `shadcn add`. Bump `revision` on every change.",
   "$schema": "./links.schema.json",
-  "revision": 2,
+  "revision": 3,
   "domain": "myargus.cc",
   "cookieDomain": ".myargus.cc",
   "tailnetHost": "homelab.tail00500e.ts.net",
@@ -366,22 +366,6 @@
       "probe": { "status": 401 },
       "moveTo": { "host": "mcp.myargus.cc", "path": "/memory" },
       "note": "Decision 7: moves to mcp.myargus.cc/memory; the old host stays as an alias for a window."
-    },
-    {
-      "id": "vault",
-      "name": "Vault MCP",
-      "description": "The CONTEXT vault agent, relayed",
-      "bucket": "mcp",
-      "status": "live",
-      "host": "vault.myargus.cc",
-      "path": "/mcp",
-      "hosting": "worker",
-      "access": false,
-      "switcher": false,
-      "routes": [],
-      "probe": { "status": 401 },
-      "moveTo": { "host": "mcp.myargus.cc", "path": "/vault" },
-      "note": "Decision 7: moves to mcp.myargus.cc/vault; the old host stays as an alias for a window."
     },
     {
       "id": "t3-tailnet",

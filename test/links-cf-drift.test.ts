@@ -17,7 +17,7 @@ const cleanLive = () => ({
   dns: [
     "myargus.cc", "budget.myargus.cc", "stockade.myargus.cc", "ops.myargus.cc", "mail.myargus.cc",
     "watchtower.myargus.cc", "capture.myargus.cc", "taskview.myargus.cc", "board.myargus.cc",
-    "knowledge.myargus.cc", "api.myargus.cc", "mcp.myargus.cc", "memory.myargus.cc", "vault.myargus.cc",
+    "knowledge.myargus.cc", "api.myargus.cc", "mcp.myargus.cc", "memory.myargus.cc",
   ].map((name) => ({ type: "CNAME", name })),
   ingress: ["budget.myargus.cc", "api.myargus.cc", "ops.myargus.cc", "capture.myargus.cc", "taskview.myargus.cc"],
   access: ["ops.myargus.cc", "mail.myargus.cc", "capture.myargus.cc", "taskview.myargus.cc"],
