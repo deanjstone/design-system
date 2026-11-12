@@ -1,0 +1,22 @@
+{
+  "comment": "Every frontend the audit reads. `path` is the app root inside the repo. `uiDir` is only set where there is no components.json to read it from. `mirrorOf` marks a second copy of the same app, so cross-app counts do not count it twice. `remote` is set for a repo that is not cloned under the repos directory.",
+  "apps": [
+    { "id": "argus/email", "repo": "argus", "path": "apps/email", "mirrorOf": "email/email" },
+    { "id": "argus/watchtower", "repo": "argus", "path": "apps/watchtower" },
+    { "id": "email/email", "repo": "email", "path": "apps/email" },
+    { "id": "ops-hub/ops-hub-web", "repo": "ops-hub", "path": "apps/ops-hub-web" },
+    { "id": "myargus/briefings", "repo": "myargus", "path": "apps/briefings" },
+    { "id": "myargus/jobs", "repo": "myargus", "path": "apps/jobs" },
+    { "id": "myargus/knowledge", "repo": "myargus", "path": "apps/knowledge" },
+    { "id": "myargus/reader", "repo": "myargus", "path": "apps/reader" },
+    { "id": "myargus/shell", "repo": "myargus", "path": "apps/shell" },
+    { "id": "myargus/stockade", "repo": "myargus", "path": "apps/stockade" },
+    { "id": "homelab/scan-app", "repo": "homelab", "path": "services/scan-app/web" },
+    { "id": "quick-capture/web", "repo": "quick-capture", "path": "web" },
+    { "id": "atto1", "repo": "atto1", "path": "" },
+    { "id": "budget/web", "repo": "budget", "path": "web", "uiDir": "web/src/components/ui" },
+    { "id": "sparky", "repo": "sparky", "path": "", "only": ["src/", "index.html"] },
+    { "id": "slate-reader/server", "repo": "slate-reader", "path": "apps/server", "remote": true },
+    { "id": "slate-reader/client", "repo": "slate-reader", "path": "apps/client", "remote": true }
+  ]
+}
