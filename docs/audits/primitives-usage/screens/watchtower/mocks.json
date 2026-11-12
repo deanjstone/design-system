@@ -1,0 +1,214 @@
+[
+  {
+    "url": "http://127.0.0.1:54321/auth/v1/passkeys**",
+    "method": "GET",
+    "status": 200,
+    "json": [
+      {
+        "id": "7d3c2a10-6b1e-4f7a-9c2d-0a1b2c3d4e5f",
+        "friendly_name": "Laptop Touch ID",
+        "created_at": "2026-03-02T09:14:00Z",
+        "last_used_at": "2026-11-10T06:42:00Z"
+      }
+    ]
+  },
+  {
+    "url": "http://127.0.0.1:54321/auth/v1/user**",
+    "method": "GET",
+    "status": 200,
+    "json": {
+      "id": "00000000-0000-4000-8000-000000000001",
+      "aud": "authenticated",
+      "role": "authenticated",
+      "email": "owner@example.test",
+      "app_metadata": {},
+      "user_metadata": { "name": "Owner" },
+      "created_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "url": "http://127.0.0.1:54321/auth/v1/**",
+    "status": 200,
+    "json": {}
+  },
+  {
+    "url": "http://127.0.0.1:54321/realtime/**",
+    "status": 204,
+    "body": ""
+  },
+  {
+    "url": "http://127.0.0.1:59007/checks**",
+    "method": "GET",
+    "status": 200,
+    "json": [
+      {
+        "service_key": "ai-usage",
+        "host": "multi",
+        "status": "degraded",
+        "detail": {
+          "totalTokens": 412906375,
+          "totalCost": 268.4017,
+          "hosts": [
+            {
+              "name": "homelab",
+              "status": "healthy",
+              "totalTokens": 412906375,
+              "totalCost": 268.4017,
+              "latestPeriod": "2026-11-10"
+            },
+            {
+              "name": "wsl2",
+              "status": "unreachable",
+              "totalTokens": 0,
+              "totalCost": 0,
+              "latestPeriod": null,
+              "error": "connect timed out after 10s"
+            }
+          ]
+        },
+        "checked_at": "2026-11-10T06:41:12.000Z"
+      },
+      {
+        "service_key": "cloudflare:myargus",
+        "host": "cloudflare",
+        "status": "down",
+        "detail": {
+          "environment": "production",
+          "stageStatus": "failure",
+          "deployedOn": "2026-11-10T05:58:31.000Z"
+        },
+        "checked_at": "2026-11-10T06:39:50.000Z"
+      },
+      {
+        "service_key": "cloudflare:reader-api",
+        "host": "cloudflare",
+        "status": "healthy",
+        "detail": {
+          "defaultEnvironment": {
+            "environment": "production",
+            "script_tag": "0f3a9c1e7b2d4a6f8e0c1b3d5f7a9e2c",
+            "created_on": "2026-06-11T02:52:49.000Z",
+            "modified_on": "2026-11-08T21:14:03.000Z"
+          }
+        },
+        "checked_at": "2026-11-10T06:40:21.000Z"
+      },
+      {
+        "service_key": "homelab:disk:/",
+        "host": "homelab",
+        "status": "healthy",
+        "detail": {
+          "path": "/",
+          "pctUsed": 62
+        },
+        "checked_at": "2026-11-10T06:41:03.000Z"
+      },
+      {
+        "service_key": "homelab:uptime",
+        "host": "homelab",
+        "status": "healthy",
+        "detail": {
+          "uptimeSeconds": 1209600
+        },
+        "checked_at": "2026-11-10T06:40:58.000Z"
+      },
+      {
+        "service_key": "printer",
+        "host": "homelab",
+        "status": "degraded",
+        "detail": {
+          "state": "idle",
+          "reasons": ["toner-low"],
+          "message": null,
+          "model": "Example Printer WF-3000 Series",
+          "markers": [
+            { "name": "Black ink", "color": "#000000", "level": 14, "lowLevel": 15, "low": true },
+            { "name": "Cyan ink", "color": "#00aeef", "level": 63, "lowLevel": 15, "low": false }
+          ],
+          "queue": [],
+          "recentJobs": [
+            {
+              "id": 214,
+              "name": "Quarterly tax summary for the accountant.pdf",
+              "user": "owner",
+              "state": "completed",
+              "pages": 6,
+              "at": "2026-11-09T19:22:00.000Z"
+            },
+            {
+              "id": 213,
+              "name": "Boarding pass",
+              "user": "owner",
+              "state": "completed",
+              "pages": 1,
+              "at": "2026-11-09T08:05:00.000Z"
+            }
+          ],
+          "clockSkewSeconds": 3
+        },
+        "checked_at": "2026-11-10T06:40:43.000Z"
+      },
+      {
+        "service_key": "scanner",
+        "host": "homelab",
+        "status": "healthy",
+        "detail": {
+          "state": "idle",
+          "adfState": "empty",
+          "recentScans": [
+            {
+              "id": "69130e51-993a-4b20-a31a-4057e007d1e0",
+              "state": "completed",
+              "images": 3,
+              "at": "2026-11-09T14:30:00.000Z"
+            }
+          ]
+        },
+        "checked_at": "2026-11-10T06:40:43.000Z"
+      },
+      {
+        "service_key": "supabase:examplefixtureref0001",
+        "host": "supabase",
+        "status": "unreachable",
+        "detail": {
+          "error": "Management API did not respond"
+        },
+        "checked_at": "2026-11-10T06:36:17.000Z"
+      },
+      {
+        "service_key": "syncthing",
+        "host": "homelab",
+        "status": "degraded",
+        "detail": {
+          "totalErrors": 0,
+          "totalOutOfSync": 2,
+          "folders": [
+            { "id": "vault-main", "state": "idle", "errors": 0, "needTotalItems": 0 },
+            { "id": "scratch-sync", "state": "scanning", "errors": 0, "needTotalItems": 2 }
+          ]
+        },
+        "checked_at": "2026-11-10T06:25:41.000Z"
+      },
+      {
+        "service_key": "systemd:agent-engine.service",
+        "host": "homelab",
+        "status": "healthy",
+        "detail": {
+          "activeState": "active",
+          "subState": "running"
+        },
+        "checked_at": "2026-11-10T06:40:42.000Z"
+      },
+      {
+        "service_key": "systemd:session-tasks.service",
+        "host": "homelab",
+        "status": "down",
+        "detail": {
+          "activeState": "failed",
+          "subState": "failed"
+        },
+        "checked_at": "2026-11-10T06:40:42.000Z"
+      }
+    ]
+  }
+]

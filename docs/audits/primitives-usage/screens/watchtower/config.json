@@ -1,7 +1,7 @@
 {
   "app": "watchtower",
   "repo": "argus",
-  "sha": "755a09b",
+  "sha": "077d1ff",
   "baseUrl": "http://127.0.0.1:4314",
   "base": "/",
   "mocksFile": "mocks.json",

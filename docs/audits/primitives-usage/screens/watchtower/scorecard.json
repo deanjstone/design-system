@@ -1,0 +1,3341 @@
+{
+ "app": "watchtower",
+ "baseUrl": "http://127.0.0.1:4314",
+ "rules": {
+  "fontSizesInFirstViewport": 3,
+  "largestRatio": 1.2,
+  "largestElements": 2,
+  "chipsPerRow": 1,
+  "coloursPerRow": 2,
+  "interactiveInFirstViewport": 15,
+  "alphaSteps": 4,
+  "tapTarget": 44,
+  "inputFontSize": 16,
+  "thumbZoneFrom": 0.6,
+  "bodyFontSize": 16,
+  "lineLength": [
+   45,
+   75
+  ],
+  "contrast": 4.5,
+  "contrastLarge": 3
+ },
+ "screens": [
+  {
+   "name": "dashboard",
+   "path": "/",
+   "why": "The only screen after sign-in (src/App.tsx:48): service health cards.",
+   "primaryAction": null,
+   "expectsProgress": true,
+   "checks": {
+    "hierarchy": {
+     "oneLargest": {
+      "pass": false,
+      "detail": "16px ×1 \"Watchtower\", next 14px"
+     },
+     "fontSizes": {
+      "pass": false,
+      "detail": "16/14/13/12"
+     },
+     "pageTitleVisible": {
+      "pass": false,
+      "detail": "no h1 on show in the first viewport"
+     },
+     "headingVisible": {
+      "pass": true,
+      "detail": "h2 \"multi\" at 104px"
+     },
+     "headingOutweighsRows": {
+      "pass": true,
+      "detail": "heading 500/500/500, row title 500"
+     },
+     "headingOutweighsRowsDesktop": {
+      "pass": true,
+      "detail": "heading 600/500/500/500/500, row title 500"
+     }
+    },
+    "clutter": {
+     "chipsPerRow": {
+      "pass": false,
+      "detail": "max 2 in 7 rows"
+     },
+     "coloursPerRow": {
+      "pass": true,
+      "detail": "max 2"
+     },
+     "noNestedBorders": {
+      "pass": true,
+      "detail": "0 rows"
+     },
+     "chipsPerRowDesktop": {
+      "pass": false,
+      "detail": "max 2 in 10 rows"
+     },
+     "coloursPerRowDesktop": {
+      "pass": true,
+      "detail": "max 2"
+     },
+     "nothingCutOff": {
+      "pass": true,
+      "detail": "0 texts cut short, 0 of them in list rows"
+     },
+     "interactiveCount": {
+      "pass": true,
+      "detail": "8"
+     },
+     "alphaSteps": {
+      "pass": true,
+      "detail": "3: 0.15, 0.6, 0.74"
+     }
+    },
+    "action": {
+     "primaryVisible": {
+      "pass": null,
+      "detail": "no primary action on this screen"
+     },
+     "primaryInThumbZone": {
+      "pass": null,
+      "detail": "no primary action on this screen"
+     },
+     "tapTargets": {
+      "pass": true,
+      "detail": "0 of 12 under 44px"
+     },
+     "inputText": {
+      "pass": null,
+      "detail": "no inputs"
+     }
+    },
+    "state": {
+     "moreThanColour": {
+      "pass": true,
+      "detail": "0 of 25 carry colour alone"
+     },
+     "statusFromTokens": {
+      "pass": false,
+      "detail": "#bb4d00×6, #009a65×5, #009966×5, #bc4a00×3"
+     },
+     "progressShown": {
+      "pass": true,
+      "detail": "0 counted headings, 0 progress elements, 1 \"n of m\" or percent texts"
+     },
+     "emptySaysNext": {
+      "pass": null,
+      "detail": "no empty state on screen"
+     }
+    },
+    "reading": {
+     "bodyText": {
+      "pass": false,
+      "detail": "12px"
+     },
+     "lineLength": {
+      "pass": null,
+      "detail": "no wrapped paragraph on desktop"
+     },
+     "contrast": {
+      "pass": false,
+      "detail": "iphone-light 8, iphone-dark 0, desktop-light 8, desktop-dark 0"
+     },
+     "noSidewaysScroll": {
+      "pass": true,
+      "detail": "390: 0px, 320: 0px"
+     },
+     "reducedMotion": {
+      "pass": true,
+      "detail": "0 running"
+     }
+    }
+   },
+   "variants": {
+    "iphone-light": {
+     "viewport": [
+      390,
+      844
+     ],
+     "coarse": true,
+     "hierarchy": {
+      "fontSizes": [
+       {
+        "size": 16,
+        "chars": 10
+       },
+       {
+        "size": 14,
+        "chars": 51
+       },
+       {
+        "size": 13,
+        "chars": 48
+       },
+       {
+        "size": 12,
+        "chars": 236
+       }
+      ],
+      "largest": {
+       "size": 16,
+       "elements": 1,
+       "weight": 600,
+       "text": "Watchtower",
+       "nextSize": 14
+      },
+      "headings": [
+       {
+        "tag": "h2",
+        "text": "multi",
+        "size": 12,
+        "weight": 500,
+        "top": 104
+       },
+       {
+        "tag": "h2",
+        "text": "cloudflare",
+        "size": 12,
+        "weight": 500,
+        "top": 242
+       },
+       {
+        "tag": "h2",
+        "text": "homelab",
+        "size": 12,
+        "weight": 500,
+        "top": 470
+       }
+      ]
+     },
+     "rows": {
+      "count": 7,
+      "sample": [
+       {
+        "height": 78,
+        "chips": 1,
+        "chipTexts": [
+         "Healthy"
+        ],
+        "colours": 1,
+        "colourValues": [
+         "#009966"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Disk /"
+       },
+       {
+        "height": 78,
+        "chips": 1,
+        "chipTexts": [
+         "Healthy"
+        ],
+        "colours": 1,
+        "colourValues": [
+         "#009966"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Uptime"
+       },
+       {
+        "height": 78,
+        "chips": 1,
+        "chipTexts": [
+         "Degraded"
+        ],
+        "colours": 2,
+        "colourValues": [
+         "#bc4a00",
+         "#bb4d00"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Printer"
+       },
+       {
+        "height": 78,
+        "chips": 1,
+        "chipTexts": [
+         "Healthy"
+        ],
+        "colours": 1,
+        "colourValues": [
+         "#009966"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Scanner"
+       },
+       {
+        "height": 78,
+        "chips": 2,
+        "chipTexts": [
+         "Stale",
+         "Degraded"
+        ],
+        "colours": 2,
+        "colourValues": [
+         "#bc4a00",
+         "#bb4d00"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Syncthing"
+       },
+       {
+        "height": 78,
+        "chips": 1,
+        "chipTexts": [
+         "Healthy"
+        ],
+        "colours": 1,
+        "colourValues": [
+         "#009966"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "agent-engine.service"
+       }
+      ],
+      "maxChips": 2,
+      "maxColours": 2,
+      "nested": 0,
+      "heights": [
+       78
+      ],
+      "titleWeightMax": 500
+     },
+     "interactive": {
+      "firstViewport": 8,
+      "measured": 12,
+      "small": 0,
+      "smallSample": [],
+      "inputs": 0,
+      "smallInputs": []
+     },
+     "controls": [
+      {
+       "what": "Watchtower",
+       "tag": "button",
+       "top": 10,
+       "bottom": 54,
+       "left": 17,
+       "inFirstViewport": true,
+       "centreAt": 0,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 128.2,
+       "height": 44
+      },
+      {
+       "what": "AI usage5m agoDegradedwsl2 unreachable: ",
+       "tag": "button",
+       "top": 132,
+       "bottom": 210,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.2,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 78
+      },
+      {
+       "what": "myargus6m agoDownLatest deployment (prod",
+       "tag": "button",
+       "top": 270,
+       "bottom": 348,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 78
+      },
+      {
+       "what": "reader-api6m agoHealthyproduction · depl",
+       "tag": "button",
+       "top": 360,
+       "bottom": 438,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.5,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 78
+      },
+      {
+       "what": "Disk /5m agoHealthy62% used",
+       "tag": "button",
+       "top": 498,
+       "bottom": 576,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 78
+      },
+      {
+       "what": "Uptime5m agoHealthyup 14d 0h",
+       "tag": "button",
+       "top": 588,
+       "bottom": 666,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.7,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 78
+      },
+      {
+       "what": "Printer5m agoDegradedtoner-low",
+       "tag": "button",
+       "top": 678,
+       "bottom": 756,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.8,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 78
+      },
+      {
+       "what": "Scanner5m agoHealthyidle · feeder empty",
+       "tag": "button",
+       "top": 768,
+       "bottom": 846,
+       "left": 16,
+       "inFirstViewport": false,
+       "centreAt": 1,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 78
+      },
+      {
+       "what": "Syncthing21m agoStaleDegraded2 items out",
+       "tag": "button",
+       "top": 858,
+       "bottom": 936,
+       "left": 16,
+       "inFirstViewport": false,
+       "centreAt": 1.1,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 78
+      },
+      {
+       "what": "agent-engine.service6m agoHealthyactive ",
+       "tag": "button",
+       "top": 948,
+       "bottom": 1026,
+       "left": 16,
+       "inFirstViewport": false,
+       "centreAt": 1.2,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 78
+      },
+      {
+       "what": "session-tasks.service6m agoDownfailed (f",
+       "tag": "button",
+       "top": 1038,
+       "bottom": 1116,
+       "left": 16,
+       "inFirstViewport": false,
+       "centreAt": 1.3,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 78
+      },
+      {
+       "what": "supabase:examplefixtureref000110m agoUnr",
+       "tag": "button",
+       "top": 1176,
+       "bottom": 1254,
+       "left": 16,
+       "inFirstViewport": false,
+       "centreAt": 1.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 78
+      }
+     ],
+     "alphaSteps": [
+      0.15,
+      0.6,
+      0.74
+     ],
+     "state": {
+      "statusTokens": [
+       "--warning #8a5300",
+       "--success #137333",
+       "--critical #c10007",
+       "--unreachable #b04400",
+       "--destructive #c10007"
+      ],
+      "statusColoured": 25,
+      "offToken": [
+       {
+        "colour": "#bb4d00",
+        "family": "amber",
+        "count": 6,
+        "sample": "SPAN"
+       },
+       {
+        "colour": "#009a65",
+        "family": "green",
+        "count": 5,
+        "sample": "Healthy"
+       },
+       {
+        "colour": "#009966",
+        "family": "green",
+        "count": 5,
+        "sample": "SPAN"
+       },
+       {
+        "colour": "#bc4a00",
+        "family": "red",
+        "count": 3,
+        "sample": "Degraded"
+       }
+      ],
+      "colourOnly": 0,
+      "colourOnlySamples": [],
+      "countsInHeadings": 0,
+      "progressText": 1,
+      "usesSafeTokens": true,
+      "progressElements": 0,
+      "empties": []
+     },
+     "reading": {
+      "bodySize": 12,
+      "lines": [],
+      "contrastChecked": 50,
+      "contrastUnknown": 0,
+      "contrastFails": [
+       {
+        "text": "Degraded",
+        "ratio": 3.8,
+        "size": 13,
+        "colour": "#bb4d00",
+        "on": "#ecddd3"
+       },
+       {
+        "text": "Healthy",
+        "ratio": 2.86,
+        "size": 13,
+        "colour": "#009966",
+        "on": "#d0e9e2"
+       },
+       {
+        "text": "Healthy",
+        "ratio": 2.86,
+        "size": 13,
+        "colour": "#009966",
+        "on": "#d0e9e2"
+       },
+       {
+        "text": "Healthy",
+        "ratio": 2.86,
+        "size": 13,
+        "colour": "#009966",
+        "on": "#d0e9e2"
+       },
+       {
+        "text": "Degraded",
+        "ratio": 3.8,
+        "size": 13,
+        "colour": "#bb4d00",
+        "on": "#ecddd3"
+       },
+       {
+        "text": "Healthy",
+        "ratio": 2.86,
+        "size": 13,
+        "colour": "#009966",
+        "on": "#d0e9e2"
+       },
+       {
+        "text": "Degraded",
+        "ratio": 3.8,
+        "size": 13,
+        "colour": "#bb4d00",
+        "on": "#ecddd3"
+       },
+       {
+        "text": "Healthy",
+        "ratio": 2.86,
+        "size": 13,
+        "colour": "#009966",
+        "on": "#d0e9e2"
+       }
+      ],
+      "contrastFailCount": 8,
+      "overflowX": 0,
+      "runningAnimations": 0
+     },
+     "textRuns": 50,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
+     "covered": {
+      "runs": 0,
+      "sample": []
+     },
+     "waitForSeen": true,
+     "pageErrors": [],
+     "url": "/"
+    },
+    "iphone-dark": {
+     "viewport": [
+      390,
+      844
+     ],
+     "coarse": true,
+     "hierarchy": {
+      "fontSizes": [
+       {
+        "size": 16,
+        "chars": 10
+       },
+       {
+        "size": 14,
+        "chars": 51
+       },
+       {
+        "size": 13,
+        "chars": 48
+       },
+       {
+        "size": 12,
+        "chars": 236
+       }
+      ],
+      "largest": {
+       "size": 16,
+       "elements": 1,
+       "weight": 600,
+       "text": "Watchtower",
+       "nextSize": 14
+      },
+      "headings": [
+       {
+        "tag": "h2",
+        "text": "multi",
+        "size": 12,
+        "weight": 500,
+        "top": 104
+       },
+       {
+        "tag": "h2",
+        "text": "cloudflare",
+        "size": 12,
+        "weight": 500,
+        "top": 242
+       },
+       {
+        "tag": "h2",
+        "text": "homelab",
+        "size": 12,
+        "weight": 500,
+        "top": 470
+       }
+      ]
+     },
+     "rows": {
+      "count": 7,
+      "sample": [
+       {
+        "height": 78,
+        "chips": 1,
+        "chipTexts": [
+         "Healthy"
+        ],
+        "colours": 1,
+        "colourValues": [
+         "#00d492"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Disk /"
+       },
+       {
+        "height": 78,
+        "chips": 1,
+        "chipTexts": [
+         "Healthy"
+        ],
+        "colours": 1,
+        "colourValues": [
+         "#00d492"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Uptime"
+       },
+       {
+        "height": 78,
+        "chips": 1,
+        "chipTexts": [
+         "Degraded"
+        ],
+        "colours": 1,
+        "colourValues": [
+         "#ffb900"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Printer"
+       },
+       {
+        "height": 78,
+        "chips": 1,
+        "chipTexts": [
+         "Healthy"
+        ],
+        "colours": 1,
+        "colourValues": [
+         "#00d492"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Scanner"
+       },
+       {
+        "height": 78,
+        "chips": 2,
+        "chipTexts": [
+         "Stale",
+         "Degraded"
+        ],
+        "colours": 1,
+        "colourValues": [
+         "#ffb900"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Syncthing"
+       },
+       {
+        "height": 78,
+        "chips": 1,
+        "chipTexts": [
+         "Healthy"
+        ],
+        "colours": 1,
+        "colourValues": [
+         "#00d492"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "agent-engine.service"
+       }
+      ],
+      "maxChips": 2,
+      "maxColours": 1,
+      "nested": 0,
+      "heights": [
+       78
+      ],
+      "titleWeightMax": 500
+     },
+     "interactive": {
+      "firstViewport": 8,
+      "measured": 12,
+      "small": 0,
+      "smallSample": [],
+      "inputs": 0,
+      "smallInputs": []
+     },
+     "controls": [
+      {
+       "what": "Watchtower",
+       "tag": "button",
+       "top": 10,
+       "bottom": 54,
+       "left": 17,
+       "inFirstViewport": true,
+       "centreAt": 0,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 128.2,
+       "height": 44
+      },
+      {
+       "what": "AI usage5m agoDegradedwsl2 unreachable: ",
+       "tag": "button",
+       "top": 132,
+       "bottom": 210,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.2,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 78
+      },
+      {
+       "what": "myargus6m agoDownLatest deployment (prod",
+       "tag": "button",
+       "top": 270,
+       "bottom": 348,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 78
+      },
+      {
+       "what": "reader-api6m agoHealthyproduction · depl",
+       "tag": "button",
+       "top": 360,
+       "bottom": 438,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.5,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 78
+      },
+      {
+       "what": "Disk /5m agoHealthy62% used",
+       "tag": "button",
+       "top": 498,
+       "bottom": 576,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 78
+      },
+      {
+       "what": "Uptime5m agoHealthyup 14d 0h",
+       "tag": "button",
+       "top": 588,
+       "bottom": 666,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.7,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 78
+      },
+      {
+       "what": "Printer5m agoDegradedtoner-low",
+       "tag": "button",
+       "top": 678,
+       "bottom": 756,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.8,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 78
+      },
+      {
+       "what": "Scanner5m agoHealthyidle · feeder empty",
+       "tag": "button",
+       "top": 768,
+       "bottom": 846,
+       "left": 16,
+       "inFirstViewport": false,
+       "centreAt": 1,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 78
+      },
+      {
+       "what": "Syncthing21m agoStaleDegraded2 items out",
+       "tag": "button",
+       "top": 858,
+       "bottom": 936,
+       "left": 16,
+       "inFirstViewport": false,
+       "centreAt": 1.1,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 78
+      },
+      {
+       "what": "agent-engine.service6m agoHealthyactive ",
+       "tag": "button",
+       "top": 948,
+       "bottom": 1026,
+       "left": 16,
+       "inFirstViewport": false,
+       "centreAt": 1.2,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 78
+      },
+      {
+       "what": "session-tasks.service6m agoDownfailed (f",
+       "tag": "button",
+       "top": 1038,
+       "bottom": 1116,
+       "left": 16,
+       "inFirstViewport": false,
+       "centreAt": 1.3,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 78
+      },
+      {
+       "what": "supabase:examplefixtureref000110m agoUnr",
+       "tag": "button",
+       "top": 1176,
+       "bottom": 1254,
+       "left": 16,
+       "inFirstViewport": false,
+       "centreAt": 1.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 78
+      }
+     ],
+     "alphaSteps": [
+      0.15,
+      0.6,
+      0.74
+     ],
+     "state": {
+      "statusTokens": [
+       "--warning #fbbf24",
+       "--success #4ade80",
+       "--critical #ff7a7e",
+       "--unreachable #fb923c",
+       "--destructive #ff6467"
+      ],
+      "statusColoured": 25,
+      "offToken": [
+       {
+        "colour": "#ffb900",
+        "family": "amber",
+        "count": 6,
+        "sample": "SPAN"
+       },
+       {
+        "colour": "#00d794",
+        "family": "green",
+        "count": 5,
+        "sample": "Healthy"
+       },
+       {
+        "colour": "#00d492",
+        "family": "green",
+        "count": 5,
+        "sample": "SPAN"
+       },
+       {
+        "colour": "#ffbc00",
+        "family": "amber",
+        "count": 3,
+        "sample": "Degraded"
+       }
+      ],
+      "colourOnly": 0,
+      "colourOnlySamples": [],
+      "countsInHeadings": 0,
+      "progressText": 1,
+      "usesSafeTokens": true,
+      "progressElements": 0,
+      "empties": []
+     },
+     "reading": {
+      "bodySize": 12,
+      "lines": [],
+      "contrastChecked": 50,
+      "contrastUnknown": 0,
+      "contrastFails": [],
+      "contrastFailCount": 0,
+      "overflowX": 0,
+      "runningAnimations": 0
+     },
+     "textRuns": 50,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
+     "covered": {
+      "runs": 0,
+      "sample": []
+     },
+     "waitForSeen": true,
+     "pageErrors": [],
+     "url": "/"
+    },
+    "desktop-light": {
+     "viewport": [
+      1440,
+      900
+     ],
+     "coarse": false,
+     "hierarchy": {
+      "fontSizes": [
+       {
+        "size": 26,
+        "chars": 10
+       },
+       {
+        "size": 16,
+        "chars": 10
+       },
+       {
+        "size": 14,
+        "chars": 177
+       },
+       {
+        "size": 13,
+        "chars": 83
+       },
+       {
+        "size": 12,
+        "chars": 343
+       }
+      ],
+      "largest": {
+       "size": 26,
+       "elements": 1,
+       "weight": 600,
+       "text": "Watchtower",
+       "nextSize": 16
+      },
+      "headings": [
+       {
+        "tag": "h1",
+        "text": "Watchtower",
+        "size": 26,
+        "weight": 600,
+        "top": 72
+       },
+       {
+        "tag": "h2",
+        "text": "multi",
+        "size": 12,
+        "weight": 500,
+        "top": 159
+       },
+       {
+        "tag": "h2",
+        "text": "cloudflare",
+        "size": 12,
+        "weight": 500,
+        "top": 297
+       },
+       {
+        "tag": "h2",
+        "text": "homelab",
+        "size": 12,
+        "weight": 500,
+        "top": 435
+       },
+       {
+        "tag": "h2",
+        "text": "supabase",
+        "size": 12,
+        "weight": 500,
+        "top": 843
+       }
+      ]
+     },
+     "rows": {
+      "count": 10,
+      "sample": [
+       {
+        "height": 106,
+        "chips": 1,
+        "chipTexts": [
+         "Degraded"
+        ],
+        "colours": 2,
+        "colourValues": [
+         "#bc4a00",
+         "#bb4d00"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "AI usage"
+       },
+       {
+        "height": 106,
+        "chips": 2,
+        "chipTexts": [
+         "Down",
+         "Healthy"
+        ],
+        "colours": 2,
+        "colourValues": [
+         "#c10007",
+         "#009966"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "myargus"
+       },
+       {
+        "height": 106,
+        "chips": 1,
+        "chipTexts": [
+         "Unreachable"
+        ],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "supabase:examplefixtureref0001"
+       },
+       {
+        "height": 78,
+        "chips": 1,
+        "chipTexts": [
+         "Healthy"
+        ],
+        "colours": 1,
+        "colourValues": [
+         "#009966"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Disk /"
+       },
+       {
+        "height": 78,
+        "chips": 1,
+        "chipTexts": [
+         "Healthy"
+        ],
+        "colours": 1,
+        "colourValues": [
+         "#009966"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Uptime"
+       },
+       {
+        "height": 78,
+        "chips": 1,
+        "chipTexts": [
+         "Degraded"
+        ],
+        "colours": 2,
+        "colourValues": [
+         "#bc4a00",
+         "#bb4d00"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Printer"
+       }
+      ],
+      "maxChips": 2,
+      "maxColours": 2,
+      "nested": 0,
+      "heights": [
+       78,
+       106
+      ],
+      "titleWeightMax": 500
+     },
+     "interactive": {
+      "firstViewport": 13,
+      "measured": 13,
+      "small": 1,
+      "smallSample": [
+       {
+        "what": "Services",
+        "tag": "a",
+        "width": 231,
+        "height": 40
+       }
+      ],
+      "inputs": 0,
+      "smallInputs": []
+     },
+     "controls": [
+      {
+       "what": "Services",
+       "tag": "a",
+       "top": 0,
+       "bottom": 40,
+       "left": 12,
+       "inFirstViewport": true,
+       "centreAt": 0,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 231,
+       "height": 40
+      },
+      {
+       "what": "Watchtower",
+       "tag": "button",
+       "top": 10,
+       "bottom": 54,
+       "left": 273,
+       "inFirstViewport": true,
+       "centreAt": 0,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 128.2,
+       "height": 44
+      },
+      {
+       "what": "AI usage5m agoDegradedwsl2 unreachable: ",
+       "tag": "button",
+       "top": 187,
+       "bottom": 265,
+       "left": 460,
+       "inFirstViewport": true,
+       "centreAt": 0.3,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 378,
+       "height": 78
+      },
+      {
+       "what": "myargus6m agoDownLatest deployment (prod",
+       "tag": "button",
+       "top": 325,
+       "bottom": 403,
+       "left": 460,
+       "inFirstViewport": true,
+       "centreAt": 0.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 378,
+       "height": 78
+      },
+      {
+       "what": "reader-api6m agoHealthyproduction · depl",
+       "tag": "button",
+       "top": 325,
+       "bottom": 403,
+       "left": 850,
+       "inFirstViewport": true,
+       "centreAt": 0.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 378,
+       "height": 78
+      },
+      {
+       "what": "Disk /5m agoHealthy62% used",
+       "tag": "button",
+       "top": 463,
+       "bottom": 541,
+       "left": 460,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 378,
+       "height": 78
+      },
+      {
+       "what": "Uptime5m agoHealthyup 14d 0h",
+       "tag": "button",
+       "top": 463,
+       "bottom": 541,
+       "left": 850,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 378,
+       "height": 78
+      },
+      {
+       "what": "Printer5m agoDegradedtoner-low",
+       "tag": "button",
+       "top": 553,
+       "bottom": 631,
+       "left": 460,
+       "inFirstViewport": true,
+       "centreAt": 0.7,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 378,
+       "height": 78
+      },
+      {
+       "what": "Scanner5m agoHealthyidle · feeder empty",
+       "tag": "button",
+       "top": 553,
+       "bottom": 631,
+       "left": 850,
+       "inFirstViewport": true,
+       "centreAt": 0.7,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 378,
+       "height": 78
+      },
+      {
+       "what": "Syncthing21m agoStaleDegraded2 items out",
+       "tag": "button",
+       "top": 643,
+       "bottom": 721,
+       "left": 460,
+       "inFirstViewport": true,
+       "centreAt": 0.8,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 378,
+       "height": 78
+      },
+      {
+       "what": "agent-engine.service6m agoHealthyactive ",
+       "tag": "button",
+       "top": 643,
+       "bottom": 721,
+       "left": 850,
+       "inFirstViewport": true,
+       "centreAt": 0.8,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 378,
+       "height": 78
+      },
+      {
+       "what": "session-tasks.service6m agoDownfailed (f",
+       "tag": "button",
+       "top": 733,
+       "bottom": 811,
+       "left": 460,
+       "inFirstViewport": true,
+       "centreAt": 0.9,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 378,
+       "height": 78
+      },
+      {
+       "what": "supabase:examplefixtureref000110m agoUnr",
+       "tag": "button",
+       "top": 871,
+       "bottom": 949,
+       "left": 460,
+       "inFirstViewport": false,
+       "centreAt": 1,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 378,
+       "height": 78
+      }
+     ],
+     "alphaSteps": [
+      0.15,
+      0.6,
+      0.74
+     ],
+     "state": {
+      "statusTokens": [
+       "--warning #8a5300",
+       "--success #137333",
+       "--critical #c10007",
+       "--unreachable #b04400",
+       "--destructive #c10007"
+      ],
+      "statusColoured": 25,
+      "offToken": [
+       {
+        "colour": "#bb4d00",
+        "family": "amber",
+        "count": 6,
+        "sample": "SPAN"
+       },
+       {
+        "colour": "#009a65",
+        "family": "green",
+        "count": 5,
+        "sample": "Healthy"
+       },
+       {
+        "colour": "#009966",
+        "family": "green",
+        "count": 5,
+        "sample": "SPAN"
+       },
+       {
+        "colour": "#bc4a00",
+        "family": "red",
+        "count": 3,
+        "sample": "Degraded"
+       }
+      ],
+      "colourOnly": 0,
+      "colourOnlySamples": [],
+      "countsInHeadings": 0,
+      "progressText": 1,
+      "usesSafeTokens": true,
+      "progressElements": 0,
+      "empties": []
+     },
+     "reading": {
+      "bodySize": 14,
+      "lines": [],
+      "contrastChecked": 53,
+      "contrastUnknown": 0,
+      "contrastFails": [
+       {
+        "text": "Degraded",
+        "ratio": 3.8,
+        "size": 13,
+        "colour": "#bb4d00",
+        "on": "#ecddd3"
+       },
+       {
+        "text": "Healthy",
+        "ratio": 2.86,
+        "size": 13,
+        "colour": "#009966",
+        "on": "#d0e9e2"
+       },
+       {
+        "text": "Healthy",
+        "ratio": 2.86,
+        "size": 13,
+        "colour": "#009966",
+        "on": "#d0e9e2"
+       },
+       {
+        "text": "Healthy",
+        "ratio": 2.86,
+        "size": 13,
+        "colour": "#009966",
+        "on": "#d0e9e2"
+       },
+       {
+        "text": "Degraded",
+        "ratio": 3.8,
+        "size": 13,
+        "colour": "#bb4d00",
+        "on": "#ecddd3"
+       },
+       {
+        "text": "Healthy",
+        "ratio": 2.86,
+        "size": 13,
+        "colour": "#009966",
+        "on": "#d0e9e2"
+       },
+       {
+        "text": "Degraded",
+        "ratio": 3.8,
+        "size": 13,
+        "colour": "#bb4d00",
+        "on": "#ecddd3"
+       },
+       {
+        "text": "Healthy",
+        "ratio": 2.86,
+        "size": 13,
+        "colour": "#009966",
+        "on": "#d0e9e2"
+       }
+      ],
+      "contrastFailCount": 8,
+      "overflowX": -8,
+      "runningAnimations": 0
+     },
+     "textRuns": 53,
+     "truncated": {
+      "count": 1,
+      "inRows": 1,
+      "sample": [
+       "supabase:examplefixtureref0001 (69% shown)"
+      ]
+     },
+     "covered": {
+      "runs": 0,
+      "sample": []
+     },
+     "waitForSeen": true,
+     "pageErrors": [],
+     "url": "/"
+    },
+    "desktop-dark": {
+     "viewport": [
+      1440,
+      900
+     ],
+     "coarse": false,
+     "hierarchy": {
+      "fontSizes": [
+       {
+        "size": 26,
+        "chars": 10
+       },
+       {
+        "size": 16,
+        "chars": 10
+       },
+       {
+        "size": 14,
+        "chars": 177
+       },
+       {
+        "size": 13,
+        "chars": 83
+       },
+       {
+        "size": 12,
+        "chars": 343
+       }
+      ],
+      "largest": {
+       "size": 26,
+       "elements": 1,
+       "weight": 600,
+       "text": "Watchtower",
+       "nextSize": 16
+      },
+      "headings": [
+       {
+        "tag": "h1",
+        "text": "Watchtower",
+        "size": 26,
+        "weight": 600,
+        "top": 72
+       },
+       {
+        "tag": "h2",
+        "text": "multi",
+        "size": 12,
+        "weight": 500,
+        "top": 159
+       },
+       {
+        "tag": "h2",
+        "text": "cloudflare",
+        "size": 12,
+        "weight": 500,
+        "top": 297
+       },
+       {
+        "tag": "h2",
+        "text": "homelab",
+        "size": 12,
+        "weight": 500,
+        "top": 435
+       },
+       {
+        "tag": "h2",
+        "text": "supabase",
+        "size": 12,
+        "weight": 500,
+        "top": 843
+       }
+      ]
+     },
+     "rows": {
+      "count": 10,
+      "sample": [
+       {
+        "height": 106,
+        "chips": 1,
+        "chipTexts": [
+         "Degraded"
+        ],
+        "colours": 1,
+        "colourValues": [
+         "#ffb900"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "AI usage"
+       },
+       {
+        "height": 106,
+        "chips": 2,
+        "chipTexts": [
+         "Down",
+         "Healthy"
+        ],
+        "colours": 2,
+        "colourValues": [
+         "#ff6467",
+         "#00d492"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "myargus"
+       },
+       {
+        "height": 106,
+        "chips": 1,
+        "chipTexts": [
+         "Unreachable"
+        ],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "supabase:examplefixtureref0001"
+       },
+       {
+        "height": 78,
+        "chips": 1,
+        "chipTexts": [
+         "Healthy"
+        ],
+        "colours": 1,
+        "colourValues": [
+         "#00d492"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Disk /"
+       },
+       {
+        "height": 78,
+        "chips": 1,
+        "chipTexts": [
+         "Healthy"
+        ],
+        "colours": 1,
+        "colourValues": [
+         "#00d492"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Uptime"
+       },
+       {
+        "height": 78,
+        "chips": 1,
+        "chipTexts": [
+         "Degraded"
+        ],
+        "colours": 1,
+        "colourValues": [
+         "#ffb900"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Printer"
+       }
+      ],
+      "maxChips": 2,
+      "maxColours": 2,
+      "nested": 0,
+      "heights": [
+       78,
+       106
+      ],
+      "titleWeightMax": 500
+     },
+     "interactive": {
+      "firstViewport": 13,
+      "measured": 13,
+      "small": 1,
+      "smallSample": [
+       {
+        "what": "Services",
+        "tag": "a",
+        "width": 231,
+        "height": 40
+       }
+      ],
+      "inputs": 0,
+      "smallInputs": []
+     },
+     "controls": [
+      {
+       "what": "Services",
+       "tag": "a",
+       "top": 0,
+       "bottom": 40,
+       "left": 12,
+       "inFirstViewport": true,
+       "centreAt": 0,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 231,
+       "height": 40
+      },
+      {
+       "what": "Watchtower",
+       "tag": "button",
+       "top": 10,
+       "bottom": 54,
+       "left": 273,
+       "inFirstViewport": true,
+       "centreAt": 0,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 128.2,
+       "height": 44
+      },
+      {
+       "what": "AI usage5m agoDegradedwsl2 unreachable: ",
+       "tag": "button",
+       "top": 187,
+       "bottom": 265,
+       "left": 460,
+       "inFirstViewport": true,
+       "centreAt": 0.3,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 378,
+       "height": 78
+      },
+      {
+       "what": "myargus6m agoDownLatest deployment (prod",
+       "tag": "button",
+       "top": 325,
+       "bottom": 403,
+       "left": 460,
+       "inFirstViewport": true,
+       "centreAt": 0.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 378,
+       "height": 78
+      },
+      {
+       "what": "reader-api6m agoHealthyproduction · depl",
+       "tag": "button",
+       "top": 325,
+       "bottom": 403,
+       "left": 850,
+       "inFirstViewport": true,
+       "centreAt": 0.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 378,
+       "height": 78
+      },
+      {
+       "what": "Disk /5m agoHealthy62% used",
+       "tag": "button",
+       "top": 463,
+       "bottom": 541,
+       "left": 460,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 378,
+       "height": 78
+      },
+      {
+       "what": "Uptime5m agoHealthyup 14d 0h",
+       "tag": "button",
+       "top": 463,
+       "bottom": 541,
+       "left": 850,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 378,
+       "height": 78
+      },
+      {
+       "what": "Printer5m agoDegradedtoner-low",
+       "tag": "button",
+       "top": 553,
+       "bottom": 631,
+       "left": 460,
+       "inFirstViewport": true,
+       "centreAt": 0.7,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 378,
+       "height": 78
+      },
+      {
+       "what": "Scanner5m agoHealthyidle · feeder empty",
+       "tag": "button",
+       "top": 553,
+       "bottom": 631,
+       "left": 850,
+       "inFirstViewport": true,
+       "centreAt": 0.7,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 378,
+       "height": 78
+      },
+      {
+       "what": "Syncthing21m agoStaleDegraded2 items out",
+       "tag": "button",
+       "top": 643,
+       "bottom": 721,
+       "left": 460,
+       "inFirstViewport": true,
+       "centreAt": 0.8,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 378,
+       "height": 78
+      },
+      {
+       "what": "agent-engine.service6m agoHealthyactive ",
+       "tag": "button",
+       "top": 643,
+       "bottom": 721,
+       "left": 850,
+       "inFirstViewport": true,
+       "centreAt": 0.8,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 378,
+       "height": 78
+      },
+      {
+       "what": "session-tasks.service6m agoDownfailed (f",
+       "tag": "button",
+       "top": 733,
+       "bottom": 811,
+       "left": 460,
+       "inFirstViewport": true,
+       "centreAt": 0.9,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 378,
+       "height": 78
+      },
+      {
+       "what": "supabase:examplefixtureref000110m agoUnr",
+       "tag": "button",
+       "top": 871,
+       "bottom": 949,
+       "left": 460,
+       "inFirstViewport": false,
+       "centreAt": 1,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 378,
+       "height": 78
+      }
+     ],
+     "alphaSteps": [
+      0.15,
+      0.6,
+      0.74
+     ],
+     "state": {
+      "statusTokens": [
+       "--warning #fbbf24",
+       "--success #4ade80",
+       "--critical #ff7a7e",
+       "--unreachable #fb923c",
+       "--destructive #ff6467"
+      ],
+      "statusColoured": 25,
+      "offToken": [
+       {
+        "colour": "#ffb900",
+        "family": "amber",
+        "count": 6,
+        "sample": "SPAN"
+       },
+       {
+        "colour": "#00d794",
+        "family": "green",
+        "count": 5,
+        "sample": "Healthy"
+       },
+       {
+        "colour": "#00d492",
+        "family": "green",
+        "count": 5,
+        "sample": "SPAN"
+       },
+       {
+        "colour": "#ffbc00",
+        "family": "amber",
+        "count": 3,
+        "sample": "Degraded"
+       }
+      ],
+      "colourOnly": 0,
+      "colourOnlySamples": [],
+      "countsInHeadings": 0,
+      "progressText": 1,
+      "usesSafeTokens": true,
+      "progressElements": 0,
+      "empties": []
+     },
+     "reading": {
+      "bodySize": 14,
+      "lines": [],
+      "contrastChecked": 53,
+      "contrastUnknown": 0,
+      "contrastFails": [],
+      "contrastFailCount": 0,
+      "overflowX": -8,
+      "runningAnimations": 0
+     },
+     "textRuns": 53,
+     "truncated": {
+      "count": 1,
+      "inRows": 1,
+      "sample": [
+       "supabase:examplefixtureref0001 (69% shown)"
+      ]
+     },
+     "covered": {
+      "runs": 0,
+      "sample": []
+     },
+     "waitForSeen": true,
+     "pageErrors": [],
+     "url": "/"
+    },
+    "iphone-320": {
+     "viewport": [
+      320,
+      844
+     ],
+     "coarse": true,
+     "hierarchy": {
+      "fontSizes": [
+       {
+        "size": 16,
+        "chars": 10
+       },
+       {
+        "size": 14,
+        "chars": 51
+       },
+       {
+        "size": 13,
+        "chars": 48
+       },
+       {
+        "size": 12,
+        "chars": 217
+       }
+      ],
+      "largest": {
+       "size": 16,
+       "elements": 1,
+       "weight": 600,
+       "text": "Watchtower",
+       "nextSize": 14
+      },
+      "headings": [
+       {
+        "tag": "h2",
+        "text": "multi",
+        "size": 12,
+        "weight": 500,
+        "top": 104
+       },
+       {
+        "tag": "h2",
+        "text": "cloudflare",
+        "size": 12,
+        "weight": 500,
+        "top": 258
+       },
+       {
+        "tag": "h2",
+        "text": "homelab",
+        "size": 12,
+        "weight": 500,
+        "top": 502
+       }
+      ]
+     },
+     "rows": {
+      "count": 7,
+      "sample": [
+       {
+        "height": 78,
+        "chips": 1,
+        "chipTexts": [
+         "Healthy"
+        ],
+        "colours": 1,
+        "colourValues": [
+         "#009966"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Disk /"
+       },
+       {
+        "height": 78,
+        "chips": 1,
+        "chipTexts": [
+         "Healthy"
+        ],
+        "colours": 1,
+        "colourValues": [
+         "#009966"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Uptime"
+       },
+       {
+        "height": 78,
+        "chips": 1,
+        "chipTexts": [
+         "Degraded"
+        ],
+        "colours": 2,
+        "colourValues": [
+         "#bc4a00",
+         "#bb4d00"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Printer"
+       },
+       {
+        "height": 78,
+        "chips": 1,
+        "chipTexts": [
+         "Healthy"
+        ],
+        "colours": 1,
+        "colourValues": [
+         "#009966"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Scanner"
+       },
+       {
+        "height": 78,
+        "chips": 2,
+        "chipTexts": [
+         "Stale",
+         "Degraded"
+        ],
+        "colours": 2,
+        "colourValues": [
+         "#bc4a00",
+         "#bb4d00"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Syncthing"
+       },
+       {
+        "height": 78,
+        "chips": 1,
+        "chipTexts": [
+         "Healthy"
+        ],
+        "colours": 1,
+        "colourValues": [
+         "#009966"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "agent-engine.service"
+       }
+      ],
+      "maxChips": 2,
+      "maxColours": 2,
+      "nested": 0,
+      "heights": [
+       78
+      ],
+      "titleWeightMax": 500
+     },
+     "interactive": {
+      "firstViewport": 8,
+      "measured": 12,
+      "small": 0,
+      "smallSample": [],
+      "inputs": 0,
+      "smallInputs": []
+     },
+     "controls": [
+      {
+       "what": "Watchtower",
+       "tag": "button",
+       "top": 10,
+       "bottom": 54,
+       "left": 17,
+       "inFirstViewport": true,
+       "centreAt": 0,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 128.2,
+       "height": 44
+      },
+      {
+       "what": "AI usage5m agoDegradedwsl2 unreachable: ",
+       "tag": "button",
+       "top": 132,
+       "bottom": 226,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.2,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 288,
+       "height": 94
+      },
+      {
+       "what": "myargus6m agoDownLatest deployment (prod",
+       "tag": "button",
+       "top": 286,
+       "bottom": 380,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 288,
+       "height": 94
+      },
+      {
+       "what": "reader-api6m agoHealthyproduction · depl",
+       "tag": "button",
+       "top": 392,
+       "bottom": 470,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.5,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 288,
+       "height": 78
+      },
+      {
+       "what": "Disk /5m agoHealthy62% used",
+       "tag": "button",
+       "top": 530,
+       "bottom": 608,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.7,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 288,
+       "height": 78
+      },
+      {
+       "what": "Uptime5m agoHealthyup 14d 0h",
+       "tag": "button",
+       "top": 620,
+       "bottom": 698,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.8,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 288,
+       "height": 78
+      },
+      {
+       "what": "Printer5m agoDegradedtoner-low",
+       "tag": "button",
+       "top": 710,
+       "bottom": 788,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.9,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 288,
+       "height": 78
+      },
+      {
+       "what": "Scanner5m agoHealthyidle · feeder empty",
+       "tag": "button",
+       "top": 800,
+       "bottom": 878,
+       "left": 16,
+       "inFirstViewport": false,
+       "centreAt": 1,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 288,
+       "height": 78
+      },
+      {
+       "what": "Syncthing21m agoStaleDegraded2 items out",
+       "tag": "button",
+       "top": 890,
+       "bottom": 968,
+       "left": 16,
+       "inFirstViewport": false,
+       "centreAt": 1.1,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 288,
+       "height": 78
+      },
+      {
+       "what": "agent-engine.service6m agoHealthyactive ",
+       "tag": "button",
+       "top": 980,
+       "bottom": 1058,
+       "left": 16,
+       "inFirstViewport": false,
+       "centreAt": 1.2,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 288,
+       "height": 78
+      },
+      {
+       "what": "session-tasks.service6m agoDownfailed (f",
+       "tag": "button",
+       "top": 1070,
+       "bottom": 1148,
+       "left": 16,
+       "inFirstViewport": false,
+       "centreAt": 1.3,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 288,
+       "height": 78
+      },
+      {
+       "what": "supabase:examplefixtureref000110m agoUnr",
+       "tag": "button",
+       "top": 1208,
+       "bottom": 1286,
+       "left": 16,
+       "inFirstViewport": false,
+       "centreAt": 1.5,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 288,
+       "height": 78
+      }
+     ],
+     "alphaSteps": [
+      0.15,
+      0.6,
+      0.74
+     ],
+     "state": {
+      "statusTokens": [
+       "--warning #8a5300",
+       "--success #137333",
+       "--critical #c10007",
+       "--unreachable #b04400",
+       "--destructive #c10007"
+      ],
+      "statusColoured": 25,
+      "offToken": [
+       {
+        "colour": "#bb4d00",
+        "family": "amber",
+        "count": 6,
+        "sample": "SPAN"
+       },
+       {
+        "colour": "#009a65",
+        "family": "green",
+        "count": 5,
+        "sample": "Healthy"
+       },
+       {
+        "colour": "#009966",
+        "family": "green",
+        "count": 5,
+        "sample": "SPAN"
+       },
+       {
+        "colour": "#bc4a00",
+        "family": "red",
+        "count": 3,
+        "sample": "Degraded"
+       }
+      ],
+      "colourOnly": 0,
+      "colourOnlySamples": [],
+      "countsInHeadings": 0,
+      "progressText": 1,
+      "usesSafeTokens": true,
+      "progressElements": 0,
+      "empties": []
+     },
+     "reading": {
+      "bodySize": 12,
+      "lines": [],
+      "contrastChecked": 50,
+      "contrastUnknown": 0,
+      "contrastFails": [
+       {
+        "text": "Degraded",
+        "ratio": 3.8,
+        "size": 13,
+        "colour": "#bb4d00",
+        "on": "#ecddd3"
+       },
+       {
+        "text": "Healthy",
+        "ratio": 2.86,
+        "size": 13,
+        "colour": "#009966",
+        "on": "#d0e9e2"
+       },
+       {
+        "text": "Healthy",
+        "ratio": 2.86,
+        "size": 13,
+        "colour": "#009966",
+        "on": "#d0e9e2"
+       },
+       {
+        "text": "Healthy",
+        "ratio": 2.86,
+        "size": 13,
+        "colour": "#009966",
+        "on": "#d0e9e2"
+       },
+       {
+        "text": "Degraded",
+        "ratio": 3.8,
+        "size": 13,
+        "colour": "#bb4d00",
+        "on": "#ecddd3"
+       },
+       {
+        "text": "Healthy",
+        "ratio": 2.86,
+        "size": 13,
+        "colour": "#009966",
+        "on": "#d0e9e2"
+       },
+       {
+        "text": "Degraded",
+        "ratio": 3.8,
+        "size": 13,
+        "colour": "#bb4d00",
+        "on": "#ecddd3"
+       },
+       {
+        "text": "Healthy",
+        "ratio": 2.86,
+        "size": 13,
+        "colour": "#009966",
+        "on": "#d0e9e2"
+       }
+      ],
+      "contrastFailCount": 8,
+      "overflowX": 0,
+      "runningAnimations": 0
+     },
+     "textRuns": 50,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
+     "covered": {
+      "runs": 0,
+      "sample": []
+     },
+     "waitForSeen": true,
+     "pageErrors": [],
+     "url": "/"
+    },
+    "iphone-reduced-motion": {
+     "viewport": [
+      390,
+      844
+     ],
+     "coarse": true,
+     "hierarchy": {
+      "fontSizes": [
+       {
+        "size": 16,
+        "chars": 10
+       },
+       {
+        "size": 14,
+        "chars": 51
+       },
+       {
+        "size": 13,
+        "chars": 48
+       },
+       {
+        "size": 12,
+        "chars": 236
+       }
+      ],
+      "largest": {
+       "size": 16,
+       "elements": 1,
+       "weight": 600,
+       "text": "Watchtower",
+       "nextSize": 14
+      },
+      "headings": [
+       {
+        "tag": "h2",
+        "text": "multi",
+        "size": 12,
+        "weight": 500,
+        "top": 104
+       },
+       {
+        "tag": "h2",
+        "text": "cloudflare",
+        "size": 12,
+        "weight": 500,
+        "top": 242
+       },
+       {
+        "tag": "h2",
+        "text": "homelab",
+        "size": 12,
+        "weight": 500,
+        "top": 470
+       }
+      ]
+     },
+     "rows": {
+      "count": 7,
+      "sample": [
+       {
+        "height": 78,
+        "chips": 1,
+        "chipTexts": [
+         "Healthy"
+        ],
+        "colours": 1,
+        "colourValues": [
+         "#009966"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Disk /"
+       },
+       {
+        "height": 78,
+        "chips": 1,
+        "chipTexts": [
+         "Healthy"
+        ],
+        "colours": 1,
+        "colourValues": [
+         "#009966"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Uptime"
+       },
+       {
+        "height": 78,
+        "chips": 1,
+        "chipTexts": [
+         "Degraded"
+        ],
+        "colours": 2,
+        "colourValues": [
+         "#bc4a00",
+         "#bb4d00"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Printer"
+       },
+       {
+        "height": 78,
+        "chips": 1,
+        "chipTexts": [
+         "Healthy"
+        ],
+        "colours": 1,
+        "colourValues": [
+         "#009966"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Scanner"
+       },
+       {
+        "height": 78,
+        "chips": 2,
+        "chipTexts": [
+         "Stale",
+         "Degraded"
+        ],
+        "colours": 2,
+        "colourValues": [
+         "#bc4a00",
+         "#bb4d00"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Syncthing"
+       },
+       {
+        "height": 78,
+        "chips": 1,
+        "chipTexts": [
+         "Healthy"
+        ],
+        "colours": 1,
+        "colourValues": [
+         "#009966"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "agent-engine.service"
+       }
+      ],
+      "maxChips": 2,
+      "maxColours": 2,
+      "nested": 0,
+      "heights": [
+       78
+      ],
+      "titleWeightMax": 500
+     },
+     "interactive": {
+      "firstViewport": 8,
+      "measured": 12,
+      "small": 0,
+      "smallSample": [],
+      "inputs": 0,
+      "smallInputs": []
+     },
+     "controls": [
+      {
+       "what": "Watchtower",
+       "tag": "button",
+       "top": 10,
+       "bottom": 54,
+       "left": 17,
+       "inFirstViewport": true,
+       "centreAt": 0,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 128.2,
+       "height": 44
+      },
+      {
+       "what": "AI usage5m agoDegradedwsl2 unreachable: ",
+       "tag": "button",
+       "top": 132,
+       "bottom": 210,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.2,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 78
+      },
+      {
+       "what": "myargus6m agoDownLatest deployment (prod",
+       "tag": "button",
+       "top": 270,
+       "bottom": 348,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 78
+      },
+      {
+       "what": "reader-api6m agoHealthyproduction · depl",
+       "tag": "button",
+       "top": 360,
+       "bottom": 438,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.5,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 78
+      },
+      {
+       "what": "Disk /5m agoHealthy62% used",
+       "tag": "button",
+       "top": 498,
+       "bottom": 576,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 78
+      },
+      {
+       "what": "Uptime5m agoHealthyup 14d 0h",
+       "tag": "button",
+       "top": 588,
+       "bottom": 666,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.7,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 78
+      },
+      {
+       "what": "Printer5m agoDegradedtoner-low",
+       "tag": "button",
+       "top": 678,
+       "bottom": 756,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.8,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 78
+      },
+      {
+       "what": "Scanner5m agoHealthyidle · feeder empty",
+       "tag": "button",
+       "top": 768,
+       "bottom": 846,
+       "left": 16,
+       "inFirstViewport": false,
+       "centreAt": 1,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 78
+      },
+      {
+       "what": "Syncthing21m agoStaleDegraded2 items out",
+       "tag": "button",
+       "top": 858,
+       "bottom": 936,
+       "left": 16,
+       "inFirstViewport": false,
+       "centreAt": 1.1,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 78
+      },
+      {
+       "what": "agent-engine.service6m agoHealthyactive ",
+       "tag": "button",
+       "top": 948,
+       "bottom": 1026,
+       "left": 16,
+       "inFirstViewport": false,
+       "centreAt": 1.2,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 78
+      },
+      {
+       "what": "session-tasks.service6m agoDownfailed (f",
+       "tag": "button",
+       "top": 1038,
+       "bottom": 1116,
+       "left": 16,
+       "inFirstViewport": false,
+       "centreAt": 1.3,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 78
+      },
+      {
+       "what": "supabase:examplefixtureref000110m agoUnr",
+       "tag": "button",
+       "top": 1176,
+       "bottom": 1254,
+       "left": 16,
+       "inFirstViewport": false,
+       "centreAt": 1.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 78
+      }
+     ],
+     "alphaSteps": [
+      0.15,
+      0.6,
+      0.74
+     ],
+     "state": {
+      "statusTokens": [
+       "--warning #8a5300",
+       "--success #137333",
+       "--critical #c10007",
+       "--unreachable #b04400",
+       "--destructive #c10007"
+      ],
+      "statusColoured": 25,
+      "offToken": [
+       {
+        "colour": "#bb4d00",
+        "family": "amber",
+        "count": 6,
+        "sample": "SPAN"
+       },
+       {
+        "colour": "#009a65",
+        "family": "green",
+        "count": 5,
+        "sample": "Healthy"
+       },
+       {
+        "colour": "#009966",
+        "family": "green",
+        "count": 5,
+        "sample": "SPAN"
+       },
+       {
+        "colour": "#bc4a00",
+        "family": "red",
+        "count": 3,
+        "sample": "Degraded"
+       }
+      ],
+      "colourOnly": 0,
+      "colourOnlySamples": [],
+      "countsInHeadings": 0,
+      "progressText": 1,
+      "usesSafeTokens": true,
+      "progressElements": 0,
+      "empties": []
+     },
+     "reading": {
+      "bodySize": 12,
+      "lines": [],
+      "contrastChecked": 50,
+      "contrastUnknown": 0,
+      "contrastFails": [
+       {
+        "text": "Degraded",
+        "ratio": 3.8,
+        "size": 13,
+        "colour": "#bb4d00",
+        "on": "#ecddd3"
+       },
+       {
+        "text": "Healthy",
+        "ratio": 2.86,
+        "size": 13,
+        "colour": "#009966",
+        "on": "#d0e9e2"
+       },
+       {
+        "text": "Healthy",
+        "ratio": 2.86,
+        "size": 13,
+        "colour": "#009966",
+        "on": "#d0e9e2"
+       },
+       {
+        "text": "Healthy",
+        "ratio": 2.86,
+        "size": 13,
+        "colour": "#009966",
+        "on": "#d0e9e2"
+       },
+       {
+        "text": "Degraded",
+        "ratio": 3.8,
+        "size": 13,
+        "colour": "#bb4d00",
+        "on": "#ecddd3"
+       },
+       {
+        "text": "Healthy",
+        "ratio": 2.86,
+        "size": 13,
+        "colour": "#009966",
+        "on": "#d0e9e2"
+       },
+       {
+        "text": "Degraded",
+        "ratio": 3.8,
+        "size": 13,
+        "colour": "#bb4d00",
+        "on": "#ecddd3"
+       },
+       {
+        "text": "Healthy",
+        "ratio": 2.86,
+        "size": 13,
+        "colour": "#009966",
+        "on": "#d0e9e2"
+       }
+      ],
+      "contrastFailCount": 8,
+      "overflowX": 0,
+      "runningAnimations": 0
+     },
+     "textRuns": 50,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
+     "covered": {
+      "runs": 0,
+      "sample": []
+     },
+     "waitForSeen": true,
+     "pageErrors": [],
+     "url": "/"
+    },
+    "iphone-insets-light": {
+     "viewport": [
+      390,
+      844
+     ],
+     "coarse": true,
+     "hierarchy": {
+      "fontSizes": [
+       {
+        "size": 16,
+        "chars": 10
+       },
+       {
+        "size": 14,
+        "chars": 51
+       },
+       {
+        "size": 13,
+        "chars": 48
+       },
+       {
+        "size": 12,
+        "chars": 236
+       }
+      ],
+      "largest": {
+       "size": 16,
+       "elements": 1,
+       "weight": 600,
+       "text": "Watchtower",
+       "nextSize": 14
+      },
+      "headings": [
+       {
+        "tag": "h2",
+        "text": "multi",
+        "size": 12,
+        "weight": 500,
+        "top": 104
+       },
+       {
+        "tag": "h2",
+        "text": "cloudflare",
+        "size": 12,
+        "weight": 500,
+        "top": 242
+       },
+       {
+        "tag": "h2",
+        "text": "homelab",
+        "size": 12,
+        "weight": 500,
+        "top": 470
+       }
+      ]
+     },
+     "rows": {
+      "count": 7,
+      "sample": [
+       {
+        "height": 78,
+        "chips": 1,
+        "chipTexts": [
+         "Healthy"
+        ],
+        "colours": 1,
+        "colourValues": [
+         "#009966"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Disk /"
+       },
+       {
+        "height": 78,
+        "chips": 1,
+        "chipTexts": [
+         "Healthy"
+        ],
+        "colours": 1,
+        "colourValues": [
+         "#009966"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Uptime"
+       },
+       {
+        "height": 78,
+        "chips": 1,
+        "chipTexts": [
+         "Degraded"
+        ],
+        "colours": 2,
+        "colourValues": [
+         "#bc4a00",
+         "#bb4d00"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Printer"
+       },
+       {
+        "height": 78,
+        "chips": 1,
+        "chipTexts": [
+         "Healthy"
+        ],
+        "colours": 1,
+        "colourValues": [
+         "#009966"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Scanner"
+       },
+       {
+        "height": 78,
+        "chips": 2,
+        "chipTexts": [
+         "Stale",
+         "Degraded"
+        ],
+        "colours": 2,
+        "colourValues": [
+         "#bc4a00",
+         "#bb4d00"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Syncthing"
+       },
+       {
+        "height": 78,
+        "chips": 1,
+        "chipTexts": [
+         "Healthy"
+        ],
+        "colours": 1,
+        "colourValues": [
+         "#009966"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "agent-engine.service"
+       }
+      ],
+      "maxChips": 2,
+      "maxColours": 2,
+      "nested": 0,
+      "heights": [
+       78
+      ],
+      "titleWeightMax": 500
+     },
+     "interactive": {
+      "firstViewport": 8,
+      "measured": 12,
+      "small": 0,
+      "smallSample": [],
+      "inputs": 0,
+      "smallInputs": []
+     },
+     "controls": [
+      {
+       "what": "Watchtower",
+       "tag": "button",
+       "top": 10,
+       "bottom": 54,
+       "left": 17,
+       "inFirstViewport": true,
+       "centreAt": 0,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 128.2,
+       "height": 44
+      },
+      {
+       "what": "AI usage5m agoDegradedwsl2 unreachable: ",
+       "tag": "button",
+       "top": 132,
+       "bottom": 210,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.2,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 78
+      },
+      {
+       "what": "myargus6m agoDownLatest deployment (prod",
+       "tag": "button",
+       "top": 270,
+       "bottom": 348,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 78
+      },
+      {
+       "what": "reader-api6m agoHealthyproduction · depl",
+       "tag": "button",
+       "top": 360,
+       "bottom": 438,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.5,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 78
+      },
+      {
+       "what": "Disk /5m agoHealthy62% used",
+       "tag": "button",
+       "top": 498,
+       "bottom": 576,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 78
+      },
+      {
+       "what": "Uptime5m agoHealthyup 14d 0h",
+       "tag": "button",
+       "top": 588,
+       "bottom": 666,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.7,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 78
+      },
+      {
+       "what": "Printer5m agoDegradedtoner-low",
+       "tag": "button",
+       "top": 678,
+       "bottom": 756,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.8,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 78
+      },
+      {
+       "what": "Scanner5m agoHealthyidle · feeder empty",
+       "tag": "button",
+       "top": 768,
+       "bottom": 846,
+       "left": 16,
+       "inFirstViewport": false,
+       "centreAt": 1,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 78
+      },
+      {
+       "what": "Syncthing21m agoStaleDegraded2 items out",
+       "tag": "button",
+       "top": 858,
+       "bottom": 936,
+       "left": 16,
+       "inFirstViewport": false,
+       "centreAt": 1.1,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 78
+      },
+      {
+       "what": "agent-engine.service6m agoHealthyactive ",
+       "tag": "button",
+       "top": 948,
+       "bottom": 1026,
+       "left": 16,
+       "inFirstViewport": false,
+       "centreAt": 1.2,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 78
+      },
+      {
+       "what": "session-tasks.service6m agoDownfailed (f",
+       "tag": "button",
+       "top": 1038,
+       "bottom": 1116,
+       "left": 16,
+       "inFirstViewport": false,
+       "centreAt": 1.3,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 78
+      },
+      {
+       "what": "supabase:examplefixtureref000110m agoUnr",
+       "tag": "button",
+       "top": 1176,
+       "bottom": 1254,
+       "left": 16,
+       "inFirstViewport": false,
+       "centreAt": 1.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 78
+      }
+     ],
+     "alphaSteps": [
+      0.15,
+      0.6,
+      0.74
+     ],
+     "state": {
+      "statusTokens": [
+       "--warning #8a5300",
+       "--success #137333",
+       "--critical #c10007",
+       "--unreachable #b04400",
+       "--destructive #c10007"
+      ],
+      "statusColoured": 25,
+      "offToken": [
+       {
+        "colour": "#bb4d00",
+        "family": "amber",
+        "count": 6,
+        "sample": "SPAN"
+       },
+       {
+        "colour": "#009a65",
+        "family": "green",
+        "count": 5,
+        "sample": "Healthy"
+       },
+       {
+        "colour": "#009966",
+        "family": "green",
+        "count": 5,
+        "sample": "SPAN"
+       },
+       {
+        "colour": "#bc4a00",
+        "family": "red",
+        "count": 3,
+        "sample": "Degraded"
+       }
+      ],
+      "colourOnly": 0,
+      "colourOnlySamples": [],
+      "countsInHeadings": 0,
+      "progressText": 1,
+      "usesSafeTokens": true,
+      "progressElements": 0,
+      "empties": []
+     },
+     "reading": {
+      "bodySize": 12,
+      "lines": [],
+      "contrastChecked": 50,
+      "contrastUnknown": 0,
+      "contrastFails": [
+       {
+        "text": "Degraded",
+        "ratio": 3.8,
+        "size": 13,
+        "colour": "#bb4d00",
+        "on": "#ecddd3"
+       },
+       {
+        "text": "Healthy",
+        "ratio": 2.86,
+        "size": 13,
+        "colour": "#009966",
+        "on": "#d0e9e2"
+       },
+       {
+        "text": "Healthy",
+        "ratio": 2.86,
+        "size": 13,
+        "colour": "#009966",
+        "on": "#d0e9e2"
+       },
+       {
+        "text": "Healthy",
+        "ratio": 2.86,
+        "size": 13,
+        "colour": "#009966",
+        "on": "#d0e9e2"
+       },
+       {
+        "text": "Degraded",
+        "ratio": 3.8,
+        "size": 13,
+        "colour": "#bb4d00",
+        "on": "#ecddd3"
+       },
+       {
+        "text": "Healthy",
+        "ratio": 2.86,
+        "size": 13,
+        "colour": "#009966",
+        "on": "#d0e9e2"
+       },
+       {
+        "text": "Degraded",
+        "ratio": 3.8,
+        "size": 13,
+        "colour": "#bb4d00",
+        "on": "#ecddd3"
+       },
+       {
+        "text": "Healthy",
+        "ratio": 2.86,
+        "size": 13,
+        "colour": "#009966",
+        "on": "#d0e9e2"
+       }
+      ],
+      "contrastFailCount": 8,
+      "overflowX": 0,
+      "runningAnimations": 0
+     },
+     "textRuns": 50,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
+     "covered": {
+      "runs": 0,
+      "sample": []
+     },
+     "waitForSeen": true,
+     "pageErrors": [],
+     "url": "/",
+     "underInsets": [
+      "Watchtower",
+      "Scanner5m agoHealthyidle · fee"
+     ]
+    }
+   }
+  }
+ ],
+ "mocks": [
+  {
+   "url": "http://127.0.0.1:54321/auth/v1/passkeys**",
+   "method": "GET",
+   "hits": 7
+  },
+  {
+   "url": "http://127.0.0.1:54321/auth/v1/user**",
+   "method": "GET",
+   "hits": 0
+  },
+  {
+   "url": "http://127.0.0.1:54321/auth/v1/**",
+   "method": "any",
+   "hits": 0
+  },
+  {
+   "url": "http://127.0.0.1:54321/realtime/**",
+   "method": "any",
+   "hits": 0
+  },
+  {
+   "url": "http://127.0.0.1:59007/checks**",
+   "method": "GET",
+   "hits": 7
+  }
+ ],
+ "blocked": [],
+ "unmockedLocal": []
+}
