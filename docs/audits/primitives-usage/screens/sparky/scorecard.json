@@ -1,0 +1,6571 @@
+{
+ "app": "sparky",
+ "baseUrl": "http://127.0.0.1:4311",
+ "rules": {
+  "fontSizesInFirstViewport": 3,
+  "largestRatio": 1.2,
+  "largestElements": 2,
+  "chipsPerRow": 1,
+  "coloursPerRow": 2,
+  "interactiveInFirstViewport": 15,
+  "alphaSteps": 4,
+  "tapTarget": 44,
+  "inputFontSize": 16,
+  "thumbZoneFrom": 0.6,
+  "bodyFontSize": 16,
+  "lineLength": [
+   45,
+   75
+  ],
+  "contrast": 4.5,
+  "contrastLarge": 3
+ },
+ "screens": [
+  {
+   "name": "home",
+   "path": "/?now=2026-11-10T09:00:00%2B11:00#/home",
+   "why": "The first tab and the default route (src/app/router.ts): this quarter's energy use against last year.",
+   "primaryAction": null,
+   "expectsProgress": true,
+   "checks": {
+    "hierarchy": {
+     "oneLargest": {
+      "pass": false,
+      "detail": "26px ×4 \"63.0\", next 18px"
+     },
+     "fontSizes": {
+      "pass": false,
+      "detail": "26/18/16/14/13/9.8"
+     },
+     "headingVisible": {
+      "pass": true,
+      "detail": "h1 \"This quarter\" at 16.5px"
+     },
+     "headingOutweighsRows": {
+      "pass": true,
+      "detail": "heading 600/600, row title 500"
+     }
+    },
+    "clutter": {
+     "chipsPerRow": {
+      "pass": true,
+      "detail": "max 0 in 4 rows"
+     },
+     "coloursPerRow": {
+      "pass": true,
+      "detail": "max 0"
+     },
+     "noNestedBorders": {
+      "pass": true,
+      "detail": "0 rows"
+     },
+     "interactiveCount": {
+      "pass": true,
+      "detail": "9"
+     },
+     "alphaSteps": {
+      "pass": true,
+      "detail": "2: 0.15, 0.95"
+     }
+    },
+    "action": {
+     "primaryVisible": {
+      "pass": null,
+      "detail": "no primary action on this screen"
+     },
+     "primaryInThumbZone": {
+      "pass": null,
+      "detail": "no primary action on this screen"
+     },
+     "tapTargets": {
+      "pass": false,
+      "detail": "1 of 9 under 44px"
+     },
+     "inputText": {
+      "pass": null,
+      "detail": "no inputs"
+     }
+    },
+    "state": {
+     "moreThanColour": {
+      "pass": true,
+      "detail": "0 of 1 carry colour alone"
+     },
+     "statusFromTokens": {
+      "pass": true,
+      "detail": "all from tokens"
+     },
+     "progressShown": {
+      "pass": false,
+      "detail": "0 counted headings, 0 progress elements"
+     },
+     "emptySaysNext": {
+      "pass": null,
+      "detail": "no empty state on screen"
+     }
+    },
+    "reading": {
+     "bodyText": {
+      "pass": false,
+      "detail": "13px"
+     },
+     "lineLength": {
+      "pass": null,
+      "detail": "no wrapped paragraph on desktop"
+     },
+     "contrast": {
+      "pass": true,
+      "detail": "iphone-light 0, iphone-dark 0, desktop-light 0, desktop-dark 0"
+     },
+     "noSidewaysScroll": {
+      "pass": true,
+      "detail": "390: 0px, 320: 0px"
+     },
+     "reducedMotion": {
+      "pass": true,
+      "detail": "0 running"
+     }
+    }
+   },
+   "variants": {
+    "iphone-light": {
+     "viewport": [
+      390,
+      844
+     ],
+     "coarse": true,
+     "hierarchy": {
+      "fontSizes": [
+       {
+        "size": 26,
+        "chars": 20
+       },
+       {
+        "size": 18,
+        "chars": 12
+       },
+       {
+        "size": 16,
+        "chars": 20
+       },
+       {
+        "size": 14,
+        "chars": 275
+       },
+       {
+        "size": 13,
+        "chars": 237
+       },
+       {
+        "size": 9.8,
+        "chars": 1
+       }
+      ],
+      "largest": {
+       "size": 26,
+       "elements": 4,
+       "weight": 600,
+       "text": "63.0",
+       "nextSize": 18
+      },
+      "headings": [
+       {
+        "tag": "h1",
+        "text": "This quarter",
+        "size": 18,
+        "weight": 600,
+        "top": 16.5
+       },
+       {
+        "tag": "h2",
+        "text": "Where the power goes",
+        "size": 16,
+        "weight": 600,
+        "top": 443
+       }
+      ]
+     },
+     "rows": {
+      "count": 4,
+      "sample": [
+       {
+        "height": 48,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Rest of house"
+       },
+       {
+        "height": 48,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Circuit 3"
+       },
+       {
+        "height": 48,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Circuit 1"
+       },
+       {
+        "height": 48,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Circuit 2"
+       }
+      ],
+      "maxChips": 0,
+      "maxColours": 0,
+      "nested": 0,
+      "heights": [
+       48
+      ],
+      "titleWeightMax": 500
+     },
+     "interactive": {
+      "firstViewport": 9,
+      "measured": 9,
+      "small": 1,
+      "smallSample": [
+       {
+        "what": "Settings",
+        "tag": "a",
+        "width": 40,
+        "height": 40
+       }
+      ],
+      "inputs": 0,
+      "smallInputs": []
+     },
+     "controls": [
+      {
+       "what": "Settings",
+       "tag": "a",
+       "top": 8,
+       "bottom": 48,
+       "left": 334,
+       "inFirstViewport": true,
+       "centreAt": 0,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 40,
+       "height": 40
+      },
+      {
+       "what": "Rest of house149 kWh · 37%",
+       "tag": "a",
+       "top": 474,
+       "bottom": 522,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 48
+      },
+      {
+       "what": "Circuit 3117 kWh · 29%",
+       "tag": "a",
+       "top": 528,
+       "bottom": 576,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.7,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 48
+      },
+      {
+       "what": "Circuit 179 kWh · 19%",
+       "tag": "a",
+       "top": 582,
+       "bottom": 630,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.7,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 48
+      },
+      {
+       "what": "Circuit 259 kWh · 15%",
+       "tag": "a",
+       "top": 636,
+       "bottom": 684,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.8,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 48
+      },
+      {
+       "what": "Home",
+       "tag": "a",
+       "top": 788,
+       "bottom": 844,
+       "left": 0,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 97.5,
+       "height": 56
+      },
+      {
+       "what": "History",
+       "tag": "a",
+       "top": 788,
+       "bottom": 844,
+       "left": 97.5,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 97.5,
+       "height": 56
+      },
+      {
+       "what": "Circuits",
+       "tag": "a",
+       "top": 788,
+       "bottom": 844,
+       "left": 195,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 97.5,
+       "height": 56
+      },
+      {
+       "what": "Bills",
+       "tag": "a",
+       "top": 788,
+       "bottom": 844,
+       "left": 292.5,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 97.5,
+       "height": 56
+      }
+     ],
+     "alphaSteps": [
+      0.15,
+      0.95
+     ],
+     "state": {
+      "statusTokens": [
+       "--warning #8a5300",
+       "--success #137333",
+       "--critical #c10007",
+       "--unreachable #b04400",
+       "--destructive #c10007"
+      ],
+      "statusColoured": 1,
+      "offToken": [],
+      "colourOnly": 0,
+      "colourOnlySamples": [],
+      "countsInHeadings": 0,
+      "progressElements": 0,
+      "empties": []
+     },
+     "reading": {
+      "bodySize": 13,
+      "lines": [],
+      "contrastChecked": 55,
+      "contrastUnknown": 0,
+      "contrastFails": [],
+      "contrastFailCount": 0,
+      "overflowX": 0,
+      "runningAnimations": 0
+     },
+     "textRuns": 55,
+     "waitForSeen": true,
+     "pageErrors": [],
+     "url": "/?now=2026-11-10T09:00:00%2B11:00#/home"
+    },
+    "iphone-dark": {
+     "viewport": [
+      390,
+      844
+     ],
+     "coarse": true,
+     "hierarchy": {
+      "fontSizes": [
+       {
+        "size": 26,
+        "chars": 20
+       },
+       {
+        "size": 18,
+        "chars": 12
+       },
+       {
+        "size": 16,
+        "chars": 20
+       },
+       {
+        "size": 14,
+        "chars": 275
+       },
+       {
+        "size": 13,
+        "chars": 237
+       },
+       {
+        "size": 9.8,
+        "chars": 1
+       }
+      ],
+      "largest": {
+       "size": 26,
+       "elements": 4,
+       "weight": 600,
+       "text": "63.0",
+       "nextSize": 18
+      },
+      "headings": [
+       {
+        "tag": "h1",
+        "text": "This quarter",
+        "size": 18,
+        "weight": 600,
+        "top": 16.5
+       },
+       {
+        "tag": "h2",
+        "text": "Where the power goes",
+        "size": 16,
+        "weight": 600,
+        "top": 443
+       }
+      ]
+     },
+     "rows": {
+      "count": 4,
+      "sample": [
+       {
+        "height": 48,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Rest of house"
+       },
+       {
+        "height": 48,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Circuit 3"
+       },
+       {
+        "height": 48,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Circuit 1"
+       },
+       {
+        "height": 48,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Circuit 2"
+       }
+      ],
+      "maxChips": 0,
+      "maxColours": 0,
+      "nested": 0,
+      "heights": [
+       48
+      ],
+      "titleWeightMax": 500
+     },
+     "interactive": {
+      "firstViewport": 9,
+      "measured": 9,
+      "small": 1,
+      "smallSample": [
+       {
+        "what": "Settings",
+        "tag": "a",
+        "width": 40,
+        "height": 40
+       }
+      ],
+      "inputs": 0,
+      "smallInputs": []
+     },
+     "controls": [
+      {
+       "what": "Settings",
+       "tag": "a",
+       "top": 8,
+       "bottom": 48,
+       "left": 334,
+       "inFirstViewport": true,
+       "centreAt": 0,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 40,
+       "height": 40
+      },
+      {
+       "what": "Rest of house149 kWh · 37%",
+       "tag": "a",
+       "top": 474,
+       "bottom": 522,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 48
+      },
+      {
+       "what": "Circuit 3117 kWh · 29%",
+       "tag": "a",
+       "top": 528,
+       "bottom": 576,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.7,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 48
+      },
+      {
+       "what": "Circuit 179 kWh · 19%",
+       "tag": "a",
+       "top": 582,
+       "bottom": 630,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.7,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 48
+      },
+      {
+       "what": "Circuit 259 kWh · 15%",
+       "tag": "a",
+       "top": 636,
+       "bottom": 684,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.8,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 48
+      },
+      {
+       "what": "Home",
+       "tag": "a",
+       "top": 788,
+       "bottom": 844,
+       "left": 0,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 97.5,
+       "height": 56
+      },
+      {
+       "what": "History",
+       "tag": "a",
+       "top": 788,
+       "bottom": 844,
+       "left": 97.5,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 97.5,
+       "height": 56
+      },
+      {
+       "what": "Circuits",
+       "tag": "a",
+       "top": 788,
+       "bottom": 844,
+       "left": 195,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 97.5,
+       "height": 56
+      },
+      {
+       "what": "Bills",
+       "tag": "a",
+       "top": 788,
+       "bottom": 844,
+       "left": 292.5,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 97.5,
+       "height": 56
+      }
+     ],
+     "alphaSteps": [
+      0.15,
+      0.95
+     ],
+     "state": {
+      "statusTokens": [
+       "--warning #fbbf24",
+       "--success #4ade80",
+       "--critical #ff7a7e",
+       "--unreachable #fb923c",
+       "--destructive #ff6467"
+      ],
+      "statusColoured": 1,
+      "offToken": [],
+      "colourOnly": 0,
+      "colourOnlySamples": [],
+      "countsInHeadings": 0,
+      "progressElements": 0,
+      "empties": []
+     },
+     "reading": {
+      "bodySize": 13,
+      "lines": [],
+      "contrastChecked": 55,
+      "contrastUnknown": 0,
+      "contrastFails": [],
+      "contrastFailCount": 0,
+      "overflowX": 0,
+      "runningAnimations": 0
+     },
+     "textRuns": 55,
+     "waitForSeen": true,
+     "pageErrors": [],
+     "url": "/?now=2026-11-10T09:00:00%2B11:00#/home"
+    },
+    "desktop-light": {
+     "viewport": [
+      1440,
+      900
+     ],
+     "coarse": false,
+     "hierarchy": {
+      "fontSizes": [
+       {
+        "size": 26,
+        "chars": 20
+       },
+       {
+        "size": 18,
+        "chars": 12
+       },
+       {
+        "size": 16,
+        "chars": 20
+       },
+       {
+        "size": 14,
+        "chars": 275
+       },
+       {
+        "size": 13,
+        "chars": 237
+       },
+       {
+        "size": 9.8,
+        "chars": 1
+       }
+      ],
+      "largest": {
+       "size": 26,
+       "elements": 4,
+       "weight": 600,
+       "text": "63.0",
+       "nextSize": 18
+      },
+      "headings": [
+       {
+        "tag": "h1",
+        "text": "This quarter",
+        "size": 18,
+        "weight": 600,
+        "top": 16.5
+       },
+       {
+        "tag": "h2",
+        "text": "Where the power goes",
+        "size": 16,
+        "weight": 600,
+        "top": 443
+       }
+      ]
+     },
+     "rows": {
+      "count": 4,
+      "sample": [
+       {
+        "height": 48,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Rest of house"
+       },
+       {
+        "height": 48,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Circuit 3"
+       },
+       {
+        "height": 48,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Circuit 1"
+       },
+       {
+        "height": 48,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Circuit 2"
+       }
+      ],
+      "maxChips": 0,
+      "maxColours": 0,
+      "nested": 0,
+      "heights": [
+       48
+      ],
+      "titleWeightMax": 500
+     },
+     "interactive": {
+      "firstViewport": 9,
+      "measured": 9,
+      "small": 1,
+      "smallSample": [
+       {
+        "what": "Settings",
+        "tag": "a",
+        "width": 40,
+        "height": 40
+       }
+      ],
+      "inputs": 0,
+      "smallInputs": []
+     },
+     "controls": [
+      {
+       "what": "Settings",
+       "tag": "a",
+       "top": 8,
+       "bottom": 48,
+       "left": 952,
+       "inFirstViewport": true,
+       "centreAt": 0,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 40,
+       "height": 40
+      },
+      {
+       "what": "Rest of house149 kWh · 37%",
+       "tag": "a",
+       "top": 474,
+       "bottom": 522,
+       "left": 448,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 544,
+       "height": 48
+      },
+      {
+       "what": "Circuit 3117 kWh · 29%",
+       "tag": "a",
+       "top": 528,
+       "bottom": 576,
+       "left": 448,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 544,
+       "height": 48
+      },
+      {
+       "what": "Circuit 179 kWh · 19%",
+       "tag": "a",
+       "top": 582,
+       "bottom": 630,
+       "left": 448,
+       "inFirstViewport": true,
+       "centreAt": 0.7,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 544,
+       "height": 48
+      },
+      {
+       "what": "Circuit 259 kWh · 15%",
+       "tag": "a",
+       "top": 636,
+       "bottom": 684,
+       "left": 448,
+       "inFirstViewport": true,
+       "centreAt": 0.7,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 544,
+       "height": 48
+      },
+      {
+       "what": "Home",
+       "tag": "a",
+       "top": 844,
+       "bottom": 900,
+       "left": 432,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 144,
+       "height": 56
+      },
+      {
+       "what": "History",
+       "tag": "a",
+       "top": 844,
+       "bottom": 900,
+       "left": 576,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 144,
+       "height": 56
+      },
+      {
+       "what": "Circuits",
+       "tag": "a",
+       "top": 844,
+       "bottom": 900,
+       "left": 720,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 144,
+       "height": 56
+      },
+      {
+       "what": "Bills",
+       "tag": "a",
+       "top": 844,
+       "bottom": 900,
+       "left": 864,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 144,
+       "height": 56
+      }
+     ],
+     "alphaSteps": [
+      0.15,
+      0.95
+     ],
+     "state": {
+      "statusTokens": [
+       "--warning #8a5300",
+       "--success #137333",
+       "--critical #c10007",
+       "--unreachable #b04400",
+       "--destructive #c10007"
+      ],
+      "statusColoured": 1,
+      "offToken": [],
+      "colourOnly": 0,
+      "colourOnlySamples": [],
+      "countsInHeadings": 0,
+      "progressElements": 0,
+      "empties": []
+     },
+     "reading": {
+      "bodySize": 13,
+      "lines": [],
+      "contrastChecked": 55,
+      "contrastUnknown": 0,
+      "contrastFails": [],
+      "contrastFailCount": 0,
+      "overflowX": 0,
+      "runningAnimations": 0
+     },
+     "textRuns": 55,
+     "waitForSeen": true,
+     "pageErrors": [],
+     "url": "/?now=2026-11-10T09:00:00%2B11:00#/home"
+    },
+    "desktop-dark": {
+     "viewport": [
+      1440,
+      900
+     ],
+     "coarse": false,
+     "hierarchy": {
+      "fontSizes": [
+       {
+        "size": 26,
+        "chars": 20
+       },
+       {
+        "size": 18,
+        "chars": 12
+       },
+       {
+        "size": 16,
+        "chars": 20
+       },
+       {
+        "size": 14,
+        "chars": 275
+       },
+       {
+        "size": 13,
+        "chars": 237
+       },
+       {
+        "size": 9.8,
+        "chars": 1
+       }
+      ],
+      "largest": {
+       "size": 26,
+       "elements": 4,
+       "weight": 600,
+       "text": "63.0",
+       "nextSize": 18
+      },
+      "headings": [
+       {
+        "tag": "h1",
+        "text": "This quarter",
+        "size": 18,
+        "weight": 600,
+        "top": 16.5
+       },
+       {
+        "tag": "h2",
+        "text": "Where the power goes",
+        "size": 16,
+        "weight": 600,
+        "top": 443
+       }
+      ]
+     },
+     "rows": {
+      "count": 4,
+      "sample": [
+       {
+        "height": 48,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Rest of house"
+       },
+       {
+        "height": 48,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Circuit 3"
+       },
+       {
+        "height": 48,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Circuit 1"
+       },
+       {
+        "height": 48,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Circuit 2"
+       }
+      ],
+      "maxChips": 0,
+      "maxColours": 0,
+      "nested": 0,
+      "heights": [
+       48
+      ],
+      "titleWeightMax": 500
+     },
+     "interactive": {
+      "firstViewport": 9,
+      "measured": 9,
+      "small": 1,
+      "smallSample": [
+       {
+        "what": "Settings",
+        "tag": "a",
+        "width": 40,
+        "height": 40
+       }
+      ],
+      "inputs": 0,
+      "smallInputs": []
+     },
+     "controls": [
+      {
+       "what": "Settings",
+       "tag": "a",
+       "top": 8,
+       "bottom": 48,
+       "left": 952,
+       "inFirstViewport": true,
+       "centreAt": 0,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 40,
+       "height": 40
+      },
+      {
+       "what": "Rest of house149 kWh · 37%",
+       "tag": "a",
+       "top": 474,
+       "bottom": 522,
+       "left": 448,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 544,
+       "height": 48
+      },
+      {
+       "what": "Circuit 3117 kWh · 29%",
+       "tag": "a",
+       "top": 528,
+       "bottom": 576,
+       "left": 448,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 544,
+       "height": 48
+      },
+      {
+       "what": "Circuit 179 kWh · 19%",
+       "tag": "a",
+       "top": 582,
+       "bottom": 630,
+       "left": 448,
+       "inFirstViewport": true,
+       "centreAt": 0.7,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 544,
+       "height": 48
+      },
+      {
+       "what": "Circuit 259 kWh · 15%",
+       "tag": "a",
+       "top": 636,
+       "bottom": 684,
+       "left": 448,
+       "inFirstViewport": true,
+       "centreAt": 0.7,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 544,
+       "height": 48
+      },
+      {
+       "what": "Home",
+       "tag": "a",
+       "top": 844,
+       "bottom": 900,
+       "left": 432,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 144,
+       "height": 56
+      },
+      {
+       "what": "History",
+       "tag": "a",
+       "top": 844,
+       "bottom": 900,
+       "left": 576,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 144,
+       "height": 56
+      },
+      {
+       "what": "Circuits",
+       "tag": "a",
+       "top": 844,
+       "bottom": 900,
+       "left": 720,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 144,
+       "height": 56
+      },
+      {
+       "what": "Bills",
+       "tag": "a",
+       "top": 844,
+       "bottom": 900,
+       "left": 864,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 144,
+       "height": 56
+      }
+     ],
+     "alphaSteps": [
+      0.15,
+      0.95
+     ],
+     "state": {
+      "statusTokens": [
+       "--warning #fbbf24",
+       "--success #4ade80",
+       "--critical #ff7a7e",
+       "--unreachable #fb923c",
+       "--destructive #ff6467"
+      ],
+      "statusColoured": 1,
+      "offToken": [],
+      "colourOnly": 0,
+      "colourOnlySamples": [],
+      "countsInHeadings": 0,
+      "progressElements": 0,
+      "empties": []
+     },
+     "reading": {
+      "bodySize": 13,
+      "lines": [],
+      "contrastChecked": 55,
+      "contrastUnknown": 0,
+      "contrastFails": [],
+      "contrastFailCount": 0,
+      "overflowX": 0,
+      "runningAnimations": 0
+     },
+     "textRuns": 55,
+     "waitForSeen": true,
+     "pageErrors": [],
+     "url": "/?now=2026-11-10T09:00:00%2B11:00#/home"
+    },
+    "iphone-320": {
+     "viewport": [
+      320,
+      844
+     ],
+     "coarse": true,
+     "hierarchy": {
+      "fontSizes": [
+       {
+        "size": 21,
+        "chars": 20
+       },
+       {
+        "size": 18,
+        "chars": 12
+       },
+       {
+        "size": 16,
+        "chars": 20
+       },
+       {
+        "size": 14,
+        "chars": 275
+       },
+       {
+        "size": 13,
+        "chars": 237
+       },
+       {
+        "size": 9.8,
+        "chars": 1
+       }
+      ],
+      "largest": {
+       "size": 21,
+       "elements": 4,
+       "weight": 600,
+       "text": "63.0",
+       "nextSize": 18
+      },
+      "headings": [
+       {
+        "tag": "h1",
+        "text": "This quarter",
+        "size": 18,
+        "weight": 600,
+        "top": 16.5
+       },
+       {
+        "tag": "h2",
+        "text": "Where the power goes",
+        "size": 16,
+        "weight": 600,
+        "top": 462
+       }
+      ]
+     },
+     "rows": {
+      "count": 4,
+      "sample": [
+       {
+        "height": 48,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Rest of house"
+       },
+       {
+        "height": 48,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Circuit 3"
+       },
+       {
+        "height": 48,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Circuit 1"
+       },
+       {
+        "height": 48,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Circuit 2"
+       }
+      ],
+      "maxChips": 0,
+      "maxColours": 0,
+      "nested": 0,
+      "heights": [
+       48
+      ],
+      "titleWeightMax": 500
+     },
+     "interactive": {
+      "firstViewport": 9,
+      "measured": 9,
+      "small": 1,
+      "smallSample": [
+       {
+        "what": "Settings",
+        "tag": "a",
+        "width": 40,
+        "height": 40
+       }
+      ],
+      "inputs": 0,
+      "smallInputs": []
+     },
+     "controls": [
+      {
+       "what": "Settings",
+       "tag": "a",
+       "top": 8,
+       "bottom": 48,
+       "left": 264,
+       "inFirstViewport": true,
+       "centreAt": 0,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 40,
+       "height": 40
+      },
+      {
+       "what": "Rest of house149 kWh · 37%",
+       "tag": "a",
+       "top": 493,
+       "bottom": 541,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 288,
+       "height": 48
+      },
+      {
+       "what": "Circuit 3117 kWh · 29%",
+       "tag": "a",
+       "top": 547,
+       "bottom": 595,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.7,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 288,
+       "height": 48
+      },
+      {
+       "what": "Circuit 179 kWh · 19%",
+       "tag": "a",
+       "top": 601,
+       "bottom": 649,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.7,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 288,
+       "height": 48
+      },
+      {
+       "what": "Circuit 259 kWh · 15%",
+       "tag": "a",
+       "top": 655,
+       "bottom": 703,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.8,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 288,
+       "height": 48
+      },
+      {
+       "what": "Home",
+       "tag": "a",
+       "top": 788,
+       "bottom": 844,
+       "left": 0,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 80,
+       "height": 56
+      },
+      {
+       "what": "History",
+       "tag": "a",
+       "top": 788,
+       "bottom": 844,
+       "left": 80,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 80,
+       "height": 56
+      },
+      {
+       "what": "Circuits",
+       "tag": "a",
+       "top": 788,
+       "bottom": 844,
+       "left": 160,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 80,
+       "height": 56
+      },
+      {
+       "what": "Bills",
+       "tag": "a",
+       "top": 788,
+       "bottom": 844,
+       "left": 240,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 80,
+       "height": 56
+      }
+     ],
+     "alphaSteps": [
+      0.15,
+      0.95
+     ],
+     "state": {
+      "statusTokens": [
+       "--warning #8a5300",
+       "--success #137333",
+       "--critical #c10007",
+       "--unreachable #b04400",
+       "--destructive #c10007"
+      ],
+      "statusColoured": 1,
+      "offToken": [],
+      "colourOnly": 0,
+      "colourOnlySamples": [],
+      "countsInHeadings": 0,
+      "progressElements": 0,
+      "empties": []
+     },
+     "reading": {
+      "bodySize": 13,
+      "lines": [],
+      "contrastChecked": 55,
+      "contrastUnknown": 0,
+      "contrastFails": [],
+      "contrastFailCount": 0,
+      "overflowX": 0,
+      "runningAnimations": 0
+     },
+     "textRuns": 55,
+     "waitForSeen": true,
+     "pageErrors": [],
+     "url": "/?now=2026-11-10T09:00:00%2B11:00#/home"
+    },
+    "iphone-reduced-motion": {
+     "viewport": [
+      390,
+      844
+     ],
+     "coarse": true,
+     "hierarchy": {
+      "fontSizes": [
+       {
+        "size": 26,
+        "chars": 20
+       },
+       {
+        "size": 18,
+        "chars": 12
+       },
+       {
+        "size": 16,
+        "chars": 20
+       },
+       {
+        "size": 14,
+        "chars": 275
+       },
+       {
+        "size": 13,
+        "chars": 237
+       },
+       {
+        "size": 9.8,
+        "chars": 1
+       }
+      ],
+      "largest": {
+       "size": 26,
+       "elements": 4,
+       "weight": 600,
+       "text": "63.0",
+       "nextSize": 18
+      },
+      "headings": [
+       {
+        "tag": "h1",
+        "text": "This quarter",
+        "size": 18,
+        "weight": 600,
+        "top": 16.5
+       },
+       {
+        "tag": "h2",
+        "text": "Where the power goes",
+        "size": 16,
+        "weight": 600,
+        "top": 443
+       }
+      ]
+     },
+     "rows": {
+      "count": 4,
+      "sample": [
+       {
+        "height": 48,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Rest of house"
+       },
+       {
+        "height": 48,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Circuit 3"
+       },
+       {
+        "height": 48,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Circuit 1"
+       },
+       {
+        "height": 48,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Circuit 2"
+       }
+      ],
+      "maxChips": 0,
+      "maxColours": 0,
+      "nested": 0,
+      "heights": [
+       48
+      ],
+      "titleWeightMax": 500
+     },
+     "interactive": {
+      "firstViewport": 9,
+      "measured": 9,
+      "small": 1,
+      "smallSample": [
+       {
+        "what": "Settings",
+        "tag": "a",
+        "width": 40,
+        "height": 40
+       }
+      ],
+      "inputs": 0,
+      "smallInputs": []
+     },
+     "controls": [
+      {
+       "what": "Settings",
+       "tag": "a",
+       "top": 8,
+       "bottom": 48,
+       "left": 334,
+       "inFirstViewport": true,
+       "centreAt": 0,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 40,
+       "height": 40
+      },
+      {
+       "what": "Rest of house149 kWh · 37%",
+       "tag": "a",
+       "top": 474,
+       "bottom": 522,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 48
+      },
+      {
+       "what": "Circuit 3117 kWh · 29%",
+       "tag": "a",
+       "top": 528,
+       "bottom": 576,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.7,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 48
+      },
+      {
+       "what": "Circuit 179 kWh · 19%",
+       "tag": "a",
+       "top": 582,
+       "bottom": 630,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.7,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 48
+      },
+      {
+       "what": "Circuit 259 kWh · 15%",
+       "tag": "a",
+       "top": 636,
+       "bottom": 684,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.8,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 48
+      },
+      {
+       "what": "Home",
+       "tag": "a",
+       "top": 788,
+       "bottom": 844,
+       "left": 0,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 97.5,
+       "height": 56
+      },
+      {
+       "what": "History",
+       "tag": "a",
+       "top": 788,
+       "bottom": 844,
+       "left": 97.5,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 97.5,
+       "height": 56
+      },
+      {
+       "what": "Circuits",
+       "tag": "a",
+       "top": 788,
+       "bottom": 844,
+       "left": 195,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 97.5,
+       "height": 56
+      },
+      {
+       "what": "Bills",
+       "tag": "a",
+       "top": 788,
+       "bottom": 844,
+       "left": 292.5,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 97.5,
+       "height": 56
+      }
+     ],
+     "alphaSteps": [
+      0.15,
+      0.95
+     ],
+     "state": {
+      "statusTokens": [
+       "--warning #8a5300",
+       "--success #137333",
+       "--critical #c10007",
+       "--unreachable #b04400",
+       "--destructive #c10007"
+      ],
+      "statusColoured": 1,
+      "offToken": [],
+      "colourOnly": 0,
+      "colourOnlySamples": [],
+      "countsInHeadings": 0,
+      "progressElements": 0,
+      "empties": []
+     },
+     "reading": {
+      "bodySize": 13,
+      "lines": [],
+      "contrastChecked": 55,
+      "contrastUnknown": 0,
+      "contrastFails": [],
+      "contrastFailCount": 0,
+      "overflowX": 0,
+      "runningAnimations": 0
+     },
+     "textRuns": 55,
+     "waitForSeen": true,
+     "pageErrors": [],
+     "url": "/?now=2026-11-10T09:00:00%2B11:00#/home"
+    },
+    "iphone-insets-light": {
+     "viewport": [
+      390,
+      844
+     ],
+     "coarse": true,
+     "hierarchy": {
+      "fontSizes": [
+       {
+        "size": 26,
+        "chars": 20
+       },
+       {
+        "size": 18,
+        "chars": 12
+       },
+       {
+        "size": 16,
+        "chars": 20
+       },
+       {
+        "size": 14,
+        "chars": 275
+       },
+       {
+        "size": 13,
+        "chars": 237
+       },
+       {
+        "size": 9.8,
+        "chars": 1
+       }
+      ],
+      "largest": {
+       "size": 26,
+       "elements": 4,
+       "weight": 600,
+       "text": "63.0",
+       "nextSize": 18
+      },
+      "headings": [
+       {
+        "tag": "h1",
+        "text": "This quarter",
+        "size": 18,
+        "weight": 600,
+        "top": 16.5
+       },
+       {
+        "tag": "h2",
+        "text": "Where the power goes",
+        "size": 16,
+        "weight": 600,
+        "top": 443
+       }
+      ]
+     },
+     "rows": {
+      "count": 4,
+      "sample": [
+       {
+        "height": 48,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Rest of house"
+       },
+       {
+        "height": 48,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Circuit 3"
+       },
+       {
+        "height": 48,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Circuit 1"
+       },
+       {
+        "height": 48,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Circuit 2"
+       }
+      ],
+      "maxChips": 0,
+      "maxColours": 0,
+      "nested": 0,
+      "heights": [
+       48
+      ],
+      "titleWeightMax": 500
+     },
+     "interactive": {
+      "firstViewport": 9,
+      "measured": 9,
+      "small": 1,
+      "smallSample": [
+       {
+        "what": "Settings",
+        "tag": "a",
+        "width": 40,
+        "height": 40
+       }
+      ],
+      "inputs": 0,
+      "smallInputs": []
+     },
+     "controls": [
+      {
+       "what": "Settings",
+       "tag": "a",
+       "top": 8,
+       "bottom": 48,
+       "left": 334,
+       "inFirstViewport": true,
+       "centreAt": 0,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 40,
+       "height": 40
+      },
+      {
+       "what": "Rest of house149 kWh · 37%",
+       "tag": "a",
+       "top": 474,
+       "bottom": 522,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 48
+      },
+      {
+       "what": "Circuit 3117 kWh · 29%",
+       "tag": "a",
+       "top": 528,
+       "bottom": 576,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.7,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 48
+      },
+      {
+       "what": "Circuit 179 kWh · 19%",
+       "tag": "a",
+       "top": 582,
+       "bottom": 630,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.7,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 48
+      },
+      {
+       "what": "Circuit 259 kWh · 15%",
+       "tag": "a",
+       "top": 636,
+       "bottom": 684,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.8,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 48
+      },
+      {
+       "what": "Home",
+       "tag": "a",
+       "top": 788,
+       "bottom": 844,
+       "left": 0,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 97.5,
+       "height": 56
+      },
+      {
+       "what": "History",
+       "tag": "a",
+       "top": 788,
+       "bottom": 844,
+       "left": 97.5,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 97.5,
+       "height": 56
+      },
+      {
+       "what": "Circuits",
+       "tag": "a",
+       "top": 788,
+       "bottom": 844,
+       "left": 195,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 97.5,
+       "height": 56
+      },
+      {
+       "what": "Bills",
+       "tag": "a",
+       "top": 788,
+       "bottom": 844,
+       "left": 292.5,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 97.5,
+       "height": 56
+      }
+     ],
+     "alphaSteps": [
+      0.15,
+      0.95
+     ],
+     "state": {
+      "statusTokens": [
+       "--warning #8a5300",
+       "--success #137333",
+       "--critical #c10007",
+       "--unreachable #b04400",
+       "--destructive #c10007"
+      ],
+      "statusColoured": 1,
+      "offToken": [],
+      "colourOnly": 0,
+      "colourOnlySamples": [],
+      "countsInHeadings": 0,
+      "progressElements": 0,
+      "empties": []
+     },
+     "reading": {
+      "bodySize": 13,
+      "lines": [],
+      "contrastChecked": 55,
+      "contrastUnknown": 0,
+      "contrastFails": [],
+      "contrastFailCount": 0,
+      "overflowX": 0,
+      "runningAnimations": 0
+     },
+     "textRuns": 55,
+     "waitForSeen": true,
+     "pageErrors": [],
+     "url": "/?now=2026-11-10T09:00:00%2B11:00#/home",
+     "underInsets": [
+      "Settings",
+      "Home",
+      "History",
+      "Circuits",
+      "Bills"
+     ]
+    }
+   }
+  },
+  {
+   "name": "history",
+   "path": "/?now=2026-11-10T09:00:00%2B11:00#/history",
+   "why": "Second tab in the tab bar (src/app/App.tsx TABS); the only screen with form controls (period and range pickers).",
+   "primaryAction": null,
+   "expectsProgress": false,
+   "checks": {
+    "hierarchy": {
+     "oneLargest": {
+      "pass": true,
+      "detail": "26px ×1 \"404 kWh\", next 18px"
+     },
+     "fontSizes": {
+      "pass": false,
+      "detail": "26/18/14/13/11"
+     },
+     "headingVisible": {
+      "pass": true,
+      "detail": "h1 \"History\" at 16.5px"
+     },
+     "headingOutweighsRows": {
+      "pass": true,
+      "detail": "heading 600, row title 500"
+     }
+    },
+    "clutter": {
+     "chipsPerRow": {
+      "pass": true,
+      "detail": "max 0 in 3 rows"
+     },
+     "coloursPerRow": {
+      "pass": true,
+      "detail": "max 1"
+     },
+     "noNestedBorders": {
+      "pass": true,
+      "detail": "0 rows"
+     },
+     "interactiveCount": {
+      "pass": true,
+      "detail": "14"
+     },
+     "alphaSteps": {
+      "pass": true,
+      "detail": "3: 0.3, 0.75, 0.95"
+     }
+    },
+    "action": {
+     "primaryVisible": {
+      "pass": null,
+      "detail": "no primary action on this screen"
+     },
+     "primaryInThumbZone": {
+      "pass": null,
+      "detail": "no primary action on this screen"
+     },
+     "tapTargets": {
+      "pass": false,
+      "detail": "10 of 14 under 44px"
+     },
+     "inputText": {
+      "pass": null,
+      "detail": "no inputs"
+     }
+    },
+    "state": {
+     "moreThanColour": {
+      "pass": null,
+      "detail": "no status colour on screen"
+     },
+     "statusFromTokens": {
+      "pass": null,
+      "detail": "no status colour on screen"
+     },
+     "progressShown": {
+      "pass": null,
+      "detail": "no goal on this screen"
+     },
+     "emptySaysNext": {
+      "pass": null,
+      "detail": "no empty state on screen"
+     }
+    },
+    "reading": {
+     "bodyText": {
+      "pass": false,
+      "detail": "14px"
+     },
+     "lineLength": {
+      "pass": null,
+      "detail": "no wrapped paragraph on desktop"
+     },
+     "contrast": {
+      "pass": false,
+      "detail": "iphone-light 1, iphone-dark 1, desktop-light 1, desktop-dark 1"
+     },
+     "noSidewaysScroll": {
+      "pass": true,
+      "detail": "390: 0px, 320: 0px"
+     },
+     "reducedMotion": {
+      "pass": true,
+      "detail": "0 running"
+     }
+    }
+   },
+   "variants": {
+    "iphone-light": {
+     "viewport": [
+      390,
+      844
+     ],
+     "coarse": true,
+     "hierarchy": {
+      "fontSizes": [
+       {
+        "size": 26,
+        "chars": 7
+       },
+       {
+        "size": 18,
+        "chars": 9
+       },
+       {
+        "size": 14,
+        "chars": 88
+       },
+       {
+        "size": 13,
+        "chars": 63
+       },
+       {
+        "size": 11,
+        "chars": 35
+       }
+      ],
+      "largest": {
+       "size": 26,
+       "elements": 1,
+       "weight": 600,
+       "text": "404 kWh",
+       "nextSize": 18
+      },
+      "headings": [
+       {
+        "tag": "h1",
+        "text": "History",
+        "size": 18,
+        "weight": 600,
+        "top": 16.5
+       }
+      ]
+     },
+     "rows": {
+      "count": 3,
+      "sample": [
+       {
+        "height": 78,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 1,
+        "colourValues": [
+         "#0a6f75"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Day"
+       },
+       {
+        "height": 40,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 400,
+        "titleSize": 18,
+        "titleText": "‹"
+       },
+       {
+        "height": 44,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "kWh"
+       }
+      ],
+      "maxChips": 0,
+      "maxColours": 1,
+      "nested": 0,
+      "heights": [
+       40,
+       44,
+       78
+      ],
+      "titleWeightMax": 500
+     },
+     "interactive": {
+      "firstViewport": 14,
+      "measured": 14,
+      "small": 10,
+      "smallSample": [
+       {
+        "what": "Settings",
+        "tag": "a",
+        "width": 40,
+        "height": 40
+       },
+       {
+        "what": "Day",
+        "tag": "button",
+        "width": 54.3,
+        "height": 36
+       },
+       {
+        "what": "Week",
+        "tag": "button",
+        "width": 65.9,
+        "height": 36
+       },
+       {
+        "what": "Month",
+        "tag": "button",
+        "width": 70.6,
+        "height": 36
+       },
+       {
+        "what": "Quarter",
+        "tag": "button",
+        "width": 79.4,
+        "height": 36
+       },
+       {
+        "what": "Year",
+        "tag": "button",
+        "width": 58.7,
+        "height": 36
+       },
+       {
+        "what": "Custom",
+        "tag": "button",
+        "width": 79.1,
+        "height": 36
+       },
+       {
+        "what": "Previous period",
+        "tag": "button",
+        "width": 40,
+        "height": 40
+       },
+       {
+        "what": "kWh",
+        "tag": "button",
+        "width": 175,
+        "height": 36
+       },
+       {
+        "what": "$",
+        "tag": "button",
+        "width": 175,
+        "height": 36
+       }
+      ],
+      "inputs": 0,
+      "smallInputs": []
+     },
+     "controls": [
+      {
+       "what": "Settings",
+       "tag": "a",
+       "top": 8,
+       "bottom": 48,
+       "left": 334,
+       "inFirstViewport": true,
+       "centreAt": 0,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 40,
+       "height": 40
+      },
+      {
+       "what": "Day",
+       "tag": "button",
+       "top": 73,
+       "bottom": 109,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.1,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 54.3,
+       "height": 36
+      },
+      {
+       "what": "Week",
+       "tag": "button",
+       "top": 73,
+       "bottom": 109,
+       "left": 76.3,
+       "inFirstViewport": true,
+       "centreAt": 0.1,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 65.9,
+       "height": 36
+      },
+      {
+       "what": "Month",
+       "tag": "button",
+       "top": 73,
+       "bottom": 109,
+       "left": 148.3,
+       "inFirstViewport": true,
+       "centreAt": 0.1,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 70.6,
+       "height": 36
+      },
+      {
+       "what": "Quarter",
+       "tag": "button",
+       "top": 73,
+       "bottom": 109,
+       "left": 224.9,
+       "inFirstViewport": true,
+       "centreAt": 0.1,
+       "pinnedToBottom": false,
+       "primaryFill": true,
+       "width": 79.4,
+       "height": 36
+      },
+      {
+       "what": "Year",
+       "tag": "button",
+       "top": 73,
+       "bottom": 109,
+       "left": 310.3,
+       "inFirstViewport": true,
+       "centreAt": 0.1,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 58.7,
+       "height": 36
+      },
+      {
+       "what": "Custom",
+       "tag": "button",
+       "top": 115,
+       "bottom": 151,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.2,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 79.1,
+       "height": 36
+      },
+      {
+       "what": "Previous period",
+       "tag": "button",
+       "top": 159,
+       "bottom": 199,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.2,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 40,
+       "height": 40
+      },
+      {
+       "what": "kWh",
+       "tag": "button",
+       "top": 211,
+       "bottom": 247,
+       "left": 20,
+       "inFirstViewport": true,
+       "centreAt": 0.3,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 175,
+       "height": 36
+      },
+      {
+       "what": "$",
+       "tag": "button",
+       "top": 211,
+       "bottom": 247,
+       "left": 195,
+       "inFirstViewport": true,
+       "centreAt": 0.3,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 175,
+       "height": 36
+      },
+      {
+       "what": "Home",
+       "tag": "a",
+       "top": 788,
+       "bottom": 844,
+       "left": 0,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 97.5,
+       "height": 56
+      },
+      {
+       "what": "History",
+       "tag": "a",
+       "top": 788,
+       "bottom": 844,
+       "left": 97.5,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 97.5,
+       "height": 56
+      },
+      {
+       "what": "Circuits",
+       "tag": "a",
+       "top": 788,
+       "bottom": 844,
+       "left": 195,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 97.5,
+       "height": 56
+      },
+      {
+       "what": "Bills",
+       "tag": "a",
+       "top": 788,
+       "bottom": 844,
+       "left": 292.5,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 97.5,
+       "height": 56
+      }
+     ],
+     "alphaSteps": [
+      0.3,
+      0.75,
+      0.95
+     ],
+     "state": {
+      "statusTokens": [
+       "--warning #8a5300",
+       "--success #137333",
+       "--critical #c10007",
+       "--unreachable #b04400",
+       "--destructive #c10007"
+      ],
+      "statusColoured": 0,
+      "offToken": [],
+      "colourOnly": 0,
+      "colourOnlySamples": [],
+      "countsInHeadings": 0,
+      "progressElements": 0,
+      "empties": []
+     },
+     "reading": {
+      "bodySize": 14,
+      "lines": [],
+      "contrastChecked": 31,
+      "contrastUnknown": 0,
+      "contrastFails": [
+       {
+        "text": "›",
+        "ratio": 1.92,
+        "size": 18,
+        "colour": "#b6b3b8",
+        "on": "#f5f7f8"
+       }
+      ],
+      "contrastFailCount": 1,
+      "overflowX": 0,
+      "runningAnimations": 0
+     },
+     "textRuns": 31,
+     "waitForSeen": true,
+     "pageErrors": [],
+     "url": "/?now=2026-11-10T09:00:00%2B11:00#/history"
+    },
+    "iphone-dark": {
+     "viewport": [
+      390,
+      844
+     ],
+     "coarse": true,
+     "hierarchy": {
+      "fontSizes": [
+       {
+        "size": 26,
+        "chars": 7
+       },
+       {
+        "size": 18,
+        "chars": 9
+       },
+       {
+        "size": 14,
+        "chars": 88
+       },
+       {
+        "size": 13,
+        "chars": 63
+       },
+       {
+        "size": 11,
+        "chars": 35
+       }
+      ],
+      "largest": {
+       "size": 26,
+       "elements": 1,
+       "weight": 600,
+       "text": "404 kWh",
+       "nextSize": 18
+      },
+      "headings": [
+       {
+        "tag": "h1",
+        "text": "History",
+        "size": 18,
+        "weight": 600,
+        "top": 16.5
+       }
+      ]
+     },
+     "rows": {
+      "count": 3,
+      "sample": [
+       {
+        "height": 78,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 1,
+        "colourValues": [
+         "#5bd0d6"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Day"
+       },
+       {
+        "height": 40,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 400,
+        "titleSize": 18,
+        "titleText": "‹"
+       },
+       {
+        "height": 44,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "kWh"
+       }
+      ],
+      "maxChips": 0,
+      "maxColours": 1,
+      "nested": 0,
+      "heights": [
+       40,
+       44,
+       78
+      ],
+      "titleWeightMax": 500
+     },
+     "interactive": {
+      "firstViewport": 14,
+      "measured": 14,
+      "small": 10,
+      "smallSample": [
+       {
+        "what": "Settings",
+        "tag": "a",
+        "width": 40,
+        "height": 40
+       },
+       {
+        "what": "Day",
+        "tag": "button",
+        "width": 54.3,
+        "height": 36
+       },
+       {
+        "what": "Week",
+        "tag": "button",
+        "width": 65.9,
+        "height": 36
+       },
+       {
+        "what": "Month",
+        "tag": "button",
+        "width": 70.6,
+        "height": 36
+       },
+       {
+        "what": "Quarter",
+        "tag": "button",
+        "width": 79.4,
+        "height": 36
+       },
+       {
+        "what": "Year",
+        "tag": "button",
+        "width": 58.7,
+        "height": 36
+       },
+       {
+        "what": "Custom",
+        "tag": "button",
+        "width": 79.1,
+        "height": 36
+       },
+       {
+        "what": "Previous period",
+        "tag": "button",
+        "width": 40,
+        "height": 40
+       },
+       {
+        "what": "kWh",
+        "tag": "button",
+        "width": 175,
+        "height": 36
+       },
+       {
+        "what": "$",
+        "tag": "button",
+        "width": 175,
+        "height": 36
+       }
+      ],
+      "inputs": 0,
+      "smallInputs": []
+     },
+     "controls": [
+      {
+       "what": "Settings",
+       "tag": "a",
+       "top": 8,
+       "bottom": 48,
+       "left": 334,
+       "inFirstViewport": true,
+       "centreAt": 0,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 40,
+       "height": 40
+      },
+      {
+       "what": "Day",
+       "tag": "button",
+       "top": 73,
+       "bottom": 109,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.1,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 54.3,
+       "height": 36
+      },
+      {
+       "what": "Week",
+       "tag": "button",
+       "top": 73,
+       "bottom": 109,
+       "left": 76.3,
+       "inFirstViewport": true,
+       "centreAt": 0.1,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 65.9,
+       "height": 36
+      },
+      {
+       "what": "Month",
+       "tag": "button",
+       "top": 73,
+       "bottom": 109,
+       "left": 148.3,
+       "inFirstViewport": true,
+       "centreAt": 0.1,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 70.6,
+       "height": 36
+      },
+      {
+       "what": "Quarter",
+       "tag": "button",
+       "top": 73,
+       "bottom": 109,
+       "left": 224.9,
+       "inFirstViewport": true,
+       "centreAt": 0.1,
+       "pinnedToBottom": false,
+       "primaryFill": true,
+       "width": 79.4,
+       "height": 36
+      },
+      {
+       "what": "Year",
+       "tag": "button",
+       "top": 73,
+       "bottom": 109,
+       "left": 310.3,
+       "inFirstViewport": true,
+       "centreAt": 0.1,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 58.7,
+       "height": 36
+      },
+      {
+       "what": "Custom",
+       "tag": "button",
+       "top": 115,
+       "bottom": 151,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.2,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 79.1,
+       "height": 36
+      },
+      {
+       "what": "Previous period",
+       "tag": "button",
+       "top": 159,
+       "bottom": 199,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.2,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 40,
+       "height": 40
+      },
+      {
+       "what": "kWh",
+       "tag": "button",
+       "top": 211,
+       "bottom": 247,
+       "left": 20,
+       "inFirstViewport": true,
+       "centreAt": 0.3,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 175,
+       "height": 36
+      },
+      {
+       "what": "$",
+       "tag": "button",
+       "top": 211,
+       "bottom": 247,
+       "left": 195,
+       "inFirstViewport": true,
+       "centreAt": 0.3,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 175,
+       "height": 36
+      },
+      {
+       "what": "Home",
+       "tag": "a",
+       "top": 788,
+       "bottom": 844,
+       "left": 0,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 97.5,
+       "height": 56
+      },
+      {
+       "what": "History",
+       "tag": "a",
+       "top": 788,
+       "bottom": 844,
+       "left": 97.5,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 97.5,
+       "height": 56
+      },
+      {
+       "what": "Circuits",
+       "tag": "a",
+       "top": 788,
+       "bottom": 844,
+       "left": 195,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 97.5,
+       "height": 56
+      },
+      {
+       "what": "Bills",
+       "tag": "a",
+       "top": 788,
+       "bottom": 844,
+       "left": 292.5,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 97.5,
+       "height": 56
+      }
+     ],
+     "alphaSteps": [
+      0.3,
+      0.75,
+      0.95
+     ],
+     "state": {
+      "statusTokens": [
+       "--warning #fbbf24",
+       "--success #4ade80",
+       "--critical #ff7a7e",
+       "--unreachable #fb923c",
+       "--destructive #ff6467"
+      ],
+      "statusColoured": 0,
+      "offToken": [],
+      "colourOnly": 0,
+      "colourOnlySamples": [],
+      "countsInHeadings": 0,
+      "progressElements": 0,
+      "empties": []
+     },
+     "reading": {
+      "bodySize": 14,
+      "lines": [],
+      "contrastChecked": 31,
+      "contrastUnknown": 0,
+      "contrastFails": [
+       {
+        "text": "›",
+        "ratio": 2.66,
+        "size": 18,
+        "colour": "#5d626b",
+        "on": "#17212b"
+       }
+      ],
+      "contrastFailCount": 1,
+      "overflowX": 0,
+      "runningAnimations": 0
+     },
+     "textRuns": 31,
+     "waitForSeen": true,
+     "pageErrors": [],
+     "url": "/?now=2026-11-10T09:00:00%2B11:00#/history"
+    },
+    "desktop-light": {
+     "viewport": [
+      1440,
+      900
+     ],
+     "coarse": false,
+     "hierarchy": {
+      "fontSizes": [
+       {
+        "size": 26,
+        "chars": 7
+       },
+       {
+        "size": 18,
+        "chars": 9
+       },
+       {
+        "size": 14,
+        "chars": 88
+       },
+       {
+        "size": 13,
+        "chars": 63
+       },
+       {
+        "size": 11,
+        "chars": 35
+       }
+      ],
+      "largest": {
+       "size": 26,
+       "elements": 1,
+       "weight": 600,
+       "text": "404 kWh",
+       "nextSize": 18
+      },
+      "headings": [
+       {
+        "tag": "h1",
+        "text": "History",
+        "size": 18,
+        "weight": 600,
+        "top": 16.5
+       }
+      ]
+     },
+     "rows": {
+      "count": 3,
+      "sample": [
+       {
+        "height": 36,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 1,
+        "colourValues": [
+         "#0a6f75"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Day"
+       },
+       {
+        "height": 40,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 400,
+        "titleSize": 18,
+        "titleText": "‹"
+       },
+       {
+        "height": 44,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "kWh"
+       }
+      ],
+      "maxChips": 0,
+      "maxColours": 1,
+      "nested": 0,
+      "heights": [
+       36,
+       40,
+       44
+      ],
+      "titleWeightMax": 500
+     },
+     "interactive": {
+      "firstViewport": 14,
+      "measured": 14,
+      "small": 10,
+      "smallSample": [
+       {
+        "what": "Settings",
+        "tag": "a",
+        "width": 40,
+        "height": 40
+       },
+       {
+        "what": "Day",
+        "tag": "button",
+        "width": 54.3,
+        "height": 36
+       },
+       {
+        "what": "Week",
+        "tag": "button",
+        "width": 65.9,
+        "height": 36
+       },
+       {
+        "what": "Month",
+        "tag": "button",
+        "width": 70.6,
+        "height": 36
+       },
+       {
+        "what": "Quarter",
+        "tag": "button",
+        "width": 79.4,
+        "height": 36
+       },
+       {
+        "what": "Year",
+        "tag": "button",
+        "width": 58.7,
+        "height": 36
+       },
+       {
+        "what": "Custom",
+        "tag": "button",
+        "width": 79.1,
+        "height": 36
+       },
+       {
+        "what": "Previous period",
+        "tag": "button",
+        "width": 40,
+        "height": 40
+       },
+       {
+        "what": "kWh",
+        "tag": "button",
+        "width": 268,
+        "height": 36
+       },
+       {
+        "what": "$",
+        "tag": "button",
+        "width": 268,
+        "height": 36
+       }
+      ],
+      "inputs": 0,
+      "smallInputs": []
+     },
+     "controls": [
+      {
+       "what": "Settings",
+       "tag": "a",
+       "top": 8,
+       "bottom": 48,
+       "left": 952,
+       "inFirstViewport": true,
+       "centreAt": 0,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 40,
+       "height": 40
+      },
+      {
+       "what": "Day",
+       "tag": "button",
+       "top": 73,
+       "bottom": 109,
+       "left": 448,
+       "inFirstViewport": true,
+       "centreAt": 0.1,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 54.3,
+       "height": 36
+      },
+      {
+       "what": "Week",
+       "tag": "button",
+       "top": 73,
+       "bottom": 109,
+       "left": 508.3,
+       "inFirstViewport": true,
+       "centreAt": 0.1,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 65.9,
+       "height": 36
+      },
+      {
+       "what": "Month",
+       "tag": "button",
+       "top": 73,
+       "bottom": 109,
+       "left": 580.3,
+       "inFirstViewport": true,
+       "centreAt": 0.1,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 70.6,
+       "height": 36
+      },
+      {
+       "what": "Quarter",
+       "tag": "button",
+       "top": 73,
+       "bottom": 109,
+       "left": 656.9,
+       "inFirstViewport": true,
+       "centreAt": 0.1,
+       "pinnedToBottom": false,
+       "primaryFill": true,
+       "width": 79.4,
+       "height": 36
+      },
+      {
+       "what": "Year",
+       "tag": "button",
+       "top": 73,
+       "bottom": 109,
+       "left": 742.3,
+       "inFirstViewport": true,
+       "centreAt": 0.1,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 58.7,
+       "height": 36
+      },
+      {
+       "what": "Custom",
+       "tag": "button",
+       "top": 73,
+       "bottom": 109,
+       "left": 807,
+       "inFirstViewport": true,
+       "centreAt": 0.1,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 79.1,
+       "height": 36
+      },
+      {
+       "what": "Previous period",
+       "tag": "button",
+       "top": 117,
+       "bottom": 157,
+       "left": 448,
+       "inFirstViewport": true,
+       "centreAt": 0.2,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 40,
+       "height": 40
+      },
+      {
+       "what": "kWh",
+       "tag": "button",
+       "top": 169,
+       "bottom": 205,
+       "left": 452,
+       "inFirstViewport": true,
+       "centreAt": 0.2,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 268,
+       "height": 36
+      },
+      {
+       "what": "$",
+       "tag": "button",
+       "top": 169,
+       "bottom": 205,
+       "left": 720,
+       "inFirstViewport": true,
+       "centreAt": 0.2,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 268,
+       "height": 36
+      },
+      {
+       "what": "Home",
+       "tag": "a",
+       "top": 844,
+       "bottom": 900,
+       "left": 432,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 144,
+       "height": 56
+      },
+      {
+       "what": "History",
+       "tag": "a",
+       "top": 844,
+       "bottom": 900,
+       "left": 576,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 144,
+       "height": 56
+      },
+      {
+       "what": "Circuits",
+       "tag": "a",
+       "top": 844,
+       "bottom": 900,
+       "left": 720,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 144,
+       "height": 56
+      },
+      {
+       "what": "Bills",
+       "tag": "a",
+       "top": 844,
+       "bottom": 900,
+       "left": 864,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 144,
+       "height": 56
+      }
+     ],
+     "alphaSteps": [
+      0.3,
+      0.75,
+      0.95
+     ],
+     "state": {
+      "statusTokens": [
+       "--warning #8a5300",
+       "--success #137333",
+       "--critical #c10007",
+       "--unreachable #b04400",
+       "--destructive #c10007"
+      ],
+      "statusColoured": 0,
+      "offToken": [],
+      "colourOnly": 0,
+      "colourOnlySamples": [],
+      "countsInHeadings": 0,
+      "progressElements": 0,
+      "empties": []
+     },
+     "reading": {
+      "bodySize": 14,
+      "lines": [],
+      "contrastChecked": 31,
+      "contrastUnknown": 0,
+      "contrastFails": [
+       {
+        "text": "›",
+        "ratio": 1.92,
+        "size": 18,
+        "colour": "#b6b3b8",
+        "on": "#f5f7f8"
+       }
+      ],
+      "contrastFailCount": 1,
+      "overflowX": 0,
+      "runningAnimations": 0
+     },
+     "textRuns": 31,
+     "waitForSeen": true,
+     "pageErrors": [],
+     "url": "/?now=2026-11-10T09:00:00%2B11:00#/history"
+    },
+    "desktop-dark": {
+     "viewport": [
+      1440,
+      900
+     ],
+     "coarse": false,
+     "hierarchy": {
+      "fontSizes": [
+       {
+        "size": 26,
+        "chars": 7
+       },
+       {
+        "size": 18,
+        "chars": 9
+       },
+       {
+        "size": 14,
+        "chars": 88
+       },
+       {
+        "size": 13,
+        "chars": 63
+       },
+       {
+        "size": 11,
+        "chars": 35
+       }
+      ],
+      "largest": {
+       "size": 26,
+       "elements": 1,
+       "weight": 600,
+       "text": "404 kWh",
+       "nextSize": 18
+      },
+      "headings": [
+       {
+        "tag": "h1",
+        "text": "History",
+        "size": 18,
+        "weight": 600,
+        "top": 16.5
+       }
+      ]
+     },
+     "rows": {
+      "count": 3,
+      "sample": [
+       {
+        "height": 36,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 1,
+        "colourValues": [
+         "#5bd0d6"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Day"
+       },
+       {
+        "height": 40,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 400,
+        "titleSize": 18,
+        "titleText": "‹"
+       },
+       {
+        "height": 44,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "kWh"
+       }
+      ],
+      "maxChips": 0,
+      "maxColours": 1,
+      "nested": 0,
+      "heights": [
+       36,
+       40,
+       44
+      ],
+      "titleWeightMax": 500
+     },
+     "interactive": {
+      "firstViewport": 14,
+      "measured": 14,
+      "small": 10,
+      "smallSample": [
+       {
+        "what": "Settings",
+        "tag": "a",
+        "width": 40,
+        "height": 40
+       },
+       {
+        "what": "Day",
+        "tag": "button",
+        "width": 54.3,
+        "height": 36
+       },
+       {
+        "what": "Week",
+        "tag": "button",
+        "width": 65.9,
+        "height": 36
+       },
+       {
+        "what": "Month",
+        "tag": "button",
+        "width": 70.6,
+        "height": 36
+       },
+       {
+        "what": "Quarter",
+        "tag": "button",
+        "width": 79.4,
+        "height": 36
+       },
+       {
+        "what": "Year",
+        "tag": "button",
+        "width": 58.7,
+        "height": 36
+       },
+       {
+        "what": "Custom",
+        "tag": "button",
+        "width": 79.1,
+        "height": 36
+       },
+       {
+        "what": "Previous period",
+        "tag": "button",
+        "width": 40,
+        "height": 40
+       },
+       {
+        "what": "kWh",
+        "tag": "button",
+        "width": 268,
+        "height": 36
+       },
+       {
+        "what": "$",
+        "tag": "button",
+        "width": 268,
+        "height": 36
+       }
+      ],
+      "inputs": 0,
+      "smallInputs": []
+     },
+     "controls": [
+      {
+       "what": "Settings",
+       "tag": "a",
+       "top": 8,
+       "bottom": 48,
+       "left": 952,
+       "inFirstViewport": true,
+       "centreAt": 0,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 40,
+       "height": 40
+      },
+      {
+       "what": "Day",
+       "tag": "button",
+       "top": 73,
+       "bottom": 109,
+       "left": 448,
+       "inFirstViewport": true,
+       "centreAt": 0.1,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 54.3,
+       "height": 36
+      },
+      {
+       "what": "Week",
+       "tag": "button",
+       "top": 73,
+       "bottom": 109,
+       "left": 508.3,
+       "inFirstViewport": true,
+       "centreAt": 0.1,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 65.9,
+       "height": 36
+      },
+      {
+       "what": "Month",
+       "tag": "button",
+       "top": 73,
+       "bottom": 109,
+       "left": 580.3,
+       "inFirstViewport": true,
+       "centreAt": 0.1,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 70.6,
+       "height": 36
+      },
+      {
+       "what": "Quarter",
+       "tag": "button",
+       "top": 73,
+       "bottom": 109,
+       "left": 656.9,
+       "inFirstViewport": true,
+       "centreAt": 0.1,
+       "pinnedToBottom": false,
+       "primaryFill": true,
+       "width": 79.4,
+       "height": 36
+      },
+      {
+       "what": "Year",
+       "tag": "button",
+       "top": 73,
+       "bottom": 109,
+       "left": 742.3,
+       "inFirstViewport": true,
+       "centreAt": 0.1,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 58.7,
+       "height": 36
+      },
+      {
+       "what": "Custom",
+       "tag": "button",
+       "top": 73,
+       "bottom": 109,
+       "left": 807,
+       "inFirstViewport": true,
+       "centreAt": 0.1,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 79.1,
+       "height": 36
+      },
+      {
+       "what": "Previous period",
+       "tag": "button",
+       "top": 117,
+       "bottom": 157,
+       "left": 448,
+       "inFirstViewport": true,
+       "centreAt": 0.2,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 40,
+       "height": 40
+      },
+      {
+       "what": "kWh",
+       "tag": "button",
+       "top": 169,
+       "bottom": 205,
+       "left": 452,
+       "inFirstViewport": true,
+       "centreAt": 0.2,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 268,
+       "height": 36
+      },
+      {
+       "what": "$",
+       "tag": "button",
+       "top": 169,
+       "bottom": 205,
+       "left": 720,
+       "inFirstViewport": true,
+       "centreAt": 0.2,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 268,
+       "height": 36
+      },
+      {
+       "what": "Home",
+       "tag": "a",
+       "top": 844,
+       "bottom": 900,
+       "left": 432,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 144,
+       "height": 56
+      },
+      {
+       "what": "History",
+       "tag": "a",
+       "top": 844,
+       "bottom": 900,
+       "left": 576,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 144,
+       "height": 56
+      },
+      {
+       "what": "Circuits",
+       "tag": "a",
+       "top": 844,
+       "bottom": 900,
+       "left": 720,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 144,
+       "height": 56
+      },
+      {
+       "what": "Bills",
+       "tag": "a",
+       "top": 844,
+       "bottom": 900,
+       "left": 864,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 144,
+       "height": 56
+      }
+     ],
+     "alphaSteps": [
+      0.3,
+      0.75,
+      0.95
+     ],
+     "state": {
+      "statusTokens": [
+       "--warning #fbbf24",
+       "--success #4ade80",
+       "--critical #ff7a7e",
+       "--unreachable #fb923c",
+       "--destructive #ff6467"
+      ],
+      "statusColoured": 0,
+      "offToken": [],
+      "colourOnly": 0,
+      "colourOnlySamples": [],
+      "countsInHeadings": 0,
+      "progressElements": 0,
+      "empties": []
+     },
+     "reading": {
+      "bodySize": 14,
+      "lines": [],
+      "contrastChecked": 31,
+      "contrastUnknown": 0,
+      "contrastFails": [
+       {
+        "text": "›",
+        "ratio": 2.66,
+        "size": 18,
+        "colour": "#5d626b",
+        "on": "#17212b"
+       }
+      ],
+      "contrastFailCount": 1,
+      "overflowX": 0,
+      "runningAnimations": 0
+     },
+     "textRuns": 31,
+     "waitForSeen": true,
+     "pageErrors": [],
+     "url": "/?now=2026-11-10T09:00:00%2B11:00#/history"
+    },
+    "iphone-320": {
+     "viewport": [
+      320,
+      844
+     ],
+     "coarse": true,
+     "hierarchy": {
+      "fontSizes": [
+       {
+        "size": 26,
+        "chars": 7
+       },
+       {
+        "size": 18,
+        "chars": 9
+       },
+       {
+        "size": 14,
+        "chars": 88
+       },
+       {
+        "size": 13,
+        "chars": 63
+       },
+       {
+        "size": 11,
+        "chars": 35
+       }
+      ],
+      "largest": {
+       "size": 26,
+       "elements": 1,
+       "weight": 600,
+       "text": "404 kWh",
+       "nextSize": 18
+      },
+      "headings": [
+       {
+        "tag": "h1",
+        "text": "History",
+        "size": 18,
+        "weight": 600,
+        "top": 16.5
+       }
+      ]
+     },
+     "rows": {
+      "count": 3,
+      "sample": [
+       {
+        "height": 78,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 1,
+        "colourValues": [
+         "#0a6f75"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Day"
+       },
+       {
+        "height": 40,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 400,
+        "titleSize": 18,
+        "titleText": "‹"
+       },
+       {
+        "height": 44,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "kWh"
+       }
+      ],
+      "maxChips": 0,
+      "maxColours": 1,
+      "nested": 0,
+      "heights": [
+       40,
+       44,
+       78
+      ],
+      "titleWeightMax": 500
+     },
+     "interactive": {
+      "firstViewport": 14,
+      "measured": 14,
+      "small": 10,
+      "smallSample": [
+       {
+        "what": "Settings",
+        "tag": "a",
+        "width": 40,
+        "height": 40
+       },
+       {
+        "what": "Day",
+        "tag": "button",
+        "width": 54.3,
+        "height": 36
+       },
+       {
+        "what": "Week",
+        "tag": "button",
+        "width": 65.9,
+        "height": 36
+       },
+       {
+        "what": "Month",
+        "tag": "button",
+        "width": 70.6,
+        "height": 36
+       },
+       {
+        "what": "Quarter",
+        "tag": "button",
+        "width": 79.4,
+        "height": 36
+       },
+       {
+        "what": "Year",
+        "tag": "button",
+        "width": 58.7,
+        "height": 36
+       },
+       {
+        "what": "Custom",
+        "tag": "button",
+        "width": 79.1,
+        "height": 36
+       },
+       {
+        "what": "Previous period",
+        "tag": "button",
+        "width": 40,
+        "height": 40
+       },
+       {
+        "what": "kWh",
+        "tag": "button",
+        "width": 140,
+        "height": 36
+       },
+       {
+        "what": "$",
+        "tag": "button",
+        "width": 140,
+        "height": 36
+       }
+      ],
+      "inputs": 0,
+      "smallInputs": []
+     },
+     "controls": [
+      {
+       "what": "Settings",
+       "tag": "a",
+       "top": 8,
+       "bottom": 48,
+       "left": 264,
+       "inFirstViewport": true,
+       "centreAt": 0,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 40,
+       "height": 40
+      },
+      {
+       "what": "Day",
+       "tag": "button",
+       "top": 73,
+       "bottom": 109,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.1,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 54.3,
+       "height": 36
+      },
+      {
+       "what": "Week",
+       "tag": "button",
+       "top": 73,
+       "bottom": 109,
+       "left": 76.3,
+       "inFirstViewport": true,
+       "centreAt": 0.1,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 65.9,
+       "height": 36
+      },
+      {
+       "what": "Month",
+       "tag": "button",
+       "top": 73,
+       "bottom": 109,
+       "left": 148.3,
+       "inFirstViewport": true,
+       "centreAt": 0.1,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 70.6,
+       "height": 36
+      },
+      {
+       "what": "Quarter",
+       "tag": "button",
+       "top": 115,
+       "bottom": 151,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.2,
+       "pinnedToBottom": false,
+       "primaryFill": true,
+       "width": 79.4,
+       "height": 36
+      },
+      {
+       "what": "Year",
+       "tag": "button",
+       "top": 115,
+       "bottom": 151,
+       "left": 101.4,
+       "inFirstViewport": true,
+       "centreAt": 0.2,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 58.7,
+       "height": 36
+      },
+      {
+       "what": "Custom",
+       "tag": "button",
+       "top": 115,
+       "bottom": 151,
+       "left": 166.1,
+       "inFirstViewport": true,
+       "centreAt": 0.2,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 79.1,
+       "height": 36
+      },
+      {
+       "what": "Previous period",
+       "tag": "button",
+       "top": 159,
+       "bottom": 199,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.2,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 40,
+       "height": 40
+      },
+      {
+       "what": "kWh",
+       "tag": "button",
+       "top": 211,
+       "bottom": 247,
+       "left": 20,
+       "inFirstViewport": true,
+       "centreAt": 0.3,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 140,
+       "height": 36
+      },
+      {
+       "what": "$",
+       "tag": "button",
+       "top": 211,
+       "bottom": 247,
+       "left": 160,
+       "inFirstViewport": true,
+       "centreAt": 0.3,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 140,
+       "height": 36
+      },
+      {
+       "what": "Home",
+       "tag": "a",
+       "top": 788,
+       "bottom": 844,
+       "left": 0,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 80,
+       "height": 56
+      },
+      {
+       "what": "History",
+       "tag": "a",
+       "top": 788,
+       "bottom": 844,
+       "left": 80,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 80,
+       "height": 56
+      },
+      {
+       "what": "Circuits",
+       "tag": "a",
+       "top": 788,
+       "bottom": 844,
+       "left": 160,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 80,
+       "height": 56
+      },
+      {
+       "what": "Bills",
+       "tag": "a",
+       "top": 788,
+       "bottom": 844,
+       "left": 240,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 80,
+       "height": 56
+      }
+     ],
+     "alphaSteps": [
+      0.3,
+      0.75,
+      0.95
+     ],
+     "state": {
+      "statusTokens": [
+       "--warning #8a5300",
+       "--success #137333",
+       "--critical #c10007",
+       "--unreachable #b04400",
+       "--destructive #c10007"
+      ],
+      "statusColoured": 0,
+      "offToken": [],
+      "colourOnly": 0,
+      "colourOnlySamples": [],
+      "countsInHeadings": 0,
+      "progressElements": 0,
+      "empties": []
+     },
+     "reading": {
+      "bodySize": 14,
+      "lines": [],
+      "contrastChecked": 31,
+      "contrastUnknown": 0,
+      "contrastFails": [
+       {
+        "text": "›",
+        "ratio": 1.92,
+        "size": 18,
+        "colour": "#b6b3b8",
+        "on": "#f5f7f8"
+       }
+      ],
+      "contrastFailCount": 1,
+      "overflowX": 0,
+      "runningAnimations": 0
+     },
+     "textRuns": 31,
+     "waitForSeen": true,
+     "pageErrors": [],
+     "url": "/?now=2026-11-10T09:00:00%2B11:00#/history"
+    },
+    "iphone-reduced-motion": {
+     "viewport": [
+      390,
+      844
+     ],
+     "coarse": true,
+     "hierarchy": {
+      "fontSizes": [
+       {
+        "size": 26,
+        "chars": 7
+       },
+       {
+        "size": 18,
+        "chars": 9
+       },
+       {
+        "size": 14,
+        "chars": 88
+       },
+       {
+        "size": 13,
+        "chars": 63
+       },
+       {
+        "size": 11,
+        "chars": 35
+       }
+      ],
+      "largest": {
+       "size": 26,
+       "elements": 1,
+       "weight": 600,
+       "text": "404 kWh",
+       "nextSize": 18
+      },
+      "headings": [
+       {
+        "tag": "h1",
+        "text": "History",
+        "size": 18,
+        "weight": 600,
+        "top": 16.5
+       }
+      ]
+     },
+     "rows": {
+      "count": 3,
+      "sample": [
+       {
+        "height": 78,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 1,
+        "colourValues": [
+         "#0a6f75"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Day"
+       },
+       {
+        "height": 40,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 400,
+        "titleSize": 18,
+        "titleText": "‹"
+       },
+       {
+        "height": 44,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "kWh"
+       }
+      ],
+      "maxChips": 0,
+      "maxColours": 1,
+      "nested": 0,
+      "heights": [
+       40,
+       44,
+       78
+      ],
+      "titleWeightMax": 500
+     },
+     "interactive": {
+      "firstViewport": 14,
+      "measured": 14,
+      "small": 10,
+      "smallSample": [
+       {
+        "what": "Settings",
+        "tag": "a",
+        "width": 40,
+        "height": 40
+       },
+       {
+        "what": "Day",
+        "tag": "button",
+        "width": 54.3,
+        "height": 36
+       },
+       {
+        "what": "Week",
+        "tag": "button",
+        "width": 65.9,
+        "height": 36
+       },
+       {
+        "what": "Month",
+        "tag": "button",
+        "width": 70.6,
+        "height": 36
+       },
+       {
+        "what": "Quarter",
+        "tag": "button",
+        "width": 79.4,
+        "height": 36
+       },
+       {
+        "what": "Year",
+        "tag": "button",
+        "width": 58.7,
+        "height": 36
+       },
+       {
+        "what": "Custom",
+        "tag": "button",
+        "width": 79.1,
+        "height": 36
+       },
+       {
+        "what": "Previous period",
+        "tag": "button",
+        "width": 40,
+        "height": 40
+       },
+       {
+        "what": "kWh",
+        "tag": "button",
+        "width": 175,
+        "height": 36
+       },
+       {
+        "what": "$",
+        "tag": "button",
+        "width": 175,
+        "height": 36
+       }
+      ],
+      "inputs": 0,
+      "smallInputs": []
+     },
+     "controls": [
+      {
+       "what": "Settings",
+       "tag": "a",
+       "top": 8,
+       "bottom": 48,
+       "left": 334,
+       "inFirstViewport": true,
+       "centreAt": 0,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 40,
+       "height": 40
+      },
+      {
+       "what": "Day",
+       "tag": "button",
+       "top": 73,
+       "bottom": 109,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.1,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 54.3,
+       "height": 36
+      },
+      {
+       "what": "Week",
+       "tag": "button",
+       "top": 73,
+       "bottom": 109,
+       "left": 76.3,
+       "inFirstViewport": true,
+       "centreAt": 0.1,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 65.9,
+       "height": 36
+      },
+      {
+       "what": "Month",
+       "tag": "button",
+       "top": 73,
+       "bottom": 109,
+       "left": 148.3,
+       "inFirstViewport": true,
+       "centreAt": 0.1,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 70.6,
+       "height": 36
+      },
+      {
+       "what": "Quarter",
+       "tag": "button",
+       "top": 73,
+       "bottom": 109,
+       "left": 224.9,
+       "inFirstViewport": true,
+       "centreAt": 0.1,
+       "pinnedToBottom": false,
+       "primaryFill": true,
+       "width": 79.4,
+       "height": 36
+      },
+      {
+       "what": "Year",
+       "tag": "button",
+       "top": 73,
+       "bottom": 109,
+       "left": 310.3,
+       "inFirstViewport": true,
+       "centreAt": 0.1,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 58.7,
+       "height": 36
+      },
+      {
+       "what": "Custom",
+       "tag": "button",
+       "top": 115,
+       "bottom": 151,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.2,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 79.1,
+       "height": 36
+      },
+      {
+       "what": "Previous period",
+       "tag": "button",
+       "top": 159,
+       "bottom": 199,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.2,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 40,
+       "height": 40
+      },
+      {
+       "what": "kWh",
+       "tag": "button",
+       "top": 211,
+       "bottom": 247,
+       "left": 20,
+       "inFirstViewport": true,
+       "centreAt": 0.3,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 175,
+       "height": 36
+      },
+      {
+       "what": "$",
+       "tag": "button",
+       "top": 211,
+       "bottom": 247,
+       "left": 195,
+       "inFirstViewport": true,
+       "centreAt": 0.3,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 175,
+       "height": 36
+      },
+      {
+       "what": "Home",
+       "tag": "a",
+       "top": 788,
+       "bottom": 844,
+       "left": 0,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 97.5,
+       "height": 56
+      },
+      {
+       "what": "History",
+       "tag": "a",
+       "top": 788,
+       "bottom": 844,
+       "left": 97.5,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 97.5,
+       "height": 56
+      },
+      {
+       "what": "Circuits",
+       "tag": "a",
+       "top": 788,
+       "bottom": 844,
+       "left": 195,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 97.5,
+       "height": 56
+      },
+      {
+       "what": "Bills",
+       "tag": "a",
+       "top": 788,
+       "bottom": 844,
+       "left": 292.5,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 97.5,
+       "height": 56
+      }
+     ],
+     "alphaSteps": [
+      0.3,
+      0.75,
+      0.95
+     ],
+     "state": {
+      "statusTokens": [
+       "--warning #8a5300",
+       "--success #137333",
+       "--critical #c10007",
+       "--unreachable #b04400",
+       "--destructive #c10007"
+      ],
+      "statusColoured": 0,
+      "offToken": [],
+      "colourOnly": 0,
+      "colourOnlySamples": [],
+      "countsInHeadings": 0,
+      "progressElements": 0,
+      "empties": []
+     },
+     "reading": {
+      "bodySize": 14,
+      "lines": [],
+      "contrastChecked": 31,
+      "contrastUnknown": 0,
+      "contrastFails": [
+       {
+        "text": "›",
+        "ratio": 1.92,
+        "size": 18,
+        "colour": "#b6b3b8",
+        "on": "#f5f7f8"
+       }
+      ],
+      "contrastFailCount": 1,
+      "overflowX": 0,
+      "runningAnimations": 0
+     },
+     "textRuns": 31,
+     "waitForSeen": true,
+     "pageErrors": [],
+     "url": "/?now=2026-11-10T09:00:00%2B11:00#/history"
+    }
+   }
+  },
+  {
+   "name": "bills",
+   "path": "/?now=2026-11-10T09:00:00%2B11:00#/bills",
+   "why": "Fourth tab; the app's list screen (one row per bill).",
+   "primaryAction": null,
+   "expectsProgress": false,
+   "checks": {
+    "hierarchy": {
+     "oneLargest": {
+      "pass": false,
+      "detail": "21px ×6 \"$2,447.17\", next 18px"
+     },
+     "fontSizes": {
+      "pass": false,
+      "detail": "21/18/14/13"
+     },
+     "headingVisible": {
+      "pass": true,
+      "detail": "h1 \"Bills\" at 16.5px"
+     },
+     "headingOutweighsRows": {
+      "pass": true,
+      "detail": "heading 600, row title 600"
+     }
+    },
+    "clutter": {
+     "chipsPerRow": {
+      "pass": true,
+      "detail": "max 0 in 6 rows"
+     },
+     "coloursPerRow": {
+      "pass": true,
+      "detail": "max 0"
+     },
+     "noNestedBorders": {
+      "pass": true,
+      "detail": "0 rows"
+     },
+     "interactiveCount": {
+      "pass": true,
+      "detail": "11"
+     },
+     "alphaSteps": {
+      "pass": true,
+      "detail": "1: 0.95"
+     }
+    },
+    "action": {
+     "primaryVisible": {
+      "pass": null,
+      "detail": "no primary action on this screen"
+     },
+     "primaryInThumbZone": {
+      "pass": null,
+      "detail": "no primary action on this screen"
+     },
+     "tapTargets": {
+      "pass": false,
+      "detail": "1 of 11 under 44px"
+     },
+     "inputText": {
+      "pass": null,
+      "detail": "no inputs"
+     }
+    },
+    "state": {
+     "moreThanColour": {
+      "pass": null,
+      "detail": "no status colour on screen"
+     },
+     "statusFromTokens": {
+      "pass": null,
+      "detail": "no status colour on screen"
+     },
+     "progressShown": {
+      "pass": null,
+      "detail": "no goal on this screen"
+     },
+     "emptySaysNext": {
+      "pass": null,
+      "detail": "no empty state on screen"
+     }
+    },
+    "reading": {
+     "bodyText": {
+      "pass": true,
+      "detail": "18px"
+     },
+     "lineLength": {
+      "pass": null,
+      "detail": "no wrapped paragraph on desktop"
+     },
+     "contrast": {
+      "pass": true,
+      "detail": "iphone-light 0, iphone-dark 0, desktop-light 0, desktop-dark 0"
+     },
+     "noSidewaysScroll": {
+      "pass": true,
+      "detail": "390: 0px, 320: 0px"
+     },
+     "reducedMotion": {
+      "pass": true,
+      "detail": "0 running"
+     }
+    }
+   },
+   "variants": {
+    "iphone-light": {
+     "viewport": [
+      390,
+      844
+     ],
+     "coarse": true,
+     "hierarchy": {
+      "fontSizes": [
+       {
+        "size": 21,
+        "chars": 54
+       },
+       {
+        "size": 18,
+        "chars": 5
+       },
+       {
+        "size": 14,
+        "chars": 224
+       },
+       {
+        "size": 13,
+        "chars": 252
+       }
+      ],
+      "largest": {
+       "size": 21,
+       "elements": 6,
+       "weight": 600,
+       "text": "$2,447.17",
+       "nextSize": 18
+      },
+      "headings": [
+       {
+        "tag": "h1",
+        "text": "Bills",
+        "size": 18,
+        "weight": 600,
+        "top": 16.5
+       }
+      ]
+     },
+     "rows": {
+      "count": 6,
+      "sample": [
+       {
+        "height": 110,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 600,
+        "titleSize": 21,
+        "titleText": "$2,447.17"
+       },
+       {
+        "height": 110,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 600,
+        "titleSize": 21,
+        "titleText": "$2,347.47"
+       },
+       {
+        "height": 110,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 600,
+        "titleSize": 21,
+        "titleText": "$1,781.82"
+       },
+       {
+        "height": 110,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 600,
+        "titleSize": 21,
+        "titleText": "$1,772.63"
+       },
+       {
+        "height": 110,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 600,
+        "titleSize": 21,
+        "titleText": "$1,861.30"
+       },
+       {
+        "height": 110,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 600,
+        "titleSize": 21,
+        "titleText": "$2,943.99"
+       }
+      ],
+      "maxChips": 0,
+      "maxColours": 0,
+      "nested": 0,
+      "heights": [
+       110
+      ],
+      "titleWeightMax": 600
+     },
+     "interactive": {
+      "firstViewport": 11,
+      "measured": 11,
+      "small": 1,
+      "smallSample": [
+       {
+        "what": "Settings",
+        "tag": "a",
+        "width": 40,
+        "height": 40
+       }
+      ],
+      "inputs": 0,
+      "smallInputs": []
+     },
+     "controls": [
+      {
+       "what": "Settings",
+       "tag": "a",
+       "top": 8,
+       "bottom": 48,
+       "left": 334,
+       "inFirstViewport": true,
+       "centreAt": 0,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 40,
+       "height": 40
+      },
+      {
+       "what": "Bill for 31 Jul – 30 Oct 2026: open deta",
+       "tag": "a",
+       "top": 73,
+       "bottom": 183,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.2,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 110
+      },
+      {
+       "what": "Bill for 30 Apr – 30 Jul 2026: open deta",
+       "tag": "a",
+       "top": 195,
+       "bottom": 305,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.3,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 110
+      },
+      {
+       "what": "Bill for 31 Jan – 29 Apr 2026: open deta",
+       "tag": "a",
+       "top": 317,
+       "bottom": 427,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 110
+      },
+      {
+       "what": "Bill for 2 Nov – 30 Jan 2026: open detai",
+       "tag": "a",
+       "top": 439,
+       "bottom": 549,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 110
+      },
+      {
+       "what": "Bill for 3 Aug – 1 Nov 2025: open detail",
+       "tag": "a",
+       "top": 561,
+       "bottom": 671,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.7,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 110
+      },
+      {
+       "what": "Bill for 3 May – 2 Aug 2025: open detail",
+       "tag": "a",
+       "top": 683,
+       "bottom": 793,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.9,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 110
+      },
+      {
+       "what": "Home",
+       "tag": "a",
+       "top": 788,
+       "bottom": 844,
+       "left": 0,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 97.5,
+       "height": 56
+      },
+      {
+       "what": "History",
+       "tag": "a",
+       "top": 788,
+       "bottom": 844,
+       "left": 97.5,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 97.5,
+       "height": 56
+      },
+      {
+       "what": "Circuits",
+       "tag": "a",
+       "top": 788,
+       "bottom": 844,
+       "left": 195,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 97.5,
+       "height": 56
+      },
+      {
+       "what": "Bills",
+       "tag": "a",
+       "top": 788,
+       "bottom": 844,
+       "left": 292.5,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 97.5,
+       "height": 56
+      }
+     ],
+     "alphaSteps": [
+      0.95
+     ],
+     "state": {
+      "statusTokens": [
+       "--warning #8a5300",
+       "--success #137333",
+       "--critical #c10007",
+       "--unreachable #b04400",
+       "--destructive #c10007"
+      ],
+      "statusColoured": 0,
+      "offToken": [],
+      "colourOnly": 0,
+      "colourOnlySamples": [],
+      "countsInHeadings": 0,
+      "progressElements": 0,
+      "empties": []
+     },
+     "reading": {
+      "bodySize": 18,
+      "lines": [],
+      "contrastChecked": 65,
+      "contrastUnknown": 0,
+      "contrastFails": [],
+      "contrastFailCount": 0,
+      "overflowX": 0,
+      "runningAnimations": 0
+     },
+     "textRuns": 65,
+     "waitForSeen": true,
+     "pageErrors": [],
+     "url": "/?now=2026-11-10T09:00:00%2B11:00#/bills"
+    },
+    "iphone-dark": {
+     "viewport": [
+      390,
+      844
+     ],
+     "coarse": true,
+     "hierarchy": {
+      "fontSizes": [
+       {
+        "size": 21,
+        "chars": 54
+       },
+       {
+        "size": 18,
+        "chars": 5
+       },
+       {
+        "size": 14,
+        "chars": 224
+       },
+       {
+        "size": 13,
+        "chars": 252
+       }
+      ],
+      "largest": {
+       "size": 21,
+       "elements": 6,
+       "weight": 600,
+       "text": "$2,447.17",
+       "nextSize": 18
+      },
+      "headings": [
+       {
+        "tag": "h1",
+        "text": "Bills",
+        "size": 18,
+        "weight": 600,
+        "top": 16.5
+       }
+      ]
+     },
+     "rows": {
+      "count": 6,
+      "sample": [
+       {
+        "height": 110,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 600,
+        "titleSize": 21,
+        "titleText": "$2,447.17"
+       },
+       {
+        "height": 110,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 600,
+        "titleSize": 21,
+        "titleText": "$2,347.47"
+       },
+       {
+        "height": 110,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 600,
+        "titleSize": 21,
+        "titleText": "$1,781.82"
+       },
+       {
+        "height": 110,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 600,
+        "titleSize": 21,
+        "titleText": "$1,772.63"
+       },
+       {
+        "height": 110,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 600,
+        "titleSize": 21,
+        "titleText": "$1,861.30"
+       },
+       {
+        "height": 110,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 600,
+        "titleSize": 21,
+        "titleText": "$2,943.99"
+       }
+      ],
+      "maxChips": 0,
+      "maxColours": 0,
+      "nested": 0,
+      "heights": [
+       110
+      ],
+      "titleWeightMax": 600
+     },
+     "interactive": {
+      "firstViewport": 11,
+      "measured": 11,
+      "small": 1,
+      "smallSample": [
+       {
+        "what": "Settings",
+        "tag": "a",
+        "width": 40,
+        "height": 40
+       }
+      ],
+      "inputs": 0,
+      "smallInputs": []
+     },
+     "controls": [
+      {
+       "what": "Settings",
+       "tag": "a",
+       "top": 8,
+       "bottom": 48,
+       "left": 334,
+       "inFirstViewport": true,
+       "centreAt": 0,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 40,
+       "height": 40
+      },
+      {
+       "what": "Bill for 31 Jul – 30 Oct 2026: open deta",
+       "tag": "a",
+       "top": 73,
+       "bottom": 183,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.2,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 110
+      },
+      {
+       "what": "Bill for 30 Apr – 30 Jul 2026: open deta",
+       "tag": "a",
+       "top": 195,
+       "bottom": 305,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.3,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 110
+      },
+      {
+       "what": "Bill for 31 Jan – 29 Apr 2026: open deta",
+       "tag": "a",
+       "top": 317,
+       "bottom": 427,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 110
+      },
+      {
+       "what": "Bill for 2 Nov – 30 Jan 2026: open detai",
+       "tag": "a",
+       "top": 439,
+       "bottom": 549,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 110
+      },
+      {
+       "what": "Bill for 3 Aug – 1 Nov 2025: open detail",
+       "tag": "a",
+       "top": 561,
+       "bottom": 671,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.7,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 110
+      },
+      {
+       "what": "Bill for 3 May – 2 Aug 2025: open detail",
+       "tag": "a",
+       "top": 683,
+       "bottom": 793,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.9,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 110
+      },
+      {
+       "what": "Home",
+       "tag": "a",
+       "top": 788,
+       "bottom": 844,
+       "left": 0,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 97.5,
+       "height": 56
+      },
+      {
+       "what": "History",
+       "tag": "a",
+       "top": 788,
+       "bottom": 844,
+       "left": 97.5,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 97.5,
+       "height": 56
+      },
+      {
+       "what": "Circuits",
+       "tag": "a",
+       "top": 788,
+       "bottom": 844,
+       "left": 195,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 97.5,
+       "height": 56
+      },
+      {
+       "what": "Bills",
+       "tag": "a",
+       "top": 788,
+       "bottom": 844,
+       "left": 292.5,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 97.5,
+       "height": 56
+      }
+     ],
+     "alphaSteps": [
+      0.95
+     ],
+     "state": {
+      "statusTokens": [
+       "--warning #fbbf24",
+       "--success #4ade80",
+       "--critical #ff7a7e",
+       "--unreachable #fb923c",
+       "--destructive #ff6467"
+      ],
+      "statusColoured": 0,
+      "offToken": [],
+      "colourOnly": 0,
+      "colourOnlySamples": [],
+      "countsInHeadings": 0,
+      "progressElements": 0,
+      "empties": []
+     },
+     "reading": {
+      "bodySize": 18,
+      "lines": [],
+      "contrastChecked": 65,
+      "contrastUnknown": 0,
+      "contrastFails": [],
+      "contrastFailCount": 0,
+      "overflowX": 0,
+      "runningAnimations": 0
+     },
+     "textRuns": 65,
+     "waitForSeen": true,
+     "pageErrors": [],
+     "url": "/?now=2026-11-10T09:00:00%2B11:00#/bills"
+    },
+    "desktop-light": {
+     "viewport": [
+      1440,
+      900
+     ],
+     "coarse": false,
+     "hierarchy": {
+      "fontSizes": [
+       {
+        "size": 21,
+        "chars": 54
+       },
+       {
+        "size": 18,
+        "chars": 5
+       },
+       {
+        "size": 14,
+        "chars": 224
+       },
+       {
+        "size": 13,
+        "chars": 252
+       }
+      ],
+      "largest": {
+       "size": 21,
+       "elements": 6,
+       "weight": 600,
+       "text": "$2,447.17",
+       "nextSize": 18
+      },
+      "headings": [
+       {
+        "tag": "h1",
+        "text": "Bills",
+        "size": 18,
+        "weight": 600,
+        "top": 16.5
+       }
+      ]
+     },
+     "rows": {
+      "count": 6,
+      "sample": [
+       {
+        "height": 110,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 600,
+        "titleSize": 21,
+        "titleText": "$2,447.17"
+       },
+       {
+        "height": 110,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 600,
+        "titleSize": 21,
+        "titleText": "$2,347.47"
+       },
+       {
+        "height": 110,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 600,
+        "titleSize": 21,
+        "titleText": "$1,781.82"
+       },
+       {
+        "height": 110,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 600,
+        "titleSize": 21,
+        "titleText": "$1,772.63"
+       },
+       {
+        "height": 110,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 600,
+        "titleSize": 21,
+        "titleText": "$1,861.30"
+       },
+       {
+        "height": 110,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 600,
+        "titleSize": 21,
+        "titleText": "$2,943.99"
+       }
+      ],
+      "maxChips": 0,
+      "maxColours": 0,
+      "nested": 0,
+      "heights": [
+       110
+      ],
+      "titleWeightMax": 600
+     },
+     "interactive": {
+      "firstViewport": 11,
+      "measured": 11,
+      "small": 1,
+      "smallSample": [
+       {
+        "what": "Settings",
+        "tag": "a",
+        "width": 40,
+        "height": 40
+       }
+      ],
+      "inputs": 0,
+      "smallInputs": []
+     },
+     "controls": [
+      {
+       "what": "Settings",
+       "tag": "a",
+       "top": 8,
+       "bottom": 48,
+       "left": 948,
+       "inFirstViewport": true,
+       "centreAt": 0,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 40,
+       "height": 40
+      },
+      {
+       "what": "Bill for 31 Jul – 30 Oct 2026: open deta",
+       "tag": "a",
+       "top": 73,
+       "bottom": 183,
+       "left": 444,
+       "inFirstViewport": true,
+       "centreAt": 0.1,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 544,
+       "height": 110
+      },
+      {
+       "what": "Bill for 30 Apr – 30 Jul 2026: open deta",
+       "tag": "a",
+       "top": 195,
+       "bottom": 305,
+       "left": 444,
+       "inFirstViewport": true,
+       "centreAt": 0.3,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 544,
+       "height": 110
+      },
+      {
+       "what": "Bill for 31 Jan – 29 Apr 2026: open deta",
+       "tag": "a",
+       "top": 317,
+       "bottom": 427,
+       "left": 444,
+       "inFirstViewport": true,
+       "centreAt": 0.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 544,
+       "height": 110
+      },
+      {
+       "what": "Bill for 2 Nov – 30 Jan 2026: open detai",
+       "tag": "a",
+       "top": 439,
+       "bottom": 549,
+       "left": 444,
+       "inFirstViewport": true,
+       "centreAt": 0.5,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 544,
+       "height": 110
+      },
+      {
+       "what": "Bill for 3 Aug – 1 Nov 2025: open detail",
+       "tag": "a",
+       "top": 561,
+       "bottom": 671,
+       "left": 444,
+       "inFirstViewport": true,
+       "centreAt": 0.7,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 544,
+       "height": 110
+      },
+      {
+       "what": "Bill for 3 May – 2 Aug 2025: open detail",
+       "tag": "a",
+       "top": 683,
+       "bottom": 793,
+       "left": 444,
+       "inFirstViewport": true,
+       "centreAt": 0.8,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 544,
+       "height": 110
+      },
+      {
+       "what": "Home",
+       "tag": "a",
+       "top": 844,
+       "bottom": 900,
+       "left": 428,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 144,
+       "height": 56
+      },
+      {
+       "what": "History",
+       "tag": "a",
+       "top": 844,
+       "bottom": 900,
+       "left": 572,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 144,
+       "height": 56
+      },
+      {
+       "what": "Circuits",
+       "tag": "a",
+       "top": 844,
+       "bottom": 900,
+       "left": 716,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 144,
+       "height": 56
+      },
+      {
+       "what": "Bills",
+       "tag": "a",
+       "top": 844,
+       "bottom": 900,
+       "left": 860,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 144,
+       "height": 56
+      }
+     ],
+     "alphaSteps": [
+      0.95
+     ],
+     "state": {
+      "statusTokens": [
+       "--warning #8a5300",
+       "--success #137333",
+       "--critical #c10007",
+       "--unreachable #b04400",
+       "--destructive #c10007"
+      ],
+      "statusColoured": 0,
+      "offToken": [],
+      "colourOnly": 0,
+      "colourOnlySamples": [],
+      "countsInHeadings": 0,
+      "progressElements": 0,
+      "empties": []
+     },
+     "reading": {
+      "bodySize": 18,
+      "lines": [],
+      "contrastChecked": 65,
+      "contrastUnknown": 0,
+      "contrastFails": [],
+      "contrastFailCount": 0,
+      "overflowX": -8,
+      "runningAnimations": 0
+     },
+     "textRuns": 65,
+     "waitForSeen": true,
+     "pageErrors": [],
+     "url": "/?now=2026-11-10T09:00:00%2B11:00#/bills"
+    },
+    "desktop-dark": {
+     "viewport": [
+      1440,
+      900
+     ],
+     "coarse": false,
+     "hierarchy": {
+      "fontSizes": [
+       {
+        "size": 21,
+        "chars": 54
+       },
+       {
+        "size": 18,
+        "chars": 5
+       },
+       {
+        "size": 14,
+        "chars": 224
+       },
+       {
+        "size": 13,
+        "chars": 252
+       }
+      ],
+      "largest": {
+       "size": 21,
+       "elements": 6,
+       "weight": 600,
+       "text": "$2,447.17",
+       "nextSize": 18
+      },
+      "headings": [
+       {
+        "tag": "h1",
+        "text": "Bills",
+        "size": 18,
+        "weight": 600,
+        "top": 16.5
+       }
+      ]
+     },
+     "rows": {
+      "count": 6,
+      "sample": [
+       {
+        "height": 110,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 600,
+        "titleSize": 21,
+        "titleText": "$2,447.17"
+       },
+       {
+        "height": 110,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 600,
+        "titleSize": 21,
+        "titleText": "$2,347.47"
+       },
+       {
+        "height": 110,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 600,
+        "titleSize": 21,
+        "titleText": "$1,781.82"
+       },
+       {
+        "height": 110,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 600,
+        "titleSize": 21,
+        "titleText": "$1,772.63"
+       },
+       {
+        "height": 110,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 600,
+        "titleSize": 21,
+        "titleText": "$1,861.30"
+       },
+       {
+        "height": 110,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 600,
+        "titleSize": 21,
+        "titleText": "$2,943.99"
+       }
+      ],
+      "maxChips": 0,
+      "maxColours": 0,
+      "nested": 0,
+      "heights": [
+       110
+      ],
+      "titleWeightMax": 600
+     },
+     "interactive": {
+      "firstViewport": 11,
+      "measured": 11,
+      "small": 1,
+      "smallSample": [
+       {
+        "what": "Settings",
+        "tag": "a",
+        "width": 40,
+        "height": 40
+       }
+      ],
+      "inputs": 0,
+      "smallInputs": []
+     },
+     "controls": [
+      {
+       "what": "Settings",
+       "tag": "a",
+       "top": 8,
+       "bottom": 48,
+       "left": 948,
+       "inFirstViewport": true,
+       "centreAt": 0,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 40,
+       "height": 40
+      },
+      {
+       "what": "Bill for 31 Jul – 30 Oct 2026: open deta",
+       "tag": "a",
+       "top": 73,
+       "bottom": 183,
+       "left": 444,
+       "inFirstViewport": true,
+       "centreAt": 0.1,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 544,
+       "height": 110
+      },
+      {
+       "what": "Bill for 30 Apr – 30 Jul 2026: open deta",
+       "tag": "a",
+       "top": 195,
+       "bottom": 305,
+       "left": 444,
+       "inFirstViewport": true,
+       "centreAt": 0.3,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 544,
+       "height": 110
+      },
+      {
+       "what": "Bill for 31 Jan – 29 Apr 2026: open deta",
+       "tag": "a",
+       "top": 317,
+       "bottom": 427,
+       "left": 444,
+       "inFirstViewport": true,
+       "centreAt": 0.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 544,
+       "height": 110
+      },
+      {
+       "what": "Bill for 2 Nov – 30 Jan 2026: open detai",
+       "tag": "a",
+       "top": 439,
+       "bottom": 549,
+       "left": 444,
+       "inFirstViewport": true,
+       "centreAt": 0.5,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 544,
+       "height": 110
+      },
+      {
+       "what": "Bill for 3 Aug – 1 Nov 2025: open detail",
+       "tag": "a",
+       "top": 561,
+       "bottom": 671,
+       "left": 444,
+       "inFirstViewport": true,
+       "centreAt": 0.7,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 544,
+       "height": 110
+      },
+      {
+       "what": "Bill for 3 May – 2 Aug 2025: open detail",
+       "tag": "a",
+       "top": 683,
+       "bottom": 793,
+       "left": 444,
+       "inFirstViewport": true,
+       "centreAt": 0.8,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 544,
+       "height": 110
+      },
+      {
+       "what": "Home",
+       "tag": "a",
+       "top": 844,
+       "bottom": 900,
+       "left": 428,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 144,
+       "height": 56
+      },
+      {
+       "what": "History",
+       "tag": "a",
+       "top": 844,
+       "bottom": 900,
+       "left": 572,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 144,
+       "height": 56
+      },
+      {
+       "what": "Circuits",
+       "tag": "a",
+       "top": 844,
+       "bottom": 900,
+       "left": 716,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 144,
+       "height": 56
+      },
+      {
+       "what": "Bills",
+       "tag": "a",
+       "top": 844,
+       "bottom": 900,
+       "left": 860,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 144,
+       "height": 56
+      }
+     ],
+     "alphaSteps": [
+      0.95
+     ],
+     "state": {
+      "statusTokens": [
+       "--warning #fbbf24",
+       "--success #4ade80",
+       "--critical #ff7a7e",
+       "--unreachable #fb923c",
+       "--destructive #ff6467"
+      ],
+      "statusColoured": 0,
+      "offToken": [],
+      "colourOnly": 0,
+      "colourOnlySamples": [],
+      "countsInHeadings": 0,
+      "progressElements": 0,
+      "empties": []
+     },
+     "reading": {
+      "bodySize": 18,
+      "lines": [],
+      "contrastChecked": 65,
+      "contrastUnknown": 0,
+      "contrastFails": [],
+      "contrastFailCount": 0,
+      "overflowX": -8,
+      "runningAnimations": 0
+     },
+     "textRuns": 65,
+     "waitForSeen": true,
+     "pageErrors": [],
+     "url": "/?now=2026-11-10T09:00:00%2B11:00#/bills"
+    },
+    "iphone-320": {
+     "viewport": [
+      320,
+      844
+     ],
+     "coarse": true,
+     "hierarchy": {
+      "fontSizes": [
+       {
+        "size": 21,
+        "chars": 54
+       },
+       {
+        "size": 18,
+        "chars": 5
+       },
+       {
+        "size": 14,
+        "chars": 211
+       },
+       {
+        "size": 13,
+        "chars": 252
+       }
+      ],
+      "largest": {
+       "size": 21,
+       "elements": 6,
+       "weight": 600,
+       "text": "$2,447.17",
+       "nextSize": 18
+      },
+      "headings": [
+       {
+        "tag": "h1",
+        "text": "Bills",
+        "size": 18,
+        "weight": 600,
+        "top": 16.5
+       }
+      ]
+     },
+     "rows": {
+      "count": 6,
+      "sample": [
+       {
+        "height": 127,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 600,
+        "titleSize": 21,
+        "titleText": "$2,447.17"
+       },
+       {
+        "height": 127,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 600,
+        "titleSize": 21,
+        "titleText": "$2,347.47"
+       },
+       {
+        "height": 127,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 600,
+        "titleSize": 21,
+        "titleText": "$1,781.82"
+       },
+       {
+        "height": 127,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 600,
+        "titleSize": 21,
+        "titleText": "$1,772.63"
+       },
+       {
+        "height": 127,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 600,
+        "titleSize": 21,
+        "titleText": "$1,861.30"
+       },
+       {
+        "height": 127,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 600,
+        "titleSize": 21,
+        "titleText": "$2,943.99"
+       }
+      ],
+      "maxChips": 0,
+      "maxColours": 0,
+      "nested": 0,
+      "heights": [
+       127
+      ],
+      "titleWeightMax": 600
+     },
+     "interactive": {
+      "firstViewport": 11,
+      "measured": 11,
+      "small": 1,
+      "smallSample": [
+       {
+        "what": "Settings",
+        "tag": "a",
+        "width": 40,
+        "height": 40
+       }
+      ],
+      "inputs": 0,
+      "smallInputs": []
+     },
+     "controls": [
+      {
+       "what": "Settings",
+       "tag": "a",
+       "top": 8,
+       "bottom": 48,
+       "left": 264,
+       "inFirstViewport": true,
+       "centreAt": 0,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 40,
+       "height": 40
+      },
+      {
+       "what": "Bill for 31 Jul – 30 Oct 2026: open deta",
+       "tag": "a",
+       "top": 73,
+       "bottom": 200,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.2,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 288,
+       "height": 127
+      },
+      {
+       "what": "Bill for 30 Apr – 30 Jul 2026: open deta",
+       "tag": "a",
+       "top": 212,
+       "bottom": 339,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.3,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 288,
+       "height": 127
+      },
+      {
+       "what": "Bill for 31 Jan – 29 Apr 2026: open deta",
+       "tag": "a",
+       "top": 351,
+       "bottom": 478,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.5,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 288,
+       "height": 127
+      },
+      {
+       "what": "Bill for 2 Nov – 30 Jan 2026: open detai",
+       "tag": "a",
+       "top": 490,
+       "bottom": 617,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.7,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 288,
+       "height": 127
+      },
+      {
+       "what": "Bill for 3 Aug – 1 Nov 2025: open detail",
+       "tag": "a",
+       "top": 629,
+       "bottom": 756,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.8,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 288,
+       "height": 127
+      },
+      {
+       "what": "Bill for 3 May – 2 Aug 2025: open detail",
+       "tag": "a",
+       "top": 768,
+       "bottom": 895,
+       "left": 16,
+       "inFirstViewport": false,
+       "centreAt": 1,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 288,
+       "height": 127
+      },
+      {
+       "what": "Home",
+       "tag": "a",
+       "top": 788,
+       "bottom": 844,
+       "left": 0,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 80,
+       "height": 56
+      },
+      {
+       "what": "History",
+       "tag": "a",
+       "top": 788,
+       "bottom": 844,
+       "left": 80,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 80,
+       "height": 56
+      },
+      {
+       "what": "Circuits",
+       "tag": "a",
+       "top": 788,
+       "bottom": 844,
+       "left": 160,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 80,
+       "height": 56
+      },
+      {
+       "what": "Bills",
+       "tag": "a",
+       "top": 788,
+       "bottom": 844,
+       "left": 240,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 80,
+       "height": 56
+      }
+     ],
+     "alphaSteps": [
+      0.95
+     ],
+     "state": {
+      "statusTokens": [
+       "--warning #8a5300",
+       "--success #137333",
+       "--critical #c10007",
+       "--unreachable #b04400",
+       "--destructive #c10007"
+      ],
+      "statusColoured": 0,
+      "offToken": [],
+      "colourOnly": 0,
+      "colourOnlySamples": [],
+      "countsInHeadings": 0,
+      "progressElements": 0,
+      "empties": []
+     },
+     "reading": {
+      "bodySize": 18,
+      "lines": [],
+      "contrastChecked": 65,
+      "contrastUnknown": 0,
+      "contrastFails": [],
+      "contrastFailCount": 0,
+      "overflowX": 0,
+      "runningAnimations": 0
+     },
+     "textRuns": 65,
+     "waitForSeen": true,
+     "pageErrors": [],
+     "url": "/?now=2026-11-10T09:00:00%2B11:00#/bills"
+    },
+    "iphone-reduced-motion": {
+     "viewport": [
+      390,
+      844
+     ],
+     "coarse": true,
+     "hierarchy": {
+      "fontSizes": [
+       {
+        "size": 21,
+        "chars": 54
+       },
+       {
+        "size": 18,
+        "chars": 5
+       },
+       {
+        "size": 14,
+        "chars": 224
+       },
+       {
+        "size": 13,
+        "chars": 252
+       }
+      ],
+      "largest": {
+       "size": 21,
+       "elements": 6,
+       "weight": 600,
+       "text": "$2,447.17",
+       "nextSize": 18
+      },
+      "headings": [
+       {
+        "tag": "h1",
+        "text": "Bills",
+        "size": 18,
+        "weight": 600,
+        "top": 16.5
+       }
+      ]
+     },
+     "rows": {
+      "count": 6,
+      "sample": [
+       {
+        "height": 110,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 600,
+        "titleSize": 21,
+        "titleText": "$2,447.17"
+       },
+       {
+        "height": 110,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 600,
+        "titleSize": 21,
+        "titleText": "$2,347.47"
+       },
+       {
+        "height": 110,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 600,
+        "titleSize": 21,
+        "titleText": "$1,781.82"
+       },
+       {
+        "height": 110,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 600,
+        "titleSize": 21,
+        "titleText": "$1,772.63"
+       },
+       {
+        "height": 110,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 600,
+        "titleSize": 21,
+        "titleText": "$1,861.30"
+       },
+       {
+        "height": 110,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 600,
+        "titleSize": 21,
+        "titleText": "$2,943.99"
+       }
+      ],
+      "maxChips": 0,
+      "maxColours": 0,
+      "nested": 0,
+      "heights": [
+       110
+      ],
+      "titleWeightMax": 600
+     },
+     "interactive": {
+      "firstViewport": 11,
+      "measured": 11,
+      "small": 1,
+      "smallSample": [
+       {
+        "what": "Settings",
+        "tag": "a",
+        "width": 40,
+        "height": 40
+       }
+      ],
+      "inputs": 0,
+      "smallInputs": []
+     },
+     "controls": [
+      {
+       "what": "Settings",
+       "tag": "a",
+       "top": 8,
+       "bottom": 48,
+       "left": 334,
+       "inFirstViewport": true,
+       "centreAt": 0,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 40,
+       "height": 40
+      },
+      {
+       "what": "Bill for 31 Jul – 30 Oct 2026: open deta",
+       "tag": "a",
+       "top": 73,
+       "bottom": 183,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.2,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 110
+      },
+      {
+       "what": "Bill for 30 Apr – 30 Jul 2026: open deta",
+       "tag": "a",
+       "top": 195,
+       "bottom": 305,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.3,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 110
+      },
+      {
+       "what": "Bill for 31 Jan – 29 Apr 2026: open deta",
+       "tag": "a",
+       "top": 317,
+       "bottom": 427,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 110
+      },
+      {
+       "what": "Bill for 2 Nov – 30 Jan 2026: open detai",
+       "tag": "a",
+       "top": 439,
+       "bottom": 549,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 110
+      },
+      {
+       "what": "Bill for 3 Aug – 1 Nov 2025: open detail",
+       "tag": "a",
+       "top": 561,
+       "bottom": 671,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.7,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 110
+      },
+      {
+       "what": "Bill for 3 May – 2 Aug 2025: open detail",
+       "tag": "a",
+       "top": 683,
+       "bottom": 793,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.9,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 110
+      },
+      {
+       "what": "Home",
+       "tag": "a",
+       "top": 788,
+       "bottom": 844,
+       "left": 0,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 97.5,
+       "height": 56
+      },
+      {
+       "what": "History",
+       "tag": "a",
+       "top": 788,
+       "bottom": 844,
+       "left": 97.5,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 97.5,
+       "height": 56
+      },
+      {
+       "what": "Circuits",
+       "tag": "a",
+       "top": 788,
+       "bottom": 844,
+       "left": 195,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 97.5,
+       "height": 56
+      },
+      {
+       "what": "Bills",
+       "tag": "a",
+       "top": 788,
+       "bottom": 844,
+       "left": 292.5,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 97.5,
+       "height": 56
+      }
+     ],
+     "alphaSteps": [
+      0.95
+     ],
+     "state": {
+      "statusTokens": [
+       "--warning #8a5300",
+       "--success #137333",
+       "--critical #c10007",
+       "--unreachable #b04400",
+       "--destructive #c10007"
+      ],
+      "statusColoured": 0,
+      "offToken": [],
+      "colourOnly": 0,
+      "colourOnlySamples": [],
+      "countsInHeadings": 0,
+      "progressElements": 0,
+      "empties": []
+     },
+     "reading": {
+      "bodySize": 18,
+      "lines": [],
+      "contrastChecked": 65,
+      "contrastUnknown": 0,
+      "contrastFails": [],
+      "contrastFailCount": 0,
+      "overflowX": 0,
+      "runningAnimations": 0
+     },
+     "textRuns": 65,
+     "waitForSeen": true,
+     "pageErrors": [],
+     "url": "/?now=2026-11-10T09:00:00%2B11:00#/bills"
+    }
+   }
+  }
+ ],
+ "mocks": [],
+ "blocked": []
+}

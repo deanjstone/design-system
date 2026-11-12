@@ -1,0 +1,35 @@
+{
+  "app": "sparky",
+  "repo": "sparky",
+  "sha": "1a831d7",
+  "baseUrl": "http://127.0.0.1:4311",
+  "mocks": [],
+  "screens": [
+    {
+      "name": "home",
+      "path": "/?now=2026-11-10T09:00:00%2B11:00#/home",
+      "waitFor": "h1",
+      "primaryAction": null,
+      "expectsProgress": true,
+      "why": "The first tab and the default route (src/app/router.ts): this quarter's energy use against last year."
+    },
+    {
+      "name": "history",
+      "path": "/?now=2026-11-10T09:00:00%2B11:00#/history",
+      "waitFor": "h1",
+      "primaryAction": null,
+      "expectsProgress": false,
+      "why": "Second tab in the tab bar (src/app/App.tsx TABS); the only screen with form controls (period and range pickers)."
+    },
+    {
+      "name": "bills",
+      "path": "/?now=2026-11-10T09:00:00%2B11:00#/bills",
+      "waitFor": "h1",
+      "primaryAction": null,
+      "expectsProgress": false,
+      "why": "Fourth tab; the app's list screen (one row per bill)."
+    }
+  ],
+  "mocksFile": "mocks.json",
+  "initScriptFile": "init.js"
+}
