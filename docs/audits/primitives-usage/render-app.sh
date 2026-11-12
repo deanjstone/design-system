@@ -22,3 +22,7 @@ server=$!
 trap 'kill "$server" 2>/dev/null || true; wait "$server" 2>/dev/null || true' EXIT
 sleep 1
 node "${here}/render.mjs" "$config" "$@"
+# Screenshots are kept in the repo, so shrink them where pngquant is installed (lossy, 256 colours).
+if command -v pngquant > /dev/null; then
+  pngquant --force --skip-if-larger --ext .png --quality 70-95 "${here}/screens/${app}"/*.png || true
+fi
