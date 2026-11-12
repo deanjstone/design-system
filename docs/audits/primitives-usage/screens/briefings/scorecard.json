@@ -1,0 +1,3987 @@
+{
+ "app": "briefings",
+ "baseUrl": "http://127.0.0.1:4315",
+ "rules": {
+  "fontSizesInFirstViewport": 3,
+  "largestRatio": 1.2,
+  "largestElements": 2,
+  "chipsPerRow": 1,
+  "coloursPerRow": 2,
+  "interactiveInFirstViewport": 15,
+  "alphaSteps": 4,
+  "tapTarget": 44,
+  "inputFontSize": 16,
+  "thumbZoneFrom": 0.6,
+  "bodyFontSize": 16,
+  "lineLength": [
+   45,
+   75
+  ],
+  "contrast": 4.5,
+  "contrastLarge": 3
+ },
+ "screens": [
+  {
+   "name": "briefing",
+   "path": "/briefings/",
+   "why": "The only route: the latest daily briefing (src/App.tsx).",
+   "primaryAction": null,
+   "expectsProgress": false,
+   "checks": {
+    "hierarchy": {
+     "oneLargest": {
+      "pass": false,
+      "detail": "21px ×1 \"10 Nov 2026\", next 18px"
+     },
+     "fontSizes": {
+      "pass": false,
+      "detail": "21/18/16/14/13/12.8/12"
+     },
+     "pageTitleVisible": {
+      "pass": true,
+      "detail": "h1 \"10 Nov 2026\""
+     },
+     "headingVisible": {
+      "pass": true,
+      "detail": "h1 \"10 Nov 2026\" at 140px"
+     },
+     "headingOutweighsRows": {
+      "pass": true,
+      "detail": "heading 600/600/500, row title 500"
+     },
+     "headingOutweighsRowsDesktop": {
+      "pass": true,
+      "detail": "heading 600/600/500/500/500, row title 500"
+     }
+    },
+    "clutter": {
+     "chipsPerRow": {
+      "pass": true,
+      "detail": "max 0 in 17 rows"
+     },
+     "coloursPerRow": {
+      "pass": true,
+      "detail": "max 1"
+     },
+     "noNestedBorders": {
+      "pass": false,
+      "detail": "3 rows"
+     },
+     "chipsPerRowDesktop": {
+      "pass": true,
+      "detail": "max 0 in 17 rows"
+     },
+     "coloursPerRowDesktop": {
+      "pass": true,
+      "detail": "max 1"
+     },
+     "nothingCutOff": {
+      "pass": true,
+      "detail": "0 texts cut short, 0 of them in list rows"
+     },
+     "interactiveCount": {
+      "pass": true,
+      "detail": "12"
+     },
+     "alphaSteps": {
+      "pass": true,
+      "detail": "3: 0.1, 0.6, 0.74"
+     }
+    },
+    "action": {
+     "primaryVisible": {
+      "pass": null,
+      "detail": "no primary action on this screen"
+     },
+     "primaryInThumbZone": {
+      "pass": null,
+      "detail": "no primary action on this screen"
+     },
+     "tapTargets": {
+      "pass": true,
+      "detail": "0 of 19 under 44px"
+     },
+     "inputText": {
+      "pass": null,
+      "detail": "no inputs"
+     }
+    },
+    "state": {
+     "moreThanColour": {
+      "pass": true,
+      "detail": "0 of 3 carry colour alone"
+     },
+     "statusFromTokens": {
+      "pass": true,
+      "detail": "all from tokens"
+     },
+     "progressShown": {
+      "pass": null,
+      "detail": "no goal on this screen"
+     },
+     "emptySaysNext": {
+      "pass": null,
+      "detail": "no empty state on screen"
+     }
+    },
+    "reading": {
+     "bodyText": {
+      "pass": true,
+      "detail": "16px"
+     },
+     "lineLength": {
+      "pass": false,
+      "detail": "85 to 85ch"
+     },
+     "contrast": {
+      "pass": false,
+      "detail": "iphone-light 0, iphone-dark 3, desktop-light 0, desktop-dark 3"
+     },
+     "noSidewaysScroll": {
+      "pass": true,
+      "detail": "390: 0px, 320: 0px"
+     },
+     "reducedMotion": {
+      "pass": true,
+      "detail": "0 running"
+     }
+    }
+   },
+   "variants": {
+    "iphone-light": {
+     "viewport": [
+      390,
+      844
+     ],
+     "coarse": true,
+     "hierarchy": {
+      "fontSizes": [
+       {
+        "size": 21,
+        "chars": 11
+       },
+       {
+        "size": 18,
+        "chars": 12
+       },
+       {
+        "size": 16,
+        "chars": 209
+       },
+       {
+        "size": 14,
+        "chars": 24
+       },
+       {
+        "size": 13,
+        "chars": 82
+       },
+       {
+        "size": 12.8,
+        "chars": 42
+       },
+       {
+        "size": 12,
+        "chars": 121
+       }
+      ],
+      "largest": {
+       "size": 21,
+       "elements": 1,
+       "weight": 600,
+       "text": "10 Nov 2026",
+       "nextSize": 18
+      },
+      "headings": [
+       {
+        "tag": "h1",
+        "text": "10 Nov 2026",
+        "size": 21,
+        "weight": 600,
+        "top": 140
+       },
+       {
+        "tag": "h2",
+        "text": "New memories",
+        "size": 18,
+        "weight": 600,
+        "top": 200
+       },
+       {
+        "tag": "h2",
+        "text": "Filed issues3",
+        "size": 14,
+        "weight": 500,
+        "top": 828
+       }
+      ]
+     },
+     "rows": {
+      "count": 17,
+      "sample": [
+       {
+        "height": 179,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 1,
+        "colourValues": [
+         "#c10007"
+        ],
+        "nested": 2,
+        "titleWeight": 500,
+        "titleSize": 16,
+        "titleText": "Nightly ingest retries once af"
+       },
+       {
+        "height": 179,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 1,
+        "colourValues": [
+         "#c10007"
+        ],
+        "nested": 2,
+        "titleWeight": 500,
+        "titleSize": 16,
+        "titleText": "Access answers an expired sess"
+       },
+       {
+        "height": 179,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 1,
+        "colourValues": [
+         "#c10007"
+        ],
+        "nested": 2,
+        "titleWeight": 500,
+        "titleSize": 16,
+        "titleText": "Prefer a here-string over a pi"
+       },
+       {
+        "height": 58,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Retry the nightly ingest when "
+       },
+       {
+        "height": 58,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Document the rollback steps fo"
+       },
+       {
+        "height": 58,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Add a timeout to the lint runn"
+       }
+      ],
+      "maxChips": 0,
+      "maxColours": 1,
+      "nested": 3,
+      "heights": [
+       58,
+       76,
+       95,
+       179
+      ],
+      "titleWeightMax": 500
+     },
+     "interactive": {
+      "firstViewport": 12,
+      "measured": 19,
+      "small": 0,
+      "smallSample": [],
+      "inputs": 0,
+      "smallInputs": []
+     },
+     "controls": [
+      {
+       "what": "Briefings",
+       "tag": "button",
+       "top": 10,
+       "bottom": 54,
+       "left": 17,
+       "inFirstViewport": true,
+       "centreAt": 0,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 104.3,
+       "height": 44
+      },
+      {
+       "what": "Briefing",
+       "tag": "button",
+       "top": 72,
+       "bottom": 116,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.1,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 179.5,
+       "height": 44
+      },
+      {
+       "what": "Days",
+       "tag": "button",
+       "top": 72,
+       "bottom": 116,
+       "left": 195.5,
+       "inFirstViewport": true,
+       "centreAt": 0.1,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 178.5,
+       "height": 44
+      },
+      {
+       "what": "Keep",
+       "tag": "button",
+       "top": 328,
+       "bottom": 372,
+       "left": 33,
+       "inFirstViewport": true,
+       "centreAt": 0.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 51.9,
+       "height": 44
+      },
+      {
+       "what": "Edit",
+       "tag": "button",
+       "top": 328,
+       "bottom": 372,
+       "left": 92.9,
+       "inFirstViewport": true,
+       "centreAt": 0.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 45.1,
+       "height": 44
+      },
+      {
+       "what": "Delete",
+       "tag": "button",
+       "top": 328,
+       "bottom": 372,
+       "left": 146,
+       "inFirstViewport": true,
+       "centreAt": 0.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 60.3,
+       "height": 44
+      },
+      {
+       "what": "Keep",
+       "tag": "button",
+       "top": 519,
+       "bottom": 563,
+       "left": 33,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 51.9,
+       "height": 44
+      },
+      {
+       "what": "Edit",
+       "tag": "button",
+       "top": 519,
+       "bottom": 563,
+       "left": 92.9,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 45.1,
+       "height": 44
+      },
+      {
+       "what": "Delete",
+       "tag": "button",
+       "top": 519,
+       "bottom": 563,
+       "left": 146,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 60.3,
+       "height": 44
+      },
+      {
+       "what": "Keep",
+       "tag": "button",
+       "top": 710,
+       "bottom": 754,
+       "left": 33,
+       "inFirstViewport": true,
+       "centreAt": 0.9,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 51.9,
+       "height": 44
+      },
+      {
+       "what": "Edit",
+       "tag": "button",
+       "top": 710,
+       "bottom": 754,
+       "left": 92.9,
+       "inFirstViewport": true,
+       "centreAt": 0.9,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 45.1,
+       "height": 44
+      },
+      {
+       "what": "Delete",
+       "tag": "button",
+       "top": 710,
+       "bottom": 754,
+       "left": 146,
+       "inFirstViewport": true,
+       "centreAt": 0.9,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 60.3,
+       "height": 44
+      },
+      {
+       "what": "Retry the nightly ingest when the inbox ",
+       "tag": "a",
+       "top": 855,
+       "bottom": 913,
+       "left": 16,
+       "inFirstViewport": false,
+       "centreAt": 1,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 58
+      },
+      {
+       "what": "Document the rollback steps for the noti",
+       "tag": "a",
+       "top": 921,
+       "bottom": 979,
+       "left": 16,
+       "inFirstViewport": false,
+       "centreAt": 1.1,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 58
+      },
+      {
+       "what": "Add a timeout to the lint runner so stal",
+       "tag": "a",
+       "top": 987,
+       "bottom": 1045,
+       "left": 16,
+       "inFirstViewport": false,
+       "centreAt": 1.2,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 58
+      },
+      {
+       "what": "Lazy-load the knowledge graph panel on t",
+       "tag": "a",
+       "top": 1104,
+       "bottom": 1162,
+       "left": 16,
+       "inFirstViewport": false,
+       "centreAt": 1.3,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 58
+      },
+      {
+       "what": "Count duplicate pull request events once",
+       "tag": "a",
+       "top": 1170,
+       "bottom": 1228,
+       "left": 16,
+       "inFirstViewport": false,
+       "centreAt": 1.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 58
+      },
+      {
+       "what": "Tighten the cookie domain check in the h",
+       "tag": "a",
+       "top": 1236,
+       "bottom": 1294,
+       "left": 16,
+       "inFirstViewport": false,
+       "centreAt": 1.5,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 58
+      },
+      {
+       "what": "Bump the markdown renderer to the releas",
+       "tag": "a",
+       "top": 1302,
+       "bottom": 1360,
+       "left": 16,
+       "inFirstViewport": false,
+       "centreAt": 1.6,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 58
+      }
+     ],
+     "alphaSteps": [
+      0.1,
+      0.6,
+      0.74
+     ],
+     "state": {
+      "statusTokens": [
+       "--warning #8a5300",
+       "--success #137333",
+       "--critical #c10007",
+       "--unreachable #b04400",
+       "--destructive #c10007"
+      ],
+      "statusColoured": 3,
+      "offToken": [],
+      "colourOnly": 0,
+      "colourOnlySamples": [],
+      "countsInHeadings": 5,
+      "progressText": 0,
+      "usesSafeTokens": true,
+      "progressElements": 0,
+      "empties": []
+     },
+     "reading": {
+      "bodySize": 16,
+      "lines": [
+       {
+        "ch": 43,
+        "size": 14,
+        "sample": "The revised timetable adds two"
+       },
+       {
+        "ch": 43,
+        "size": 14,
+        "sample": "The state energy planner has o"
+       },
+       {
+        "ch": 43,
+        "size": 14,
+        "sample": "The council approved a six-mon"
+       },
+       {
+        "ch": 43,
+        "size": 14,
+        "sample": "A university team sampled soil"
+       },
+       {
+        "ch": 43,
+        "size": 14,
+        "sample": "Average dwell time at the east"
+       }
+      ],
+      "contrastChecked": 52,
+      "contrastUnknown": 0,
+      "contrastFails": [],
+      "contrastFailCount": 0,
+      "overflowX": 0,
+      "runningAnimations": 0
+     },
+     "textRuns": 65,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
+     "covered": {
+      "runs": 0,
+      "sample": []
+     },
+     "waitForSeen": true,
+     "pageErrors": [],
+     "url": "/briefings/"
+    },
+    "iphone-dark": {
+     "viewport": [
+      390,
+      844
+     ],
+     "coarse": true,
+     "hierarchy": {
+      "fontSizes": [
+       {
+        "size": 21,
+        "chars": 11
+       },
+       {
+        "size": 18,
+        "chars": 12
+       },
+       {
+        "size": 16,
+        "chars": 209
+       },
+       {
+        "size": 14,
+        "chars": 24
+       },
+       {
+        "size": 13,
+        "chars": 82
+       },
+       {
+        "size": 12.8,
+        "chars": 42
+       },
+       {
+        "size": 12,
+        "chars": 121
+       }
+      ],
+      "largest": {
+       "size": 21,
+       "elements": 1,
+       "weight": 600,
+       "text": "10 Nov 2026",
+       "nextSize": 18
+      },
+      "headings": [
+       {
+        "tag": "h1",
+        "text": "10 Nov 2026",
+        "size": 21,
+        "weight": 600,
+        "top": 140
+       },
+       {
+        "tag": "h2",
+        "text": "New memories",
+        "size": 18,
+        "weight": 600,
+        "top": 200
+       },
+       {
+        "tag": "h2",
+        "text": "Filed issues3",
+        "size": 14,
+        "weight": 500,
+        "top": 828
+       }
+      ]
+     },
+     "rows": {
+      "count": 17,
+      "sample": [
+       {
+        "height": 179,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 1,
+        "colourValues": [
+         "#ff6467"
+        ],
+        "nested": 2,
+        "titleWeight": 500,
+        "titleSize": 16,
+        "titleText": "Nightly ingest retries once af"
+       },
+       {
+        "height": 179,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 1,
+        "colourValues": [
+         "#ff6467"
+        ],
+        "nested": 2,
+        "titleWeight": 500,
+        "titleSize": 16,
+        "titleText": "Access answers an expired sess"
+       },
+       {
+        "height": 179,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 1,
+        "colourValues": [
+         "#ff6467"
+        ],
+        "nested": 2,
+        "titleWeight": 500,
+        "titleSize": 16,
+        "titleText": "Prefer a here-string over a pi"
+       },
+       {
+        "height": 58,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Retry the nightly ingest when "
+       },
+       {
+        "height": 58,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Document the rollback steps fo"
+       },
+       {
+        "height": 58,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Add a timeout to the lint runn"
+       }
+      ],
+      "maxChips": 0,
+      "maxColours": 1,
+      "nested": 3,
+      "heights": [
+       58,
+       76,
+       95,
+       179
+      ],
+      "titleWeightMax": 500
+     },
+     "interactive": {
+      "firstViewport": 12,
+      "measured": 19,
+      "small": 0,
+      "smallSample": [],
+      "inputs": 0,
+      "smallInputs": []
+     },
+     "controls": [
+      {
+       "what": "Briefings",
+       "tag": "button",
+       "top": 10,
+       "bottom": 54,
+       "left": 17,
+       "inFirstViewport": true,
+       "centreAt": 0,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 104.3,
+       "height": 44
+      },
+      {
+       "what": "Briefing",
+       "tag": "button",
+       "top": 72,
+       "bottom": 116,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.1,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 179.5,
+       "height": 44
+      },
+      {
+       "what": "Days",
+       "tag": "button",
+       "top": 72,
+       "bottom": 116,
+       "left": 195.5,
+       "inFirstViewport": true,
+       "centreAt": 0.1,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 178.5,
+       "height": 44
+      },
+      {
+       "what": "Keep",
+       "tag": "button",
+       "top": 328,
+       "bottom": 372,
+       "left": 33,
+       "inFirstViewport": true,
+       "centreAt": 0.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 51.9,
+       "height": 44
+      },
+      {
+       "what": "Edit",
+       "tag": "button",
+       "top": 328,
+       "bottom": 372,
+       "left": 92.9,
+       "inFirstViewport": true,
+       "centreAt": 0.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 45.1,
+       "height": 44
+      },
+      {
+       "what": "Delete",
+       "tag": "button",
+       "top": 328,
+       "bottom": 372,
+       "left": 146,
+       "inFirstViewport": true,
+       "centreAt": 0.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 60.3,
+       "height": 44
+      },
+      {
+       "what": "Keep",
+       "tag": "button",
+       "top": 519,
+       "bottom": 563,
+       "left": 33,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 51.9,
+       "height": 44
+      },
+      {
+       "what": "Edit",
+       "tag": "button",
+       "top": 519,
+       "bottom": 563,
+       "left": 92.9,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 45.1,
+       "height": 44
+      },
+      {
+       "what": "Delete",
+       "tag": "button",
+       "top": 519,
+       "bottom": 563,
+       "left": 146,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 60.3,
+       "height": 44
+      },
+      {
+       "what": "Keep",
+       "tag": "button",
+       "top": 710,
+       "bottom": 754,
+       "left": 33,
+       "inFirstViewport": true,
+       "centreAt": 0.9,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 51.9,
+       "height": 44
+      },
+      {
+       "what": "Edit",
+       "tag": "button",
+       "top": 710,
+       "bottom": 754,
+       "left": 92.9,
+       "inFirstViewport": true,
+       "centreAt": 0.9,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 45.1,
+       "height": 44
+      },
+      {
+       "what": "Delete",
+       "tag": "button",
+       "top": 710,
+       "bottom": 754,
+       "left": 146,
+       "inFirstViewport": true,
+       "centreAt": 0.9,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 60.3,
+       "height": 44
+      },
+      {
+       "what": "Retry the nightly ingest when the inbox ",
+       "tag": "a",
+       "top": 855,
+       "bottom": 913,
+       "left": 16,
+       "inFirstViewport": false,
+       "centreAt": 1,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 58
+      },
+      {
+       "what": "Document the rollback steps for the noti",
+       "tag": "a",
+       "top": 921,
+       "bottom": 979,
+       "left": 16,
+       "inFirstViewport": false,
+       "centreAt": 1.1,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 58
+      },
+      {
+       "what": "Add a timeout to the lint runner so stal",
+       "tag": "a",
+       "top": 987,
+       "bottom": 1045,
+       "left": 16,
+       "inFirstViewport": false,
+       "centreAt": 1.2,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 58
+      },
+      {
+       "what": "Lazy-load the knowledge graph panel on t",
+       "tag": "a",
+       "top": 1104,
+       "bottom": 1162,
+       "left": 16,
+       "inFirstViewport": false,
+       "centreAt": 1.3,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 58
+      },
+      {
+       "what": "Count duplicate pull request events once",
+       "tag": "a",
+       "top": 1170,
+       "bottom": 1228,
+       "left": 16,
+       "inFirstViewport": false,
+       "centreAt": 1.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 58
+      },
+      {
+       "what": "Tighten the cookie domain check in the h",
+       "tag": "a",
+       "top": 1236,
+       "bottom": 1294,
+       "left": 16,
+       "inFirstViewport": false,
+       "centreAt": 1.5,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 58
+      },
+      {
+       "what": "Bump the markdown renderer to the releas",
+       "tag": "a",
+       "top": 1302,
+       "bottom": 1360,
+       "left": 16,
+       "inFirstViewport": false,
+       "centreAt": 1.6,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 58
+      }
+     ],
+     "alphaSteps": [
+      0.2,
+      0.3,
+      0.6,
+      0.74
+     ],
+     "state": {
+      "statusTokens": [
+       "--warning #fbbf24",
+       "--success #4ade80",
+       "--critical #ff7a7e",
+       "--unreachable #fb923c",
+       "--destructive #ff6467"
+      ],
+      "statusColoured": 3,
+      "offToken": [],
+      "colourOnly": 0,
+      "colourOnlySamples": [],
+      "countsInHeadings": 5,
+      "progressText": 0,
+      "usesSafeTokens": true,
+      "progressElements": 0,
+      "empties": []
+     },
+     "reading": {
+      "bodySize": 16,
+      "lines": [
+       {
+        "ch": 43,
+        "size": 14,
+        "sample": "The revised timetable adds two"
+       },
+       {
+        "ch": 43,
+        "size": 14,
+        "sample": "The state energy planner has o"
+       },
+       {
+        "ch": 43,
+        "size": 14,
+        "sample": "The council approved a six-mon"
+       },
+       {
+        "ch": 43,
+        "size": 14,
+        "sample": "A university team sampled soil"
+       },
+       {
+        "ch": 43,
+        "size": 14,
+        "sample": "Average dwell time at the east"
+       }
+      ],
+      "contrastChecked": 52,
+      "contrastUnknown": 0,
+      "contrastFails": [
+       {
+        "text": "Delete",
+        "ratio": 4.25,
+        "size": 12.8,
+        "colour": "#ff6467",
+        "on": "#452e37"
+       },
+       {
+        "text": "Delete",
+        "ratio": 4.25,
+        "size": 12.8,
+        "colour": "#ff6467",
+        "on": "#452e37"
+       },
+       {
+        "text": "Delete",
+        "ratio": 4.25,
+        "size": 12.8,
+        "colour": "#ff6467",
+        "on": "#452e37"
+       }
+      ],
+      "contrastFailCount": 3,
+      "overflowX": 0,
+      "runningAnimations": 0
+     },
+     "textRuns": 65,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
+     "covered": {
+      "runs": 0,
+      "sample": []
+     },
+     "waitForSeen": true,
+     "pageErrors": [],
+     "url": "/briefings/"
+    },
+    "desktop-light": {
+     "viewport": [
+      1440,
+      900
+     ],
+     "coarse": false,
+     "hierarchy": {
+      "fontSizes": [
+       {
+        "size": 26,
+        "chars": 11
+       },
+       {
+        "size": 18,
+        "chars": 12
+       },
+       {
+        "size": 16,
+        "chars": 209
+       },
+       {
+        "size": 14,
+        "chars": 356
+       },
+       {
+        "size": 13,
+        "chars": 233
+       },
+       {
+        "size": 12.8,
+        "chars": 42
+       },
+       {
+        "size": 12,
+        "chars": 121
+       }
+      ],
+      "largest": {
+       "size": 26,
+       "elements": 1,
+       "weight": 600,
+       "text": "10 Nov 2026",
+       "nextSize": 18
+      },
+      "headings": [
+       {
+        "tag": "h1",
+        "text": "10 Nov 2026",
+        "size": 26,
+        "weight": 600,
+        "top": 72
+       },
+       {
+        "tag": "h2",
+        "text": "New memories",
+        "size": 18,
+        "weight": 600,
+        "top": 136
+       },
+       {
+        "tag": "h2",
+        "text": "Filed issues3",
+        "size": 14,
+        "weight": 500,
+        "top": 604
+       },
+       {
+        "tag": "h2",
+        "text": "Open PRs4",
+        "size": 14,
+        "weight": 500,
+        "top": 853
+       },
+       {
+        "tag": "h2",
+        "text": "Last 14 days7",
+        "size": 14,
+        "weight": 500,
+        "top": 72
+       }
+      ]
+     },
+     "rows": {
+      "count": 17,
+      "sample": [
+       {
+        "height": 99,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 1,
+        "colourValues": [
+         "#c10007"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 16,
+        "titleText": "Nightly ingest retries once af"
+       },
+       {
+        "height": 139,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 1,
+        "colourValues": [
+         "#c10007"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 16,
+        "titleText": "Access answers an expired sess"
+       },
+       {
+        "height": 139,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 1,
+        "colourValues": [
+         "#c10007"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 16,
+        "titleText": "Prefer a here-string over a pi"
+       },
+       {
+        "height": 58,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Retry the nightly ingest when "
+       },
+       {
+        "height": 58,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Document the rollback steps fo"
+       },
+       {
+        "height": 58,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Add a timeout to the lint runn"
+       }
+      ],
+      "maxChips": 0,
+      "maxColours": 1,
+      "nested": 0,
+      "heights": [
+       38,
+       58,
+       99,
+       139
+      ],
+      "titleWeightMax": 500
+     },
+     "interactive": {
+      "firstViewport": 22,
+      "measured": 28,
+      "small": 13,
+      "smallSample": [
+       {
+        "what": "Briefing",
+        "tag": "a",
+        "width": 231,
+        "height": 40
+       },
+       {
+        "what": "Keep",
+        "tag": "button",
+        "width": 51.9,
+        "height": 28
+       },
+       {
+        "what": "Edit",
+        "tag": "button",
+        "width": 45.1,
+        "height": 28
+       },
+       {
+        "what": "Delete",
+        "tag": "button",
+        "width": 60.3,
+        "height": 28
+       },
+       {
+        "what": "Keep",
+        "tag": "button",
+        "width": 51.9,
+        "height": 28
+       },
+       {
+        "what": "Edit",
+        "tag": "button",
+        "width": 45.1,
+        "height": 28
+       },
+       {
+        "what": "Delete",
+        "tag": "button",
+        "width": 60.3,
+        "height": 28
+       },
+       {
+        "what": "Keep",
+        "tag": "button",
+        "width": 51.9,
+        "height": 28
+       },
+       {
+        "what": "Edit",
+        "tag": "button",
+        "width": 45.1,
+        "height": 28
+       },
+       {
+        "what": "Delete",
+        "tag": "button",
+        "width": 60.3,
+        "height": 28
+       }
+      ],
+      "inputs": 0,
+      "smallInputs": []
+     },
+     "controls": [
+      {
+       "what": "Briefing",
+       "tag": "a",
+       "top": 0,
+       "bottom": 40,
+       "left": 12,
+       "inFirstViewport": true,
+       "centreAt": 0,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 231,
+       "height": 40
+      },
+      {
+       "what": "Briefings",
+       "tag": "button",
+       "top": 10,
+       "bottom": 54,
+       "left": 273,
+       "inFirstViewport": true,
+       "centreAt": 0,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 104.3,
+       "height": 44
+      },
+      {
+       "what": "Keep",
+       "tag": "button",
+       "top": 188,
+       "bottom": 216,
+       "left": 877.7,
+       "inFirstViewport": true,
+       "centreAt": 0.2,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 51.9,
+       "height": 28
+      },
+      {
+       "what": "Edit",
+       "tag": "button",
+       "top": 188,
+       "bottom": 216,
+       "left": 937.6,
+       "inFirstViewport": true,
+       "centreAt": 0.2,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 45.1,
+       "height": 28
+      },
+      {
+       "what": "Delete",
+       "tag": "button",
+       "top": 188,
+       "bottom": 216,
+       "left": 990.7,
+       "inFirstViewport": true,
+       "centreAt": 0.2,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 60.3,
+       "height": 28
+      },
+      {
+       "what": "Keep",
+       "tag": "button",
+       "top": 351,
+       "bottom": 379,
+       "left": 373,
+       "inFirstViewport": true,
+       "centreAt": 0.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 51.9,
+       "height": 28
+      },
+      {
+       "what": "Edit",
+       "tag": "button",
+       "top": 351,
+       "bottom": 379,
+       "left": 432.9,
+       "inFirstViewport": true,
+       "centreAt": 0.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 45.1,
+       "height": 28
+      },
+      {
+       "what": "Delete",
+       "tag": "button",
+       "top": 351,
+       "bottom": 379,
+       "left": 486,
+       "inFirstViewport": true,
+       "centreAt": 0.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 60.3,
+       "height": 28
+      },
+      {
+       "what": "Keep",
+       "tag": "button",
+       "top": 502,
+       "bottom": 530,
+       "left": 373,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 51.9,
+       "height": 28
+      },
+      {
+       "what": "Edit",
+       "tag": "button",
+       "top": 502,
+       "bottom": 530,
+       "left": 432.9,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 45.1,
+       "height": 28
+      },
+      {
+       "what": "Delete",
+       "tag": "button",
+       "top": 502,
+       "bottom": 530,
+       "left": 486,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 60.3,
+       "height": 28
+      },
+      {
+       "what": "Retry the nightly ingest when the inbox ",
+       "tag": "a",
+       "top": 631,
+       "bottom": 689,
+       "left": 356,
+       "inFirstViewport": true,
+       "centreAt": 0.7,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 712,
+       "height": 58
+      },
+      {
+       "what": "Document the rollback steps for the noti",
+       "tag": "a",
+       "top": 697,
+       "bottom": 755,
+       "left": 356,
+       "inFirstViewport": true,
+       "centreAt": 0.8,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 712,
+       "height": 58
+      },
+      {
+       "what": "Add a timeout to the lint runner so stal",
+       "tag": "a",
+       "top": 763,
+       "bottom": 821,
+       "left": 356,
+       "inFirstViewport": true,
+       "centreAt": 0.9,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 712,
+       "height": 58
+      },
+      {
+       "what": "Lazy-load the knowledge graph panel on t",
+       "tag": "a",
+       "top": 880,
+       "bottom": 938,
+       "left": 356,
+       "inFirstViewport": false,
+       "centreAt": 1,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 712,
+       "height": 58
+      },
+      {
+       "what": "Count duplicate pull request events once",
+       "tag": "a",
+       "top": 946,
+       "bottom": 1004,
+       "left": 356,
+       "inFirstViewport": false,
+       "centreAt": 1.1,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 712,
+       "height": 58
+      },
+      {
+       "what": "Tighten the cookie domain check in the h",
+       "tag": "a",
+       "top": 1012,
+       "bottom": 1070,
+       "left": 356,
+       "inFirstViewport": false,
+       "centreAt": 1.2,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 712,
+       "height": 58
+      },
+      {
+       "what": "Bump the markdown renderer to the releas",
+       "tag": "a",
+       "top": 1078,
+       "bottom": 1136,
+       "left": 356,
+       "inFirstViewport": false,
+       "centreAt": 1.2,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 712,
+       "height": 58
+      },
+      {
+       "what": "Timetable notice",
+       "tag": "a",
+       "top": 1467.5,
+       "bottom": 1485.5,
+       "left": 356,
+       "inFirstViewport": false,
+       "centreAt": 1.6,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 105.6,
+       "height": 18
+      },
+      {
+       "what": "Tender summary",
+       "tag": "a",
+       "top": 1579.5,
+       "bottom": 1597.5,
+       "left": 356,
+       "inFirstViewport": false,
+       "centreAt": 1.8,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 105.9,
+       "height": 18
+      },
+      {
+       "what": "Council minutes",
+       "tag": "a",
+       "top": 1691.5,
+       "bottom": 1709.5,
+       "left": 356,
+       "inFirstViewport": false,
+       "centreAt": 1.9,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 101.1,
+       "height": 18
+      },
+      {
+       "what": "Tue 10 Nov2 to review",
+       "tag": "a",
+       "top": 99,
+       "bottom": 157,
+       "left": 1108,
+       "inFirstViewport": true,
+       "centreAt": 0.1,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 224,
+       "height": 58
+      },
+      {
+       "what": "Mon 9 Nov7 items",
+       "tag": "a",
+       "top": 165,
+       "bottom": 223,
+       "left": 1108,
+       "inFirstViewport": true,
+       "centreAt": 0.2,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 224,
+       "height": 58
+      },
+      {
+       "what": "Sun 8 Nov8 items",
+       "tag": "a",
+       "top": 231,
+       "bottom": 289,
+       "left": 1108,
+       "inFirstViewport": true,
+       "centreAt": 0.3,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 224,
+       "height": 58
+      },
+      {
+       "what": "Sat 7 Nov6 items",
+       "tag": "a",
+       "top": 297,
+       "bottom": 355,
+       "left": 1108,
+       "inFirstViewport": true,
+       "centreAt": 0.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 224,
+       "height": 58
+      },
+      {
+       "what": "Fri 6 Nov9 items",
+       "tag": "a",
+       "top": 363,
+       "bottom": 421,
+       "left": 1108,
+       "inFirstViewport": true,
+       "centreAt": 0.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 224,
+       "height": 58
+      },
+      {
+       "what": "Thu 5 Nov5 items",
+       "tag": "a",
+       "top": 429,
+       "bottom": 487,
+       "left": 1108,
+       "inFirstViewport": true,
+       "centreAt": 0.5,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 224,
+       "height": 58
+      },
+      {
+       "what": "Wed 4 Nov7 items",
+       "tag": "a",
+       "top": 495,
+       "bottom": 553,
+       "left": 1108,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 224,
+       "height": 58
+      }
+     ],
+     "alphaSteps": [
+      0.1,
+      0.5,
+      0.6,
+      0.74
+     ],
+     "state": {
+      "statusTokens": [
+       "--warning #8a5300",
+       "--success #137333",
+       "--critical #c10007",
+       "--unreachable #b04400",
+       "--destructive #c10007"
+      ],
+      "statusColoured": 3,
+      "offToken": [],
+      "colourOnly": 0,
+      "colourOnlySamples": [],
+      "countsInHeadings": 13,
+      "progressText": 0,
+      "usesSafeTokens": true,
+      "progressElements": 0,
+      "empties": []
+     },
+     "reading": {
+      "bodySize": 14,
+      "lines": [
+       {
+        "ch": 85,
+        "size": 14,
+        "sample": "The revised timetable adds two"
+       },
+       {
+        "ch": 85,
+        "size": 14,
+        "sample": "The state energy planner has o"
+       },
+       {
+        "ch": 85,
+        "size": 14,
+        "sample": "The council approved a six-mon"
+       },
+       {
+        "ch": 85,
+        "size": 14,
+        "sample": "A university team sampled soil"
+       },
+       {
+        "ch": 85,
+        "size": 14,
+        "sample": "Average dwell time at the east"
+       }
+      ],
+      "contrastChecked": 76,
+      "contrastUnknown": 0,
+      "contrastFails": [],
+      "contrastFailCount": 0,
+      "overflowX": -8,
+      "runningAnimations": 0
+     },
+     "textRuns": 80,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
+     "covered": {
+      "runs": 0,
+      "sample": []
+     },
+     "waitForSeen": true,
+     "pageErrors": [],
+     "url": "/briefings/"
+    },
+    "desktop-dark": {
+     "viewport": [
+      1440,
+      900
+     ],
+     "coarse": false,
+     "hierarchy": {
+      "fontSizes": [
+       {
+        "size": 26,
+        "chars": 11
+       },
+       {
+        "size": 18,
+        "chars": 12
+       },
+       {
+        "size": 16,
+        "chars": 209
+       },
+       {
+        "size": 14,
+        "chars": 356
+       },
+       {
+        "size": 13,
+        "chars": 233
+       },
+       {
+        "size": 12.8,
+        "chars": 42
+       },
+       {
+        "size": 12,
+        "chars": 121
+       }
+      ],
+      "largest": {
+       "size": 26,
+       "elements": 1,
+       "weight": 600,
+       "text": "10 Nov 2026",
+       "nextSize": 18
+      },
+      "headings": [
+       {
+        "tag": "h1",
+        "text": "10 Nov 2026",
+        "size": 26,
+        "weight": 600,
+        "top": 72
+       },
+       {
+        "tag": "h2",
+        "text": "New memories",
+        "size": 18,
+        "weight": 600,
+        "top": 136
+       },
+       {
+        "tag": "h2",
+        "text": "Filed issues3",
+        "size": 14,
+        "weight": 500,
+        "top": 604
+       },
+       {
+        "tag": "h2",
+        "text": "Open PRs4",
+        "size": 14,
+        "weight": 500,
+        "top": 853
+       },
+       {
+        "tag": "h2",
+        "text": "Last 14 days7",
+        "size": 14,
+        "weight": 500,
+        "top": 72
+       }
+      ]
+     },
+     "rows": {
+      "count": 17,
+      "sample": [
+       {
+        "height": 99,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 1,
+        "colourValues": [
+         "#ff6467"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 16,
+        "titleText": "Nightly ingest retries once af"
+       },
+       {
+        "height": 139,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 1,
+        "colourValues": [
+         "#ff6467"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 16,
+        "titleText": "Access answers an expired sess"
+       },
+       {
+        "height": 139,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 1,
+        "colourValues": [
+         "#ff6467"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 16,
+        "titleText": "Prefer a here-string over a pi"
+       },
+       {
+        "height": 58,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Retry the nightly ingest when "
+       },
+       {
+        "height": 58,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Document the rollback steps fo"
+       },
+       {
+        "height": 58,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Add a timeout to the lint runn"
+       }
+      ],
+      "maxChips": 0,
+      "maxColours": 1,
+      "nested": 0,
+      "heights": [
+       38,
+       58,
+       99,
+       139
+      ],
+      "titleWeightMax": 500
+     },
+     "interactive": {
+      "firstViewport": 22,
+      "measured": 28,
+      "small": 13,
+      "smallSample": [
+       {
+        "what": "Briefing",
+        "tag": "a",
+        "width": 231,
+        "height": 40
+       },
+       {
+        "what": "Keep",
+        "tag": "button",
+        "width": 51.9,
+        "height": 28
+       },
+       {
+        "what": "Edit",
+        "tag": "button",
+        "width": 45.1,
+        "height": 28
+       },
+       {
+        "what": "Delete",
+        "tag": "button",
+        "width": 60.3,
+        "height": 28
+       },
+       {
+        "what": "Keep",
+        "tag": "button",
+        "width": 51.9,
+        "height": 28
+       },
+       {
+        "what": "Edit",
+        "tag": "button",
+        "width": 45.1,
+        "height": 28
+       },
+       {
+        "what": "Delete",
+        "tag": "button",
+        "width": 60.3,
+        "height": 28
+       },
+       {
+        "what": "Keep",
+        "tag": "button",
+        "width": 51.9,
+        "height": 28
+       },
+       {
+        "what": "Edit",
+        "tag": "button",
+        "width": 45.1,
+        "height": 28
+       },
+       {
+        "what": "Delete",
+        "tag": "button",
+        "width": 60.3,
+        "height": 28
+       }
+      ],
+      "inputs": 0,
+      "smallInputs": []
+     },
+     "controls": [
+      {
+       "what": "Briefing",
+       "tag": "a",
+       "top": 0,
+       "bottom": 40,
+       "left": 12,
+       "inFirstViewport": true,
+       "centreAt": 0,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 231,
+       "height": 40
+      },
+      {
+       "what": "Briefings",
+       "tag": "button",
+       "top": 10,
+       "bottom": 54,
+       "left": 273,
+       "inFirstViewport": true,
+       "centreAt": 0,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 104.3,
+       "height": 44
+      },
+      {
+       "what": "Keep",
+       "tag": "button",
+       "top": 188,
+       "bottom": 216,
+       "left": 877.7,
+       "inFirstViewport": true,
+       "centreAt": 0.2,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 51.9,
+       "height": 28
+      },
+      {
+       "what": "Edit",
+       "tag": "button",
+       "top": 188,
+       "bottom": 216,
+       "left": 937.6,
+       "inFirstViewport": true,
+       "centreAt": 0.2,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 45.1,
+       "height": 28
+      },
+      {
+       "what": "Delete",
+       "tag": "button",
+       "top": 188,
+       "bottom": 216,
+       "left": 990.7,
+       "inFirstViewport": true,
+       "centreAt": 0.2,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 60.3,
+       "height": 28
+      },
+      {
+       "what": "Keep",
+       "tag": "button",
+       "top": 351,
+       "bottom": 379,
+       "left": 373,
+       "inFirstViewport": true,
+       "centreAt": 0.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 51.9,
+       "height": 28
+      },
+      {
+       "what": "Edit",
+       "tag": "button",
+       "top": 351,
+       "bottom": 379,
+       "left": 432.9,
+       "inFirstViewport": true,
+       "centreAt": 0.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 45.1,
+       "height": 28
+      },
+      {
+       "what": "Delete",
+       "tag": "button",
+       "top": 351,
+       "bottom": 379,
+       "left": 486,
+       "inFirstViewport": true,
+       "centreAt": 0.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 60.3,
+       "height": 28
+      },
+      {
+       "what": "Keep",
+       "tag": "button",
+       "top": 502,
+       "bottom": 530,
+       "left": 373,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 51.9,
+       "height": 28
+      },
+      {
+       "what": "Edit",
+       "tag": "button",
+       "top": 502,
+       "bottom": 530,
+       "left": 432.9,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 45.1,
+       "height": 28
+      },
+      {
+       "what": "Delete",
+       "tag": "button",
+       "top": 502,
+       "bottom": 530,
+       "left": 486,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 60.3,
+       "height": 28
+      },
+      {
+       "what": "Retry the nightly ingest when the inbox ",
+       "tag": "a",
+       "top": 631,
+       "bottom": 689,
+       "left": 356,
+       "inFirstViewport": true,
+       "centreAt": 0.7,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 712,
+       "height": 58
+      },
+      {
+       "what": "Document the rollback steps for the noti",
+       "tag": "a",
+       "top": 697,
+       "bottom": 755,
+       "left": 356,
+       "inFirstViewport": true,
+       "centreAt": 0.8,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 712,
+       "height": 58
+      },
+      {
+       "what": "Add a timeout to the lint runner so stal",
+       "tag": "a",
+       "top": 763,
+       "bottom": 821,
+       "left": 356,
+       "inFirstViewport": true,
+       "centreAt": 0.9,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 712,
+       "height": 58
+      },
+      {
+       "what": "Lazy-load the knowledge graph panel on t",
+       "tag": "a",
+       "top": 880,
+       "bottom": 938,
+       "left": 356,
+       "inFirstViewport": false,
+       "centreAt": 1,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 712,
+       "height": 58
+      },
+      {
+       "what": "Count duplicate pull request events once",
+       "tag": "a",
+       "top": 946,
+       "bottom": 1004,
+       "left": 356,
+       "inFirstViewport": false,
+       "centreAt": 1.1,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 712,
+       "height": 58
+      },
+      {
+       "what": "Tighten the cookie domain check in the h",
+       "tag": "a",
+       "top": 1012,
+       "bottom": 1070,
+       "left": 356,
+       "inFirstViewport": false,
+       "centreAt": 1.2,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 712,
+       "height": 58
+      },
+      {
+       "what": "Bump the markdown renderer to the releas",
+       "tag": "a",
+       "top": 1078,
+       "bottom": 1136,
+       "left": 356,
+       "inFirstViewport": false,
+       "centreAt": 1.2,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 712,
+       "height": 58
+      },
+      {
+       "what": "Timetable notice",
+       "tag": "a",
+       "top": 1467.5,
+       "bottom": 1485.5,
+       "left": 356,
+       "inFirstViewport": false,
+       "centreAt": 1.6,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 105.6,
+       "height": 18
+      },
+      {
+       "what": "Tender summary",
+       "tag": "a",
+       "top": 1579.5,
+       "bottom": 1597.5,
+       "left": 356,
+       "inFirstViewport": false,
+       "centreAt": 1.8,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 105.9,
+       "height": 18
+      },
+      {
+       "what": "Council minutes",
+       "tag": "a",
+       "top": 1691.5,
+       "bottom": 1709.5,
+       "left": 356,
+       "inFirstViewport": false,
+       "centreAt": 1.9,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 101.1,
+       "height": 18
+      },
+      {
+       "what": "Tue 10 Nov2 to review",
+       "tag": "a",
+       "top": 99,
+       "bottom": 157,
+       "left": 1108,
+       "inFirstViewport": true,
+       "centreAt": 0.1,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 224,
+       "height": 58
+      },
+      {
+       "what": "Mon 9 Nov7 items",
+       "tag": "a",
+       "top": 165,
+       "bottom": 223,
+       "left": 1108,
+       "inFirstViewport": true,
+       "centreAt": 0.2,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 224,
+       "height": 58
+      },
+      {
+       "what": "Sun 8 Nov8 items",
+       "tag": "a",
+       "top": 231,
+       "bottom": 289,
+       "left": 1108,
+       "inFirstViewport": true,
+       "centreAt": 0.3,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 224,
+       "height": 58
+      },
+      {
+       "what": "Sat 7 Nov6 items",
+       "tag": "a",
+       "top": 297,
+       "bottom": 355,
+       "left": 1108,
+       "inFirstViewport": true,
+       "centreAt": 0.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 224,
+       "height": 58
+      },
+      {
+       "what": "Fri 6 Nov9 items",
+       "tag": "a",
+       "top": 363,
+       "bottom": 421,
+       "left": 1108,
+       "inFirstViewport": true,
+       "centreAt": 0.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 224,
+       "height": 58
+      },
+      {
+       "what": "Thu 5 Nov5 items",
+       "tag": "a",
+       "top": 429,
+       "bottom": 487,
+       "left": 1108,
+       "inFirstViewport": true,
+       "centreAt": 0.5,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 224,
+       "height": 58
+      },
+      {
+       "what": "Wed 4 Nov7 items",
+       "tag": "a",
+       "top": 495,
+       "bottom": 553,
+       "left": 1108,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 224,
+       "height": 58
+      }
+     ],
+     "alphaSteps": [
+      0.2,
+      0.3,
+      0.5,
+      0.6,
+      0.74
+     ],
+     "state": {
+      "statusTokens": [
+       "--warning #fbbf24",
+       "--success #4ade80",
+       "--critical #ff7a7e",
+       "--unreachable #fb923c",
+       "--destructive #ff6467"
+      ],
+      "statusColoured": 3,
+      "offToken": [],
+      "colourOnly": 0,
+      "colourOnlySamples": [],
+      "countsInHeadings": 13,
+      "progressText": 0,
+      "usesSafeTokens": true,
+      "progressElements": 0,
+      "empties": []
+     },
+     "reading": {
+      "bodySize": 14,
+      "lines": [
+       {
+        "ch": 85,
+        "size": 14,
+        "sample": "The revised timetable adds two"
+       },
+       {
+        "ch": 85,
+        "size": 14,
+        "sample": "The state energy planner has o"
+       },
+       {
+        "ch": 85,
+        "size": 14,
+        "sample": "The council approved a six-mon"
+       },
+       {
+        "ch": 85,
+        "size": 14,
+        "sample": "A university team sampled soil"
+       },
+       {
+        "ch": 85,
+        "size": 14,
+        "sample": "Average dwell time at the east"
+       }
+      ],
+      "contrastChecked": 76,
+      "contrastUnknown": 0,
+      "contrastFails": [
+       {
+        "text": "Delete",
+        "ratio": 4.25,
+        "size": 12.8,
+        "colour": "#ff6467",
+        "on": "#452e37"
+       },
+       {
+        "text": "Delete",
+        "ratio": 4.25,
+        "size": 12.8,
+        "colour": "#ff6467",
+        "on": "#452e37"
+       },
+       {
+        "text": "Delete",
+        "ratio": 4.25,
+        "size": 12.8,
+        "colour": "#ff6467",
+        "on": "#452e37"
+       }
+      ],
+      "contrastFailCount": 3,
+      "overflowX": -8,
+      "runningAnimations": 0
+     },
+     "textRuns": 80,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
+     "covered": {
+      "runs": 0,
+      "sample": []
+     },
+     "waitForSeen": true,
+     "pageErrors": [],
+     "url": "/briefings/"
+    },
+    "iphone-320": {
+     "viewport": [
+      320,
+      844
+     ],
+     "coarse": true,
+     "hierarchy": {
+      "fontSizes": [
+       {
+        "size": 21,
+        "chars": 11
+       },
+       {
+        "size": 18,
+        "chars": 12
+       },
+       {
+        "size": 16,
+        "chars": 209
+       },
+       {
+        "size": 14,
+        "chars": 12
+       },
+       {
+        "size": 13,
+        "chars": 66
+       },
+       {
+        "size": 12.8,
+        "chars": 42
+       },
+       {
+        "size": 12,
+        "chars": 121
+       }
+      ],
+      "largest": {
+       "size": 21,
+       "elements": 1,
+       "weight": 600,
+       "text": "10 Nov 2026",
+       "nextSize": 18
+      },
+      "headings": [
+       {
+        "tag": "h1",
+        "text": "10 Nov 2026",
+        "size": 21,
+        "weight": 600,
+        "top": 140
+       },
+       {
+        "tag": "h2",
+        "text": "New memories",
+        "size": 18,
+        "weight": 600,
+        "top": 200
+       }
+      ]
+     },
+     "rows": {
+      "count": 21,
+      "sample": [
+       {
+        "height": 58,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Retry the nightly ingest when "
+       },
+       {
+        "height": 58,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Document the rollback steps fo"
+       },
+       {
+        "height": 58,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Add a timeout to the lint runn"
+       },
+       {
+        "height": 58,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Lazy-load the knowledge graph "
+       },
+       {
+        "height": 58,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Count duplicate pull request e"
+       },
+       {
+        "height": 58,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Tighten the cookie domain chec"
+       }
+      ],
+      "maxChips": 0,
+      "maxColours": 1,
+      "nested": 2,
+      "heights": [
+       38,
+       58,
+       95,
+       114,
+       195,
+       219
+      ],
+      "titleWeightMax": 500
+     },
+     "interactive": {
+      "firstViewport": 12,
+      "measured": 19,
+      "small": 0,
+      "smallSample": [],
+      "inputs": 0,
+      "smallInputs": []
+     },
+     "controls": [
+      {
+       "what": "Briefings",
+       "tag": "button",
+       "top": 10,
+       "bottom": 54,
+       "left": 17,
+       "inFirstViewport": true,
+       "centreAt": 0,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 104.3,
+       "height": 44
+      },
+      {
+       "what": "Briefing",
+       "tag": "button",
+       "top": 72,
+       "bottom": 116,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.1,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 144.5,
+       "height": 44
+      },
+      {
+       "what": "Days",
+       "tag": "button",
+       "top": 72,
+       "bottom": 116,
+       "left": 160.5,
+       "inFirstViewport": true,
+       "centreAt": 0.1,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 143.5,
+       "height": 44
+      },
+      {
+       "what": "Keep",
+       "tag": "button",
+       "top": 344,
+       "bottom": 388,
+       "left": 33,
+       "inFirstViewport": true,
+       "centreAt": 0.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 51.9,
+       "height": 44
+      },
+      {
+       "what": "Edit",
+       "tag": "button",
+       "top": 344,
+       "bottom": 388,
+       "left": 92.9,
+       "inFirstViewport": true,
+       "centreAt": 0.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 45.1,
+       "height": 44
+      },
+      {
+       "what": "Delete",
+       "tag": "button",
+       "top": 344,
+       "bottom": 388,
+       "left": 146,
+       "inFirstViewport": true,
+       "centreAt": 0.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 60.3,
+       "height": 44
+      },
+      {
+       "what": "Keep",
+       "tag": "button",
+       "top": 575,
+       "bottom": 619,
+       "left": 33,
+       "inFirstViewport": true,
+       "centreAt": 0.7,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 51.9,
+       "height": 44
+      },
+      {
+       "what": "Edit",
+       "tag": "button",
+       "top": 575,
+       "bottom": 619,
+       "left": 92.9,
+       "inFirstViewport": true,
+       "centreAt": 0.7,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 45.1,
+       "height": 44
+      },
+      {
+       "what": "Delete",
+       "tag": "button",
+       "top": 575,
+       "bottom": 619,
+       "left": 146,
+       "inFirstViewport": true,
+       "centreAt": 0.7,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 60.3,
+       "height": 44
+      },
+      {
+       "what": "Keep",
+       "tag": "button",
+       "top": 823,
+       "bottom": 867,
+       "left": 33,
+       "inFirstViewport": false,
+       "centreAt": 1,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 51.9,
+       "height": 44
+      },
+      {
+       "what": "Edit",
+       "tag": "button",
+       "top": 823,
+       "bottom": 867,
+       "left": 92.9,
+       "inFirstViewport": false,
+       "centreAt": 1,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 45.1,
+       "height": 44
+      },
+      {
+       "what": "Delete",
+       "tag": "button",
+       "top": 823,
+       "bottom": 867,
+       "left": 146,
+       "inFirstViewport": false,
+       "centreAt": 1,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 60.3,
+       "height": 44
+      },
+      {
+       "what": "Retry the nightly ingest when the inbox ",
+       "tag": "a",
+       "top": 968,
+       "bottom": 1026,
+       "left": 16,
+       "inFirstViewport": false,
+       "centreAt": 1.2,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 288,
+       "height": 58
+      },
+      {
+       "what": "Document the rollback steps for the noti",
+       "tag": "a",
+       "top": 1034,
+       "bottom": 1092,
+       "left": 16,
+       "inFirstViewport": false,
+       "centreAt": 1.3,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 288,
+       "height": 58
+      },
+      {
+       "what": "Add a timeout to the lint runner so stal",
+       "tag": "a",
+       "top": 1100,
+       "bottom": 1158,
+       "left": 16,
+       "inFirstViewport": false,
+       "centreAt": 1.3,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 288,
+       "height": 58
+      },
+      {
+       "what": "Lazy-load the knowledge graph panel on t",
+       "tag": "a",
+       "top": 1217,
+       "bottom": 1275,
+       "left": 16,
+       "inFirstViewport": false,
+       "centreAt": 1.5,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 288,
+       "height": 58
+      },
+      {
+       "what": "Count duplicate pull request events once",
+       "tag": "a",
+       "top": 1283,
+       "bottom": 1341,
+       "left": 16,
+       "inFirstViewport": false,
+       "centreAt": 1.6,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 288,
+       "height": 58
+      },
+      {
+       "what": "Tighten the cookie domain check in the h",
+       "tag": "a",
+       "top": 1349,
+       "bottom": 1407,
+       "left": 16,
+       "inFirstViewport": false,
+       "centreAt": 1.6,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 288,
+       "height": 58
+      },
+      {
+       "what": "Bump the markdown renderer to the releas",
+       "tag": "a",
+       "top": 1415,
+       "bottom": 1473,
+       "left": 16,
+       "inFirstViewport": false,
+       "centreAt": 1.7,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 288,
+       "height": 58
+      }
+     ],
+     "alphaSteps": [
+      0.1,
+      0.6,
+      0.74
+     ],
+     "state": {
+      "statusTokens": [
+       "--warning #8a5300",
+       "--success #137333",
+       "--critical #c10007",
+       "--unreachable #b04400",
+       "--destructive #c10007"
+      ],
+      "statusColoured": 3,
+      "offToken": [],
+      "colourOnly": 0,
+      "colourOnlySamples": [],
+      "countsInHeadings": 5,
+      "progressText": 0,
+      "usesSafeTokens": true,
+      "progressElements": 0,
+      "empties": []
+     },
+     "reading": {
+      "bodySize": 16,
+      "lines": [
+       {
+        "ch": 34,
+        "size": 14,
+        "sample": "The revised timetable adds two"
+       },
+       {
+        "ch": 34,
+        "size": 14,
+        "sample": "The state energy planner has o"
+       },
+       {
+        "ch": 34,
+        "size": 14,
+        "sample": "The council approved a six-mon"
+       },
+       {
+        "ch": 34,
+        "size": 14,
+        "sample": "A university team sampled soil"
+       },
+       {
+        "ch": 34,
+        "size": 14,
+        "sample": "Average dwell time at the east"
+       }
+      ],
+      "contrastChecked": 50,
+      "contrastUnknown": 0,
+      "contrastFails": [],
+      "contrastFailCount": 0,
+      "overflowX": 0,
+      "runningAnimations": 0
+     },
+     "textRuns": 65,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
+     "covered": {
+      "runs": 0,
+      "sample": []
+     },
+     "waitForSeen": true,
+     "pageErrors": [],
+     "url": "/briefings/"
+    },
+    "iphone-reduced-motion": {
+     "viewport": [
+      390,
+      844
+     ],
+     "coarse": true,
+     "hierarchy": {
+      "fontSizes": [
+       {
+        "size": 21,
+        "chars": 11
+       },
+       {
+        "size": 18,
+        "chars": 12
+       },
+       {
+        "size": 16,
+        "chars": 209
+       },
+       {
+        "size": 14,
+        "chars": 24
+       },
+       {
+        "size": 13,
+        "chars": 82
+       },
+       {
+        "size": 12.8,
+        "chars": 42
+       },
+       {
+        "size": 12,
+        "chars": 121
+       }
+      ],
+      "largest": {
+       "size": 21,
+       "elements": 1,
+       "weight": 600,
+       "text": "10 Nov 2026",
+       "nextSize": 18
+      },
+      "headings": [
+       {
+        "tag": "h1",
+        "text": "10 Nov 2026",
+        "size": 21,
+        "weight": 600,
+        "top": 140
+       },
+       {
+        "tag": "h2",
+        "text": "New memories",
+        "size": 18,
+        "weight": 600,
+        "top": 200
+       },
+       {
+        "tag": "h2",
+        "text": "Filed issues3",
+        "size": 14,
+        "weight": 500,
+        "top": 828
+       }
+      ]
+     },
+     "rows": {
+      "count": 17,
+      "sample": [
+       {
+        "height": 179,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 1,
+        "colourValues": [
+         "#c10007"
+        ],
+        "nested": 2,
+        "titleWeight": 500,
+        "titleSize": 16,
+        "titleText": "Nightly ingest retries once af"
+       },
+       {
+        "height": 179,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 1,
+        "colourValues": [
+         "#c10007"
+        ],
+        "nested": 2,
+        "titleWeight": 500,
+        "titleSize": 16,
+        "titleText": "Access answers an expired sess"
+       },
+       {
+        "height": 179,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 1,
+        "colourValues": [
+         "#c10007"
+        ],
+        "nested": 2,
+        "titleWeight": 500,
+        "titleSize": 16,
+        "titleText": "Prefer a here-string over a pi"
+       },
+       {
+        "height": 58,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Retry the nightly ingest when "
+       },
+       {
+        "height": 58,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Document the rollback steps fo"
+       },
+       {
+        "height": 58,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Add a timeout to the lint runn"
+       }
+      ],
+      "maxChips": 0,
+      "maxColours": 1,
+      "nested": 3,
+      "heights": [
+       58,
+       76,
+       95,
+       179
+      ],
+      "titleWeightMax": 500
+     },
+     "interactive": {
+      "firstViewport": 12,
+      "measured": 19,
+      "small": 0,
+      "smallSample": [],
+      "inputs": 0,
+      "smallInputs": []
+     },
+     "controls": [
+      {
+       "what": "Briefings",
+       "tag": "button",
+       "top": 10,
+       "bottom": 54,
+       "left": 17,
+       "inFirstViewport": true,
+       "centreAt": 0,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 104.3,
+       "height": 44
+      },
+      {
+       "what": "Briefing",
+       "tag": "button",
+       "top": 72,
+       "bottom": 116,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.1,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 179.5,
+       "height": 44
+      },
+      {
+       "what": "Days",
+       "tag": "button",
+       "top": 72,
+       "bottom": 116,
+       "left": 195.5,
+       "inFirstViewport": true,
+       "centreAt": 0.1,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 178.5,
+       "height": 44
+      },
+      {
+       "what": "Keep",
+       "tag": "button",
+       "top": 328,
+       "bottom": 372,
+       "left": 33,
+       "inFirstViewport": true,
+       "centreAt": 0.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 51.9,
+       "height": 44
+      },
+      {
+       "what": "Edit",
+       "tag": "button",
+       "top": 328,
+       "bottom": 372,
+       "left": 92.9,
+       "inFirstViewport": true,
+       "centreAt": 0.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 45.1,
+       "height": 44
+      },
+      {
+       "what": "Delete",
+       "tag": "button",
+       "top": 328,
+       "bottom": 372,
+       "left": 146,
+       "inFirstViewport": true,
+       "centreAt": 0.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 60.3,
+       "height": 44
+      },
+      {
+       "what": "Keep",
+       "tag": "button",
+       "top": 519,
+       "bottom": 563,
+       "left": 33,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 51.9,
+       "height": 44
+      },
+      {
+       "what": "Edit",
+       "tag": "button",
+       "top": 519,
+       "bottom": 563,
+       "left": 92.9,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 45.1,
+       "height": 44
+      },
+      {
+       "what": "Delete",
+       "tag": "button",
+       "top": 519,
+       "bottom": 563,
+       "left": 146,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 60.3,
+       "height": 44
+      },
+      {
+       "what": "Keep",
+       "tag": "button",
+       "top": 710,
+       "bottom": 754,
+       "left": 33,
+       "inFirstViewport": true,
+       "centreAt": 0.9,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 51.9,
+       "height": 44
+      },
+      {
+       "what": "Edit",
+       "tag": "button",
+       "top": 710,
+       "bottom": 754,
+       "left": 92.9,
+       "inFirstViewport": true,
+       "centreAt": 0.9,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 45.1,
+       "height": 44
+      },
+      {
+       "what": "Delete",
+       "tag": "button",
+       "top": 710,
+       "bottom": 754,
+       "left": 146,
+       "inFirstViewport": true,
+       "centreAt": 0.9,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 60.3,
+       "height": 44
+      },
+      {
+       "what": "Retry the nightly ingest when the inbox ",
+       "tag": "a",
+       "top": 855,
+       "bottom": 913,
+       "left": 16,
+       "inFirstViewport": false,
+       "centreAt": 1,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 58
+      },
+      {
+       "what": "Document the rollback steps for the noti",
+       "tag": "a",
+       "top": 921,
+       "bottom": 979,
+       "left": 16,
+       "inFirstViewport": false,
+       "centreAt": 1.1,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 58
+      },
+      {
+       "what": "Add a timeout to the lint runner so stal",
+       "tag": "a",
+       "top": 987,
+       "bottom": 1045,
+       "left": 16,
+       "inFirstViewport": false,
+       "centreAt": 1.2,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 58
+      },
+      {
+       "what": "Lazy-load the knowledge graph panel on t",
+       "tag": "a",
+       "top": 1104,
+       "bottom": 1162,
+       "left": 16,
+       "inFirstViewport": false,
+       "centreAt": 1.3,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 58
+      },
+      {
+       "what": "Count duplicate pull request events once",
+       "tag": "a",
+       "top": 1170,
+       "bottom": 1228,
+       "left": 16,
+       "inFirstViewport": false,
+       "centreAt": 1.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 58
+      },
+      {
+       "what": "Tighten the cookie domain check in the h",
+       "tag": "a",
+       "top": 1236,
+       "bottom": 1294,
+       "left": 16,
+       "inFirstViewport": false,
+       "centreAt": 1.5,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 58
+      },
+      {
+       "what": "Bump the markdown renderer to the releas",
+       "tag": "a",
+       "top": 1302,
+       "bottom": 1360,
+       "left": 16,
+       "inFirstViewport": false,
+       "centreAt": 1.6,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 58
+      }
+     ],
+     "alphaSteps": [
+      0.1,
+      0.6,
+      0.74
+     ],
+     "state": {
+      "statusTokens": [
+       "--warning #8a5300",
+       "--success #137333",
+       "--critical #c10007",
+       "--unreachable #b04400",
+       "--destructive #c10007"
+      ],
+      "statusColoured": 3,
+      "offToken": [],
+      "colourOnly": 0,
+      "colourOnlySamples": [],
+      "countsInHeadings": 5,
+      "progressText": 0,
+      "usesSafeTokens": true,
+      "progressElements": 0,
+      "empties": []
+     },
+     "reading": {
+      "bodySize": 16,
+      "lines": [
+       {
+        "ch": 43,
+        "size": 14,
+        "sample": "The revised timetable adds two"
+       },
+       {
+        "ch": 43,
+        "size": 14,
+        "sample": "The state energy planner has o"
+       },
+       {
+        "ch": 43,
+        "size": 14,
+        "sample": "The council approved a six-mon"
+       },
+       {
+        "ch": 43,
+        "size": 14,
+        "sample": "A university team sampled soil"
+       },
+       {
+        "ch": 43,
+        "size": 14,
+        "sample": "Average dwell time at the east"
+       }
+      ],
+      "contrastChecked": 52,
+      "contrastUnknown": 0,
+      "contrastFails": [],
+      "contrastFailCount": 0,
+      "overflowX": 0,
+      "runningAnimations": 0
+     },
+     "textRuns": 65,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
+     "covered": {
+      "runs": 0,
+      "sample": []
+     },
+     "waitForSeen": true,
+     "pageErrors": [],
+     "url": "/briefings/"
+    },
+    "iphone-insets-light": {
+     "viewport": [
+      390,
+      844
+     ],
+     "coarse": true,
+     "hierarchy": {
+      "fontSizes": [
+       {
+        "size": 21,
+        "chars": 11
+       },
+       {
+        "size": 18,
+        "chars": 12
+       },
+       {
+        "size": 16,
+        "chars": 209
+       },
+       {
+        "size": 14,
+        "chars": 24
+       },
+       {
+        "size": 13,
+        "chars": 82
+       },
+       {
+        "size": 12.8,
+        "chars": 42
+       },
+       {
+        "size": 12,
+        "chars": 121
+       }
+      ],
+      "largest": {
+       "size": 21,
+       "elements": 1,
+       "weight": 600,
+       "text": "10 Nov 2026",
+       "nextSize": 18
+      },
+      "headings": [
+       {
+        "tag": "h1",
+        "text": "10 Nov 2026",
+        "size": 21,
+        "weight": 600,
+        "top": 140
+       },
+       {
+        "tag": "h2",
+        "text": "New memories",
+        "size": 18,
+        "weight": 600,
+        "top": 200
+       },
+       {
+        "tag": "h2",
+        "text": "Filed issues3",
+        "size": 14,
+        "weight": 500,
+        "top": 828
+       }
+      ]
+     },
+     "rows": {
+      "count": 17,
+      "sample": [
+       {
+        "height": 179,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 1,
+        "colourValues": [
+         "#c10007"
+        ],
+        "nested": 2,
+        "titleWeight": 500,
+        "titleSize": 16,
+        "titleText": "Nightly ingest retries once af"
+       },
+       {
+        "height": 179,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 1,
+        "colourValues": [
+         "#c10007"
+        ],
+        "nested": 2,
+        "titleWeight": 500,
+        "titleSize": 16,
+        "titleText": "Access answers an expired sess"
+       },
+       {
+        "height": 179,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 1,
+        "colourValues": [
+         "#c10007"
+        ],
+        "nested": 2,
+        "titleWeight": 500,
+        "titleSize": 16,
+        "titleText": "Prefer a here-string over a pi"
+       },
+       {
+        "height": 58,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Retry the nightly ingest when "
+       },
+       {
+        "height": 58,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Document the rollback steps fo"
+       },
+       {
+        "height": 58,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Add a timeout to the lint runn"
+       }
+      ],
+      "maxChips": 0,
+      "maxColours": 1,
+      "nested": 3,
+      "heights": [
+       58,
+       76,
+       95,
+       179
+      ],
+      "titleWeightMax": 500
+     },
+     "interactive": {
+      "firstViewport": 12,
+      "measured": 19,
+      "small": 0,
+      "smallSample": [],
+      "inputs": 0,
+      "smallInputs": []
+     },
+     "controls": [
+      {
+       "what": "Briefings",
+       "tag": "button",
+       "top": 10,
+       "bottom": 54,
+       "left": 17,
+       "inFirstViewport": true,
+       "centreAt": 0,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 104.3,
+       "height": 44
+      },
+      {
+       "what": "Briefing",
+       "tag": "button",
+       "top": 72,
+       "bottom": 116,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.1,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 179.5,
+       "height": 44
+      },
+      {
+       "what": "Days",
+       "tag": "button",
+       "top": 72,
+       "bottom": 116,
+       "left": 195.5,
+       "inFirstViewport": true,
+       "centreAt": 0.1,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 178.5,
+       "height": 44
+      },
+      {
+       "what": "Keep",
+       "tag": "button",
+       "top": 328,
+       "bottom": 372,
+       "left": 33,
+       "inFirstViewport": true,
+       "centreAt": 0.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 51.9,
+       "height": 44
+      },
+      {
+       "what": "Edit",
+       "tag": "button",
+       "top": 328,
+       "bottom": 372,
+       "left": 92.9,
+       "inFirstViewport": true,
+       "centreAt": 0.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 45.1,
+       "height": 44
+      },
+      {
+       "what": "Delete",
+       "tag": "button",
+       "top": 328,
+       "bottom": 372,
+       "left": 146,
+       "inFirstViewport": true,
+       "centreAt": 0.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 60.3,
+       "height": 44
+      },
+      {
+       "what": "Keep",
+       "tag": "button",
+       "top": 519,
+       "bottom": 563,
+       "left": 33,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 51.9,
+       "height": 44
+      },
+      {
+       "what": "Edit",
+       "tag": "button",
+       "top": 519,
+       "bottom": 563,
+       "left": 92.9,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 45.1,
+       "height": 44
+      },
+      {
+       "what": "Delete",
+       "tag": "button",
+       "top": 519,
+       "bottom": 563,
+       "left": 146,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 60.3,
+       "height": 44
+      },
+      {
+       "what": "Keep",
+       "tag": "button",
+       "top": 710,
+       "bottom": 754,
+       "left": 33,
+       "inFirstViewport": true,
+       "centreAt": 0.9,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 51.9,
+       "height": 44
+      },
+      {
+       "what": "Edit",
+       "tag": "button",
+       "top": 710,
+       "bottom": 754,
+       "left": 92.9,
+       "inFirstViewport": true,
+       "centreAt": 0.9,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 45.1,
+       "height": 44
+      },
+      {
+       "what": "Delete",
+       "tag": "button",
+       "top": 710,
+       "bottom": 754,
+       "left": 146,
+       "inFirstViewport": true,
+       "centreAt": 0.9,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 60.3,
+       "height": 44
+      },
+      {
+       "what": "Retry the nightly ingest when the inbox ",
+       "tag": "a",
+       "top": 855,
+       "bottom": 913,
+       "left": 16,
+       "inFirstViewport": false,
+       "centreAt": 1,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 58
+      },
+      {
+       "what": "Document the rollback steps for the noti",
+       "tag": "a",
+       "top": 921,
+       "bottom": 979,
+       "left": 16,
+       "inFirstViewport": false,
+       "centreAt": 1.1,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 58
+      },
+      {
+       "what": "Add a timeout to the lint runner so stal",
+       "tag": "a",
+       "top": 987,
+       "bottom": 1045,
+       "left": 16,
+       "inFirstViewport": false,
+       "centreAt": 1.2,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 58
+      },
+      {
+       "what": "Lazy-load the knowledge graph panel on t",
+       "tag": "a",
+       "top": 1104,
+       "bottom": 1162,
+       "left": 16,
+       "inFirstViewport": false,
+       "centreAt": 1.3,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 58
+      },
+      {
+       "what": "Count duplicate pull request events once",
+       "tag": "a",
+       "top": 1170,
+       "bottom": 1228,
+       "left": 16,
+       "inFirstViewport": false,
+       "centreAt": 1.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 58
+      },
+      {
+       "what": "Tighten the cookie domain check in the h",
+       "tag": "a",
+       "top": 1236,
+       "bottom": 1294,
+       "left": 16,
+       "inFirstViewport": false,
+       "centreAt": 1.5,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 58
+      },
+      {
+       "what": "Bump the markdown renderer to the releas",
+       "tag": "a",
+       "top": 1302,
+       "bottom": 1360,
+       "left": 16,
+       "inFirstViewport": false,
+       "centreAt": 1.6,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 358,
+       "height": 58
+      }
+     ],
+     "alphaSteps": [
+      0.1,
+      0.6,
+      0.74
+     ],
+     "state": {
+      "statusTokens": [
+       "--warning #8a5300",
+       "--success #137333",
+       "--critical #c10007",
+       "--unreachable #b04400",
+       "--destructive #c10007"
+      ],
+      "statusColoured": 3,
+      "offToken": [],
+      "colourOnly": 0,
+      "colourOnlySamples": [],
+      "countsInHeadings": 5,
+      "progressText": 0,
+      "usesSafeTokens": true,
+      "progressElements": 0,
+      "empties": []
+     },
+     "reading": {
+      "bodySize": 16,
+      "lines": [
+       {
+        "ch": 43,
+        "size": 14,
+        "sample": "The revised timetable adds two"
+       },
+       {
+        "ch": 43,
+        "size": 14,
+        "sample": "The state energy planner has o"
+       },
+       {
+        "ch": 43,
+        "size": 14,
+        "sample": "The council approved a six-mon"
+       },
+       {
+        "ch": 43,
+        "size": 14,
+        "sample": "A university team sampled soil"
+       },
+       {
+        "ch": 43,
+        "size": 14,
+        "sample": "Average dwell time at the east"
+       }
+      ],
+      "contrastChecked": 52,
+      "contrastUnknown": 0,
+      "contrastFails": [],
+      "contrastFailCount": 0,
+      "overflowX": 0,
+      "runningAnimations": 0
+     },
+     "textRuns": 65,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
+     "covered": {
+      "runs": 0,
+      "sample": []
+     },
+     "waitForSeen": true,
+     "pageErrors": [],
+     "url": "/briefings/",
+     "underInsets": [
+      "Briefings"
+     ]
+    }
+   }
+  }
+ ],
+ "mocks": [
+  {
+   "url": "http://127.0.0.1:59001/briefings/latest**",
+   "method": "GET",
+   "hits": 7
+  },
+  {
+   "url": "http://127.0.0.1:59001/briefings**",
+   "method": "GET",
+   "hits": 7
+  }
+ ],
+ "blocked": [],
+ "unmockedLocal": []
+}

@@ -1,0 +1,105 @@
+[
+  {
+    "url": "http://127.0.0.1:59001/briefings/latest**",
+    "method": "GET",
+    "status": 200,
+    "json": {
+      "date": "2026-11-10",
+      "news": "### A regional rail operator publishes its December timetable\n\nThe revised timetable adds two evening services on the coastal line from the first week of December. Commuters on the northern branch will see one fewer peak departure, with the change flagged on every platform board.\n\n[Timetable notice](https://news.example.test/rail/december-timetable)\n\n### Battery storage tender opens for regional substations\n\nThe state energy planner has opened a tender for grid-scale batteries at four regional substations. Bids close in February, and the planner expects the first contracts to be signed before the winter peak.\n\n[Tender summary](https://news.example.test/energy/substation-storage-tender)\n\n### Council votes to extend the library's weekend hours\n\nThe council approved a six-month trial of Saturday and Sunday opening at the central library. Staff will report usage figures to the next budget round before the trial is made permanent.\n\n[Council minutes](https://news.example.test/local/library-weekend-hours)\n\n### Researchers map soil carbon across a river catchment\n\nA university team sampled soil at 240 sites across a single catchment over three seasons. The results suggest that riparian strips hold more carbon than cleared paddocks, which may guide where future planting is funded.\n\n[Study preview](https://news.example.test/science/catchment-soil-carbon)\n\n### Shipping delays ease at the eastern container terminal\n\nAverage dwell time at the eastern terminal fell by a day last week after a second crane came back into service. Importers are still advised to allow an extra week for consignments booked through the end of the month.\n\n[Terminal update](https://news.example.test/trade/eastern-terminal-dwell)",
+      "memories": [
+        {
+          "memory_id": "mem-20261110-01",
+          "title": "Nightly ingest retries once after a read lands mid-sync",
+          "file": "MEMORY/nightly-ingest-retry-after-sync.md",
+          "state": "pending"
+        },
+        {
+          "memory_id": "mem-20261110-02",
+          "title": "Access answers an expired session with an opaque redirect, not a CORS error",
+          "file": "MEMORY/access-opaque-redirect-cors.md",
+          "state": "edit"
+        },
+        {
+          "memory_id": "mem-20261110-03",
+          "title": "Prefer a here-string over a pipe when the script needs the exit status",
+          "file": "MEMORY/here-string-over-pipe-exit-status.md",
+          "state": "pending"
+        }
+      ],
+      "ops": [
+        {
+          "section": "issues-filed",
+          "title": "Retry the nightly ingest when the inbox folder is still syncing",
+          "url": "https://git.example.test/owner/ops-hub/issues/412",
+          "detail": "ops-hub · filed 10 Nov · wave:w1"
+        },
+        {
+          "section": "issues-filed",
+          "title": "Document the rollback steps for the notice board schema migration",
+          "url": "https://git.example.test/owner/ops-hub/issues/415",
+          "detail": "ops-hub · filed 10 Nov · wave:later"
+        },
+        {
+          "section": "issues-filed",
+          "title": "Add a timeout to the lint runner so stalled workers release their slot",
+          "url": "https://git.example.test/owner/argus/issues/1318",
+          "detail": "argus · filed 9 Nov · wave:w2"
+        },
+        {
+          "section": "prs",
+          "title": "Lazy-load the knowledge graph panel on the reader page",
+          "url": "https://git.example.test/owner/apps/pull/208",
+          "detail": "apps · opened 9 Nov · checks passing"
+        },
+        {
+          "section": "prs",
+          "title": "Count duplicate pull request events once in the session digest",
+          "url": "https://git.example.test/owner/argus/pull/1322",
+          "detail": "argus · opened 10 Nov · review requested"
+        },
+        {
+          "section": "prs",
+          "title": "Tighten the cookie domain check in the hub's browser proxy route",
+          "url": "https://git.example.test/owner/ops-hub/pull/97",
+          "detail": "ops-hub · opened 10 Nov · checks running"
+        },
+        {
+          "section": "prs",
+          "title": "Bump the markdown renderer to the release that fixes nested lists",
+          "url": "https://git.example.test/owner/apps/pull/211",
+          "detail": "apps · opened 10 Nov · checks passing"
+        },
+        {
+          "section": "sessions",
+          "title": "Triaged the wave:w2 backlog and closed two stale issues",
+          "url": null,
+          "detail": "3 h · worked in the argus repo"
+        },
+        {
+          "section": "sessions",
+          "title": "Reviewed the memory consolidation findings for the week",
+          "url": null,
+          "detail": "1 h · worked in the context vault"
+        }
+      ],
+      "created_at": "2026-11-10T19:05:12.000Z",
+      "updated_at": "2026-11-10T19:31:48.000Z"
+    }
+  },
+  {
+    "url": "http://127.0.0.1:59001/briefings**",
+    "method": "GET",
+    "status": 200,
+    "json": {
+      "briefings": [
+        { "date": "2026-11-10", "ops": 9, "memories": 3, "pending_reviews": 2, "created_at": "2026-11-10T19:05:12.000Z", "updated_at": "2026-11-10T19:31:48.000Z" },
+        { "date": "2026-11-09", "ops": 7, "memories": 2, "pending_reviews": 0, "created_at": "2026-11-09T19:04:37.000Z", "updated_at": "2026-11-09T19:22:10.000Z" },
+        { "date": "2026-11-08", "ops": 8, "memories": 3, "pending_reviews": 0, "created_at": "2026-11-08T19:06:02.000Z", "updated_at": "2026-11-08T19:20:55.000Z" },
+        { "date": "2026-11-07", "ops": 6, "memories": 1, "pending_reviews": 0, "created_at": "2026-11-07T19:03:41.000Z", "updated_at": "2026-11-07T19:18:29.000Z" },
+        { "date": "2026-11-06", "ops": 9, "memories": 4, "pending_reviews": 0, "created_at": "2026-11-06T19:05:50.000Z", "updated_at": "2026-11-06T19:27:14.000Z" },
+        { "date": "2026-11-05", "ops": 5, "memories": 2, "pending_reviews": 0, "created_at": "2026-11-05T19:04:18.000Z", "updated_at": "2026-11-05T19:16:03.000Z" },
+        { "date": "2026-11-04", "ops": 7, "memories": 3, "pending_reviews": 0, "created_at": "2026-11-04T19:06:26.000Z", "updated_at": "2026-11-04T19:24:41.000Z" }
+      ]
+    }
+  }
+]

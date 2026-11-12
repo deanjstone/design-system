@@ -94,11 +94,16 @@ async function route(context) {
   await context.route("**/*", async (request) => {
     const url = request.request().url()
     if (url.startsWith("data:") || url.startsWith("blob:")) return request.continue()
+    // A mocked API on another local port is cross-origin to the app: answer the way a server
+    // that allows the app would, preflight included.
+    const from = request.request().headers().origin ?? origin
+    const cors = { "access-control-allow-origin": from, "access-control-allow-credentials": "true", "access-control-allow-headers": request.request().headers()["access-control-request-headers"] ?? "*", "access-control-allow-methods": "GET,POST,PUT,PATCH,DELETE,OPTIONS", "access-control-expose-headers": "*" }
+    if (request.request().method() === "OPTIONS" && new URL(url).origin !== origin) return request.fulfill({ status: 204, headers: cors, body: "" })
     const mock = mocks.find((candidate) => candidate.pattern.test(url) && (!candidate.method || candidate.method === request.request().method()))
     if (mock) {
       mock.hits += 1
       const body = mock.file ? readFileSync(beside(mock.file), "utf8") : mock.json !== undefined ? JSON.stringify(mock.json) : (mock.body ?? "")
-      return request.fulfill({ status: mock.status ?? 200, contentType: mock.contentType ?? "application/json", headers: { "access-control-allow-origin": "*", ...mock.headers }, body })
+      return request.fulfill({ status: mock.status ?? 200, contentType: mock.contentType ?? "application/json", headers: { ...cors, ...mock.headers }, body })
     }
     if (new URL(url).origin === origin) {
       // A data call to the app's own origin that no mock answers gets the static server's
