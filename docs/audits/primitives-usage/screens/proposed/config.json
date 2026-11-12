@@ -1,0 +1,14 @@
+{
+  "app": "proposed",
+  "repo": "design-system",
+  "note": "The five proposed sample screens under docs/audits/primitives-usage/proposed/. Build them with `PRIMITIVES_USAGE_PROPOSED_OUT=~/.cache/primitives-usage/dist/proposed npx vite build -c docs/audits/primitives-usage/proposed/vite.config.mjs`.",
+  "baseUrl": "http://127.0.0.1:4330",
+  "base": "/",
+  "screens": [
+    { "name": "list", "path": "/?v=list", "waitFor": "h1", "primaryAction": "text=Save article", "expectsProgress": true, "why": "Recommendation 1 and 3: a list row whose title wraps, set in pointer-driven type, with one metadata line and one control. Compare reader/library, stockade/items, jobs/roles." },
+    { "name": "status", "path": "/?v=status", "waitFor": "h1", "primaryAction": null, "expectsProgress": true, "why": "Recommendation 4: state by icon and word in the status tokens, problems first. Compare watchtower/dashboard." },
+    { "name": "detail", "path": "/?v=detail", "waitFor": "h1", "primaryAction": "text=Comment", "expectsProgress": false, "why": "Recommendations 2, 5 and 6: a visible title, the text before the controls, 44px segments, the action in the thumb zone. Compare ops-hub-web/issue." },
+    { "name": "plan", "path": "/?v=plan", "waitFor": "h1", "primaryAction": "text=Mark next step done", "expectsProgress": true, "why": "Recommendation 4: progress in words and a bar, done steps without a tint. Compare shell/plan." },
+    { "name": "empty", "path": "/?v=empty", "waitFor": "h1", "primaryAction": "text=Add an item", "expectsProgress": false, "why": "An empty state that says what to do next, with the action in reach. Compare jobs/roles' 'Pick a role'." }
+  ]
+}

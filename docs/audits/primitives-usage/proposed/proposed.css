@@ -1,0 +1,698 @@
+/*
+ * The proposed phone-first screens for the primitives usage audit: one shell, five screens.
+ * Space, type, reach and the two pointer-driven values (padding and type size) come from the token block.
+ * Colour is only the theme's own tokens. Below the block, lengths are tokens, 1px hairlines or the 2px focus ring.
+ * Below 1024px the bottom bars are fixed; from 1024px the tab bar is a sidebar and the action sits in the content.
+ * The 1024px breakpoint is the one length a media query cannot read from a token.
+ */
+
+/* tokens:begin */
+.pu {
+  /* Space: 7 steps on a 4px base. */
+  --pu-s1: 4px;
+  --pu-s2: 8px;
+  --pu-s3: 12px;
+  --pu-s4: 16px;
+  --pu-s5: 24px;
+  --pu-s6: 32px;
+  --pu-s7: 48px;
+
+  /* Type: 5 sizes, each with one line height, and 2 weights. */
+  --pu-t1: 12px;
+  --pu-lh1: 16px;
+  --pu-t2: 14px;
+  --pu-lh2: 20px;
+  --pu-t3: 16px;
+  --pu-lh3: 24px;
+  --pu-t4: 20px;
+  --pu-lh4: 28px;
+  --pu-t5: 28px;
+  --pu-lh5: 36px;
+  --pu-regular: 400;
+  --pu-strong: 600;
+
+  /* Shape, reach and measure. */
+  --pu-radius: 8px;
+  --pu-tap: 44px;
+  --pu-page: 720px;
+  --pu-rail: 224px;
+  --pu-measure: 65ch;
+  --pu-measure-narrow: 32ch;
+
+  /* Pointer-driven: a fine pointer gets the dense values, a coarse pointer the larger ones. */
+  --pu-pad: 8px;
+  --pu-body: 14px;
+  --pu-body-line: 20px;
+  --pu-meta: 12px;
+  --pu-meta-line: 16px;
+  --pu-title: 28px;
+  --pu-title-line: 36px;
+}
+
+@media (pointer: coarse) {
+  .pu {
+    --pu-pad: 12px;
+    --pu-body: 16px;
+    --pu-body-line: 24px;
+    --pu-meta: 14px;
+    --pu-meta-line: 20px;
+    --pu-title: 20px;
+    --pu-title-line: 28px;
+  }
+}
+/* tokens:end */
+
+.pu {
+  box-sizing: border-box;
+  background: var(--background);
+  color: var(--foreground);
+  font-size: var(--pu-body);
+  line-height: var(--pu-body-line);
+  font-weight: var(--pu-regular);
+}
+
+.pu :focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+/* Title bar: the page's only h1. Sticky on a phone; a plain row beside the content on wide screens. */
+.pu-topbar {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: var(--pu-s1);
+  min-height: var(--pu-tap);
+  padding: calc(var(--pu-s2) + env(safe-area-inset-top)) var(--pu-s2) var(--pu-s2);
+  background: var(--background);
+}
+
+.pu-title {
+  flex: 1 1 auto;
+  min-width: 0;
+  margin: 0;
+  padding-inline: var(--pu-s2);
+  font-size: var(--pu-title);
+  line-height: var(--pu-title-line);
+  font-weight: var(--pu-strong);
+  overflow-wrap: break-word;
+}
+
+/* Content: the padding clears the action button and the tab bar at the foot of a phone screen. */
+.pu-main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pu-s5);
+  box-sizing: border-box;
+  min-width: 0;
+  padding: var(--pu-s4) var(--pu-s4) calc(var(--pu-s7) * 2 + var(--pu-s6) + env(safe-area-inset-bottom));
+}
+
+/* Bottom bars: the action button above the tab bar, both fixed to the foot of the screen. */
+.pu-dock {
+  position: fixed;
+  inset-inline: 0;
+  bottom: 0;
+  z-index: 2;
+}
+
+.pu-action {
+  box-sizing: border-box;
+  padding: var(--pu-s3) var(--pu-s4);
+  border-top: 1px solid var(--border);
+  background: var(--background);
+}
+
+.pu-primary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--pu-s2);
+  box-sizing: border-box;
+  width: 100%;
+  min-height: var(--pu-tap);
+  padding: var(--pu-pad) var(--pu-s4);
+  border: 0;
+  border-radius: var(--pu-radius);
+  background: var(--primary);
+  color: var(--primary-foreground);
+  font-size: var(--pu-body);
+  line-height: var(--pu-body-line);
+  font-weight: var(--pu-strong);
+  cursor: pointer;
+}
+
+.pu-tabs {
+  box-sizing: border-box;
+  border-top: 1px solid var(--border);
+  background: var(--background);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.pu-tab-list {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pu-tab-list > li {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.pu-tab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--pu-s1);
+  box-sizing: border-box;
+  min-height: var(--pu-tap);
+  padding: var(--pu-s2) var(--pu-s1);
+  color: var(--muted-foreground);
+  font-size: var(--pu-t1);
+  line-height: var(--pu-lh1);
+  font-weight: var(--pu-regular);
+  text-align: center;
+  text-decoration: none;
+}
+
+.pu-tab[aria-current="page"] {
+  color: var(--foreground);
+  font-weight: var(--pu-strong);
+}
+
+.pu-icon {
+  flex: none;
+  width: var(--pu-s4);
+  height: var(--pu-s4);
+}
+
+.pu-icon-lg {
+  flex: none;
+  width: var(--pu-s6);
+  height: var(--pu-s6);
+  color: var(--muted-foreground);
+}
+
+.pu-icon-button {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: var(--pu-tap);
+  height: var(--pu-tap);
+  padding: 0;
+  border: 0;
+  border-radius: var(--pu-radius);
+  background: none;
+  color: var(--foreground);
+  cursor: pointer;
+}
+
+.pu-strong {
+  font-weight: var(--pu-strong);
+}
+
+.pu-muted {
+  color: var(--muted-foreground);
+}
+
+.pu-meta {
+  margin: 0;
+  color: var(--muted-foreground);
+  font-size: var(--pu-meta);
+  line-height: var(--pu-meta-line);
+}
+
+.pu-summary {
+  margin: 0;
+  font-size: var(--pu-body);
+  line-height: var(--pu-body-line);
+}
+
+.pu-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pu-s2);
+}
+
+.pu-heading {
+  margin: 0;
+  font-size: var(--pu-t3);
+  line-height: var(--pu-lh3);
+  font-weight: var(--pu-strong);
+}
+
+/* The issue title: 20px, the largest text on the page after the title bar. */
+.pu-heading-lg {
+  margin: 0;
+  font-size: var(--pu-t4);
+  line-height: var(--pu-lh4);
+  font-weight: var(--pu-strong);
+  overflow-wrap: break-word;
+}
+
+.pu-count {
+  margin-inline-start: var(--pu-s2);
+  color: var(--muted-foreground);
+  font-weight: var(--pu-regular);
+  font-variant-numeric: tabular-nums;
+}
+
+.pu-rows {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Reading list: a search field, then one row per article. */
+.pu-input {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  min-height: var(--pu-tap);
+  padding: var(--pu-pad) var(--pu-s3);
+  border: 1px solid var(--input);
+  border-radius: var(--pu-radius);
+  background: var(--background);
+  color: var(--foreground);
+  font-size: var(--pu-t3);
+  line-height: var(--pu-lh3);
+  font-weight: var(--pu-regular);
+}
+
+.pu-input::placeholder {
+  color: var(--muted-foreground);
+}
+
+.pu-row {
+  display: flex;
+  align-items: center;
+  gap: var(--pu-s3);
+  padding: var(--pu-pad) 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.pu-row .pu-icon-button {
+  color: var(--muted-foreground);
+}
+
+.pu-row-body {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: var(--pu-s1);
+  min-width: 0;
+}
+
+.pu-row-title {
+  color: var(--foreground);
+  font-size: var(--pu-body);
+  line-height: var(--pu-body-line);
+  font-weight: var(--pu-regular);
+  overflow-wrap: break-word;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+}
+
+/* Status board: state is the icon and the word together, in the state's colour. */
+.pu-state-row,
+.pu-healthy-row {
+  padding: var(--pu-pad) 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.pu-state-row {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pu-s1);
+}
+
+.pu-state-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--pu-s2);
+  font-size: var(--pu-body);
+  line-height: var(--pu-body-line);
+}
+
+.pu-state-head[data-state="down"] {
+  --pu-state: var(--critical);
+}
+
+.pu-state-head[data-state="degraded"] {
+  --pu-state: var(--warning);
+}
+
+.pu-state-icon,
+.pu-state-word {
+  color: var(--pu-state);
+}
+
+.pu-state-word {
+  font-weight: var(--pu-strong);
+}
+
+.pu-healthy-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  column-gap: var(--pu-s2);
+}
+
+.pu-health-icon {
+  color: var(--success);
+}
+
+.pu-healthy-name {
+  font-size: var(--pu-body);
+  line-height: var(--pu-body-line);
+}
+
+/* Issue page: the state line, the body text at a readable measure, then the disclosure. */
+.pu-issue {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pu-s4);
+}
+
+.pu-state-line {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--pu-s2);
+  margin: 0;
+  font-size: var(--pu-body);
+  line-height: var(--pu-body-line);
+}
+
+.pu-state-icon-warning {
+  color: var(--warning);
+}
+
+.pu-prose {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pu-s3);
+  max-width: var(--pu-measure);
+  font-size: var(--pu-body);
+  line-height: var(--pu-body-line);
+}
+
+.pu-prose p {
+  margin: 0;
+}
+
+.pu-points {
+  margin: 0;
+  padding-inline-start: var(--pu-s5);
+}
+
+.pu-disclosure {
+  max-width: var(--pu-measure);
+  border-top: 1px solid var(--border);
+  padding-top: var(--pu-s2);
+}
+
+.pu-disclosure-summary {
+  display: flex;
+  align-items: center;
+  min-height: var(--pu-tap);
+  font-size: var(--pu-body);
+  line-height: var(--pu-body-line);
+  font-weight: var(--pu-strong);
+  cursor: pointer;
+}
+
+.pu-triage {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pu-s3);
+  padding-block: var(--pu-s2);
+}
+
+.pu-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pu-s1);
+}
+
+.pu-segments {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.pu-segment {
+  box-sizing: border-box;
+  min-height: var(--pu-tap);
+  margin: 0 0 0 -1px;
+  padding: var(--pu-pad) var(--pu-s3);
+  border: 1px solid var(--input);
+  border-radius: 0;
+  background: var(--background);
+  color: var(--foreground);
+  font-size: var(--pu-body);
+  line-height: var(--pu-body-line);
+  font-weight: var(--pu-regular);
+  cursor: pointer;
+}
+
+.pu-segment:first-child {
+  margin-inline-start: 0;
+  border-radius: var(--pu-radius) 0 0 var(--pu-radius);
+}
+
+.pu-segment:last-child {
+  border-radius: 0 var(--pu-radius) var(--pu-radius) 0;
+}
+
+.pu-segment[aria-pressed="true"] {
+  position: relative;
+  z-index: 1;
+  border-color: var(--primary);
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+
+/* Plan: progress, the next step in full, the to-do checklist and the finished steps. */
+.pu-progress-block {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pu-s2);
+}
+
+.pu-progress-line {
+  margin: 0;
+  font-size: var(--pu-body);
+  line-height: var(--pu-body-line);
+}
+
+.pu-progress {
+  display: block;
+  width: 100%;
+  height: var(--pu-s3);
+  margin: 0;
+  accent-color: var(--primary);
+}
+
+.pu-task {
+  display: grid;
+  grid-template-columns: var(--pu-tap) minmax(0, 1fr);
+  align-items: center;
+  column-gap: var(--pu-s2);
+  padding: var(--pu-s1) 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.pu-task-next {
+  align-items: start;
+  padding: var(--pu-s2) 0;
+}
+
+.pu-task-title {
+  min-width: 0;
+  font-size: var(--pu-body);
+  line-height: var(--pu-body-line);
+  font-weight: var(--pu-regular);
+  overflow-wrap: break-word;
+  cursor: pointer;
+}
+
+.pu-task-note {
+  grid-column: 2;
+  margin: 0;
+  color: var(--muted-foreground);
+  font-size: var(--pu-body);
+  line-height: var(--pu-body-line);
+}
+
+/* A 44px box holding a 20px checkbox: the box is the hit area, the square is drawn from the theme tokens. */
+.pu-checkbox {
+  appearance: none;
+  display: grid;
+  place-items: center;
+  width: var(--pu-tap);
+  height: var(--pu-tap);
+  margin: 0;
+  cursor: pointer;
+}
+
+.pu-checkbox::before,
+.pu-checkbox::after {
+  content: "";
+  grid-area: 1 / 1;
+}
+
+.pu-checkbox::before {
+  box-sizing: border-box;
+  width: var(--pu-t4);
+  height: var(--pu-t4);
+  border: 1px solid var(--input);
+  border-radius: var(--pu-radius);
+  background: var(--background);
+}
+
+.pu-checkbox:checked::before {
+  border-color: var(--primary);
+  background: var(--primary);
+}
+
+.pu-checkbox::after {
+  display: none;
+  box-sizing: border-box;
+  width: var(--pu-s2);
+  height: var(--pu-s3);
+  border: solid var(--primary-foreground);
+  border-width: 0 2px 2px 0;
+  rotate: 45deg;
+}
+
+.pu-checkbox:checked::after {
+  display: block;
+}
+
+.pu-done-item {
+  display: flex;
+  align-items: center;
+  gap: var(--pu-s2);
+  min-height: var(--pu-tap);
+  padding: var(--pu-s1) 0;
+  border-bottom: 1px solid var(--border);
+  color: var(--muted-foreground);
+  font-size: var(--pu-body);
+  line-height: var(--pu-body-line);
+  font-weight: var(--pu-regular);
+}
+
+/* Empty state: one centred message with the next action as a text link. */
+.pu-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--pu-s3);
+  padding-block: var(--pu-s7);
+  text-align: center;
+}
+
+.pu-empty-text {
+  max-width: var(--pu-measure-narrow);
+  margin: 0;
+  color: var(--muted-foreground);
+  font-size: var(--pu-body);
+  line-height: var(--pu-body-line);
+}
+
+.pu-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--pu-tap);
+  color: var(--primary-text);
+  font-size: var(--pu-body);
+  line-height: var(--pu-body-line);
+  font-weight: var(--pu-regular);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+}
+
+/* Wide screens: the tab bar becomes a sidebar column, the action sits at the top of the content column. */
+@media (min-width: 1024px) {
+  .pu {
+    display: grid;
+    grid-template-columns: var(--pu-rail) minmax(0, 1fr);
+    grid-template-areas:
+      "nav top"
+      "nav action"
+      "nav main";
+    align-items: start;
+  }
+
+  .pu-topbar {
+    grid-area: top;
+    position: static;
+    width: 100%;
+    max-width: var(--pu-page);
+    padding-top: var(--pu-s4);
+  }
+
+  .pu-dock {
+    position: static;
+    display: contents;
+  }
+
+  .pu-action {
+    grid-area: action;
+    display: flex;
+    justify-content: flex-end;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: var(--pu-page);
+    padding: 0 var(--pu-s4);
+    border-top: 0;
+    background: none;
+  }
+
+  .pu-action .pu-primary {
+    width: auto;
+  }
+
+  .pu-tabs {
+    grid-area: nav;
+    position: sticky;
+    top: 0;
+    align-self: start;
+    min-height: 100%;
+    padding: var(--pu-s4) 0;
+    border-top: 0;
+    border-inline-end: 1px solid var(--border);
+    padding-bottom: var(--pu-s4);
+  }
+
+  .pu-tab-list {
+    flex-direction: column;
+    padding: 0;
+  }
+
+  .pu-tab-list > li {
+    flex: none;
+  }
+
+  .pu-tab {
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: var(--pu-s2);
+    padding: var(--pu-s2) var(--pu-s4);
+  }
+
+  .pu-main {
+    grid-area: main;
+    justify-self: start;
+    width: 100%;
+    max-width: var(--pu-page);
+    padding: var(--pu-s4) var(--pu-s4) var(--pu-s7);
+  }
+}
