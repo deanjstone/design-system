@@ -1,0 +1,10 @@
+[
+  {
+    "url": "**/api/repos**",
+    "method": "GET",
+    "status": 200,
+    "json": {
+      "repos": ["none", "argus", "homelab", "design-system", "quick-capture", "sparky"]
+    }
+  }
+]

@@ -1,0 +1,1260 @@
+{
+ "app": "quick-capture",
+ "baseUrl": "http://127.0.0.1:4322",
+ "rules": {
+  "fontSizesInFirstViewport": 3,
+  "largestRatio": 1.2,
+  "largestElements": 2,
+  "chipsPerRow": 1,
+  "coloursPerRow": 2,
+  "interactiveInFirstViewport": 15,
+  "alphaSteps": 4,
+  "tapTarget": 44,
+  "inputFontSize": 16,
+  "thumbZoneFrom": 0.6,
+  "bodyFontSize": 16,
+  "lineLength": [
+   45,
+   75
+  ],
+  "contrast": 4.5,
+  "contrastLarge": 3
+ },
+ "screens": [
+  {
+   "name": "capture",
+   "path": "/",
+   "why": "The only screen (web/src/App.tsx): type a note and send it.",
+   "primaryAction": "auto",
+   "expectsProgress": false,
+   "checks": {
+    "hierarchy": {
+     "oneLargest": {
+      "pass": true,
+      "detail": "21px ×1 \"Quick Capture\", next 16px"
+     },
+     "fontSizes": {
+      "pass": true,
+      "detail": "21/16/14"
+     },
+     "pageTitleVisible": {
+      "pass": true,
+      "detail": "h1 \"Quick Capture\""
+     },
+     "headingVisible": {
+      "pass": true,
+      "detail": "h1 \"Quick Capture\" at 16px"
+     },
+     "headingOutweighsRows": {
+      "pass": null,
+      "detail": "no rows or no heading"
+     },
+     "headingOutweighsRowsDesktop": {
+      "pass": null,
+      "detail": "no rows or no heading"
+     }
+    },
+    "clutter": {
+     "chipsPerRow": {
+      "pass": null,
+      "detail": "no rows"
+     },
+     "coloursPerRow": {
+      "pass": null,
+      "detail": "no rows"
+     },
+     "noNestedBorders": {
+      "pass": null,
+      "detail": "no rows"
+     },
+     "chipsPerRowDesktop": {
+      "pass": null,
+      "detail": "no rows"
+     },
+     "coloursPerRowDesktop": {
+      "pass": null,
+      "detail": "no rows"
+     },
+     "nothingCutOff": {
+      "pass": true,
+      "detail": "0 texts cut short, 0 of them in list rows"
+     },
+     "interactiveCount": {
+      "pass": true,
+      "detail": "6"
+     },
+     "alphaSteps": {
+      "pass": true,
+      "detail": "0: "
+     }
+    },
+    "action": {
+     "primaryVisible": {
+      "pass": true,
+      "detail": "\"Capture\" at 500px"
+     },
+     "primaryInThumbZone": {
+      "pass": true,
+      "detail": "centre at 60% of the viewport"
+     },
+     "tapTargets": {
+      "pass": true,
+      "detail": "0 of 6 under 44px"
+     },
+     "inputText": {
+      "pass": true,
+      "detail": "0 of 2 under 16px"
+     }
+    },
+    "state": {
+     "moreThanColour": {
+      "pass": null,
+      "detail": "no status colour on screen"
+     },
+     "statusFromTokens": {
+      "pass": null,
+      "detail": "no status colour on screen"
+     },
+     "progressShown": {
+      "pass": null,
+      "detail": "no goal on this screen"
+     },
+     "emptySaysNext": {
+      "pass": null,
+      "detail": "no empty state on screen"
+     }
+    },
+    "reading": {
+     "bodyText": {
+      "pass": false,
+      "detail": "14px"
+     },
+     "lineLength": {
+      "pass": null,
+      "detail": "no wrapped paragraph on desktop"
+     },
+     "contrast": {
+      "pass": true,
+      "detail": "iphone-light 0, iphone-dark 0, desktop-light 0, desktop-dark 0"
+     },
+     "noSidewaysScroll": {
+      "pass": true,
+      "detail": "390: 0px, 320: 0px"
+     },
+     "reducedMotion": {
+      "pass": true,
+      "detail": "0 running"
+     }
+    }
+   },
+   "variants": {
+    "iphone-light": {
+     "viewport": [
+      390,
+      844
+     ],
+     "coarse": true,
+     "hierarchy": {
+      "fontSizes": [
+       {
+        "size": 21,
+        "chars": 13
+       },
+       {
+        "size": 16,
+        "chars": 21
+       },
+       {
+        "size": 14,
+        "chars": 32
+       }
+      ],
+      "largest": {
+       "size": 21,
+       "elements": 1,
+       "weight": 600,
+       "text": "Quick Capture",
+       "nextSize": 16
+      },
+      "headings": [
+       {
+        "tag": "h1",
+        "text": "Quick Capture",
+        "size": 21,
+        "weight": 600,
+        "top": 16
+       }
+      ]
+     },
+     "rows": {
+      "count": 0,
+      "sample": [],
+      "maxChips": 0,
+      "maxColours": 0,
+      "nested": 0,
+      "heights": [],
+      "titleWeightMax": 0
+     },
+     "interactive": {
+      "firstViewport": 6,
+      "measured": 6,
+      "small": 0,
+      "smallSample": [],
+      "inputs": 2,
+      "smallInputs": []
+     },
+     "controls": [
+      {
+       "what": "INPUT",
+       "tag": "input",
+       "top": 96,
+       "bottom": 140,
+       "left": 32,
+       "inFirstViewport": true,
+       "centreAt": 0.1,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 326,
+       "height": 44
+      },
+      {
+       "what": "TEXTAREA",
+       "tag": "textarea",
+       "top": 176,
+       "bottom": 240,
+       "left": 32,
+       "inFirstViewport": true,
+       "centreAt": 0.2,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 326,
+       "height": 64
+      },
+      {
+       "what": "Idea",
+       "tag": "button",
+       "top": 276,
+       "bottom": 320,
+       "left": 32,
+       "inFirstViewport": true,
+       "centreAt": 0.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 326,
+       "height": 44
+      },
+      {
+       "what": "Cortex",
+       "tag": "button",
+       "top": 356,
+       "bottom": 400,
+       "left": 32,
+       "inFirstViewport": true,
+       "centreAt": 0.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 326,
+       "height": 44
+      },
+      {
+       "what": "none",
+       "tag": "button",
+       "top": 436,
+       "bottom": 480,
+       "left": 32,
+       "inFirstViewport": true,
+       "centreAt": 0.5,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 326,
+       "height": 44
+      },
+      {
+       "what": "Capture",
+       "tag": "button",
+       "top": 500,
+       "bottom": 548,
+       "left": 32,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": true,
+       "width": 326,
+       "height": 48
+      }
+     ],
+     "alphaSteps": [],
+     "state": {
+      "statusTokens": [
+       "--warning #8a5300",
+       "--success #137333",
+       "--critical #c10007",
+       "--unreachable #b04400",
+       "--destructive #c10007"
+      ],
+      "statusColoured": 0,
+      "offToken": [],
+      "colourOnly": 0,
+      "colourOnlySamples": [],
+      "countsInHeadings": 0,
+      "progressText": 0,
+      "usesSafeTokens": false,
+      "progressElements": 0,
+      "empties": []
+     },
+     "reading": {
+      "bodySize": 14,
+      "lines": [],
+      "contrastChecked": 11,
+      "contrastUnknown": 0,
+      "contrastFails": [],
+      "contrastFailCount": 0,
+      "overflowX": 0,
+      "runningAnimations": 0
+     },
+     "textRuns": 11,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
+     "covered": {
+      "runs": 0,
+      "sample": []
+     },
+     "waitForSeen": true,
+     "pageErrors": [],
+     "url": "/"
+    },
+    "iphone-dark": {
+     "viewport": [
+      390,
+      844
+     ],
+     "coarse": true,
+     "hierarchy": {
+      "fontSizes": [
+       {
+        "size": 21,
+        "chars": 13
+       },
+       {
+        "size": 16,
+        "chars": 21
+       },
+       {
+        "size": 14,
+        "chars": 32
+       }
+      ],
+      "largest": {
+       "size": 21,
+       "elements": 1,
+       "weight": 600,
+       "text": "Quick Capture",
+       "nextSize": 16
+      },
+      "headings": [
+       {
+        "tag": "h1",
+        "text": "Quick Capture",
+        "size": 21,
+        "weight": 600,
+        "top": 16
+       }
+      ]
+     },
+     "rows": {
+      "count": 0,
+      "sample": [],
+      "maxChips": 0,
+      "maxColours": 0,
+      "nested": 0,
+      "heights": [],
+      "titleWeightMax": 0
+     },
+     "interactive": {
+      "firstViewport": 6,
+      "measured": 6,
+      "small": 0,
+      "smallSample": [],
+      "inputs": 2,
+      "smallInputs": []
+     },
+     "controls": [
+      {
+       "what": "INPUT",
+       "tag": "input",
+       "top": 96,
+       "bottom": 140,
+       "left": 32,
+       "inFirstViewport": true,
+       "centreAt": 0.1,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 326,
+       "height": 44
+      },
+      {
+       "what": "TEXTAREA",
+       "tag": "textarea",
+       "top": 176,
+       "bottom": 240,
+       "left": 32,
+       "inFirstViewport": true,
+       "centreAt": 0.2,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 326,
+       "height": 64
+      },
+      {
+       "what": "Idea",
+       "tag": "button",
+       "top": 276,
+       "bottom": 320,
+       "left": 32,
+       "inFirstViewport": true,
+       "centreAt": 0.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 326,
+       "height": 44
+      },
+      {
+       "what": "Cortex",
+       "tag": "button",
+       "top": 356,
+       "bottom": 400,
+       "left": 32,
+       "inFirstViewport": true,
+       "centreAt": 0.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 326,
+       "height": 44
+      },
+      {
+       "what": "none",
+       "tag": "button",
+       "top": 436,
+       "bottom": 480,
+       "left": 32,
+       "inFirstViewport": true,
+       "centreAt": 0.5,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 326,
+       "height": 44
+      },
+      {
+       "what": "Capture",
+       "tag": "button",
+       "top": 500,
+       "bottom": 548,
+       "left": 32,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": true,
+       "width": 326,
+       "height": 48
+      }
+     ],
+     "alphaSteps": [
+      0.3
+     ],
+     "state": {
+      "statusTokens": [
+       "--warning #fbbf24",
+       "--success #4ade80",
+       "--critical #ff7a7e",
+       "--unreachable #fb923c",
+       "--destructive #ff6467"
+      ],
+      "statusColoured": 0,
+      "offToken": [],
+      "colourOnly": 0,
+      "colourOnlySamples": [],
+      "countsInHeadings": 0,
+      "progressText": 0,
+      "usesSafeTokens": false,
+      "progressElements": 0,
+      "empties": []
+     },
+     "reading": {
+      "bodySize": 14,
+      "lines": [],
+      "contrastChecked": 11,
+      "contrastUnknown": 0,
+      "contrastFails": [],
+      "contrastFailCount": 0,
+      "overflowX": 0,
+      "runningAnimations": 0
+     },
+     "textRuns": 11,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
+     "covered": {
+      "runs": 0,
+      "sample": []
+     },
+     "waitForSeen": true,
+     "pageErrors": [],
+     "url": "/"
+    },
+    "desktop-light": {
+     "viewport": [
+      1440,
+      900
+     ],
+     "coarse": false,
+     "hierarchy": {
+      "fontSizes": [
+       {
+        "size": 26,
+        "chars": 13
+       },
+       {
+        "size": 16,
+        "chars": 21
+       },
+       {
+        "size": 14,
+        "chars": 32
+       }
+      ],
+      "largest": {
+       "size": 26,
+       "elements": 1,
+       "weight": 600,
+       "text": "Quick Capture",
+       "nextSize": 16
+      },
+      "headings": [
+       {
+        "tag": "h1",
+        "text": "Quick Capture",
+        "size": 26,
+        "weight": 600,
+        "top": 16
+       }
+      ]
+     },
+     "rows": {
+      "count": 0,
+      "sample": [],
+      "maxChips": 0,
+      "maxColours": 0,
+      "nested": 0,
+      "heights": [],
+      "titleWeightMax": 0
+     },
+     "interactive": {
+      "firstViewport": 6,
+      "measured": 6,
+      "small": 0,
+      "smallSample": [],
+      "inputs": 2,
+      "smallInputs": [
+       {
+        "what": "INPUT",
+        "tag": "input",
+        "size": 14
+       },
+       {
+        "what": "TEXTAREA",
+        "tag": "textarea",
+        "size": 14
+       }
+      ]
+     },
+     "controls": [
+      {
+       "what": "INPUT",
+       "tag": "input",
+       "top": 100,
+       "bottom": 144,
+       "left": 528,
+       "inFirstViewport": true,
+       "centreAt": 0.1,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 384,
+       "height": 44
+      },
+      {
+       "what": "TEXTAREA",
+       "tag": "textarea",
+       "top": 180,
+       "bottom": 244,
+       "left": 528,
+       "inFirstViewport": true,
+       "centreAt": 0.2,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 384,
+       "height": 64
+      },
+      {
+       "what": "Idea",
+       "tag": "button",
+       "top": 280,
+       "bottom": 324,
+       "left": 528,
+       "inFirstViewport": true,
+       "centreAt": 0.3,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 384,
+       "height": 44
+      },
+      {
+       "what": "Cortex",
+       "tag": "button",
+       "top": 360,
+       "bottom": 404,
+       "left": 528,
+       "inFirstViewport": true,
+       "centreAt": 0.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 384,
+       "height": 44
+      },
+      {
+       "what": "none",
+       "tag": "button",
+       "top": 440,
+       "bottom": 484,
+       "left": 528,
+       "inFirstViewport": true,
+       "centreAt": 0.5,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 384,
+       "height": 44
+      },
+      {
+       "what": "Capture",
+       "tag": "button",
+       "top": 504,
+       "bottom": 552,
+       "left": 528,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": true,
+       "width": 384,
+       "height": 48
+      }
+     ],
+     "alphaSteps": [],
+     "state": {
+      "statusTokens": [
+       "--warning #8a5300",
+       "--success #137333",
+       "--critical #c10007",
+       "--unreachable #b04400",
+       "--destructive #c10007"
+      ],
+      "statusColoured": 0,
+      "offToken": [],
+      "colourOnly": 0,
+      "colourOnlySamples": [],
+      "countsInHeadings": 0,
+      "progressText": 0,
+      "usesSafeTokens": false,
+      "progressElements": 0,
+      "empties": []
+     },
+     "reading": {
+      "bodySize": 14,
+      "lines": [],
+      "contrastChecked": 11,
+      "contrastUnknown": 0,
+      "contrastFails": [],
+      "contrastFailCount": 0,
+      "overflowX": 0,
+      "runningAnimations": 0
+     },
+     "textRuns": 11,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
+     "covered": {
+      "runs": 0,
+      "sample": []
+     },
+     "waitForSeen": true,
+     "pageErrors": [],
+     "url": "/"
+    },
+    "desktop-dark": {
+     "viewport": [
+      1440,
+      900
+     ],
+     "coarse": false,
+     "hierarchy": {
+      "fontSizes": [
+       {
+        "size": 26,
+        "chars": 13
+       },
+       {
+        "size": 16,
+        "chars": 21
+       },
+       {
+        "size": 14,
+        "chars": 32
+       }
+      ],
+      "largest": {
+       "size": 26,
+       "elements": 1,
+       "weight": 600,
+       "text": "Quick Capture",
+       "nextSize": 16
+      },
+      "headings": [
+       {
+        "tag": "h1",
+        "text": "Quick Capture",
+        "size": 26,
+        "weight": 600,
+        "top": 16
+       }
+      ]
+     },
+     "rows": {
+      "count": 0,
+      "sample": [],
+      "maxChips": 0,
+      "maxColours": 0,
+      "nested": 0,
+      "heights": [],
+      "titleWeightMax": 0
+     },
+     "interactive": {
+      "firstViewport": 6,
+      "measured": 6,
+      "small": 0,
+      "smallSample": [],
+      "inputs": 2,
+      "smallInputs": [
+       {
+        "what": "INPUT",
+        "tag": "input",
+        "size": 14
+       },
+       {
+        "what": "TEXTAREA",
+        "tag": "textarea",
+        "size": 14
+       }
+      ]
+     },
+     "controls": [
+      {
+       "what": "INPUT",
+       "tag": "input",
+       "top": 100,
+       "bottom": 144,
+       "left": 528,
+       "inFirstViewport": true,
+       "centreAt": 0.1,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 384,
+       "height": 44
+      },
+      {
+       "what": "TEXTAREA",
+       "tag": "textarea",
+       "top": 180,
+       "bottom": 244,
+       "left": 528,
+       "inFirstViewport": true,
+       "centreAt": 0.2,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 384,
+       "height": 64
+      },
+      {
+       "what": "Idea",
+       "tag": "button",
+       "top": 280,
+       "bottom": 324,
+       "left": 528,
+       "inFirstViewport": true,
+       "centreAt": 0.3,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 384,
+       "height": 44
+      },
+      {
+       "what": "Cortex",
+       "tag": "button",
+       "top": 360,
+       "bottom": 404,
+       "left": 528,
+       "inFirstViewport": true,
+       "centreAt": 0.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 384,
+       "height": 44
+      },
+      {
+       "what": "none",
+       "tag": "button",
+       "top": 440,
+       "bottom": 484,
+       "left": 528,
+       "inFirstViewport": true,
+       "centreAt": 0.5,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 384,
+       "height": 44
+      },
+      {
+       "what": "Capture",
+       "tag": "button",
+       "top": 504,
+       "bottom": 552,
+       "left": 528,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": true,
+       "width": 384,
+       "height": 48
+      }
+     ],
+     "alphaSteps": [
+      0.3
+     ],
+     "state": {
+      "statusTokens": [
+       "--warning #fbbf24",
+       "--success #4ade80",
+       "--critical #ff7a7e",
+       "--unreachable #fb923c",
+       "--destructive #ff6467"
+      ],
+      "statusColoured": 0,
+      "offToken": [],
+      "colourOnly": 0,
+      "colourOnlySamples": [],
+      "countsInHeadings": 0,
+      "progressText": 0,
+      "usesSafeTokens": false,
+      "progressElements": 0,
+      "empties": []
+     },
+     "reading": {
+      "bodySize": 14,
+      "lines": [],
+      "contrastChecked": 11,
+      "contrastUnknown": 0,
+      "contrastFails": [],
+      "contrastFailCount": 0,
+      "overflowX": 0,
+      "runningAnimations": 0
+     },
+     "textRuns": 11,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
+     "covered": {
+      "runs": 0,
+      "sample": []
+     },
+     "waitForSeen": true,
+     "pageErrors": [],
+     "url": "/"
+    },
+    "iphone-320": {
+     "viewport": [
+      320,
+      844
+     ],
+     "coarse": true,
+     "hierarchy": {
+      "fontSizes": [
+       {
+        "size": 21,
+        "chars": 13
+       },
+       {
+        "size": 16,
+        "chars": 21
+       },
+       {
+        "size": 14,
+        "chars": 32
+       }
+      ],
+      "largest": {
+       "size": 21,
+       "elements": 1,
+       "weight": 600,
+       "text": "Quick Capture",
+       "nextSize": 16
+      },
+      "headings": [
+       {
+        "tag": "h1",
+        "text": "Quick Capture",
+        "size": 21,
+        "weight": 600,
+        "top": 16
+       }
+      ]
+     },
+     "rows": {
+      "count": 0,
+      "sample": [],
+      "maxChips": 0,
+      "maxColours": 0,
+      "nested": 0,
+      "heights": [],
+      "titleWeightMax": 0
+     },
+     "interactive": {
+      "firstViewport": 6,
+      "measured": 6,
+      "small": 0,
+      "smallSample": [],
+      "inputs": 2,
+      "smallInputs": []
+     },
+     "controls": [
+      {
+       "what": "INPUT",
+       "tag": "input",
+       "top": 96,
+       "bottom": 140,
+       "left": 32,
+       "inFirstViewport": true,
+       "centreAt": 0.1,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 256,
+       "height": 44
+      },
+      {
+       "what": "TEXTAREA",
+       "tag": "textarea",
+       "top": 176,
+       "bottom": 240,
+       "left": 32,
+       "inFirstViewport": true,
+       "centreAt": 0.2,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 256,
+       "height": 64
+      },
+      {
+       "what": "Idea",
+       "tag": "button",
+       "top": 276,
+       "bottom": 320,
+       "left": 32,
+       "inFirstViewport": true,
+       "centreAt": 0.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 256,
+       "height": 44
+      },
+      {
+       "what": "Cortex",
+       "tag": "button",
+       "top": 356,
+       "bottom": 400,
+       "left": 32,
+       "inFirstViewport": true,
+       "centreAt": 0.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 256,
+       "height": 44
+      },
+      {
+       "what": "none",
+       "tag": "button",
+       "top": 436,
+       "bottom": 480,
+       "left": 32,
+       "inFirstViewport": true,
+       "centreAt": 0.5,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 256,
+       "height": 44
+      },
+      {
+       "what": "Capture",
+       "tag": "button",
+       "top": 500,
+       "bottom": 548,
+       "left": 32,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": true,
+       "width": 256,
+       "height": 48
+      }
+     ],
+     "alphaSteps": [],
+     "state": {
+      "statusTokens": [
+       "--warning #8a5300",
+       "--success #137333",
+       "--critical #c10007",
+       "--unreachable #b04400",
+       "--destructive #c10007"
+      ],
+      "statusColoured": 0,
+      "offToken": [],
+      "colourOnly": 0,
+      "colourOnlySamples": [],
+      "countsInHeadings": 0,
+      "progressText": 0,
+      "usesSafeTokens": false,
+      "progressElements": 0,
+      "empties": []
+     },
+     "reading": {
+      "bodySize": 14,
+      "lines": [],
+      "contrastChecked": 11,
+      "contrastUnknown": 0,
+      "contrastFails": [],
+      "contrastFailCount": 0,
+      "overflowX": 0,
+      "runningAnimations": 0
+     },
+     "textRuns": 11,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
+     "covered": {
+      "runs": 0,
+      "sample": []
+     },
+     "waitForSeen": true,
+     "pageErrors": [],
+     "url": "/"
+    },
+    "iphone-reduced-motion": {
+     "viewport": [
+      390,
+      844
+     ],
+     "coarse": true,
+     "hierarchy": {
+      "fontSizes": [
+       {
+        "size": 21,
+        "chars": 13
+       },
+       {
+        "size": 16,
+        "chars": 21
+       },
+       {
+        "size": 14,
+        "chars": 32
+       }
+      ],
+      "largest": {
+       "size": 21,
+       "elements": 1,
+       "weight": 600,
+       "text": "Quick Capture",
+       "nextSize": 16
+      },
+      "headings": [
+       {
+        "tag": "h1",
+        "text": "Quick Capture",
+        "size": 21,
+        "weight": 600,
+        "top": 16
+       }
+      ]
+     },
+     "rows": {
+      "count": 0,
+      "sample": [],
+      "maxChips": 0,
+      "maxColours": 0,
+      "nested": 0,
+      "heights": [],
+      "titleWeightMax": 0
+     },
+     "interactive": {
+      "firstViewport": 6,
+      "measured": 6,
+      "small": 0,
+      "smallSample": [],
+      "inputs": 2,
+      "smallInputs": []
+     },
+     "controls": [
+      {
+       "what": "INPUT",
+       "tag": "input",
+       "top": 96,
+       "bottom": 140,
+       "left": 32,
+       "inFirstViewport": true,
+       "centreAt": 0.1,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 326,
+       "height": 44
+      },
+      {
+       "what": "TEXTAREA",
+       "tag": "textarea",
+       "top": 176,
+       "bottom": 240,
+       "left": 32,
+       "inFirstViewport": true,
+       "centreAt": 0.2,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 326,
+       "height": 64
+      },
+      {
+       "what": "Idea",
+       "tag": "button",
+       "top": 276,
+       "bottom": 320,
+       "left": 32,
+       "inFirstViewport": true,
+       "centreAt": 0.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 326,
+       "height": 44
+      },
+      {
+       "what": "Cortex",
+       "tag": "button",
+       "top": 356,
+       "bottom": 400,
+       "left": 32,
+       "inFirstViewport": true,
+       "centreAt": 0.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 326,
+       "height": 44
+      },
+      {
+       "what": "none",
+       "tag": "button",
+       "top": 436,
+       "bottom": 480,
+       "left": 32,
+       "inFirstViewport": true,
+       "centreAt": 0.5,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 326,
+       "height": 44
+      },
+      {
+       "what": "Capture",
+       "tag": "button",
+       "top": 500,
+       "bottom": 548,
+       "left": 32,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": true,
+       "width": 326,
+       "height": 48
+      }
+     ],
+     "alphaSteps": [],
+     "state": {
+      "statusTokens": [
+       "--warning #8a5300",
+       "--success #137333",
+       "--critical #c10007",
+       "--unreachable #b04400",
+       "--destructive #c10007"
+      ],
+      "statusColoured": 0,
+      "offToken": [],
+      "colourOnly": 0,
+      "colourOnlySamples": [],
+      "countsInHeadings": 0,
+      "progressText": 0,
+      "usesSafeTokens": false,
+      "progressElements": 0,
+      "empties": []
+     },
+     "reading": {
+      "bodySize": 14,
+      "lines": [],
+      "contrastChecked": 11,
+      "contrastUnknown": 0,
+      "contrastFails": [],
+      "contrastFailCount": 0,
+      "overflowX": 0,
+      "runningAnimations": 0
+     },
+     "textRuns": 11,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
+     "covered": {
+      "runs": 0,
+      "sample": []
+     },
+     "waitForSeen": true,
+     "pageErrors": [],
+     "url": "/"
+    },
+    "iphone-insets-light": {
+     "skipped": "the app does not declare the registry's --safe-* tokens, so there is nothing to set"
+    }
+   }
+  }
+ ],
+ "mocks": [
+  {
+   "url": "**/api/repos**",
+   "method": "GET",
+   "hits": 7
+  }
+ ],
+ "blocked": [],
+ "unmockedLocal": []
+}

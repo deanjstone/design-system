@@ -1,0 +1,34 @@
+[
+  {
+    "url": "**/api/status**",
+    "method": "GET",
+    "status": 200,
+    "json": {
+      "scanner": {
+        "reachable": true,
+        "makeAndModel": "Epson WF-3825",
+        "state": "Ready",
+        "adfState": "ScannerAdfEmpty",
+        "activity": "ready"
+      },
+      "job": null,
+      "ocrQueue": 0,
+      "scans": { "count": 6, "totalBytes": 13514949 }
+    }
+  },
+  {
+    "url": "**/api/scans**",
+    "method": "GET",
+    "status": 200,
+    "json": {
+      "scans": [
+        { "name": "2026-11-10 Council rates notice, third quarter 2026.pdf", "size": 1843216, "modified": "2026-11-10T08:41:00+11:00" },
+        { "name": "2026-11-09 Lease renewal, signed pages 1 to 14 with the amendment schedule.pdf", "size": 6212407, "modified": "2026-11-09T17:12:00+11:00" },
+        { "name": "scan0042.jpg", "size": 884512, "modified": "2026-11-08T10:03:00+11:00" },
+        { "name": "2026-11-07 Car service invoice.pdf", "size": 412930, "modified": "2026-11-07T14:25:00+11:00" },
+        { "name": "2026-11-05 Passport renewal application form, both sides.pdf", "size": 3975140, "modified": "2026-11-05T09:50:00+11:00" },
+        { "name": "2026-11-02 Dental receipt.pdf", "size": 186744, "modified": "2026-11-02T16:18:00+11:00" }
+      ]
+    }
+  }
+]

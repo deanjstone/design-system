@@ -31,5 +31,6 @@
     }
   ],
   "mocksFile": "mocks.json",
-  "initScriptFile": "init.js"
+  "initScriptFile": "init.js",
+  "base": "/"
 }

@@ -1,0 +1,1779 @@
+{
+ "app": "atto1",
+ "baseUrl": "http://127.0.0.1:4323",
+ "rules": {
+  "fontSizesInFirstViewport": 3,
+  "largestRatio": 1.2,
+  "largestElements": 2,
+  "chipsPerRow": 1,
+  "coloursPerRow": 2,
+  "interactiveInFirstViewport": 15,
+  "alphaSteps": 4,
+  "tapTarget": 44,
+  "inputFontSize": 16,
+  "thumbZoneFrom": 0.6,
+  "bodyFontSize": 16,
+  "lineLength": [
+   45,
+   75
+  ],
+  "contrast": 4.5,
+  "contrastLarge": 3
+ },
+ "screens": [
+  {
+   "name": "dashboard",
+   "path": "/",
+   "why": "The only route (src/App.tsx:44): the vehicle dashboard, with an add-entry action.",
+   "primaryAction": "auto",
+   "expectsProgress": true,
+   "checks": {
+    "hierarchy": {
+     "oneLargest": {
+      "pass": true,
+      "detail": "21px ×1 \"ATTO1 dashboard\", next 16px"
+     },
+     "fontSizes": {
+      "pass": false,
+      "detail": "21/16/14/12.8/12"
+     },
+     "pageTitleVisible": {
+      "pass": true,
+      "detail": "h1 \"ATTO1 dashboard\""
+     },
+     "headingVisible": {
+      "pass": true,
+      "detail": "h1 \"ATTO1 dashboard\" at 16px"
+     },
+     "headingOutweighsRows": {
+      "pass": true,
+      "detail": "heading 600, row title 500"
+     },
+     "headingOutweighsRowsDesktop": {
+      "pass": true,
+      "detail": "heading 600, row title 500"
+     }
+    },
+    "clutter": {
+     "chipsPerRow": {
+      "pass": true,
+      "detail": "max 1 in 16 rows"
+     },
+     "coloursPerRow": {
+      "pass": true,
+      "detail": "max 0"
+     },
+     "noNestedBorders": {
+      "pass": true,
+      "detail": "0 rows"
+     },
+     "chipsPerRowDesktop": {
+      "pass": true,
+      "detail": "max 1 in 12 rows"
+     },
+     "coloursPerRowDesktop": {
+      "pass": true,
+      "detail": "max 0"
+     },
+     "nothingCutOff": {
+      "pass": true,
+      "detail": "0 texts cut short, 0 of them in list rows"
+     },
+     "interactiveCount": {
+      "pass": true,
+      "detail": "4"
+     },
+     "alphaSteps": {
+      "pass": true,
+      "detail": "0: "
+     }
+    },
+    "action": {
+     "primaryVisible": {
+      "pass": true,
+      "detail": "\"Log charge\" at 79px"
+     },
+     "primaryInThumbZone": {
+      "pass": false,
+      "detail": "centre at 10% of the viewport"
+     },
+     "tapTargets": {
+      "pass": false,
+      "detail": "1 of 4 under 44px"
+     },
+     "inputText": {
+      "pass": null,
+      "detail": "no inputs"
+     }
+    },
+    "state": {
+     "moreThanColour": {
+      "pass": false,
+      "detail": "7 of 7 carry colour alone"
+     },
+     "statusFromTokens": {
+      "pass": false,
+      "detail": "#009966×7"
+     },
+     "progressShown": {
+      "pass": true,
+      "detail": "1 counted headings, 1 progress elements, 0 \"n of m\" or percent texts"
+     },
+     "emptySaysNext": {
+      "pass": null,
+      "detail": "no empty state on screen"
+     }
+    },
+    "reading": {
+     "bodyText": {
+      "pass": false,
+      "detail": "14px"
+     },
+     "lineLength": {
+      "pass": null,
+      "detail": "no wrapped paragraph on desktop"
+     },
+     "contrast": {
+      "pass": true,
+      "detail": "iphone-light 0, iphone-dark 0, desktop-light 0, desktop-dark 0"
+     },
+     "noSidewaysScroll": {
+      "pass": false,
+      "detail": "390: 295px, 320: 365px"
+     },
+     "reducedMotion": {
+      "pass": true,
+      "detail": "0 running"
+     }
+    }
+   },
+   "variants": {
+    "iphone-light": {
+     "viewport": [
+      390,
+      844
+     ],
+     "coarse": true,
+     "hierarchy": {
+      "fontSizes": [
+       {
+        "size": 21,
+        "chars": 15
+       },
+       {
+        "size": 16,
+        "chars": 87
+       },
+       {
+        "size": 14,
+        "chars": 171
+       },
+       {
+        "size": 12.8,
+        "chars": 8
+       },
+       {
+        "size": 12,
+        "chars": 97
+       }
+      ],
+      "largest": {
+       "size": 21,
+       "elements": 1,
+       "weight": 600,
+       "text": "ATTO1 dashboard",
+       "nextSize": 16
+      },
+      "headings": [
+       {
+        "tag": "h1",
+        "text": "ATTO1 dashboard",
+        "size": 21,
+        "weight": 600,
+        "top": 16
+       }
+      ]
+     },
+     "rows": {
+      "count": 16,
+      "sample": [
+       {
+        "height": 43,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 16,
+        "titleText": "328 km"
+       },
+       {
+        "height": 43,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 16,
+        "titleText": "390 km"
+       },
+       {
+        "height": 43,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 16,
+        "titleText": "18,342 km"
+       },
+       {
+        "height": 43,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 16,
+        "titleText": "10 Nov, 7:58 pm"
+       },
+       {
+        "height": 56,
+        "chips": 1,
+        "chipTexts": [
+         "DC fast"
+        ],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "10 Nov, 6:42 pm"
+       },
+       {
+        "height": 68,
+        "chips": 1,
+        "chipTexts": [
+         "Home AC"
+        ],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "9 Nov, 9:10 am"
+       }
+      ],
+      "maxChips": 1,
+      "maxColours": 0,
+      "nested": 0,
+      "heights": [
+       28,
+       36,
+       43,
+       52,
+       55,
+       56,
+       68
+      ],
+      "titleWeightMax": 500
+     },
+     "interactive": {
+      "firstViewport": 4,
+      "measured": 4,
+      "small": 1,
+      "smallSample": [
+       {
+        "what": "Sign out",
+        "tag": "a",
+        "width": 83.7,
+        "height": 28
+       }
+      ],
+      "inputs": 0,
+      "smallInputs": []
+     },
+     "controls": [
+      {
+       "what": "Log charge",
+       "tag": "button",
+       "top": 79,
+       "bottom": 123,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.1,
+       "pinnedToBottom": false,
+       "primaryFill": true,
+       "width": 111,
+       "height": 44
+      },
+      {
+       "what": "Log range",
+       "tag": "button",
+       "top": 79,
+       "bottom": 123,
+       "left": 135,
+       "inFirstViewport": true,
+       "centreAt": 0.1,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 84,
+       "height": 44
+      },
+      {
+       "what": "Add feature",
+       "tag": "button",
+       "top": 79,
+       "bottom": 123,
+       "left": 227,
+       "inFirstViewport": true,
+       "centreAt": 0.1,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 97.5,
+       "height": 44
+      },
+      {
+       "what": "Sign out",
+       "tag": "a",
+       "top": 131,
+       "bottom": 159,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.2,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 83.7,
+       "height": 28
+      }
+     ],
+     "alphaSteps": [],
+     "state": {
+      "statusTokens": [
+       "--warning #8a5300",
+       "--success #137333",
+       "--critical #c10007",
+       "--unreachable #b04400",
+       "--destructive #c10007"
+      ],
+      "statusColoured": 7,
+      "offToken": [
+       {
+        "colour": "#009966",
+        "family": "green",
+        "count": 7,
+        "sample": "18 Oct: 390 km (351 km at 90%)"
+       }
+      ],
+      "colourOnly": 7,
+      "colourOnlySamples": [
+       "span.absolute size-2 -translate-1/2 rounded-f",
+       "span.absolute size-2 -translate-1/2 rounded-f",
+       "span.absolute size-2 -translate-1/2 rounded-f",
+       "span.absolute size-2 -translate-1/2 rounded-f",
+       "span.absolute size-2 -translate-1/2 rounded-f"
+      ],
+      "countsInHeadings": 1,
+      "progressText": 0,
+      "usesSafeTokens": false,
+      "progressElements": 1,
+      "empties": []
+     },
+     "reading": {
+      "bodySize": 14,
+      "lines": [],
+      "contrastChecked": 82,
+      "contrastUnknown": 0,
+      "contrastFails": [],
+      "contrastFailCount": 0,
+      "overflowX": 295,
+      "runningAnimations": 0
+     },
+     "textRuns": 82,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
+     "covered": {
+      "runs": 0,
+      "sample": []
+     },
+     "waitForSeen": true,
+     "pageErrors": [],
+     "url": "/"
+    },
+    "iphone-dark": {
+     "viewport": [
+      390,
+      844
+     ],
+     "coarse": true,
+     "hierarchy": {
+      "fontSizes": [
+       {
+        "size": 21,
+        "chars": 15
+       },
+       {
+        "size": 16,
+        "chars": 87
+       },
+       {
+        "size": 14,
+        "chars": 171
+       },
+       {
+        "size": 12.8,
+        "chars": 8
+       },
+       {
+        "size": 12,
+        "chars": 97
+       }
+      ],
+      "largest": {
+       "size": 21,
+       "elements": 1,
+       "weight": 600,
+       "text": "ATTO1 dashboard",
+       "nextSize": 16
+      },
+      "headings": [
+       {
+        "tag": "h1",
+        "text": "ATTO1 dashboard",
+        "size": 21,
+        "weight": 600,
+        "top": 16
+       }
+      ]
+     },
+     "rows": {
+      "count": 16,
+      "sample": [
+       {
+        "height": 43,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 16,
+        "titleText": "328 km"
+       },
+       {
+        "height": 43,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 16,
+        "titleText": "390 km"
+       },
+       {
+        "height": 43,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 16,
+        "titleText": "18,342 km"
+       },
+       {
+        "height": 43,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 16,
+        "titleText": "10 Nov, 7:58 pm"
+       },
+       {
+        "height": 56,
+        "chips": 1,
+        "chipTexts": [
+         "DC fast"
+        ],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "10 Nov, 6:42 pm"
+       },
+       {
+        "height": 68,
+        "chips": 1,
+        "chipTexts": [
+         "Home AC"
+        ],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "9 Nov, 9:10 am"
+       }
+      ],
+      "maxChips": 1,
+      "maxColours": 0,
+      "nested": 0,
+      "heights": [
+       28,
+       36,
+       43,
+       52,
+       55,
+       56,
+       68
+      ],
+      "titleWeightMax": 500
+     },
+     "interactive": {
+      "firstViewport": 4,
+      "measured": 4,
+      "small": 1,
+      "smallSample": [
+       {
+        "what": "Sign out",
+        "tag": "a",
+        "width": 83.7,
+        "height": 28
+       }
+      ],
+      "inputs": 0,
+      "smallInputs": []
+     },
+     "controls": [
+      {
+       "what": "Log charge",
+       "tag": "button",
+       "top": 79,
+       "bottom": 123,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.1,
+       "pinnedToBottom": false,
+       "primaryFill": true,
+       "width": 111,
+       "height": 44
+      },
+      {
+       "what": "Log range",
+       "tag": "button",
+       "top": 79,
+       "bottom": 123,
+       "left": 135,
+       "inFirstViewport": true,
+       "centreAt": 0.1,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 84,
+       "height": 44
+      },
+      {
+       "what": "Add feature",
+       "tag": "button",
+       "top": 79,
+       "bottom": 123,
+       "left": 227,
+       "inFirstViewport": true,
+       "centreAt": 0.1,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 97.5,
+       "height": 44
+      },
+      {
+       "what": "Sign out",
+       "tag": "a",
+       "top": 131,
+       "bottom": 159,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.2,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 83.7,
+       "height": 28
+      }
+     ],
+     "alphaSteps": [
+      0.3
+     ],
+     "state": {
+      "statusTokens": [
+       "--warning #fbbf24",
+       "--success #4ade80",
+       "--critical #ff7a7e",
+       "--unreachable #fb923c",
+       "--destructive #ff6467"
+      ],
+      "statusColoured": 7,
+      "offToken": [
+       {
+        "colour": "#00d492",
+        "family": "green",
+        "count": 7,
+        "sample": "18 Oct: 390 km (351 km at 90%)"
+       }
+      ],
+      "colourOnly": 7,
+      "colourOnlySamples": [
+       "span.absolute size-2 -translate-1/2 rounded-f",
+       "span.absolute size-2 -translate-1/2 rounded-f",
+       "span.absolute size-2 -translate-1/2 rounded-f",
+       "span.absolute size-2 -translate-1/2 rounded-f",
+       "span.absolute size-2 -translate-1/2 rounded-f"
+      ],
+      "countsInHeadings": 1,
+      "progressText": 0,
+      "usesSafeTokens": false,
+      "progressElements": 1,
+      "empties": []
+     },
+     "reading": {
+      "bodySize": 14,
+      "lines": [],
+      "contrastChecked": 82,
+      "contrastUnknown": 0,
+      "contrastFails": [],
+      "contrastFailCount": 0,
+      "overflowX": 295,
+      "runningAnimations": 0
+     },
+     "textRuns": 82,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
+     "covered": {
+      "runs": 0,
+      "sample": []
+     },
+     "waitForSeen": true,
+     "pageErrors": [],
+     "url": "/"
+    },
+    "desktop-light": {
+     "viewport": [
+      1440,
+      900
+     ],
+     "coarse": false,
+     "hierarchy": {
+      "fontSizes": [
+       {
+        "size": 26,
+        "chars": 15
+       },
+       {
+        "size": 16,
+        "chars": 100
+       },
+       {
+        "size": 14,
+        "chars": 851
+       },
+       {
+        "size": 13,
+        "chars": 52
+       },
+       {
+        "size": 12.8,
+        "chars": 8
+       },
+       {
+        "size": 12,
+        "chars": 151
+       }
+      ],
+      "largest": {
+       "size": 26,
+       "elements": 1,
+       "weight": 600,
+       "text": "ATTO1 dashboard",
+       "nextSize": 16
+      },
+      "headings": [
+       {
+        "tag": "h1",
+        "text": "ATTO1 dashboard",
+        "size": 26,
+        "weight": 600,
+        "top": 24
+       }
+      ]
+     },
+     "rows": {
+      "count": 12,
+      "sample": [
+       {
+        "height": 56,
+        "chips": 1,
+        "chipTexts": [
+         "DC fast"
+        ],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "10 Nov, 6:42 pm"
+       },
+       {
+        "height": 68,
+        "chips": 1,
+        "chipTexts": [
+         "Home AC"
+        ],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "9 Nov, 9:10 am"
+       },
+       {
+        "height": 68,
+        "chips": 1,
+        "chipTexts": [
+         "Public AC"
+        ],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "6 Nov, 8:05 pm"
+       },
+       {
+        "height": 68,
+        "chips": 1,
+        "chipTexts": [
+         "DC fast"
+        ],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "3 Nov, 3:40 pm"
+       },
+       {
+        "height": 55,
+        "chips": 1,
+        "chipTexts": [
+         "Home AC"
+        ],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "30 Oct, 7:15 am"
+       },
+       {
+        "height": 28,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "72.6 kWh"
+       }
+      ],
+      "maxChips": 1,
+      "maxColours": 0,
+      "nested": 0,
+      "heights": [
+       28,
+       36,
+       52,
+       55,
+       56,
+       68
+      ],
+      "titleWeightMax": 500
+     },
+     "interactive": {
+      "firstViewport": 4,
+      "measured": 4,
+      "small": 4,
+      "smallSample": [
+       {
+        "what": "Log charge",
+        "tag": "button",
+        "width": 111,
+        "height": 32
+       },
+       {
+        "what": "Log range",
+        "tag": "button",
+        "width": 84,
+        "height": 32
+       },
+       {
+        "what": "Add feature",
+        "tag": "button",
+        "width": 97.5,
+        "height": 32
+       },
+       {
+        "what": "Sign out",
+        "tag": "a",
+        "width": 83.7,
+        "height": 28
+       }
+      ],
+      "inputs": 0,
+      "smallInputs": []
+     },
+     "controls": [
+      {
+       "what": "Log charge",
+       "tag": "button",
+       "top": 24,
+       "bottom": 56,
+       "left": 871.8,
+       "inFirstViewport": true,
+       "centreAt": 0,
+       "pinnedToBottom": false,
+       "primaryFill": true,
+       "width": 111,
+       "height": 32
+      },
+      {
+       "what": "Log range",
+       "tag": "button",
+       "top": 24,
+       "bottom": 56,
+       "left": 990.8,
+       "inFirstViewport": true,
+       "centreAt": 0,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 84,
+       "height": 32
+      },
+      {
+       "what": "Add feature",
+       "tag": "button",
+       "top": 24,
+       "bottom": 56,
+       "left": 1082.8,
+       "inFirstViewport": true,
+       "centreAt": 0,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 97.5,
+       "height": 32
+      },
+      {
+       "what": "Sign out",
+       "tag": "a",
+       "top": 26,
+       "bottom": 54,
+       "left": 1188.3,
+       "inFirstViewport": true,
+       "centreAt": 0,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 83.7,
+       "height": 28
+      }
+     ],
+     "alphaSteps": [],
+     "state": {
+      "statusTokens": [
+       "--warning #8a5300",
+       "--success #137333",
+       "--critical #c10007",
+       "--unreachable #b04400",
+       "--destructive #c10007"
+      ],
+      "statusColoured": 7,
+      "offToken": [
+       {
+        "colour": "#009966",
+        "family": "green",
+        "count": 7,
+        "sample": "18 Oct: 390 km (351 km at 90%)"
+       }
+      ],
+      "colourOnly": 7,
+      "colourOnlySamples": [
+       "span.absolute size-2 -translate-1/2 rounded-f",
+       "span.absolute size-2 -translate-1/2 rounded-f",
+       "span.absolute size-2 -translate-1/2 rounded-f",
+       "span.absolute size-2 -translate-1/2 rounded-f",
+       "span.absolute size-2 -translate-1/2 rounded-f"
+      ],
+      "countsInHeadings": 1,
+      "progressText": 5,
+      "usesSafeTokens": false,
+      "progressElements": 1,
+      "empties": []
+     },
+     "reading": {
+      "bodySize": 14,
+      "lines": [],
+      "contrastChecked": 82,
+      "contrastUnknown": 0,
+      "contrastFails": [],
+      "contrastFailCount": 0,
+      "overflowX": 0,
+      "runningAnimations": 0
+     },
+     "textRuns": 82,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
+     "covered": {
+      "runs": 0,
+      "sample": []
+     },
+     "waitForSeen": true,
+     "pageErrors": [],
+     "url": "/"
+    },
+    "desktop-dark": {
+     "viewport": [
+      1440,
+      900
+     ],
+     "coarse": false,
+     "hierarchy": {
+      "fontSizes": [
+       {
+        "size": 26,
+        "chars": 15
+       },
+       {
+        "size": 16,
+        "chars": 100
+       },
+       {
+        "size": 14,
+        "chars": 851
+       },
+       {
+        "size": 13,
+        "chars": 52
+       },
+       {
+        "size": 12.8,
+        "chars": 8
+       },
+       {
+        "size": 12,
+        "chars": 151
+       }
+      ],
+      "largest": {
+       "size": 26,
+       "elements": 1,
+       "weight": 600,
+       "text": "ATTO1 dashboard",
+       "nextSize": 16
+      },
+      "headings": [
+       {
+        "tag": "h1",
+        "text": "ATTO1 dashboard",
+        "size": 26,
+        "weight": 600,
+        "top": 24
+       }
+      ]
+     },
+     "rows": {
+      "count": 12,
+      "sample": [
+       {
+        "height": 56,
+        "chips": 1,
+        "chipTexts": [
+         "DC fast"
+        ],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "10 Nov, 6:42 pm"
+       },
+       {
+        "height": 68,
+        "chips": 1,
+        "chipTexts": [
+         "Home AC"
+        ],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "9 Nov, 9:10 am"
+       },
+       {
+        "height": 68,
+        "chips": 1,
+        "chipTexts": [
+         "Public AC"
+        ],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "6 Nov, 8:05 pm"
+       },
+       {
+        "height": 68,
+        "chips": 1,
+        "chipTexts": [
+         "DC fast"
+        ],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "3 Nov, 3:40 pm"
+       },
+       {
+        "height": 55,
+        "chips": 1,
+        "chipTexts": [
+         "Home AC"
+        ],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "30 Oct, 7:15 am"
+       },
+       {
+        "height": 28,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "72.6 kWh"
+       }
+      ],
+      "maxChips": 1,
+      "maxColours": 0,
+      "nested": 0,
+      "heights": [
+       28,
+       36,
+       52,
+       55,
+       56,
+       68
+      ],
+      "titleWeightMax": 500
+     },
+     "interactive": {
+      "firstViewport": 4,
+      "measured": 4,
+      "small": 4,
+      "smallSample": [
+       {
+        "what": "Log charge",
+        "tag": "button",
+        "width": 111,
+        "height": 32
+       },
+       {
+        "what": "Log range",
+        "tag": "button",
+        "width": 84,
+        "height": 32
+       },
+       {
+        "what": "Add feature",
+        "tag": "button",
+        "width": 97.5,
+        "height": 32
+       },
+       {
+        "what": "Sign out",
+        "tag": "a",
+        "width": 83.7,
+        "height": 28
+       }
+      ],
+      "inputs": 0,
+      "smallInputs": []
+     },
+     "controls": [
+      {
+       "what": "Log charge",
+       "tag": "button",
+       "top": 24,
+       "bottom": 56,
+       "left": 871.8,
+       "inFirstViewport": true,
+       "centreAt": 0,
+       "pinnedToBottom": false,
+       "primaryFill": true,
+       "width": 111,
+       "height": 32
+      },
+      {
+       "what": "Log range",
+       "tag": "button",
+       "top": 24,
+       "bottom": 56,
+       "left": 990.8,
+       "inFirstViewport": true,
+       "centreAt": 0,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 84,
+       "height": 32
+      },
+      {
+       "what": "Add feature",
+       "tag": "button",
+       "top": 24,
+       "bottom": 56,
+       "left": 1082.8,
+       "inFirstViewport": true,
+       "centreAt": 0,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 97.5,
+       "height": 32
+      },
+      {
+       "what": "Sign out",
+       "tag": "a",
+       "top": 26,
+       "bottom": 54,
+       "left": 1188.3,
+       "inFirstViewport": true,
+       "centreAt": 0,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 83.7,
+       "height": 28
+      }
+     ],
+     "alphaSteps": [
+      0.3
+     ],
+     "state": {
+      "statusTokens": [
+       "--warning #fbbf24",
+       "--success #4ade80",
+       "--critical #ff7a7e",
+       "--unreachable #fb923c",
+       "--destructive #ff6467"
+      ],
+      "statusColoured": 7,
+      "offToken": [
+       {
+        "colour": "#00d492",
+        "family": "green",
+        "count": 7,
+        "sample": "18 Oct: 390 km (351 km at 90%)"
+       }
+      ],
+      "colourOnly": 7,
+      "colourOnlySamples": [
+       "span.absolute size-2 -translate-1/2 rounded-f",
+       "span.absolute size-2 -translate-1/2 rounded-f",
+       "span.absolute size-2 -translate-1/2 rounded-f",
+       "span.absolute size-2 -translate-1/2 rounded-f",
+       "span.absolute size-2 -translate-1/2 rounded-f"
+      ],
+      "countsInHeadings": 1,
+      "progressText": 5,
+      "usesSafeTokens": false,
+      "progressElements": 1,
+      "empties": []
+     },
+     "reading": {
+      "bodySize": 14,
+      "lines": [],
+      "contrastChecked": 82,
+      "contrastUnknown": 0,
+      "contrastFails": [],
+      "contrastFailCount": 0,
+      "overflowX": 0,
+      "runningAnimations": 0
+     },
+     "textRuns": 82,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
+     "covered": {
+      "runs": 0,
+      "sample": []
+     },
+     "waitForSeen": true,
+     "pageErrors": [],
+     "url": "/"
+    },
+    "iphone-320": {
+     "viewport": [
+      320,
+      844
+     ],
+     "coarse": true,
+     "hierarchy": {
+      "fontSizes": [
+       {
+        "size": 21,
+        "chars": 15
+       },
+       {
+        "size": 16,
+        "chars": 66
+       },
+       {
+        "size": 14,
+        "chars": 159
+       },
+       {
+        "size": 12.8,
+        "chars": 8
+       },
+       {
+        "size": 12,
+        "chars": 50
+       }
+      ],
+      "largest": {
+       "size": 21,
+       "elements": 1,
+       "weight": 600,
+       "text": "ATTO1 dashboard",
+       "nextSize": 16
+      },
+      "headings": [
+       {
+        "tag": "h1",
+        "text": "ATTO1 dashboard",
+        "size": 21,
+        "weight": 600,
+        "top": 16
+       }
+      ]
+     },
+     "rows": {
+      "count": 19,
+      "sample": [
+       {
+        "height": 43,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 16,
+        "titleText": "328 km"
+       },
+       {
+        "height": 43,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 16,
+        "titleText": "390 km"
+       },
+       {
+        "height": 43,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 16,
+        "titleText": "18,342 km"
+       },
+       {
+        "height": 43,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 16,
+        "titleText": "10 Nov, 7:58 pm"
+       },
+       {
+        "height": 43,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 16,
+        "titleText": "390 km"
+       },
+       {
+        "height": 43,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 16,
+        "titleText": "390 km"
+       }
+      ],
+      "maxChips": 1,
+      "maxColours": 0,
+      "nested": 0,
+      "heights": [
+       28,
+       36,
+       43,
+       52,
+       55,
+       56,
+       68
+      ],
+      "titleWeightMax": 500
+     },
+     "interactive": {
+      "firstViewport": 4,
+      "measured": 4,
+      "small": 1,
+      "smallSample": [
+       {
+        "what": "Sign out",
+        "tag": "a",
+        "width": 83.7,
+        "height": 28
+       }
+      ],
+      "inputs": 0,
+      "smallInputs": []
+     },
+     "controls": [
+      {
+       "what": "Log charge",
+       "tag": "button",
+       "top": 98,
+       "bottom": 142,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.1,
+       "pinnedToBottom": false,
+       "primaryFill": true,
+       "width": 111,
+       "height": 44
+      },
+      {
+       "what": "Log range",
+       "tag": "button",
+       "top": 98,
+       "bottom": 142,
+       "left": 135,
+       "inFirstViewport": true,
+       "centreAt": 0.1,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 84,
+       "height": 44
+      },
+      {
+       "what": "Add feature",
+       "tag": "button",
+       "top": 150,
+       "bottom": 194,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.2,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 97.5,
+       "height": 44
+      },
+      {
+       "what": "Sign out",
+       "tag": "a",
+       "top": 158,
+       "bottom": 186,
+       "left": 121.5,
+       "inFirstViewport": true,
+       "centreAt": 0.2,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 83.7,
+       "height": 28
+      }
+     ],
+     "alphaSteps": [],
+     "state": {
+      "statusTokens": [
+       "--warning #8a5300",
+       "--success #137333",
+       "--critical #c10007",
+       "--unreachable #b04400",
+       "--destructive #c10007"
+      ],
+      "statusColoured": 7,
+      "offToken": [
+       {
+        "colour": "#009966",
+        "family": "green",
+        "count": 7,
+        "sample": "18 Oct: 390 km (351 km at 90%)"
+       }
+      ],
+      "colourOnly": 7,
+      "colourOnlySamples": [
+       "span.absolute size-2 -translate-1/2 rounded-f",
+       "span.absolute size-2 -translate-1/2 rounded-f",
+       "span.absolute size-2 -translate-1/2 rounded-f",
+       "span.absolute size-2 -translate-1/2 rounded-f",
+       "span.absolute size-2 -translate-1/2 rounded-f"
+      ],
+      "countsInHeadings": 1,
+      "progressText": 0,
+      "usesSafeTokens": false,
+      "progressElements": 1,
+      "empties": []
+     },
+     "reading": {
+      "bodySize": 14,
+      "lines": [],
+      "contrastChecked": 82,
+      "contrastUnknown": 0,
+      "contrastFails": [],
+      "contrastFailCount": 0,
+      "overflowX": 365,
+      "runningAnimations": 0
+     },
+     "textRuns": 82,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
+     "covered": {
+      "runs": 0,
+      "sample": []
+     },
+     "waitForSeen": true,
+     "pageErrors": [],
+     "url": "/"
+    },
+    "iphone-reduced-motion": {
+     "viewport": [
+      390,
+      844
+     ],
+     "coarse": true,
+     "hierarchy": {
+      "fontSizes": [
+       {
+        "size": 21,
+        "chars": 15
+       },
+       {
+        "size": 16,
+        "chars": 87
+       },
+       {
+        "size": 14,
+        "chars": 171
+       },
+       {
+        "size": 12.8,
+        "chars": 8
+       },
+       {
+        "size": 12,
+        "chars": 97
+       }
+      ],
+      "largest": {
+       "size": 21,
+       "elements": 1,
+       "weight": 600,
+       "text": "ATTO1 dashboard",
+       "nextSize": 16
+      },
+      "headings": [
+       {
+        "tag": "h1",
+        "text": "ATTO1 dashboard",
+        "size": 21,
+        "weight": 600,
+        "top": 16
+       }
+      ]
+     },
+     "rows": {
+      "count": 16,
+      "sample": [
+       {
+        "height": 43,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 16,
+        "titleText": "328 km"
+       },
+       {
+        "height": 43,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 16,
+        "titleText": "390 km"
+       },
+       {
+        "height": 43,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 16,
+        "titleText": "18,342 km"
+       },
+       {
+        "height": 43,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 16,
+        "titleText": "10 Nov, 7:58 pm"
+       },
+       {
+        "height": 56,
+        "chips": 1,
+        "chipTexts": [
+         "DC fast"
+        ],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "10 Nov, 6:42 pm"
+       },
+       {
+        "height": 68,
+        "chips": 1,
+        "chipTexts": [
+         "Home AC"
+        ],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "9 Nov, 9:10 am"
+       }
+      ],
+      "maxChips": 1,
+      "maxColours": 0,
+      "nested": 0,
+      "heights": [
+       28,
+       36,
+       43,
+       52,
+       55,
+       56,
+       68
+      ],
+      "titleWeightMax": 500
+     },
+     "interactive": {
+      "firstViewport": 4,
+      "measured": 4,
+      "small": 1,
+      "smallSample": [
+       {
+        "what": "Sign out",
+        "tag": "a",
+        "width": 83.7,
+        "height": 28
+       }
+      ],
+      "inputs": 0,
+      "smallInputs": []
+     },
+     "controls": [
+      {
+       "what": "Log charge",
+       "tag": "button",
+       "top": 79,
+       "bottom": 123,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.1,
+       "pinnedToBottom": false,
+       "primaryFill": true,
+       "width": 111,
+       "height": 44
+      },
+      {
+       "what": "Log range",
+       "tag": "button",
+       "top": 79,
+       "bottom": 123,
+       "left": 135,
+       "inFirstViewport": true,
+       "centreAt": 0.1,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 84,
+       "height": 44
+      },
+      {
+       "what": "Add feature",
+       "tag": "button",
+       "top": 79,
+       "bottom": 123,
+       "left": 227,
+       "inFirstViewport": true,
+       "centreAt": 0.1,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 97.5,
+       "height": 44
+      },
+      {
+       "what": "Sign out",
+       "tag": "a",
+       "top": 131,
+       "bottom": 159,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.2,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 83.7,
+       "height": 28
+      }
+     ],
+     "alphaSteps": [],
+     "state": {
+      "statusTokens": [
+       "--warning #8a5300",
+       "--success #137333",
+       "--critical #c10007",
+       "--unreachable #b04400",
+       "--destructive #c10007"
+      ],
+      "statusColoured": 7,
+      "offToken": [
+       {
+        "colour": "#009966",
+        "family": "green",
+        "count": 7,
+        "sample": "18 Oct: 390 km (351 km at 90%)"
+       }
+      ],
+      "colourOnly": 7,
+      "colourOnlySamples": [
+       "span.absolute size-2 -translate-1/2 rounded-f",
+       "span.absolute size-2 -translate-1/2 rounded-f",
+       "span.absolute size-2 -translate-1/2 rounded-f",
+       "span.absolute size-2 -translate-1/2 rounded-f",
+       "span.absolute size-2 -translate-1/2 rounded-f"
+      ],
+      "countsInHeadings": 1,
+      "progressText": 0,
+      "usesSafeTokens": false,
+      "progressElements": 1,
+      "empties": []
+     },
+     "reading": {
+      "bodySize": 14,
+      "lines": [],
+      "contrastChecked": 82,
+      "contrastUnknown": 0,
+      "contrastFails": [],
+      "contrastFailCount": 0,
+      "overflowX": 295,
+      "runningAnimations": 0
+     },
+     "textRuns": 82,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
+     "covered": {
+      "runs": 0,
+      "sample": []
+     },
+     "waitForSeen": true,
+     "pageErrors": [],
+     "url": "/"
+    },
+    "iphone-insets-light": {
+     "skipped": "the app does not declare the registry's --safe-* tokens, so there is nothing to set"
+    }
+   }
+  }
+ ],
+ "mocks": [
+  {
+   "url": "**/api/me**",
+   "method": "GET",
+   "hits": 7
+  },
+  {
+   "url": "**/api/dashboard**",
+   "method": "GET",
+   "hits": 7
+  }
+ ],
+ "blocked": [],
+ "unmockedLocal": []
+}

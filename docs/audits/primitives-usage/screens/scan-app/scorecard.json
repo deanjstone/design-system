@@ -1,0 +1,4188 @@
+{
+ "app": "scan-app",
+ "baseUrl": "http://127.0.0.1:4321",
+ "rules": {
+  "fontSizesInFirstViewport": 3,
+  "largestRatio": 1.2,
+  "largestElements": 2,
+  "chipsPerRow": 1,
+  "coloursPerRow": 2,
+  "interactiveInFirstViewport": 15,
+  "alphaSteps": 4,
+  "tapTarget": 44,
+  "inputFontSize": 16,
+  "thumbZoneFrom": 0.6,
+  "bodyFontSize": 16,
+  "lineLength": [
+   45,
+   75
+  ],
+  "contrast": 4.5,
+  "contrastLarge": 3
+ },
+ "screens": [
+  {
+   "name": "scan",
+   "path": "/",
+   "why": "The only screen (src/App.tsx): start a scan and see recent scans.",
+   "primaryAction": "auto",
+   "expectsProgress": false,
+   "checks": {
+    "hierarchy": {
+     "oneLargest": {
+      "pass": true,
+      "detail": "21px ×1 \"Scan\", next 16px"
+     },
+     "fontSizes": {
+      "pass": false,
+      "detail": "21/16/14/13/12"
+     },
+     "pageTitleVisible": {
+      "pass": true,
+      "detail": "h1 \"Scan\""
+     },
+     "headingVisible": {
+      "pass": true,
+      "detail": "h1 \"Scan\" at 80px"
+     },
+     "headingOutweighsRows": {
+      "pass": true,
+      "detail": "heading 600, row title 500"
+     },
+     "headingOutweighsRowsDesktop": {
+      "pass": true,
+      "detail": "heading 600, row title 500"
+     }
+    },
+    "clutter": {
+     "chipsPerRow": {
+      "pass": true,
+      "detail": "max 0 in 9 rows"
+     },
+     "coloursPerRow": {
+      "pass": true,
+      "detail": "max 1"
+     },
+     "noNestedBorders": {
+      "pass": true,
+      "detail": "0 rows"
+     },
+     "chipsPerRowDesktop": {
+      "pass": true,
+      "detail": "max 0 in 9 rows"
+     },
+     "coloursPerRowDesktop": {
+      "pass": true,
+      "detail": "max 1"
+     },
+     "nothingCutOff": {
+      "pass": true,
+      "detail": "0 texts cut short, 0 of them in list rows"
+     },
+     "interactiveCount": {
+      "pass": true,
+      "detail": "15"
+     },
+     "alphaSteps": {
+      "pass": true,
+      "detail": "4: 0.1, 0.6, 0.74, 0.8"
+     }
+    },
+    "action": {
+     "primaryVisible": {
+      "pass": true,
+      "detail": "\"Flatbed\" at 391px"
+     },
+     "primaryInThumbZone": {
+      "pass": false,
+      "detail": "centre at 50% of the viewport"
+     },
+     "tapTargets": {
+      "pass": false,
+      "detail": "8 of 33 under 44px"
+     },
+     "inputText": {
+      "pass": null,
+      "detail": "no inputs"
+     }
+    },
+    "state": {
+     "moreThanColour": {
+      "pass": true,
+      "detail": "0 of 1 carry colour alone"
+     },
+     "statusFromTokens": {
+      "pass": true,
+      "detail": "all from tokens"
+     },
+     "progressShown": {
+      "pass": null,
+      "detail": "no goal on this screen"
+     },
+     "emptySaysNext": {
+      "pass": null,
+      "detail": "no empty state on screen"
+     }
+    },
+    "reading": {
+     "bodyText": {
+      "pass": false,
+      "detail": "13px"
+     },
+     "lineLength": {
+      "pass": null,
+      "detail": "no wrapped paragraph on desktop"
+     },
+     "contrast": {
+      "pass": true,
+      "detail": "iphone-light 0, iphone-dark 0, desktop-light 0, desktop-dark 0"
+     },
+     "noSidewaysScroll": {
+      "pass": true,
+      "detail": "390: 0px, 320: 0px"
+     },
+     "reducedMotion": {
+      "pass": true,
+      "detail": "0 running"
+     }
+    }
+   },
+   "variants": {
+    "iphone-light": {
+     "viewport": [
+      390,
+      844
+     ],
+     "coarse": true,
+     "hierarchy": {
+      "fontSizes": [
+       {
+        "size": 21,
+        "chars": 4
+       },
+       {
+        "size": 16,
+        "chars": 21
+       },
+       {
+        "size": 14,
+        "chars": 174
+       },
+       {
+        "size": 13,
+        "chars": 154
+       },
+       {
+        "size": 12,
+        "chars": 4
+       }
+      ],
+      "largest": {
+       "size": 21,
+       "elements": 1,
+       "weight": 600,
+       "text": "Scan",
+       "nextSize": 16
+      },
+      "headings": [
+       {
+        "tag": "h1",
+        "text": "Scan",
+        "size": 21,
+        "weight": 600,
+        "top": 80
+       }
+      ]
+     },
+     "rows": {
+      "count": 9,
+      "sample": [
+       {
+        "height": 69,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 1,
+        "colourValues": [
+         "#0a6f75"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Flatbed"
+       },
+       {
+        "height": 69,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 1,
+        "colourValues": [
+         "#0a6f75"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "PDF"
+       },
+       {
+        "height": 91,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Searchable (OCR)"
+       },
+       {
+        "height": 61,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "2026-11-10 Council rates notic"
+       },
+       {
+        "height": 61,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "2026-11-09 Lease renewal, sign"
+       },
+       {
+        "height": 61,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "scan0042.jpg"
+       }
+      ],
+      "maxChips": 0,
+      "maxColours": 1,
+      "nested": 0,
+      "heights": [
+       60,
+       61,
+       69,
+       91
+      ],
+      "titleWeightMax": 500
+     },
+     "interactive": {
+      "firstViewport": 15,
+      "measured": 33,
+      "small": 8,
+      "smallSample": [
+       {
+        "what": "SPAN",
+        "tag": "span",
+        "width": 54,
+        "height": 32.4
+       },
+       {
+        "what": "SPAN",
+        "tag": "span",
+        "width": 54,
+        "height": 32.4
+       },
+       {
+        "what": "2026-11-10 Council rates notice, third q",
+        "tag": "a",
+        "width": 194,
+        "height": 19
+       },
+       {
+        "what": "2026-11-09 Lease renewal, signed pages 1",
+        "tag": "a",
+        "width": 194,
+        "height": 19
+       },
+       {
+        "what": "scan0042.jpg",
+        "tag": "a",
+        "width": 194,
+        "height": 19
+       },
+       {
+        "what": "2026-11-07 Car service invoice.pdf",
+        "tag": "a",
+        "width": 194,
+        "height": 19
+       },
+       {
+        "what": "2026-11-05 Passport renewal application ",
+        "tag": "a",
+        "width": 194,
+        "height": 19
+       },
+       {
+        "what": "2026-11-02 Dental receipt.pdf",
+        "tag": "a",
+        "width": 194,
+        "height": 19
+       }
+      ],
+      "inputs": 0,
+      "smallInputs": []
+     },
+     "controls": [
+      {
+       "what": "Scan",
+       "tag": "button",
+       "top": 14,
+       "bottom": 58,
+       "left": 17,
+       "inFirstViewport": true,
+       "centreAt": 0,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 74.3,
+       "height": 44
+      },
+      {
+       "what": "Double-sided (recommended)Feeder, both s",
+       "tag": "button",
+       "top": 296,
+       "bottom": 350,
+       "left": 32,
+       "inFirstViewport": true,
+       "centreAt": 0.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 326,
+       "height": 54
+      },
+      {
+       "what": "Flatbed",
+       "tag": "button",
+       "top": 391,
+       "bottom": 435,
+       "left": 32,
+       "inFirstViewport": true,
+       "centreAt": 0.5,
+       "pinnedToBottom": false,
+       "primaryFill": true,
+       "width": 109.3,
+       "height": 44
+      },
+      {
+       "what": "Feeder",
+       "tag": "button",
+       "top": 391,
+       "bottom": 435,
+       "left": 141.3,
+       "inFirstViewport": true,
+       "centreAt": 0.5,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 108.3,
+       "height": 44
+      },
+      {
+       "what": "Double-sided",
+       "tag": "button",
+       "top": 391,
+       "bottom": 435,
+       "left": 249.7,
+       "inFirstViewport": true,
+       "centreAt": 0.5,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 108.3,
+       "height": 44
+      },
+      {
+       "what": "Colour",
+       "tag": "button",
+       "top": 476,
+       "bottom": 520,
+       "left": 32,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": true,
+       "width": 78,
+       "height": 44
+      },
+      {
+       "what": "Grey",
+       "tag": "button",
+       "top": 476,
+       "bottom": 520,
+       "left": 110,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 77,
+       "height": 44
+      },
+      {
+       "what": "200 dpi",
+       "tag": "button",
+       "top": 476,
+       "bottom": 520,
+       "left": 203,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": true,
+       "width": 78,
+       "height": 44
+      },
+      {
+       "what": "300 dpi",
+       "tag": "button",
+       "top": 476,
+       "bottom": 520,
+       "left": 281,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 77,
+       "height": 44
+      },
+      {
+       "what": "PDF",
+       "tag": "button",
+       "top": 561,
+       "bottom": 605,
+       "left": 32,
+       "inFirstViewport": true,
+       "centreAt": 0.7,
+       "pinnedToBottom": false,
+       "primaryFill": true,
+       "width": 163.5,
+       "height": 44
+      },
+      {
+       "what": "JPEG",
+       "tag": "button",
+       "top": 561,
+       "bottom": 605,
+       "left": 195.5,
+       "inFirstViewport": true,
+       "centreAt": 0.7,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 162.5,
+       "height": 44
+      },
+      {
+       "what": "SPAN",
+       "tag": "span",
+       "top": 627.3,
+       "bottom": 645.7,
+       "left": 326,
+       "inFirstViewport": true,
+       "centreAt": 0.8,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 54,
+       "height": 32.4
+      },
+      {
+       "what": "SPAN",
+       "tag": "span",
+       "top": 678.8,
+       "bottom": 697.2,
+       "left": 326,
+       "inFirstViewport": true,
+       "centreAt": 0.8,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 54,
+       "height": 32.4
+      },
+      {
+       "what": "Scan",
+       "tag": "button",
+       "top": 728,
+       "bottom": 776,
+       "left": 32,
+       "inFirstViewport": true,
+       "centreAt": 0.9,
+       "pinnedToBottom": false,
+       "primaryFill": true,
+       "width": 326,
+       "height": 48
+      },
+      {
+       "what": "2026-11-10 Council rates notice, third q",
+       "tag": "a",
+       "top": 897,
+       "bottom": 916,
+       "left": 60,
+       "inFirstViewport": false,
+       "centreAt": 1.1,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 194,
+       "height": 19
+      },
+      {
+       "what": "Download 2026-11-10 Council rates notice",
+       "tag": "a",
+       "top": 893,
+       "bottom": 937,
+       "left": 262,
+       "inFirstViewport": false,
+       "centreAt": 1.1,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Delete 2026-11-10 Council rates notice, ",
+       "tag": "button",
+       "top": 893,
+       "bottom": 937,
+       "left": 314,
+       "inFirstViewport": false,
+       "centreAt": 1.1,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "2026-11-09 Lease renewal, signed pages 1",
+       "tag": "a",
+       "top": 958,
+       "bottom": 977,
+       "left": 60,
+       "inFirstViewport": false,
+       "centreAt": 1.1,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 194,
+       "height": 19
+      },
+      {
+       "what": "Download 2026-11-09 Lease renewal, signe",
+       "tag": "a",
+       "top": 954,
+       "bottom": 998,
+       "left": 262,
+       "inFirstViewport": false,
+       "centreAt": 1.2,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Delete 2026-11-09 Lease renewal, signed ",
+       "tag": "button",
+       "top": 954,
+       "bottom": 998,
+       "left": 314,
+       "inFirstViewport": false,
+       "centreAt": 1.2,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "scan0042.jpg",
+       "tag": "a",
+       "top": 1019,
+       "bottom": 1038,
+       "left": 60,
+       "inFirstViewport": false,
+       "centreAt": 1.2,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 194,
+       "height": 19
+      },
+      {
+       "what": "Download scan0042.jpg",
+       "tag": "a",
+       "top": 1015,
+       "bottom": 1059,
+       "left": 262,
+       "inFirstViewport": false,
+       "centreAt": 1.2,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Delete scan0042.jpg",
+       "tag": "button",
+       "top": 1015,
+       "bottom": 1059,
+       "left": 314,
+       "inFirstViewport": false,
+       "centreAt": 1.2,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "2026-11-07 Car service invoice.pdf",
+       "tag": "a",
+       "top": 1080,
+       "bottom": 1099,
+       "left": 60,
+       "inFirstViewport": false,
+       "centreAt": 1.3,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 194,
+       "height": 19
+      },
+      {
+       "what": "Download 2026-11-07 Car service invoice.",
+       "tag": "a",
+       "top": 1076,
+       "bottom": 1120,
+       "left": 262,
+       "inFirstViewport": false,
+       "centreAt": 1.3,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Delete 2026-11-07 Car service invoice.pd",
+       "tag": "button",
+       "top": 1076,
+       "bottom": 1120,
+       "left": 314,
+       "inFirstViewport": false,
+       "centreAt": 1.3,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "2026-11-05 Passport renewal application ",
+       "tag": "a",
+       "top": 1141,
+       "bottom": 1160,
+       "left": 60,
+       "inFirstViewport": false,
+       "centreAt": 1.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 194,
+       "height": 19
+      },
+      {
+       "what": "Download 2026-11-05 Passport renewal app",
+       "tag": "a",
+       "top": 1137,
+       "bottom": 1181,
+       "left": 262,
+       "inFirstViewport": false,
+       "centreAt": 1.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Delete 2026-11-05 Passport renewal appli",
+       "tag": "button",
+       "top": 1137,
+       "bottom": 1181,
+       "left": 314,
+       "inFirstViewport": false,
+       "centreAt": 1.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "2026-11-02 Dental receipt.pdf",
+       "tag": "a",
+       "top": 1202,
+       "bottom": 1221,
+       "left": 60,
+       "inFirstViewport": false,
+       "centreAt": 1.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 194,
+       "height": 19
+      },
+      {
+       "what": "Download 2026-11-02 Dental receipt.pdf",
+       "tag": "a",
+       "top": 1198,
+       "bottom": 1242,
+       "left": 262,
+       "inFirstViewport": false,
+       "centreAt": 1.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Delete 2026-11-02 Dental receipt.pdf",
+       "tag": "button",
+       "top": 1198,
+       "bottom": 1242,
+       "left": 314,
+       "inFirstViewport": false,
+       "centreAt": 1.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Scan",
+       "tag": "a",
+       "top": 773,
+       "bottom": 823,
+       "left": 25.8,
+       "inFirstViewport": true,
+       "centreAt": 0.9,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 330.4,
+       "height": 50
+      }
+     ],
+     "alphaSteps": [
+      0.1,
+      0.6,
+      0.74,
+      0.8
+     ],
+     "state": {
+      "statusTokens": [
+       "--warning #8a5300",
+       "--success #137333",
+       "--critical #c10007",
+       "--unreachable #b04400",
+       "--destructive #c10007"
+      ],
+      "statusColoured": 1,
+      "offToken": [],
+      "colourOnly": 0,
+      "colourOnlySamples": [],
+      "countsInHeadings": 0,
+      "progressText": 0,
+      "usesSafeTokens": false,
+      "progressElements": 0,
+      "empties": []
+     },
+     "reading": {
+      "bodySize": 13,
+      "lines": [],
+      "contrastChecked": 50,
+      "contrastUnknown": 0,
+      "contrastFails": [],
+      "contrastFailCount": 0,
+      "overflowX": 0,
+      "runningAnimations": 0
+     },
+     "textRuns": 50,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
+     "covered": {
+      "runs": 0,
+      "sample": []
+     },
+     "waitForSeen": true,
+     "pageErrors": [],
+     "url": "/"
+    },
+    "iphone-dark": {
+     "viewport": [
+      390,
+      844
+     ],
+     "coarse": true,
+     "hierarchy": {
+      "fontSizes": [
+       {
+        "size": 21,
+        "chars": 4
+       },
+       {
+        "size": 16,
+        "chars": 21
+       },
+       {
+        "size": 14,
+        "chars": 174
+       },
+       {
+        "size": 13,
+        "chars": 154
+       },
+       {
+        "size": 12,
+        "chars": 4
+       }
+      ],
+      "largest": {
+       "size": 21,
+       "elements": 1,
+       "weight": 600,
+       "text": "Scan",
+       "nextSize": 16
+      },
+      "headings": [
+       {
+        "tag": "h1",
+        "text": "Scan",
+        "size": 21,
+        "weight": 600,
+        "top": 80
+       }
+      ]
+     },
+     "rows": {
+      "count": 9,
+      "sample": [
+       {
+        "height": 69,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 1,
+        "colourValues": [
+         "#5bd0d6"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Flatbed"
+       },
+       {
+        "height": 69,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 1,
+        "colourValues": [
+         "#5bd0d6"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "PDF"
+       },
+       {
+        "height": 91,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Searchable (OCR)"
+       },
+       {
+        "height": 61,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "2026-11-10 Council rates notic"
+       },
+       {
+        "height": 61,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "2026-11-09 Lease renewal, sign"
+       },
+       {
+        "height": 61,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "scan0042.jpg"
+       }
+      ],
+      "maxChips": 0,
+      "maxColours": 1,
+      "nested": 0,
+      "heights": [
+       60,
+       61,
+       69,
+       91
+      ],
+      "titleWeightMax": 500
+     },
+     "interactive": {
+      "firstViewport": 15,
+      "measured": 33,
+      "small": 8,
+      "smallSample": [
+       {
+        "what": "SPAN",
+        "tag": "span",
+        "width": 54,
+        "height": 32.4
+       },
+       {
+        "what": "SPAN",
+        "tag": "span",
+        "width": 54,
+        "height": 32.4
+       },
+       {
+        "what": "2026-11-10 Council rates notice, third q",
+        "tag": "a",
+        "width": 194,
+        "height": 19
+       },
+       {
+        "what": "2026-11-09 Lease renewal, signed pages 1",
+        "tag": "a",
+        "width": 194,
+        "height": 19
+       },
+       {
+        "what": "scan0042.jpg",
+        "tag": "a",
+        "width": 194,
+        "height": 19
+       },
+       {
+        "what": "2026-11-07 Car service invoice.pdf",
+        "tag": "a",
+        "width": 194,
+        "height": 19
+       },
+       {
+        "what": "2026-11-05 Passport renewal application ",
+        "tag": "a",
+        "width": 194,
+        "height": 19
+       },
+       {
+        "what": "2026-11-02 Dental receipt.pdf",
+        "tag": "a",
+        "width": 194,
+        "height": 19
+       }
+      ],
+      "inputs": 0,
+      "smallInputs": []
+     },
+     "controls": [
+      {
+       "what": "Scan",
+       "tag": "button",
+       "top": 14,
+       "bottom": 58,
+       "left": 17,
+       "inFirstViewport": true,
+       "centreAt": 0,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 74.3,
+       "height": 44
+      },
+      {
+       "what": "Double-sided (recommended)Feeder, both s",
+       "tag": "button",
+       "top": 296,
+       "bottom": 350,
+       "left": 32,
+       "inFirstViewport": true,
+       "centreAt": 0.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 326,
+       "height": 54
+      },
+      {
+       "what": "Flatbed",
+       "tag": "button",
+       "top": 391,
+       "bottom": 435,
+       "left": 32,
+       "inFirstViewport": true,
+       "centreAt": 0.5,
+       "pinnedToBottom": false,
+       "primaryFill": true,
+       "width": 109.3,
+       "height": 44
+      },
+      {
+       "what": "Feeder",
+       "tag": "button",
+       "top": 391,
+       "bottom": 435,
+       "left": 141.3,
+       "inFirstViewport": true,
+       "centreAt": 0.5,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 108.3,
+       "height": 44
+      },
+      {
+       "what": "Double-sided",
+       "tag": "button",
+       "top": 391,
+       "bottom": 435,
+       "left": 249.7,
+       "inFirstViewport": true,
+       "centreAt": 0.5,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 108.3,
+       "height": 44
+      },
+      {
+       "what": "Colour",
+       "tag": "button",
+       "top": 476,
+       "bottom": 520,
+       "left": 32,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": true,
+       "width": 78,
+       "height": 44
+      },
+      {
+       "what": "Grey",
+       "tag": "button",
+       "top": 476,
+       "bottom": 520,
+       "left": 110,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 77,
+       "height": 44
+      },
+      {
+       "what": "200 dpi",
+       "tag": "button",
+       "top": 476,
+       "bottom": 520,
+       "left": 203,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": true,
+       "width": 78,
+       "height": 44
+      },
+      {
+       "what": "300 dpi",
+       "tag": "button",
+       "top": 476,
+       "bottom": 520,
+       "left": 281,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 77,
+       "height": 44
+      },
+      {
+       "what": "PDF",
+       "tag": "button",
+       "top": 561,
+       "bottom": 605,
+       "left": 32,
+       "inFirstViewport": true,
+       "centreAt": 0.7,
+       "pinnedToBottom": false,
+       "primaryFill": true,
+       "width": 163.5,
+       "height": 44
+      },
+      {
+       "what": "JPEG",
+       "tag": "button",
+       "top": 561,
+       "bottom": 605,
+       "left": 195.5,
+       "inFirstViewport": true,
+       "centreAt": 0.7,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 162.5,
+       "height": 44
+      },
+      {
+       "what": "SPAN",
+       "tag": "span",
+       "top": 627.3,
+       "bottom": 645.7,
+       "left": 326,
+       "inFirstViewport": true,
+       "centreAt": 0.8,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 54,
+       "height": 32.4
+      },
+      {
+       "what": "SPAN",
+       "tag": "span",
+       "top": 678.8,
+       "bottom": 697.2,
+       "left": 326,
+       "inFirstViewport": true,
+       "centreAt": 0.8,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 54,
+       "height": 32.4
+      },
+      {
+       "what": "Scan",
+       "tag": "button",
+       "top": 728,
+       "bottom": 776,
+       "left": 32,
+       "inFirstViewport": true,
+       "centreAt": 0.9,
+       "pinnedToBottom": false,
+       "primaryFill": true,
+       "width": 326,
+       "height": 48
+      },
+      {
+       "what": "2026-11-10 Council rates notice, third q",
+       "tag": "a",
+       "top": 897,
+       "bottom": 916,
+       "left": 60,
+       "inFirstViewport": false,
+       "centreAt": 1.1,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 194,
+       "height": 19
+      },
+      {
+       "what": "Download 2026-11-10 Council rates notice",
+       "tag": "a",
+       "top": 893,
+       "bottom": 937,
+       "left": 262,
+       "inFirstViewport": false,
+       "centreAt": 1.1,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Delete 2026-11-10 Council rates notice, ",
+       "tag": "button",
+       "top": 893,
+       "bottom": 937,
+       "left": 314,
+       "inFirstViewport": false,
+       "centreAt": 1.1,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "2026-11-09 Lease renewal, signed pages 1",
+       "tag": "a",
+       "top": 958,
+       "bottom": 977,
+       "left": 60,
+       "inFirstViewport": false,
+       "centreAt": 1.1,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 194,
+       "height": 19
+      },
+      {
+       "what": "Download 2026-11-09 Lease renewal, signe",
+       "tag": "a",
+       "top": 954,
+       "bottom": 998,
+       "left": 262,
+       "inFirstViewport": false,
+       "centreAt": 1.2,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Delete 2026-11-09 Lease renewal, signed ",
+       "tag": "button",
+       "top": 954,
+       "bottom": 998,
+       "left": 314,
+       "inFirstViewport": false,
+       "centreAt": 1.2,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "scan0042.jpg",
+       "tag": "a",
+       "top": 1019,
+       "bottom": 1038,
+       "left": 60,
+       "inFirstViewport": false,
+       "centreAt": 1.2,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 194,
+       "height": 19
+      },
+      {
+       "what": "Download scan0042.jpg",
+       "tag": "a",
+       "top": 1015,
+       "bottom": 1059,
+       "left": 262,
+       "inFirstViewport": false,
+       "centreAt": 1.2,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Delete scan0042.jpg",
+       "tag": "button",
+       "top": 1015,
+       "bottom": 1059,
+       "left": 314,
+       "inFirstViewport": false,
+       "centreAt": 1.2,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "2026-11-07 Car service invoice.pdf",
+       "tag": "a",
+       "top": 1080,
+       "bottom": 1099,
+       "left": 60,
+       "inFirstViewport": false,
+       "centreAt": 1.3,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 194,
+       "height": 19
+      },
+      {
+       "what": "Download 2026-11-07 Car service invoice.",
+       "tag": "a",
+       "top": 1076,
+       "bottom": 1120,
+       "left": 262,
+       "inFirstViewport": false,
+       "centreAt": 1.3,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Delete 2026-11-07 Car service invoice.pd",
+       "tag": "button",
+       "top": 1076,
+       "bottom": 1120,
+       "left": 314,
+       "inFirstViewport": false,
+       "centreAt": 1.3,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "2026-11-05 Passport renewal application ",
+       "tag": "a",
+       "top": 1141,
+       "bottom": 1160,
+       "left": 60,
+       "inFirstViewport": false,
+       "centreAt": 1.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 194,
+       "height": 19
+      },
+      {
+       "what": "Download 2026-11-05 Passport renewal app",
+       "tag": "a",
+       "top": 1137,
+       "bottom": 1181,
+       "left": 262,
+       "inFirstViewport": false,
+       "centreAt": 1.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Delete 2026-11-05 Passport renewal appli",
+       "tag": "button",
+       "top": 1137,
+       "bottom": 1181,
+       "left": 314,
+       "inFirstViewport": false,
+       "centreAt": 1.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "2026-11-02 Dental receipt.pdf",
+       "tag": "a",
+       "top": 1202,
+       "bottom": 1221,
+       "left": 60,
+       "inFirstViewport": false,
+       "centreAt": 1.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 194,
+       "height": 19
+      },
+      {
+       "what": "Download 2026-11-02 Dental receipt.pdf",
+       "tag": "a",
+       "top": 1198,
+       "bottom": 1242,
+       "left": 262,
+       "inFirstViewport": false,
+       "centreAt": 1.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Delete 2026-11-02 Dental receipt.pdf",
+       "tag": "button",
+       "top": 1198,
+       "bottom": 1242,
+       "left": 314,
+       "inFirstViewport": false,
+       "centreAt": 1.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Scan",
+       "tag": "a",
+       "top": 773,
+       "bottom": 823,
+       "left": 25.8,
+       "inFirstViewport": true,
+       "centreAt": 0.9,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 330.4,
+       "height": 50
+      }
+     ],
+     "alphaSteps": [
+      0.15,
+      0.3,
+      0.6,
+      0.74,
+      0.8
+     ],
+     "state": {
+      "statusTokens": [
+       "--warning #fbbf24",
+       "--success #4ade80",
+       "--critical #ff7a7e",
+       "--unreachable #fb923c",
+       "--destructive #ff6467"
+      ],
+      "statusColoured": 1,
+      "offToken": [],
+      "colourOnly": 0,
+      "colourOnlySamples": [],
+      "countsInHeadings": 0,
+      "progressText": 0,
+      "usesSafeTokens": false,
+      "progressElements": 0,
+      "empties": []
+     },
+     "reading": {
+      "bodySize": 13,
+      "lines": [],
+      "contrastChecked": 50,
+      "contrastUnknown": 0,
+      "contrastFails": [],
+      "contrastFailCount": 0,
+      "overflowX": 0,
+      "runningAnimations": 0
+     },
+     "textRuns": 50,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
+     "covered": {
+      "runs": 0,
+      "sample": []
+     },
+     "waitForSeen": true,
+     "pageErrors": [],
+     "url": "/"
+    },
+    "desktop-light": {
+     "viewport": [
+      1440,
+      900
+     ],
+     "coarse": false,
+     "hierarchy": {
+      "fontSizes": [
+       {
+        "size": 26,
+        "chars": 4
+       },
+       {
+        "size": 16,
+        "chars": 21
+       },
+       {
+        "size": 14,
+        "chars": 475
+       },
+       {
+        "size": 13,
+        "chars": 312
+       }
+      ],
+      "largest": {
+       "size": 26,
+       "elements": 1,
+       "weight": 600,
+       "text": "Scan",
+       "nextSize": 16
+      },
+      "headings": [
+       {
+        "tag": "h1",
+        "text": "Scan",
+        "size": 26,
+        "weight": 600,
+        "top": 80
+       }
+      ]
+     },
+     "rows": {
+      "count": 9,
+      "sample": [
+       {
+        "height": 69,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 1,
+        "colourValues": [
+         "#0a6f75"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Flatbed"
+       },
+       {
+        "height": 69,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 1,
+        "colourValues": [
+         "#0a6f75"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "PDF"
+       },
+       {
+        "height": 74,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Searchable (OCR)"
+       },
+       {
+        "height": 61,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "2026-11-10 Council rates notic"
+       },
+       {
+        "height": 61,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "2026-11-09 Lease renewal, sign"
+       },
+       {
+        "height": 61,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "scan0042.jpg"
+       }
+      ],
+      "maxChips": 0,
+      "maxColours": 1,
+      "nested": 0,
+      "heights": [
+       60,
+       61,
+       69,
+       74
+      ],
+      "titleWeightMax": 500
+     },
+     "interactive": {
+      "firstViewport": 33,
+      "measured": 33,
+      "small": 9,
+      "smallSample": [
+       {
+        "what": "Scan",
+        "tag": "a",
+        "width": 231,
+        "height": 40
+       },
+       {
+        "what": "SPAN",
+        "tag": "span",
+        "width": 54,
+        "height": 32.4
+       },
+       {
+        "what": "SPAN",
+        "tag": "span",
+        "width": 54,
+        "height": 32.4
+       },
+       {
+        "what": "2026-11-10 Council rates notice, third q",
+        "tag": "a",
+        "width": 316,
+        "height": 19
+       },
+       {
+        "what": "2026-11-09 Lease renewal, signed pages 1",
+        "tag": "a",
+        "width": 316,
+        "height": 19
+       },
+       {
+        "what": "scan0042.jpg",
+        "tag": "a",
+        "width": 316,
+        "height": 19
+       },
+       {
+        "what": "2026-11-07 Car service invoice.pdf",
+        "tag": "a",
+        "width": 316,
+        "height": 19
+       },
+       {
+        "what": "2026-11-05 Passport renewal application ",
+        "tag": "a",
+        "width": 316,
+        "height": 19
+       },
+       {
+        "what": "2026-11-02 Dental receipt.pdf",
+        "tag": "a",
+        "width": 316,
+        "height": 19
+       }
+      ],
+      "inputs": 0,
+      "smallInputs": []
+     },
+     "controls": [
+      {
+       "what": "Scan",
+       "tag": "a",
+       "top": 0,
+       "bottom": 40,
+       "left": 12,
+       "inFirstViewport": true,
+       "centreAt": 0,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 231,
+       "height": 40
+      },
+      {
+       "what": "Scan",
+       "tag": "button",
+       "top": 14,
+       "bottom": 58,
+       "left": 273,
+       "inFirstViewport": true,
+       "centreAt": 0,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 74.3,
+       "height": 44
+      },
+      {
+       "what": "Double-sided (recommended)Feeder, both s",
+       "tag": "button",
+       "top": 228,
+       "bottom": 282,
+       "left": 376,
+       "inFirstViewport": true,
+       "centreAt": 0.3,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 448,
+       "height": 54
+      },
+      {
+       "what": "Flatbed",
+       "tag": "button",
+       "top": 323,
+       "bottom": 367,
+       "left": 376,
+       "inFirstViewport": true,
+       "centreAt": 0.4,
+       "pinnedToBottom": false,
+       "primaryFill": true,
+       "width": 150,
+       "height": 44
+      },
+      {
+       "what": "Feeder",
+       "tag": "button",
+       "top": 323,
+       "bottom": 367,
+       "left": 526,
+       "inFirstViewport": true,
+       "centreAt": 0.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 149,
+       "height": 44
+      },
+      {
+       "what": "Double-sided",
+       "tag": "button",
+       "top": 323,
+       "bottom": 367,
+       "left": 675,
+       "inFirstViewport": true,
+       "centreAt": 0.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 149,
+       "height": 44
+      },
+      {
+       "what": "Colour",
+       "tag": "button",
+       "top": 408,
+       "bottom": 452,
+       "left": 376,
+       "inFirstViewport": true,
+       "centreAt": 0.5,
+       "pinnedToBottom": false,
+       "primaryFill": true,
+       "width": 108.5,
+       "height": 44
+      },
+      {
+       "what": "Grey",
+       "tag": "button",
+       "top": 408,
+       "bottom": 452,
+       "left": 484.5,
+       "inFirstViewport": true,
+       "centreAt": 0.5,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 107.5,
+       "height": 44
+      },
+      {
+       "what": "200 dpi",
+       "tag": "button",
+       "top": 408,
+       "bottom": 452,
+       "left": 608,
+       "inFirstViewport": true,
+       "centreAt": 0.5,
+       "pinnedToBottom": false,
+       "primaryFill": true,
+       "width": 108.5,
+       "height": 44
+      },
+      {
+       "what": "300 dpi",
+       "tag": "button",
+       "top": 408,
+       "bottom": 452,
+       "left": 716.5,
+       "inFirstViewport": true,
+       "centreAt": 0.5,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 107.5,
+       "height": 44
+      },
+      {
+       "what": "PDF",
+       "tag": "button",
+       "top": 493,
+       "bottom": 537,
+       "left": 376,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": true,
+       "width": 224.5,
+       "height": 44
+      },
+      {
+       "what": "JPEG",
+       "tag": "button",
+       "top": 493,
+       "bottom": 537,
+       "left": 600.5,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 223.5,
+       "height": 44
+      },
+      {
+       "what": "SPAN",
+       "tag": "span",
+       "top": 559.3,
+       "bottom": 577.7,
+       "left": 792,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 54,
+       "height": 32.4
+      },
+      {
+       "what": "SPAN",
+       "tag": "span",
+       "top": 602.3,
+       "bottom": 620.7,
+       "left": 792,
+       "inFirstViewport": true,
+       "centreAt": 0.7,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 54,
+       "height": 32.4
+      },
+      {
+       "what": "Scan",
+       "tag": "button",
+       "top": 643,
+       "bottom": 691,
+       "left": 376,
+       "inFirstViewport": true,
+       "centreAt": 0.7,
+       "pinnedToBottom": false,
+       "primaryFill": true,
+       "width": 448,
+       "height": 48
+      },
+      {
+       "what": "2026-11-10 Council rates notice, third q",
+       "tag": "a",
+       "top": 240,
+       "bottom": 259,
+       "left": 900,
+       "inFirstViewport": true,
+       "centreAt": 0.3,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 316,
+       "height": 19
+      },
+      {
+       "what": "Download 2026-11-10 Council rates notice",
+       "tag": "a",
+       "top": 236,
+       "bottom": 280,
+       "left": 1224,
+       "inFirstViewport": true,
+       "centreAt": 0.3,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Delete 2026-11-10 Council rates notice, ",
+       "tag": "button",
+       "top": 236,
+       "bottom": 280,
+       "left": 1276,
+       "inFirstViewport": true,
+       "centreAt": 0.3,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "2026-11-09 Lease renewal, signed pages 1",
+       "tag": "a",
+       "top": 301,
+       "bottom": 320,
+       "left": 900,
+       "inFirstViewport": true,
+       "centreAt": 0.3,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 316,
+       "height": 19
+      },
+      {
+       "what": "Download 2026-11-09 Lease renewal, signe",
+       "tag": "a",
+       "top": 297,
+       "bottom": 341,
+       "left": 1224,
+       "inFirstViewport": true,
+       "centreAt": 0.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Delete 2026-11-09 Lease renewal, signed ",
+       "tag": "button",
+       "top": 297,
+       "bottom": 341,
+       "left": 1276,
+       "inFirstViewport": true,
+       "centreAt": 0.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "scan0042.jpg",
+       "tag": "a",
+       "top": 362,
+       "bottom": 381,
+       "left": 900,
+       "inFirstViewport": true,
+       "centreAt": 0.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 316,
+       "height": 19
+      },
+      {
+       "what": "Download scan0042.jpg",
+       "tag": "a",
+       "top": 358,
+       "bottom": 402,
+       "left": 1224,
+       "inFirstViewport": true,
+       "centreAt": 0.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Delete scan0042.jpg",
+       "tag": "button",
+       "top": 358,
+       "bottom": 402,
+       "left": 1276,
+       "inFirstViewport": true,
+       "centreAt": 0.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "2026-11-07 Car service invoice.pdf",
+       "tag": "a",
+       "top": 423,
+       "bottom": 442,
+       "left": 900,
+       "inFirstViewport": true,
+       "centreAt": 0.5,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 316,
+       "height": 19
+      },
+      {
+       "what": "Download 2026-11-07 Car service invoice.",
+       "tag": "a",
+       "top": 419,
+       "bottom": 463,
+       "left": 1224,
+       "inFirstViewport": true,
+       "centreAt": 0.5,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Delete 2026-11-07 Car service invoice.pd",
+       "tag": "button",
+       "top": 419,
+       "bottom": 463,
+       "left": 1276,
+       "inFirstViewport": true,
+       "centreAt": 0.5,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "2026-11-05 Passport renewal application ",
+       "tag": "a",
+       "top": 484,
+       "bottom": 503,
+       "left": 900,
+       "inFirstViewport": true,
+       "centreAt": 0.5,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 316,
+       "height": 19
+      },
+      {
+       "what": "Download 2026-11-05 Passport renewal app",
+       "tag": "a",
+       "top": 480,
+       "bottom": 524,
+       "left": 1224,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Delete 2026-11-05 Passport renewal appli",
+       "tag": "button",
+       "top": 480,
+       "bottom": 524,
+       "left": 1276,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "2026-11-02 Dental receipt.pdf",
+       "tag": "a",
+       "top": 545,
+       "bottom": 564,
+       "left": 900,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 316,
+       "height": 19
+      },
+      {
+       "what": "Download 2026-11-02 Dental receipt.pdf",
+       "tag": "a",
+       "top": 541,
+       "bottom": 585,
+       "left": 1224,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Delete 2026-11-02 Dental receipt.pdf",
+       "tag": "button",
+       "top": 541,
+       "bottom": 585,
+       "left": 1276,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      }
+     ],
+     "alphaSteps": [
+      0.1,
+      0.6,
+      0.74,
+      0.8
+     ],
+     "state": {
+      "statusTokens": [
+       "--warning #8a5300",
+       "--success #137333",
+       "--critical #c10007",
+       "--unreachable #b04400",
+       "--destructive #c10007"
+      ],
+      "statusColoured": 1,
+      "offToken": [],
+      "colourOnly": 0,
+      "colourOnlySamples": [],
+      "countsInHeadings": 0,
+      "progressText": 0,
+      "usesSafeTokens": false,
+      "progressElements": 0,
+      "empties": []
+     },
+     "reading": {
+      "bodySize": 14,
+      "lines": [],
+      "contrastChecked": 50,
+      "contrastUnknown": 0,
+      "contrastFails": [],
+      "contrastFailCount": 0,
+      "overflowX": 0,
+      "runningAnimations": 0
+     },
+     "textRuns": 50,
+     "truncated": {
+      "count": 3,
+      "inRows": 3,
+      "sample": [
+       "2026-11-10 Council rates notice, third quarter 202 (88% shown)",
+       "2026-11-09 Lease renewal, signed pages 1 to 14 wit (59% shown)",
+       "2026-11-05 Passport renewal application form, both (79% shown)"
+      ]
+     },
+     "covered": {
+      "runs": 0,
+      "sample": []
+     },
+     "waitForSeen": true,
+     "pageErrors": [],
+     "url": "/"
+    },
+    "desktop-dark": {
+     "viewport": [
+      1440,
+      900
+     ],
+     "coarse": false,
+     "hierarchy": {
+      "fontSizes": [
+       {
+        "size": 26,
+        "chars": 4
+       },
+       {
+        "size": 16,
+        "chars": 21
+       },
+       {
+        "size": 14,
+        "chars": 475
+       },
+       {
+        "size": 13,
+        "chars": 312
+       }
+      ],
+      "largest": {
+       "size": 26,
+       "elements": 1,
+       "weight": 600,
+       "text": "Scan",
+       "nextSize": 16
+      },
+      "headings": [
+       {
+        "tag": "h1",
+        "text": "Scan",
+        "size": 26,
+        "weight": 600,
+        "top": 80
+       }
+      ]
+     },
+     "rows": {
+      "count": 9,
+      "sample": [
+       {
+        "height": 69,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 1,
+        "colourValues": [
+         "#5bd0d6"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Flatbed"
+       },
+       {
+        "height": 69,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 1,
+        "colourValues": [
+         "#5bd0d6"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "PDF"
+       },
+       {
+        "height": 74,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Searchable (OCR)"
+       },
+       {
+        "height": 61,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "2026-11-10 Council rates notic"
+       },
+       {
+        "height": 61,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "2026-11-09 Lease renewal, sign"
+       },
+       {
+        "height": 61,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "scan0042.jpg"
+       }
+      ],
+      "maxChips": 0,
+      "maxColours": 1,
+      "nested": 0,
+      "heights": [
+       60,
+       61,
+       69,
+       74
+      ],
+      "titleWeightMax": 500
+     },
+     "interactive": {
+      "firstViewport": 33,
+      "measured": 33,
+      "small": 9,
+      "smallSample": [
+       {
+        "what": "Scan",
+        "tag": "a",
+        "width": 231,
+        "height": 40
+       },
+       {
+        "what": "SPAN",
+        "tag": "span",
+        "width": 54,
+        "height": 32.4
+       },
+       {
+        "what": "SPAN",
+        "tag": "span",
+        "width": 54,
+        "height": 32.4
+       },
+       {
+        "what": "2026-11-10 Council rates notice, third q",
+        "tag": "a",
+        "width": 316,
+        "height": 19
+       },
+       {
+        "what": "2026-11-09 Lease renewal, signed pages 1",
+        "tag": "a",
+        "width": 316,
+        "height": 19
+       },
+       {
+        "what": "scan0042.jpg",
+        "tag": "a",
+        "width": 316,
+        "height": 19
+       },
+       {
+        "what": "2026-11-07 Car service invoice.pdf",
+        "tag": "a",
+        "width": 316,
+        "height": 19
+       },
+       {
+        "what": "2026-11-05 Passport renewal application ",
+        "tag": "a",
+        "width": 316,
+        "height": 19
+       },
+       {
+        "what": "2026-11-02 Dental receipt.pdf",
+        "tag": "a",
+        "width": 316,
+        "height": 19
+       }
+      ],
+      "inputs": 0,
+      "smallInputs": []
+     },
+     "controls": [
+      {
+       "what": "Scan",
+       "tag": "a",
+       "top": 0,
+       "bottom": 40,
+       "left": 12,
+       "inFirstViewport": true,
+       "centreAt": 0,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 231,
+       "height": 40
+      },
+      {
+       "what": "Scan",
+       "tag": "button",
+       "top": 14,
+       "bottom": 58,
+       "left": 273,
+       "inFirstViewport": true,
+       "centreAt": 0,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 74.3,
+       "height": 44
+      },
+      {
+       "what": "Double-sided (recommended)Feeder, both s",
+       "tag": "button",
+       "top": 228,
+       "bottom": 282,
+       "left": 376,
+       "inFirstViewport": true,
+       "centreAt": 0.3,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 448,
+       "height": 54
+      },
+      {
+       "what": "Flatbed",
+       "tag": "button",
+       "top": 323,
+       "bottom": 367,
+       "left": 376,
+       "inFirstViewport": true,
+       "centreAt": 0.4,
+       "pinnedToBottom": false,
+       "primaryFill": true,
+       "width": 150,
+       "height": 44
+      },
+      {
+       "what": "Feeder",
+       "tag": "button",
+       "top": 323,
+       "bottom": 367,
+       "left": 526,
+       "inFirstViewport": true,
+       "centreAt": 0.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 149,
+       "height": 44
+      },
+      {
+       "what": "Double-sided",
+       "tag": "button",
+       "top": 323,
+       "bottom": 367,
+       "left": 675,
+       "inFirstViewport": true,
+       "centreAt": 0.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 149,
+       "height": 44
+      },
+      {
+       "what": "Colour",
+       "tag": "button",
+       "top": 408,
+       "bottom": 452,
+       "left": 376,
+       "inFirstViewport": true,
+       "centreAt": 0.5,
+       "pinnedToBottom": false,
+       "primaryFill": true,
+       "width": 108.5,
+       "height": 44
+      },
+      {
+       "what": "Grey",
+       "tag": "button",
+       "top": 408,
+       "bottom": 452,
+       "left": 484.5,
+       "inFirstViewport": true,
+       "centreAt": 0.5,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 107.5,
+       "height": 44
+      },
+      {
+       "what": "200 dpi",
+       "tag": "button",
+       "top": 408,
+       "bottom": 452,
+       "left": 608,
+       "inFirstViewport": true,
+       "centreAt": 0.5,
+       "pinnedToBottom": false,
+       "primaryFill": true,
+       "width": 108.5,
+       "height": 44
+      },
+      {
+       "what": "300 dpi",
+       "tag": "button",
+       "top": 408,
+       "bottom": 452,
+       "left": 716.5,
+       "inFirstViewport": true,
+       "centreAt": 0.5,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 107.5,
+       "height": 44
+      },
+      {
+       "what": "PDF",
+       "tag": "button",
+       "top": 493,
+       "bottom": 537,
+       "left": 376,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": true,
+       "width": 224.5,
+       "height": 44
+      },
+      {
+       "what": "JPEG",
+       "tag": "button",
+       "top": 493,
+       "bottom": 537,
+       "left": 600.5,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 223.5,
+       "height": 44
+      },
+      {
+       "what": "SPAN",
+       "tag": "span",
+       "top": 559.3,
+       "bottom": 577.7,
+       "left": 792,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 54,
+       "height": 32.4
+      },
+      {
+       "what": "SPAN",
+       "tag": "span",
+       "top": 602.3,
+       "bottom": 620.7,
+       "left": 792,
+       "inFirstViewport": true,
+       "centreAt": 0.7,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 54,
+       "height": 32.4
+      },
+      {
+       "what": "Scan",
+       "tag": "button",
+       "top": 643,
+       "bottom": 691,
+       "left": 376,
+       "inFirstViewport": true,
+       "centreAt": 0.7,
+       "pinnedToBottom": false,
+       "primaryFill": true,
+       "width": 448,
+       "height": 48
+      },
+      {
+       "what": "2026-11-10 Council rates notice, third q",
+       "tag": "a",
+       "top": 240,
+       "bottom": 259,
+       "left": 900,
+       "inFirstViewport": true,
+       "centreAt": 0.3,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 316,
+       "height": 19
+      },
+      {
+       "what": "Download 2026-11-10 Council rates notice",
+       "tag": "a",
+       "top": 236,
+       "bottom": 280,
+       "left": 1224,
+       "inFirstViewport": true,
+       "centreAt": 0.3,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Delete 2026-11-10 Council rates notice, ",
+       "tag": "button",
+       "top": 236,
+       "bottom": 280,
+       "left": 1276,
+       "inFirstViewport": true,
+       "centreAt": 0.3,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "2026-11-09 Lease renewal, signed pages 1",
+       "tag": "a",
+       "top": 301,
+       "bottom": 320,
+       "left": 900,
+       "inFirstViewport": true,
+       "centreAt": 0.3,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 316,
+       "height": 19
+      },
+      {
+       "what": "Download 2026-11-09 Lease renewal, signe",
+       "tag": "a",
+       "top": 297,
+       "bottom": 341,
+       "left": 1224,
+       "inFirstViewport": true,
+       "centreAt": 0.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Delete 2026-11-09 Lease renewal, signed ",
+       "tag": "button",
+       "top": 297,
+       "bottom": 341,
+       "left": 1276,
+       "inFirstViewport": true,
+       "centreAt": 0.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "scan0042.jpg",
+       "tag": "a",
+       "top": 362,
+       "bottom": 381,
+       "left": 900,
+       "inFirstViewport": true,
+       "centreAt": 0.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 316,
+       "height": 19
+      },
+      {
+       "what": "Download scan0042.jpg",
+       "tag": "a",
+       "top": 358,
+       "bottom": 402,
+       "left": 1224,
+       "inFirstViewport": true,
+       "centreAt": 0.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Delete scan0042.jpg",
+       "tag": "button",
+       "top": 358,
+       "bottom": 402,
+       "left": 1276,
+       "inFirstViewport": true,
+       "centreAt": 0.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "2026-11-07 Car service invoice.pdf",
+       "tag": "a",
+       "top": 423,
+       "bottom": 442,
+       "left": 900,
+       "inFirstViewport": true,
+       "centreAt": 0.5,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 316,
+       "height": 19
+      },
+      {
+       "what": "Download 2026-11-07 Car service invoice.",
+       "tag": "a",
+       "top": 419,
+       "bottom": 463,
+       "left": 1224,
+       "inFirstViewport": true,
+       "centreAt": 0.5,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Delete 2026-11-07 Car service invoice.pd",
+       "tag": "button",
+       "top": 419,
+       "bottom": 463,
+       "left": 1276,
+       "inFirstViewport": true,
+       "centreAt": 0.5,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "2026-11-05 Passport renewal application ",
+       "tag": "a",
+       "top": 484,
+       "bottom": 503,
+       "left": 900,
+       "inFirstViewport": true,
+       "centreAt": 0.5,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 316,
+       "height": 19
+      },
+      {
+       "what": "Download 2026-11-05 Passport renewal app",
+       "tag": "a",
+       "top": 480,
+       "bottom": 524,
+       "left": 1224,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Delete 2026-11-05 Passport renewal appli",
+       "tag": "button",
+       "top": 480,
+       "bottom": 524,
+       "left": 1276,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "2026-11-02 Dental receipt.pdf",
+       "tag": "a",
+       "top": 545,
+       "bottom": 564,
+       "left": 900,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 316,
+       "height": 19
+      },
+      {
+       "what": "Download 2026-11-02 Dental receipt.pdf",
+       "tag": "a",
+       "top": 541,
+       "bottom": 585,
+       "left": 1224,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Delete 2026-11-02 Dental receipt.pdf",
+       "tag": "button",
+       "top": 541,
+       "bottom": 585,
+       "left": 1276,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      }
+     ],
+     "alphaSteps": [
+      0.15,
+      0.3,
+      0.6,
+      0.74,
+      0.8
+     ],
+     "state": {
+      "statusTokens": [
+       "--warning #fbbf24",
+       "--success #4ade80",
+       "--critical #ff7a7e",
+       "--unreachable #fb923c",
+       "--destructive #ff6467"
+      ],
+      "statusColoured": 1,
+      "offToken": [],
+      "colourOnly": 0,
+      "colourOnlySamples": [],
+      "countsInHeadings": 0,
+      "progressText": 0,
+      "usesSafeTokens": false,
+      "progressElements": 0,
+      "empties": []
+     },
+     "reading": {
+      "bodySize": 14,
+      "lines": [],
+      "contrastChecked": 50,
+      "contrastUnknown": 0,
+      "contrastFails": [],
+      "contrastFailCount": 0,
+      "overflowX": 0,
+      "runningAnimations": 0
+     },
+     "textRuns": 50,
+     "truncated": {
+      "count": 3,
+      "inRows": 3,
+      "sample": [
+       "2026-11-10 Council rates notice, third quarter 202 (88% shown)",
+       "2026-11-09 Lease renewal, signed pages 1 to 14 wit (59% shown)",
+       "2026-11-05 Passport renewal application form, both (79% shown)"
+      ]
+     },
+     "covered": {
+      "runs": 0,
+      "sample": []
+     },
+     "waitForSeen": true,
+     "pageErrors": [],
+     "url": "/"
+    },
+    "iphone-320": {
+     "viewport": [
+      320,
+      844
+     ],
+     "coarse": true,
+     "hierarchy": {
+      "fontSizes": [
+       {
+        "size": 21,
+        "chars": 4
+       },
+       {
+        "size": 16,
+        "chars": 12
+       },
+       {
+        "size": 14,
+        "chars": 174
+       },
+       {
+        "size": 13,
+        "chars": 154
+       },
+       {
+        "size": 12,
+        "chars": 4
+       }
+      ],
+      "largest": {
+       "size": 21,
+       "elements": 1,
+       "weight": 600,
+       "text": "Scan",
+       "nextSize": 16
+      },
+      "headings": [
+       {
+        "tag": "h1",
+        "text": "Scan",
+        "size": 21,
+        "weight": 600,
+        "top": 80
+       }
+      ]
+     },
+     "rows": {
+      "count": 9,
+      "sample": [
+       {
+        "height": 69,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 1,
+        "colourValues": [
+         "#0a6f75"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Flatbed"
+       },
+       {
+        "height": 69,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 1,
+        "colourValues": [
+         "#0a6f75"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "PDF"
+       },
+       {
+        "height": 108,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Searchable (OCR)"
+       },
+       {
+        "height": 70,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "2026-11-10 Council rates notic"
+       },
+       {
+        "height": 70,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "2026-11-09 Lease renewal, sign"
+       },
+       {
+        "height": 70,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "scan0042.jpg"
+       }
+      ],
+      "maxChips": 0,
+      "maxColours": 1,
+      "nested": 0,
+      "heights": [
+       69,
+       70,
+       108
+      ],
+      "titleWeightMax": 500
+     },
+     "interactive": {
+      "firstViewport": 15,
+      "measured": 33,
+      "small": 8,
+      "smallSample": [
+       {
+        "what": "SPAN",
+        "tag": "span",
+        "width": 54,
+        "height": 32.4
+       },
+       {
+        "what": "SPAN",
+        "tag": "span",
+        "width": 54,
+        "height": 32.4
+       },
+       {
+        "what": "2026-11-10 Council rates notice, third q",
+        "tag": "a",
+        "width": 124,
+        "height": 19
+       },
+       {
+        "what": "2026-11-09 Lease renewal, signed pages 1",
+        "tag": "a",
+        "width": 124,
+        "height": 19
+       },
+       {
+        "what": "scan0042.jpg",
+        "tag": "a",
+        "width": 124,
+        "height": 19
+       },
+       {
+        "what": "2026-11-07 Car service invoice.pdf",
+        "tag": "a",
+        "width": 124,
+        "height": 19
+       },
+       {
+        "what": "2026-11-05 Passport renewal application ",
+        "tag": "a",
+        "width": 124,
+        "height": 19
+       },
+       {
+        "what": "2026-11-02 Dental receipt.pdf",
+        "tag": "a",
+        "width": 124,
+        "height": 19
+       }
+      ],
+      "inputs": 0,
+      "smallInputs": []
+     },
+     "controls": [
+      {
+       "what": "Scan",
+       "tag": "button",
+       "top": 14,
+       "bottom": 58,
+       "left": 17,
+       "inFirstViewport": true,
+       "centreAt": 0,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 74.3,
+       "height": 44
+      },
+      {
+       "what": "Double-sided (recommended)Feeder, both s",
+       "tag": "button",
+       "top": 296,
+       "bottom": 367,
+       "left": 32,
+       "inFirstViewport": true,
+       "centreAt": 0.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 256,
+       "height": 71
+      },
+      {
+       "what": "Flatbed",
+       "tag": "button",
+       "top": 408,
+       "bottom": 452,
+       "left": 32,
+       "inFirstViewport": true,
+       "centreAt": 0.5,
+       "pinnedToBottom": false,
+       "primaryFill": true,
+       "width": 86,
+       "height": 44
+      },
+      {
+       "what": "Feeder",
+       "tag": "button",
+       "top": 408,
+       "bottom": 452,
+       "left": 118,
+       "inFirstViewport": true,
+       "centreAt": 0.5,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 85,
+       "height": 44
+      },
+      {
+       "what": "Double-sided",
+       "tag": "button",
+       "top": 408,
+       "bottom": 452,
+       "left": 203,
+       "inFirstViewport": true,
+       "centreAt": 0.5,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 85,
+       "height": 44
+      },
+      {
+       "what": "Colour",
+       "tag": "button",
+       "top": 493,
+       "bottom": 537,
+       "left": 32,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": true,
+       "width": 60.5,
+       "height": 44
+      },
+      {
+       "what": "Grey",
+       "tag": "button",
+       "top": 493,
+       "bottom": 537,
+       "left": 92.5,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 59.5,
+       "height": 44
+      },
+      {
+       "what": "200 dpi",
+       "tag": "button",
+       "top": 493,
+       "bottom": 537,
+       "left": 168,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": true,
+       "width": 60.5,
+       "height": 44
+      },
+      {
+       "what": "300 dpi",
+       "tag": "button",
+       "top": 493,
+       "bottom": 537,
+       "left": 228.5,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 59.5,
+       "height": 44
+      },
+      {
+       "what": "PDF",
+       "tag": "button",
+       "top": 578,
+       "bottom": 622,
+       "left": 32,
+       "inFirstViewport": true,
+       "centreAt": 0.7,
+       "pinnedToBottom": false,
+       "primaryFill": true,
+       "width": 128.5,
+       "height": 44
+      },
+      {
+       "what": "JPEG",
+       "tag": "button",
+       "top": 578,
+       "bottom": 622,
+       "left": 160.5,
+       "inFirstViewport": true,
+       "centreAt": 0.7,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 127.5,
+       "height": 44
+      },
+      {
+       "what": "SPAN",
+       "tag": "span",
+       "top": 652.8,
+       "bottom": 671.2,
+       "left": 256,
+       "inFirstViewport": true,
+       "centreAt": 0.8,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 54,
+       "height": 32.4
+      },
+      {
+       "what": "SPAN",
+       "tag": "span",
+       "top": 712.8,
+       "bottom": 731.2,
+       "left": 256,
+       "inFirstViewport": true,
+       "centreAt": 0.9,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 54,
+       "height": 32.4
+      },
+      {
+       "what": "Scan",
+       "tag": "button",
+       "top": 762,
+       "bottom": 810,
+       "left": 32,
+       "inFirstViewport": true,
+       "centreAt": 0.9,
+       "pinnedToBottom": false,
+       "primaryFill": true,
+       "width": 256,
+       "height": 48
+      },
+      {
+       "what": "2026-11-10 Council rates notice, third q",
+       "tag": "a",
+       "top": 927,
+       "bottom": 946,
+       "left": 60,
+       "inFirstViewport": false,
+       "centreAt": 1.1,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 124,
+       "height": 19
+      },
+      {
+       "what": "Download 2026-11-10 Council rates notice",
+       "tag": "a",
+       "top": 931.5,
+       "bottom": 975.5,
+       "left": 192,
+       "inFirstViewport": false,
+       "centreAt": 1.1,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Delete 2026-11-10 Council rates notice, ",
+       "tag": "button",
+       "top": 931.5,
+       "bottom": 975.5,
+       "left": 244,
+       "inFirstViewport": false,
+       "centreAt": 1.1,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "2026-11-09 Lease renewal, signed pages 1",
+       "tag": "a",
+       "top": 997,
+       "bottom": 1016,
+       "left": 60,
+       "inFirstViewport": false,
+       "centreAt": 1.2,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 124,
+       "height": 19
+      },
+      {
+       "what": "Download 2026-11-09 Lease renewal, signe",
+       "tag": "a",
+       "top": 1001.5,
+       "bottom": 1045.5,
+       "left": 192,
+       "inFirstViewport": false,
+       "centreAt": 1.2,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Delete 2026-11-09 Lease renewal, signed ",
+       "tag": "button",
+       "top": 1001.5,
+       "bottom": 1045.5,
+       "left": 244,
+       "inFirstViewport": false,
+       "centreAt": 1.2,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "scan0042.jpg",
+       "tag": "a",
+       "top": 1067,
+       "bottom": 1086,
+       "left": 60,
+       "inFirstViewport": false,
+       "centreAt": 1.3,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 124,
+       "height": 19
+      },
+      {
+       "what": "Download scan0042.jpg",
+       "tag": "a",
+       "top": 1071.5,
+       "bottom": 1115.5,
+       "left": 192,
+       "inFirstViewport": false,
+       "centreAt": 1.3,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Delete scan0042.jpg",
+       "tag": "button",
+       "top": 1071.5,
+       "bottom": 1115.5,
+       "left": 244,
+       "inFirstViewport": false,
+       "centreAt": 1.3,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "2026-11-07 Car service invoice.pdf",
+       "tag": "a",
+       "top": 1137,
+       "bottom": 1156,
+       "left": 60,
+       "inFirstViewport": false,
+       "centreAt": 1.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 124,
+       "height": 19
+      },
+      {
+       "what": "Download 2026-11-07 Car service invoice.",
+       "tag": "a",
+       "top": 1141.5,
+       "bottom": 1185.5,
+       "left": 192,
+       "inFirstViewport": false,
+       "centreAt": 1.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Delete 2026-11-07 Car service invoice.pd",
+       "tag": "button",
+       "top": 1141.5,
+       "bottom": 1185.5,
+       "left": 244,
+       "inFirstViewport": false,
+       "centreAt": 1.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "2026-11-05 Passport renewal application ",
+       "tag": "a",
+       "top": 1207,
+       "bottom": 1226,
+       "left": 60,
+       "inFirstViewport": false,
+       "centreAt": 1.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 124,
+       "height": 19
+      },
+      {
+       "what": "Download 2026-11-05 Passport renewal app",
+       "tag": "a",
+       "top": 1211.5,
+       "bottom": 1255.5,
+       "left": 192,
+       "inFirstViewport": false,
+       "centreAt": 1.5,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Delete 2026-11-05 Passport renewal appli",
+       "tag": "button",
+       "top": 1211.5,
+       "bottom": 1255.5,
+       "left": 244,
+       "inFirstViewport": false,
+       "centreAt": 1.5,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "2026-11-02 Dental receipt.pdf",
+       "tag": "a",
+       "top": 1277,
+       "bottom": 1296,
+       "left": 60,
+       "inFirstViewport": false,
+       "centreAt": 1.5,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 124,
+       "height": 19
+      },
+      {
+       "what": "Download 2026-11-02 Dental receipt.pdf",
+       "tag": "a",
+       "top": 1281.5,
+       "bottom": 1325.5,
+       "left": 192,
+       "inFirstViewport": false,
+       "centreAt": 1.5,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Delete 2026-11-02 Dental receipt.pdf",
+       "tag": "button",
+       "top": 1281.5,
+       "bottom": 1325.5,
+       "left": 244,
+       "inFirstViewport": false,
+       "centreAt": 1.5,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Scan",
+       "tag": "a",
+       "top": 773,
+       "bottom": 823,
+       "left": 25.8,
+       "inFirstViewport": true,
+       "centreAt": 0.9,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 260.4,
+       "height": 50
+      }
+     ],
+     "alphaSteps": [
+      0.1,
+      0.6,
+      0.74,
+      0.8
+     ],
+     "state": {
+      "statusTokens": [
+       "--warning #8a5300",
+       "--success #137333",
+       "--critical #c10007",
+       "--unreachable #b04400",
+       "--destructive #c10007"
+      ],
+      "statusColoured": 1,
+      "offToken": [],
+      "colourOnly": 0,
+      "colourOnlySamples": [],
+      "countsInHeadings": 0,
+      "progressText": 0,
+      "usesSafeTokens": false,
+      "progressElements": 0,
+      "empties": []
+     },
+     "reading": {
+      "bodySize": 13,
+      "lines": [],
+      "contrastChecked": 50,
+      "contrastUnknown": 0,
+      "contrastFails": [],
+      "contrastFailCount": 0,
+      "overflowX": 0,
+      "runningAnimations": 0
+     },
+     "textRuns": 50,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
+     "covered": {
+      "runs": 1,
+      "sample": [
+       "Scan (16px at 776)"
+      ]
+     },
+     "waitForSeen": true,
+     "pageErrors": [],
+     "url": "/"
+    },
+    "iphone-reduced-motion": {
+     "viewport": [
+      390,
+      844
+     ],
+     "coarse": true,
+     "hierarchy": {
+      "fontSizes": [
+       {
+        "size": 21,
+        "chars": 4
+       },
+       {
+        "size": 16,
+        "chars": 21
+       },
+       {
+        "size": 14,
+        "chars": 174
+       },
+       {
+        "size": 13,
+        "chars": 154
+       },
+       {
+        "size": 12,
+        "chars": 4
+       }
+      ],
+      "largest": {
+       "size": 21,
+       "elements": 1,
+       "weight": 600,
+       "text": "Scan",
+       "nextSize": 16
+      },
+      "headings": [
+       {
+        "tag": "h1",
+        "text": "Scan",
+        "size": 21,
+        "weight": 600,
+        "top": 80
+       }
+      ]
+     },
+     "rows": {
+      "count": 9,
+      "sample": [
+       {
+        "height": 69,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 1,
+        "colourValues": [
+         "#0a6f75"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Flatbed"
+       },
+       {
+        "height": 69,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 1,
+        "colourValues": [
+         "#0a6f75"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "PDF"
+       },
+       {
+        "height": 91,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Searchable (OCR)"
+       },
+       {
+        "height": 61,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "2026-11-10 Council rates notic"
+       },
+       {
+        "height": 61,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "2026-11-09 Lease renewal, sign"
+       },
+       {
+        "height": 61,
+        "chips": 0,
+        "chipTexts": [],
+        "colours": 0,
+        "colourValues": [],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "scan0042.jpg"
+       }
+      ],
+      "maxChips": 0,
+      "maxColours": 1,
+      "nested": 0,
+      "heights": [
+       60,
+       61,
+       69,
+       91
+      ],
+      "titleWeightMax": 500
+     },
+     "interactive": {
+      "firstViewport": 15,
+      "measured": 33,
+      "small": 8,
+      "smallSample": [
+       {
+        "what": "SPAN",
+        "tag": "span",
+        "width": 54,
+        "height": 32.4
+       },
+       {
+        "what": "SPAN",
+        "tag": "span",
+        "width": 54,
+        "height": 32.4
+       },
+       {
+        "what": "2026-11-10 Council rates notice, third q",
+        "tag": "a",
+        "width": 194,
+        "height": 19
+       },
+       {
+        "what": "2026-11-09 Lease renewal, signed pages 1",
+        "tag": "a",
+        "width": 194,
+        "height": 19
+       },
+       {
+        "what": "scan0042.jpg",
+        "tag": "a",
+        "width": 194,
+        "height": 19
+       },
+       {
+        "what": "2026-11-07 Car service invoice.pdf",
+        "tag": "a",
+        "width": 194,
+        "height": 19
+       },
+       {
+        "what": "2026-11-05 Passport renewal application ",
+        "tag": "a",
+        "width": 194,
+        "height": 19
+       },
+       {
+        "what": "2026-11-02 Dental receipt.pdf",
+        "tag": "a",
+        "width": 194,
+        "height": 19
+       }
+      ],
+      "inputs": 0,
+      "smallInputs": []
+     },
+     "controls": [
+      {
+       "what": "Scan",
+       "tag": "button",
+       "top": 14,
+       "bottom": 58,
+       "left": 17,
+       "inFirstViewport": true,
+       "centreAt": 0,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 74.3,
+       "height": 44
+      },
+      {
+       "what": "Double-sided (recommended)Feeder, both s",
+       "tag": "button",
+       "top": 296,
+       "bottom": 350,
+       "left": 32,
+       "inFirstViewport": true,
+       "centreAt": 0.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 326,
+       "height": 54
+      },
+      {
+       "what": "Flatbed",
+       "tag": "button",
+       "top": 391,
+       "bottom": 435,
+       "left": 32,
+       "inFirstViewport": true,
+       "centreAt": 0.5,
+       "pinnedToBottom": false,
+       "primaryFill": true,
+       "width": 109.3,
+       "height": 44
+      },
+      {
+       "what": "Feeder",
+       "tag": "button",
+       "top": 391,
+       "bottom": 435,
+       "left": 141.3,
+       "inFirstViewport": true,
+       "centreAt": 0.5,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 108.3,
+       "height": 44
+      },
+      {
+       "what": "Double-sided",
+       "tag": "button",
+       "top": 391,
+       "bottom": 435,
+       "left": 249.7,
+       "inFirstViewport": true,
+       "centreAt": 0.5,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 108.3,
+       "height": 44
+      },
+      {
+       "what": "Colour",
+       "tag": "button",
+       "top": 476,
+       "bottom": 520,
+       "left": 32,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": true,
+       "width": 78,
+       "height": 44
+      },
+      {
+       "what": "Grey",
+       "tag": "button",
+       "top": 476,
+       "bottom": 520,
+       "left": 110,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 77,
+       "height": 44
+      },
+      {
+       "what": "200 dpi",
+       "tag": "button",
+       "top": 476,
+       "bottom": 520,
+       "left": 203,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": true,
+       "width": 78,
+       "height": 44
+      },
+      {
+       "what": "300 dpi",
+       "tag": "button",
+       "top": 476,
+       "bottom": 520,
+       "left": 281,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 77,
+       "height": 44
+      },
+      {
+       "what": "PDF",
+       "tag": "button",
+       "top": 561,
+       "bottom": 605,
+       "left": 32,
+       "inFirstViewport": true,
+       "centreAt": 0.7,
+       "pinnedToBottom": false,
+       "primaryFill": true,
+       "width": 163.5,
+       "height": 44
+      },
+      {
+       "what": "JPEG",
+       "tag": "button",
+       "top": 561,
+       "bottom": 605,
+       "left": 195.5,
+       "inFirstViewport": true,
+       "centreAt": 0.7,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 162.5,
+       "height": 44
+      },
+      {
+       "what": "SPAN",
+       "tag": "span",
+       "top": 627.3,
+       "bottom": 645.7,
+       "left": 326,
+       "inFirstViewport": true,
+       "centreAt": 0.8,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 54,
+       "height": 32.4
+      },
+      {
+       "what": "SPAN",
+       "tag": "span",
+       "top": 678.8,
+       "bottom": 697.2,
+       "left": 326,
+       "inFirstViewport": true,
+       "centreAt": 0.8,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 54,
+       "height": 32.4
+      },
+      {
+       "what": "Scan",
+       "tag": "button",
+       "top": 728,
+       "bottom": 776,
+       "left": 32,
+       "inFirstViewport": true,
+       "centreAt": 0.9,
+       "pinnedToBottom": false,
+       "primaryFill": true,
+       "width": 326,
+       "height": 48
+      },
+      {
+       "what": "2026-11-10 Council rates notice, third q",
+       "tag": "a",
+       "top": 897,
+       "bottom": 916,
+       "left": 60,
+       "inFirstViewport": false,
+       "centreAt": 1.1,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 194,
+       "height": 19
+      },
+      {
+       "what": "Download 2026-11-10 Council rates notice",
+       "tag": "a",
+       "top": 893,
+       "bottom": 937,
+       "left": 262,
+       "inFirstViewport": false,
+       "centreAt": 1.1,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Delete 2026-11-10 Council rates notice, ",
+       "tag": "button",
+       "top": 893,
+       "bottom": 937,
+       "left": 314,
+       "inFirstViewport": false,
+       "centreAt": 1.1,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "2026-11-09 Lease renewal, signed pages 1",
+       "tag": "a",
+       "top": 958,
+       "bottom": 977,
+       "left": 60,
+       "inFirstViewport": false,
+       "centreAt": 1.1,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 194,
+       "height": 19
+      },
+      {
+       "what": "Download 2026-11-09 Lease renewal, signe",
+       "tag": "a",
+       "top": 954,
+       "bottom": 998,
+       "left": 262,
+       "inFirstViewport": false,
+       "centreAt": 1.2,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Delete 2026-11-09 Lease renewal, signed ",
+       "tag": "button",
+       "top": 954,
+       "bottom": 998,
+       "left": 314,
+       "inFirstViewport": false,
+       "centreAt": 1.2,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "scan0042.jpg",
+       "tag": "a",
+       "top": 1019,
+       "bottom": 1038,
+       "left": 60,
+       "inFirstViewport": false,
+       "centreAt": 1.2,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 194,
+       "height": 19
+      },
+      {
+       "what": "Download scan0042.jpg",
+       "tag": "a",
+       "top": 1015,
+       "bottom": 1059,
+       "left": 262,
+       "inFirstViewport": false,
+       "centreAt": 1.2,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Delete scan0042.jpg",
+       "tag": "button",
+       "top": 1015,
+       "bottom": 1059,
+       "left": 314,
+       "inFirstViewport": false,
+       "centreAt": 1.2,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "2026-11-07 Car service invoice.pdf",
+       "tag": "a",
+       "top": 1080,
+       "bottom": 1099,
+       "left": 60,
+       "inFirstViewport": false,
+       "centreAt": 1.3,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 194,
+       "height": 19
+      },
+      {
+       "what": "Download 2026-11-07 Car service invoice.",
+       "tag": "a",
+       "top": 1076,
+       "bottom": 1120,
+       "left": 262,
+       "inFirstViewport": false,
+       "centreAt": 1.3,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Delete 2026-11-07 Car service invoice.pd",
+       "tag": "button",
+       "top": 1076,
+       "bottom": 1120,
+       "left": 314,
+       "inFirstViewport": false,
+       "centreAt": 1.3,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "2026-11-05 Passport renewal application ",
+       "tag": "a",
+       "top": 1141,
+       "bottom": 1160,
+       "left": 60,
+       "inFirstViewport": false,
+       "centreAt": 1.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 194,
+       "height": 19
+      },
+      {
+       "what": "Download 2026-11-05 Passport renewal app",
+       "tag": "a",
+       "top": 1137,
+       "bottom": 1181,
+       "left": 262,
+       "inFirstViewport": false,
+       "centreAt": 1.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Delete 2026-11-05 Passport renewal appli",
+       "tag": "button",
+       "top": 1137,
+       "bottom": 1181,
+       "left": 314,
+       "inFirstViewport": false,
+       "centreAt": 1.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "2026-11-02 Dental receipt.pdf",
+       "tag": "a",
+       "top": 1202,
+       "bottom": 1221,
+       "left": 60,
+       "inFirstViewport": false,
+       "centreAt": 1.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 194,
+       "height": 19
+      },
+      {
+       "what": "Download 2026-11-02 Dental receipt.pdf",
+       "tag": "a",
+       "top": 1198,
+       "bottom": 1242,
+       "left": 262,
+       "inFirstViewport": false,
+       "centreAt": 1.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Delete 2026-11-02 Dental receipt.pdf",
+       "tag": "button",
+       "top": 1198,
+       "bottom": 1242,
+       "left": 314,
+       "inFirstViewport": false,
+       "centreAt": 1.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Scan",
+       "tag": "a",
+       "top": 773,
+       "bottom": 823,
+       "left": 25.8,
+       "inFirstViewport": true,
+       "centreAt": 0.9,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 330.4,
+       "height": 50
+      }
+     ],
+     "alphaSteps": [
+      0.1,
+      0.6,
+      0.74,
+      0.8
+     ],
+     "state": {
+      "statusTokens": [
+       "--warning #8a5300",
+       "--success #137333",
+       "--critical #c10007",
+       "--unreachable #b04400",
+       "--destructive #c10007"
+      ],
+      "statusColoured": 1,
+      "offToken": [],
+      "colourOnly": 0,
+      "colourOnlySamples": [],
+      "countsInHeadings": 0,
+      "progressText": 0,
+      "usesSafeTokens": false,
+      "progressElements": 0,
+      "empties": []
+     },
+     "reading": {
+      "bodySize": 13,
+      "lines": [],
+      "contrastChecked": 50,
+      "contrastUnknown": 0,
+      "contrastFails": [],
+      "contrastFailCount": 0,
+      "overflowX": 0,
+      "runningAnimations": 0
+     },
+     "textRuns": 50,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
+     "covered": {
+      "runs": 0,
+      "sample": []
+     },
+     "waitForSeen": true,
+     "pageErrors": [],
+     "url": "/"
+    },
+    "iphone-insets-light": {
+     "skipped": "the app does not declare the registry's --safe-* tokens, so there is nothing to set"
+    }
+   }
+  }
+ ],
+ "mocks": [
+  {
+   "url": "**/api/status**",
+   "method": "GET",
+   "hits": 7
+  },
+  {
+   "url": "**/api/scans**",
+   "method": "GET",
+   "hits": 14
+  }
+ ],
+ "blocked": [],
+ "unmockedLocal": []
+}

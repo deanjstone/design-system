@@ -37,11 +37,19 @@
       "pass": false,
       "detail": "26/18/16/14/13/9.8"
      },
+     "pageTitleVisible": {
+      "pass": true,
+      "detail": "h1 \"This quarter\""
+     },
      "headingVisible": {
       "pass": true,
       "detail": "h1 \"This quarter\" at 16.5px"
      },
      "headingOutweighsRows": {
+      "pass": true,
+      "detail": "heading 600/600, row title 500"
+     },
+     "headingOutweighsRowsDesktop": {
       "pass": true,
       "detail": "heading 600/600, row title 500"
      }
@@ -58,6 +66,18 @@
      "noNestedBorders": {
       "pass": true,
       "detail": "0 rows"
+     },
+     "chipsPerRowDesktop": {
+      "pass": true,
+      "detail": "max 0 in 4 rows"
+     },
+     "coloursPerRowDesktop": {
+      "pass": true,
+      "detail": "max 0"
+     },
+     "nothingCutOff": {
+      "pass": true,
+      "detail": "0 texts cut short, 0 of them in list rows"
      },
      "interactiveCount": {
       "pass": true,
@@ -96,8 +116,8 @@
       "detail": "all from tokens"
      },
      "progressShown": {
-      "pass": false,
-      "detail": "0 counted headings, 0 progress elements"
+      "pass": true,
+      "detail": "0 counted headings, 0 progress elements, 5 \"n of m\" or percent texts"
      },
      "emptySaysNext": {
       "pass": null,
@@ -107,7 +127,7 @@
     "reading": {
      "bodyText": {
       "pass": false,
-      "detail": "13px"
+      "detail": "14px"
      },
      "lineLength": {
       "pass": null,
@@ -154,7 +174,7 @@
        },
        {
         "size": 13,
-        "chars": 237
+        "chars": 104
        },
        {
         "size": 9.8,
@@ -392,11 +412,13 @@
       "colourOnly": 0,
       "colourOnlySamples": [],
       "countsInHeadings": 0,
+      "progressText": 5,
+      "usesSafeTokens": true,
       "progressElements": 0,
       "empties": []
      },
      "reading": {
-      "bodySize": 13,
+      "bodySize": 14,
       "lines": [],
       "contrastChecked": 55,
       "contrastUnknown": 0,
@@ -406,6 +428,22 @@
       "runningAnimations": 0
      },
      "textRuns": 55,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
+     "covered": {
+      "runs": 7,
+      "sample": [
+       "* The projected bill repeats t (13px at 770)",
+       "$386.28 (13px at 787)",
+       "). Early in a quarter it is a  (13px at 787)",
+       "6 (13px at 787)",
+       "days of (13px at 787)",
+       "91 (13px at 804)"
+      ]
+     },
      "waitForSeen": true,
      "pageErrors": [],
      "url": "/?now=2026-11-10T09:00:00%2B11:00#/home"
@@ -436,7 +474,7 @@
        },
        {
         "size": 13,
-        "chars": 237
+        "chars": 104
        },
        {
         "size": 9.8,
@@ -674,11 +712,13 @@
       "colourOnly": 0,
       "colourOnlySamples": [],
       "countsInHeadings": 0,
+      "progressText": 5,
+      "usesSafeTokens": true,
       "progressElements": 0,
       "empties": []
      },
      "reading": {
-      "bodySize": 13,
+      "bodySize": 14,
       "lines": [],
       "contrastChecked": 55,
       "contrastUnknown": 0,
@@ -688,6 +728,22 @@
       "runningAnimations": 0
      },
      "textRuns": 55,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
+     "covered": {
+      "runs": 7,
+      "sample": [
+       "* The projected bill repeats t (13px at 770)",
+       "$386.28 (13px at 787)",
+       "). Early in a quarter it is a  (13px at 787)",
+       "6 (13px at 787)",
+       "days of (13px at 787)",
+       "91 (13px at 804)"
+      ]
+     },
      "waitForSeen": true,
      "pageErrors": [],
      "url": "/?now=2026-11-10T09:00:00%2B11:00#/home"
@@ -956,11 +1012,13 @@
       "colourOnly": 0,
       "colourOnlySamples": [],
       "countsInHeadings": 0,
+      "progressText": 5,
+      "usesSafeTokens": true,
       "progressElements": 0,
       "empties": []
      },
      "reading": {
-      "bodySize": 13,
+      "bodySize": 14,
       "lines": [],
       "contrastChecked": 55,
       "contrastUnknown": 0,
@@ -970,6 +1028,15 @@
       "runningAnimations": 0
      },
      "textRuns": 55,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
+     "covered": {
+      "runs": 0,
+      "sample": []
+     },
      "waitForSeen": true,
      "pageErrors": [],
      "url": "/?now=2026-11-10T09:00:00%2B11:00#/home"
@@ -1238,11 +1305,13 @@
       "colourOnly": 0,
       "colourOnlySamples": [],
       "countsInHeadings": 0,
+      "progressText": 5,
+      "usesSafeTokens": true,
       "progressElements": 0,
       "empties": []
      },
      "reading": {
-      "bodySize": 13,
+      "bodySize": 14,
       "lines": [],
       "contrastChecked": 55,
       "contrastUnknown": 0,
@@ -1252,6 +1321,15 @@
       "runningAnimations": 0
      },
      "textRuns": 55,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
+     "covered": {
+      "runs": 0,
+      "sample": []
+     },
      "waitForSeen": true,
      "pageErrors": [],
      "url": "/?now=2026-11-10T09:00:00%2B11:00#/home"
@@ -1282,7 +1360,7 @@
        },
        {
         "size": 13,
-        "chars": 237
+        "chars": 104
        },
        {
         "size": 9.8,
@@ -1520,11 +1598,13 @@
       "colourOnly": 0,
       "colourOnlySamples": [],
       "countsInHeadings": 0,
+      "progressText": 5,
+      "usesSafeTokens": true,
       "progressElements": 0,
       "empties": []
      },
      "reading": {
-      "bodySize": 13,
+      "bodySize": 14,
       "lines": [],
       "contrastChecked": 55,
       "contrastUnknown": 0,
@@ -1534,6 +1614,22 @@
       "runningAnimations": 0
      },
      "textRuns": 55,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
+     "covered": {
+      "runs": 7,
+      "sample": [
+       "* The projected bill repeats t (13px at 789)",
+       "$386.28 (13px at 806)",
+       "). Early in a quarter it is a  (13px at 806)",
+       "6 (13px at 823)",
+       "days of (13px at 823)",
+       "91 (13px at 823)"
+      ]
+     },
      "waitForSeen": true,
      "pageErrors": [],
      "url": "/?now=2026-11-10T09:00:00%2B11:00#/home"
@@ -1564,7 +1660,7 @@
        },
        {
         "size": 13,
-        "chars": 237
+        "chars": 104
        },
        {
         "size": 9.8,
@@ -1802,11 +1898,13 @@
       "colourOnly": 0,
       "colourOnlySamples": [],
       "countsInHeadings": 0,
+      "progressText": 5,
+      "usesSafeTokens": true,
       "progressElements": 0,
       "empties": []
      },
      "reading": {
-      "bodySize": 13,
+      "bodySize": 14,
       "lines": [],
       "contrastChecked": 55,
       "contrastUnknown": 0,
@@ -1816,6 +1914,22 @@
       "runningAnimations": 0
      },
      "textRuns": 55,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
+     "covered": {
+      "runs": 7,
+      "sample": [
+       "* The projected bill repeats t (13px at 770)",
+       "$386.28 (13px at 787)",
+       "). Early in a quarter it is a  (13px at 787)",
+       "6 (13px at 787)",
+       "days of (13px at 787)",
+       "91 (13px at 804)"
+      ]
+     },
      "waitForSeen": true,
      "pageErrors": [],
      "url": "/?now=2026-11-10T09:00:00%2B11:00#/home"
@@ -1846,7 +1960,7 @@
        },
        {
         "size": 13,
-        "chars": 237
+        "chars": 104
        },
        {
         "size": 9.8,
@@ -2084,11 +2198,13 @@
       "colourOnly": 0,
       "colourOnlySamples": [],
       "countsInHeadings": 0,
+      "progressText": 5,
+      "usesSafeTokens": true,
       "progressElements": 0,
       "empties": []
      },
      "reading": {
-      "bodySize": 13,
+      "bodySize": 14,
       "lines": [],
       "contrastChecked": 55,
       "contrastUnknown": 0,
@@ -2098,6 +2214,22 @@
       "runningAnimations": 0
      },
      "textRuns": 55,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
+     "covered": {
+      "runs": 7,
+      "sample": [
+       "* The projected bill repeats t (13px at 770)",
+       "$386.28 (13px at 787)",
+       "). Early in a quarter it is a  (13px at 787)",
+       "6 (13px at 787)",
+       "days of (13px at 787)",
+       "91 (13px at 804)"
+      ]
+     },
      "waitForSeen": true,
      "pageErrors": [],
      "url": "/?now=2026-11-10T09:00:00%2B11:00#/home",
@@ -2127,27 +2259,47 @@
       "pass": false,
       "detail": "26/18/14/13/11"
      },
+     "pageTitleVisible": {
+      "pass": true,
+      "detail": "h1 \"History\""
+     },
      "headingVisible": {
       "pass": true,
       "detail": "h1 \"History\" at 16.5px"
      },
      "headingOutweighsRows": {
-      "pass": true,
-      "detail": "heading 600, row title 500"
+      "pass": null,
+      "detail": "no rows or no heading"
+     },
+     "headingOutweighsRowsDesktop": {
+      "pass": null,
+      "detail": "no rows or no heading"
      }
     },
     "clutter": {
      "chipsPerRow": {
-      "pass": true,
-      "detail": "max 0 in 3 rows"
+      "pass": null,
+      "detail": "no rows"
      },
      "coloursPerRow": {
-      "pass": true,
-      "detail": "max 1"
+      "pass": null,
+      "detail": "no rows"
      },
      "noNestedBorders": {
+      "pass": null,
+      "detail": "no rows"
+     },
+     "chipsPerRowDesktop": {
+      "pass": null,
+      "detail": "no rows"
+     },
+     "coloursPerRowDesktop": {
+      "pass": null,
+      "detail": "no rows"
+     },
+     "nothingCutOff": {
       "pass": true,
-      "detail": "0 rows"
+      "detail": "0 texts cut short, 0 of them in list rows"
      },
      "interactiveCount": {
       "pass": true,
@@ -2204,8 +2356,8 @@
       "detail": "no wrapped paragraph on desktop"
      },
      "contrast": {
-      "pass": false,
-      "detail": "iphone-light 1, iphone-dark 1, desktop-light 1, desktop-dark 1"
+      "pass": true,
+      "detail": "iphone-light 0, iphone-dark 0, desktop-light 0, desktop-dark 0"
      },
      "noSidewaysScroll": {
       "pass": true,
@@ -2265,53 +2417,13 @@
       ]
      },
      "rows": {
-      "count": 3,
-      "sample": [
-       {
-        "height": 78,
-        "chips": 0,
-        "chipTexts": [],
-        "colours": 1,
-        "colourValues": [
-         "#0a6f75"
-        ],
-        "nested": 0,
-        "titleWeight": 500,
-        "titleSize": 14,
-        "titleText": "Day"
-       },
-       {
-        "height": 40,
-        "chips": 0,
-        "chipTexts": [],
-        "colours": 0,
-        "colourValues": [],
-        "nested": 0,
-        "titleWeight": 400,
-        "titleSize": 18,
-        "titleText": "‹"
-       },
-       {
-        "height": 44,
-        "chips": 0,
-        "chipTexts": [],
-        "colours": 0,
-        "colourValues": [],
-        "nested": 0,
-        "titleWeight": 500,
-        "titleSize": 14,
-        "titleText": "kWh"
-       }
-      ],
+      "count": 0,
+      "sample": [],
       "maxChips": 0,
-      "maxColours": 1,
+      "maxColours": 0,
       "nested": 0,
-      "heights": [
-       40,
-       44,
-       78
-      ],
-      "titleWeightMax": 500
+      "heights": [],
+      "titleWeightMax": 0
      },
      "interactive": {
       "firstViewport": 14,
@@ -2584,28 +2696,31 @@
       "colourOnly": 0,
       "colourOnlySamples": [],
       "countsInHeadings": 0,
+      "progressText": 1,
+      "usesSafeTokens": true,
       "progressElements": 0,
       "empties": []
      },
      "reading": {
       "bodySize": 14,
       "lines": [],
-      "contrastChecked": 31,
+      "contrastChecked": 30,
       "contrastUnknown": 0,
-      "contrastFails": [
-       {
-        "text": "›",
-        "ratio": 1.92,
-        "size": 18,
-        "colour": "#b6b3b8",
-        "on": "#f5f7f8"
-       }
-      ],
-      "contrastFailCount": 1,
+      "contrastFails": [],
+      "contrastFailCount": 0,
       "overflowX": 0,
       "runningAnimations": 0
      },
      "textRuns": 31,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
+     "covered": {
+      "runs": 0,
+      "sample": []
+     },
      "waitForSeen": true,
      "pageErrors": [],
      "url": "/?now=2026-11-10T09:00:00%2B11:00#/history"
@@ -2657,53 +2772,13 @@
       ]
      },
      "rows": {
-      "count": 3,
-      "sample": [
-       {
-        "height": 78,
-        "chips": 0,
-        "chipTexts": [],
-        "colours": 1,
-        "colourValues": [
-         "#5bd0d6"
-        ],
-        "nested": 0,
-        "titleWeight": 500,
-        "titleSize": 14,
-        "titleText": "Day"
-       },
-       {
-        "height": 40,
-        "chips": 0,
-        "chipTexts": [],
-        "colours": 0,
-        "colourValues": [],
-        "nested": 0,
-        "titleWeight": 400,
-        "titleSize": 18,
-        "titleText": "‹"
-       },
-       {
-        "height": 44,
-        "chips": 0,
-        "chipTexts": [],
-        "colours": 0,
-        "colourValues": [],
-        "nested": 0,
-        "titleWeight": 500,
-        "titleSize": 14,
-        "titleText": "kWh"
-       }
-      ],
+      "count": 0,
+      "sample": [],
       "maxChips": 0,
-      "maxColours": 1,
+      "maxColours": 0,
       "nested": 0,
-      "heights": [
-       40,
-       44,
-       78
-      ],
-      "titleWeightMax": 500
+      "heights": [],
+      "titleWeightMax": 0
      },
      "interactive": {
       "firstViewport": 14,
@@ -2976,28 +3051,31 @@
       "colourOnly": 0,
       "colourOnlySamples": [],
       "countsInHeadings": 0,
+      "progressText": 1,
+      "usesSafeTokens": true,
       "progressElements": 0,
       "empties": []
      },
      "reading": {
       "bodySize": 14,
       "lines": [],
-      "contrastChecked": 31,
+      "contrastChecked": 30,
       "contrastUnknown": 0,
-      "contrastFails": [
-       {
-        "text": "›",
-        "ratio": 2.66,
-        "size": 18,
-        "colour": "#5d626b",
-        "on": "#17212b"
-       }
-      ],
-      "contrastFailCount": 1,
+      "contrastFails": [],
+      "contrastFailCount": 0,
       "overflowX": 0,
       "runningAnimations": 0
      },
      "textRuns": 31,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
+     "covered": {
+      "runs": 0,
+      "sample": []
+     },
      "waitForSeen": true,
      "pageErrors": [],
      "url": "/?now=2026-11-10T09:00:00%2B11:00#/history"
@@ -3049,53 +3127,13 @@
       ]
      },
      "rows": {
-      "count": 3,
-      "sample": [
-       {
-        "height": 36,
-        "chips": 0,
-        "chipTexts": [],
-        "colours": 1,
-        "colourValues": [
-         "#0a6f75"
-        ],
-        "nested": 0,
-        "titleWeight": 500,
-        "titleSize": 14,
-        "titleText": "Day"
-       },
-       {
-        "height": 40,
-        "chips": 0,
-        "chipTexts": [],
-        "colours": 0,
-        "colourValues": [],
-        "nested": 0,
-        "titleWeight": 400,
-        "titleSize": 18,
-        "titleText": "‹"
-       },
-       {
-        "height": 44,
-        "chips": 0,
-        "chipTexts": [],
-        "colours": 0,
-        "colourValues": [],
-        "nested": 0,
-        "titleWeight": 500,
-        "titleSize": 14,
-        "titleText": "kWh"
-       }
-      ],
+      "count": 0,
+      "sample": [],
       "maxChips": 0,
-      "maxColours": 1,
+      "maxColours": 0,
       "nested": 0,
-      "heights": [
-       36,
-       40,
-       44
-      ],
-      "titleWeightMax": 500
+      "heights": [],
+      "titleWeightMax": 0
      },
      "interactive": {
       "firstViewport": 14,
@@ -3368,28 +3406,31 @@
       "colourOnly": 0,
       "colourOnlySamples": [],
       "countsInHeadings": 0,
+      "progressText": 1,
+      "usesSafeTokens": true,
       "progressElements": 0,
       "empties": []
      },
      "reading": {
       "bodySize": 14,
       "lines": [],
-      "contrastChecked": 31,
+      "contrastChecked": 30,
       "contrastUnknown": 0,
-      "contrastFails": [
-       {
-        "text": "›",
-        "ratio": 1.92,
-        "size": 18,
-        "colour": "#b6b3b8",
-        "on": "#f5f7f8"
-       }
-      ],
-      "contrastFailCount": 1,
+      "contrastFails": [],
+      "contrastFailCount": 0,
       "overflowX": 0,
       "runningAnimations": 0
      },
      "textRuns": 31,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
+     "covered": {
+      "runs": 0,
+      "sample": []
+     },
      "waitForSeen": true,
      "pageErrors": [],
      "url": "/?now=2026-11-10T09:00:00%2B11:00#/history"
@@ -3441,53 +3482,13 @@
       ]
      },
      "rows": {
-      "count": 3,
-      "sample": [
-       {
-        "height": 36,
-        "chips": 0,
-        "chipTexts": [],
-        "colours": 1,
-        "colourValues": [
-         "#5bd0d6"
-        ],
-        "nested": 0,
-        "titleWeight": 500,
-        "titleSize": 14,
-        "titleText": "Day"
-       },
-       {
-        "height": 40,
-        "chips": 0,
-        "chipTexts": [],
-        "colours": 0,
-        "colourValues": [],
-        "nested": 0,
-        "titleWeight": 400,
-        "titleSize": 18,
-        "titleText": "‹"
-       },
-       {
-        "height": 44,
-        "chips": 0,
-        "chipTexts": [],
-        "colours": 0,
-        "colourValues": [],
-        "nested": 0,
-        "titleWeight": 500,
-        "titleSize": 14,
-        "titleText": "kWh"
-       }
-      ],
+      "count": 0,
+      "sample": [],
       "maxChips": 0,
-      "maxColours": 1,
+      "maxColours": 0,
       "nested": 0,
-      "heights": [
-       36,
-       40,
-       44
-      ],
-      "titleWeightMax": 500
+      "heights": [],
+      "titleWeightMax": 0
      },
      "interactive": {
       "firstViewport": 14,
@@ -3760,28 +3761,31 @@
       "colourOnly": 0,
       "colourOnlySamples": [],
       "countsInHeadings": 0,
+      "progressText": 1,
+      "usesSafeTokens": true,
       "progressElements": 0,
       "empties": []
      },
      "reading": {
       "bodySize": 14,
       "lines": [],
-      "contrastChecked": 31,
+      "contrastChecked": 30,
       "contrastUnknown": 0,
-      "contrastFails": [
-       {
-        "text": "›",
-        "ratio": 2.66,
-        "size": 18,
-        "colour": "#5d626b",
-        "on": "#17212b"
-       }
-      ],
-      "contrastFailCount": 1,
+      "contrastFails": [],
+      "contrastFailCount": 0,
       "overflowX": 0,
       "runningAnimations": 0
      },
      "textRuns": 31,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
+     "covered": {
+      "runs": 0,
+      "sample": []
+     },
      "waitForSeen": true,
      "pageErrors": [],
      "url": "/?now=2026-11-10T09:00:00%2B11:00#/history"
@@ -3833,53 +3837,13 @@
       ]
      },
      "rows": {
-      "count": 3,
-      "sample": [
-       {
-        "height": 78,
-        "chips": 0,
-        "chipTexts": [],
-        "colours": 1,
-        "colourValues": [
-         "#0a6f75"
-        ],
-        "nested": 0,
-        "titleWeight": 500,
-        "titleSize": 14,
-        "titleText": "Day"
-       },
-       {
-        "height": 40,
-        "chips": 0,
-        "chipTexts": [],
-        "colours": 0,
-        "colourValues": [],
-        "nested": 0,
-        "titleWeight": 400,
-        "titleSize": 18,
-        "titleText": "‹"
-       },
-       {
-        "height": 44,
-        "chips": 0,
-        "chipTexts": [],
-        "colours": 0,
-        "colourValues": [],
-        "nested": 0,
-        "titleWeight": 500,
-        "titleSize": 14,
-        "titleText": "kWh"
-       }
-      ],
+      "count": 0,
+      "sample": [],
       "maxChips": 0,
-      "maxColours": 1,
+      "maxColours": 0,
       "nested": 0,
-      "heights": [
-       40,
-       44,
-       78
-      ],
-      "titleWeightMax": 500
+      "heights": [],
+      "titleWeightMax": 0
      },
      "interactive": {
       "firstViewport": 14,
@@ -4152,28 +4116,31 @@
       "colourOnly": 0,
       "colourOnlySamples": [],
       "countsInHeadings": 0,
+      "progressText": 1,
+      "usesSafeTokens": true,
       "progressElements": 0,
       "empties": []
      },
      "reading": {
       "bodySize": 14,
       "lines": [],
-      "contrastChecked": 31,
+      "contrastChecked": 30,
       "contrastUnknown": 0,
-      "contrastFails": [
-       {
-        "text": "›",
-        "ratio": 1.92,
-        "size": 18,
-        "colour": "#b6b3b8",
-        "on": "#f5f7f8"
-       }
-      ],
-      "contrastFailCount": 1,
+      "contrastFails": [],
+      "contrastFailCount": 0,
       "overflowX": 0,
       "runningAnimations": 0
      },
      "textRuns": 31,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
+     "covered": {
+      "runs": 0,
+      "sample": []
+     },
      "waitForSeen": true,
      "pageErrors": [],
      "url": "/?now=2026-11-10T09:00:00%2B11:00#/history"
@@ -4225,53 +4192,13 @@
       ]
      },
      "rows": {
-      "count": 3,
-      "sample": [
-       {
-        "height": 78,
-        "chips": 0,
-        "chipTexts": [],
-        "colours": 1,
-        "colourValues": [
-         "#0a6f75"
-        ],
-        "nested": 0,
-        "titleWeight": 500,
-        "titleSize": 14,
-        "titleText": "Day"
-       },
-       {
-        "height": 40,
-        "chips": 0,
-        "chipTexts": [],
-        "colours": 0,
-        "colourValues": [],
-        "nested": 0,
-        "titleWeight": 400,
-        "titleSize": 18,
-        "titleText": "‹"
-       },
-       {
-        "height": 44,
-        "chips": 0,
-        "chipTexts": [],
-        "colours": 0,
-        "colourValues": [],
-        "nested": 0,
-        "titleWeight": 500,
-        "titleSize": 14,
-        "titleText": "kWh"
-       }
-      ],
+      "count": 0,
+      "sample": [],
       "maxChips": 0,
-      "maxColours": 1,
+      "maxColours": 0,
       "nested": 0,
-      "heights": [
-       40,
-       44,
-       78
-      ],
-      "titleWeightMax": 500
+      "heights": [],
+      "titleWeightMax": 0
      },
      "interactive": {
       "firstViewport": 14,
@@ -4544,28 +4471,31 @@
       "colourOnly": 0,
       "colourOnlySamples": [],
       "countsInHeadings": 0,
+      "progressText": 1,
+      "usesSafeTokens": true,
       "progressElements": 0,
       "empties": []
      },
      "reading": {
       "bodySize": 14,
       "lines": [],
-      "contrastChecked": 31,
+      "contrastChecked": 30,
       "contrastUnknown": 0,
-      "contrastFails": [
-       {
-        "text": "›",
-        "ratio": 1.92,
-        "size": 18,
-        "colour": "#b6b3b8",
-        "on": "#f5f7f8"
-       }
-      ],
-      "contrastFailCount": 1,
+      "contrastFails": [],
+      "contrastFailCount": 0,
       "overflowX": 0,
       "runningAnimations": 0
      },
      "textRuns": 31,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
+     "covered": {
+      "runs": 0,
+      "sample": []
+     },
      "waitForSeen": true,
      "pageErrors": [],
      "url": "/?now=2026-11-10T09:00:00%2B11:00#/history"
@@ -4588,11 +4518,19 @@
       "pass": false,
       "detail": "21/18/14/13"
      },
+     "pageTitleVisible": {
+      "pass": true,
+      "detail": "h1 \"Bills\""
+     },
      "headingVisible": {
       "pass": true,
       "detail": "h1 \"Bills\" at 16.5px"
      },
      "headingOutweighsRows": {
+      "pass": true,
+      "detail": "heading 600, row title 600"
+     },
+     "headingOutweighsRowsDesktop": {
       "pass": true,
       "detail": "heading 600, row title 600"
      }
@@ -4609,6 +4547,18 @@
      "noNestedBorders": {
       "pass": true,
       "detail": "0 rows"
+     },
+     "chipsPerRowDesktop": {
+      "pass": true,
+      "detail": "max 0 in 6 rows"
+     },
+     "coloursPerRowDesktop": {
+      "pass": true,
+      "detail": "max 0"
+     },
+     "nothingCutOff": {
+      "pass": true,
+      "detail": "0 texts cut short, 0 of them in list rows"
      },
      "interactiveCount": {
       "pass": true,
@@ -4657,8 +4607,8 @@
     },
     "reading": {
      "bodyText": {
-      "pass": true,
-      "detail": "18px"
+      "pass": false,
+      "detail": "13px"
      },
      "lineLength": {
       "pass": null,
@@ -4975,11 +4925,13 @@
       "colourOnly": 0,
       "colourOnlySamples": [],
       "countsInHeadings": 0,
+      "progressText": 12,
+      "usesSafeTokens": true,
       "progressElements": 0,
       "empties": []
      },
      "reading": {
-      "bodySize": 18,
+      "bodySize": 13,
       "lines": [],
       "contrastChecked": 65,
       "contrastUnknown": 0,
@@ -4989,6 +4941,15 @@
       "runningAnimations": 0
      },
      "textRuns": 65,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
+     "covered": {
+      "runs": 0,
+      "sample": []
+     },
      "waitForSeen": true,
      "pageErrors": [],
      "url": "/?now=2026-11-10T09:00:00%2B11:00#/bills"
@@ -5289,11 +5250,13 @@
       "colourOnly": 0,
       "colourOnlySamples": [],
       "countsInHeadings": 0,
+      "progressText": 12,
+      "usesSafeTokens": true,
       "progressElements": 0,
       "empties": []
      },
      "reading": {
-      "bodySize": 18,
+      "bodySize": 13,
       "lines": [],
       "contrastChecked": 65,
       "contrastUnknown": 0,
@@ -5303,6 +5266,15 @@
       "runningAnimations": 0
      },
      "textRuns": 65,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
+     "covered": {
+      "runs": 0,
+      "sample": []
+     },
      "waitForSeen": true,
      "pageErrors": [],
      "url": "/?now=2026-11-10T09:00:00%2B11:00#/bills"
@@ -5603,11 +5575,13 @@
       "colourOnly": 0,
       "colourOnlySamples": [],
       "countsInHeadings": 0,
+      "progressText": 12,
+      "usesSafeTokens": true,
       "progressElements": 0,
       "empties": []
      },
      "reading": {
-      "bodySize": 18,
+      "bodySize": 13,
       "lines": [],
       "contrastChecked": 65,
       "contrastUnknown": 0,
@@ -5617,6 +5591,15 @@
       "runningAnimations": 0
      },
      "textRuns": 65,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
+     "covered": {
+      "runs": 0,
+      "sample": []
+     },
      "waitForSeen": true,
      "pageErrors": [],
      "url": "/?now=2026-11-10T09:00:00%2B11:00#/bills"
@@ -5917,11 +5900,13 @@
       "colourOnly": 0,
       "colourOnlySamples": [],
       "countsInHeadings": 0,
+      "progressText": 12,
+      "usesSafeTokens": true,
       "progressElements": 0,
       "empties": []
      },
      "reading": {
-      "bodySize": 18,
+      "bodySize": 13,
       "lines": [],
       "contrastChecked": 65,
       "contrastUnknown": 0,
@@ -5931,6 +5916,15 @@
       "runningAnimations": 0
      },
      "textRuns": 65,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
+     "covered": {
+      "runs": 0,
+      "sample": []
+     },
      "waitForSeen": true,
      "pageErrors": [],
      "url": "/?now=2026-11-10T09:00:00%2B11:00#/bills"
@@ -5945,7 +5939,7 @@
       "fontSizes": [
        {
         "size": 21,
-        "chars": 54
+        "chars": 45
        },
        {
         "size": 18,
@@ -5953,16 +5947,16 @@
        },
        {
         "size": 14,
-        "chars": 211
+        "chars": 193
        },
        {
         "size": 13,
-        "chars": 252
+        "chars": 245
        }
       ],
       "largest": {
        "size": 21,
-       "elements": 6,
+       "elements": 5,
        "weight": 600,
        "text": "$2,447.17",
        "nextSize": 18
@@ -6231,11 +6225,13 @@
       "colourOnly": 0,
       "colourOnlySamples": [],
       "countsInHeadings": 0,
+      "progressText": 10,
+      "usesSafeTokens": true,
       "progressElements": 0,
       "empties": []
      },
      "reading": {
-      "bodySize": 18,
+      "bodySize": 13,
       "lines": [],
       "contrastChecked": 65,
       "contrastUnknown": 0,
@@ -6245,6 +6241,19 @@
       "runningAnimations": 0
      },
      "textRuns": 65,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
+     "covered": {
+      "runs": 3,
+      "sample": [
+       "3 May – 2 Aug 2025 (14px at 793)",
+       "$2,943.99 (21px at 785)",
+       "$ a day (13px at 825)"
+      ]
+     },
      "waitForSeen": true,
      "pageErrors": [],
      "url": "/?now=2026-11-10T09:00:00%2B11:00#/bills"
@@ -6545,11 +6554,13 @@
       "colourOnly": 0,
       "colourOnlySamples": [],
       "countsInHeadings": 0,
+      "progressText": 12,
+      "usesSafeTokens": true,
       "progressElements": 0,
       "empties": []
      },
      "reading": {
-      "bodySize": 18,
+      "bodySize": 13,
       "lines": [],
       "contrastChecked": 65,
       "contrastUnknown": 0,
@@ -6559,6 +6570,15 @@
       "runningAnimations": 0
      },
      "textRuns": 65,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
+     "covered": {
+      "runs": 0,
+      "sample": []
+     },
      "waitForSeen": true,
      "pageErrors": [],
      "url": "/?now=2026-11-10T09:00:00%2B11:00#/bills"
@@ -6567,5 +6587,6 @@
   }
  ],
  "mocks": [],
- "blocked": []
+ "blocked": [],
+ "unmockedLocal": []
 }
