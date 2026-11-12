@@ -75,6 +75,10 @@
       "pass": true,
       "detail": "max 2"
      },
+     "nothingCutOff": {
+      "pass": false,
+      "detail": "7 texts cut short, 7 of them in list rows"
+     },
      "interactiveCount": {
       "pass": false,
       "detail": "22"
@@ -818,6 +822,19 @@
       "runningAnimations": 0
      },
      "textRuns": 91,
+     "truncated": {
+      "count": 7,
+      "inRows": 7,
+      "sample": [
+       "Robot vacuum with the spare brush roll and chargin (82% shown)",
+       "House · S/N: RV-88014 · Bought: 2026-05-16 · Warra (9% shown)",
+       "Kitchen · Bought: 2026-06-02 · Descaled in Septemb (21% shown)",
+       "House · S/N: USB65-0931 · Bought: 2025-08-20 · War (12% shown)",
+       "Kitchen · S/N: AF-22083 · Bought: 2025-12-01 · War (10% shown)",
+       "House · Bought: 2025-02-02 · Warranty: 2035-02-02  (13% shown)",
+       "Kitchen · S/N: SM-7741-B · Bought: 2024-11-29 · Wa (15% shown)"
+      ]
+     },
      "covered": {
       "runs": 1,
       "sample": [
@@ -1502,6 +1519,19 @@
       "runningAnimations": 0
      },
      "textRuns": 91,
+     "truncated": {
+      "count": 7,
+      "inRows": 7,
+      "sample": [
+       "Robot vacuum with the spare brush roll and chargin (82% shown)",
+       "House · S/N: RV-88014 · Bought: 2026-05-16 · Warra (9% shown)",
+       "Kitchen · Bought: 2026-06-02 · Descaled in Septemb (21% shown)",
+       "House · S/N: USB65-0931 · Bought: 2025-08-20 · War (12% shown)",
+       "Kitchen · S/N: AF-22083 · Bought: 2025-12-01 · War (10% shown)",
+       "House · Bought: 2025-02-02 · Warranty: 2035-02-02  (13% shown)",
+       "Kitchen · S/N: SM-7741-B · Bought: 2024-11-29 · Wa (15% shown)"
+      ]
+     },
      "covered": {
       "runs": 1,
       "sample": [
@@ -2269,6 +2299,16 @@
       "runningAnimations": 0
      },
      "textRuns": 93,
+     "truncated": {
+      "count": 4,
+      "inRows": 4,
+      "sample": [
+       "House · S/N: RV-88014 · Bought: 2026-05-16 · Warra (85% shown)",
+       "House · S/N: USB65-0931 · Bought: 2025-08-20 · War (99% shown)",
+       "Kitchen · S/N: AF-22083 · Bought: 2025-12-01 · War (95% shown)",
+       "Garage · S/N: DR-20481 · Bought: 2025-03-14 · Warr (97% shown)"
+      ]
+     },
      "covered": {
       "runs": 0,
       "sample": []
@@ -3034,6 +3074,16 @@
       "runningAnimations": 0
      },
      "textRuns": 93,
+     "truncated": {
+      "count": 4,
+      "inRows": 4,
+      "sample": [
+       "House · S/N: RV-88014 · Bought: 2026-05-16 · Warra (85% shown)",
+       "House · S/N: USB65-0931 · Bought: 2025-08-20 · War (99% shown)",
+       "Kitchen · S/N: AF-22083 · Bought: 2025-12-01 · War (95% shown)",
+       "Garage · S/N: DR-20481 · Bought: 2025-03-14 · Warr (97% shown)"
+      ]
+     },
      "covered": {
       "runs": 0,
       "sample": []
@@ -3716,6 +3766,20 @@
       "runningAnimations": 0
      },
      "textRuns": 91,
+     "truncated": {
+      "count": 12,
+      "inRows": 9,
+      "sample": [
+       "Robot vacuum with the spare brush roll and chargin (65% shown)",
+       "House · S/N: RV-88014 · Bought: 2026-05-16 · Warra (1% shown)",
+       "Kitchen · Bought: 2026-06-02 · Descaled in Septemb (4% shown)",
+       "House · S/N: USB65-0931 · Bought: 2025-08-20 · War (2% shown)",
+       "Kitchen · S/N: AF-22083 · Bought: 2025-12-01 · War (1% shown)",
+       "Smoke alarm with ten-year sealed battery (87% shown)",
+       "House · Bought: 2025-02-02 · Warranty: 2035-02-02  (2% shown)",
+       "Stand mixer with the dough hook and whisk (84% shown)"
+      ]
+     },
      "covered": {
       "runs": 1,
       "sample": [
@@ -4400,6 +4464,19 @@
       "runningAnimations": 0
      },
      "textRuns": 91,
+     "truncated": {
+      "count": 7,
+      "inRows": 7,
+      "sample": [
+       "Robot vacuum with the spare brush roll and chargin (82% shown)",
+       "House · S/N: RV-88014 · Bought: 2026-05-16 · Warra (9% shown)",
+       "Kitchen · Bought: 2026-06-02 · Descaled in Septemb (21% shown)",
+       "House · S/N: USB65-0931 · Bought: 2025-08-20 · War (12% shown)",
+       "Kitchen · S/N: AF-22083 · Bought: 2025-12-01 · War (10% shown)",
+       "House · Bought: 2025-02-02 · Warranty: 2035-02-02  (13% shown)",
+       "Kitchen · S/N: SM-7741-B · Bought: 2024-11-29 · Wa (15% shown)"
+      ]
+     },
      "covered": {
       "runs": 1,
       "sample": [
@@ -5084,6 +5161,19 @@
       "runningAnimations": 0
      },
      "textRuns": 91,
+     "truncated": {
+      "count": 7,
+      "inRows": 7,
+      "sample": [
+       "Robot vacuum with the spare brush roll and chargin (82% shown)",
+       "House · S/N: RV-88014 · Bought: 2026-05-16 · Warra (9% shown)",
+       "Kitchen · Bought: 2026-06-02 · Descaled in Septemb (21% shown)",
+       "House · S/N: USB65-0931 · Bought: 2025-08-20 · War (12% shown)",
+       "Kitchen · S/N: AF-22083 · Bought: 2025-12-01 · War (10% shown)",
+       "House · Bought: 2025-02-02 · Warranty: 2035-02-02  (13% shown)",
+       "Kitchen · S/N: SM-7741-B · Bought: 2024-11-29 · Wa (15% shown)"
+      ]
+     },
      "covered": {
       "runs": 1,
       "sample": [
@@ -5160,6 +5250,10 @@
      "coloursPerRowDesktop": {
       "pass": true,
       "detail": "max 2"
+     },
+     "nothingCutOff": {
+      "pass": true,
+      "detail": "0 texts cut short, 0 of them in list rows"
      },
      "interactiveCount": {
       "pass": true,
@@ -5499,6 +5593,11 @@
       "runningAnimations": 0
      },
      "textRuns": 28,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
      "covered": {
       "runs": 0,
       "sample": []
@@ -5769,6 +5868,11 @@
       "runningAnimations": 0
      },
      "textRuns": 28,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
      "covered": {
       "runs": 0,
       "sample": []
@@ -6123,6 +6227,11 @@
       "runningAnimations": 0
      },
      "textRuns": 30,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
      "covered": {
       "runs": 0,
       "sample": []
@@ -6470,6 +6579,11 @@
       "runningAnimations": 0
      },
      "textRuns": 30,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
      "covered": {
       "runs": 0,
       "sample": []
@@ -6747,6 +6861,15 @@
       "runningAnimations": 0
      },
      "textRuns": 28,
+     "truncated": {
+      "count": 3,
+      "inRows": 0,
+      "sample": [
+       "Products (86% shown)",
+       "Low Stock (75% shown)",
+       "Shopping (81% shown)"
+      ]
+     },
      "covered": {
       "runs": 0,
       "sample": []
@@ -7024,6 +7147,11 @@
       "runningAnimations": 0
      },
      "textRuns": 28,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
      "covered": {
       "runs": 0,
       "sample": []
@@ -7087,6 +7215,10 @@
      "coloursPerRowDesktop": {
       "pass": true,
       "detail": "max 1"
+     },
+     "nothingCutOff": {
+      "pass": true,
+      "detail": "0 texts cut short, 0 of them in list rows"
      },
      "interactiveCount": {
       "pass": false,
@@ -7709,6 +7841,11 @@
       "runningAnimations": 0
      },
      "textRuns": 41,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
      "covered": {
       "runs": 4,
       "sample": [
@@ -8282,6 +8419,11 @@
       "runningAnimations": 0
      },
      "textRuns": 41,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
      "covered": {
       "runs": 4,
       "sample": [
@@ -8956,6 +9098,11 @@
       "runningAnimations": 0
      },
      "textRuns": 43,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
      "covered": {
       "runs": 0,
       "sample": []
@@ -9633,6 +9780,11 @@
       "runningAnimations": 0
      },
      "textRuns": 43,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
      "covered": {
       "runs": 0,
       "sample": []
@@ -10193,6 +10345,15 @@
       "runningAnimations": 0
      },
      "textRuns": 41,
+     "truncated": {
+      "count": 3,
+      "inRows": 0,
+      "sample": [
+       "Products (86% shown)",
+       "Low Stock (75% shown)",
+       "Shopping (81% shown)"
+      ]
+     },
      "covered": {
       "runs": 4,
       "sample": [
@@ -10758,6 +10919,11 @@
       "runningAnimations": 0
      },
      "textRuns": 41,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
      "covered": {
       "runs": 4,
       "sample": [

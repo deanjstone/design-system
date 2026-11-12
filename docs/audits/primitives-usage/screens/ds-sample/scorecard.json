@@ -37,6 +37,10 @@
       "pass": false,
       "detail": "21/16/14/13"
      },
+     "pageTitleVisible": {
+      "pass": true,
+      "detail": "h1 \"Issues\""
+     },
      "headingVisible": {
       "pass": true,
       "detail": "h1 \"Issues\" at 24px"
@@ -70,6 +74,10 @@
      "coloursPerRowDesktop": {
       "pass": true,
       "detail": "max 2"
+     },
+     "nothingCutOff": {
+      "pass": true,
+      "detail": "0 texts cut short, 0 of them in list rows"
      },
      "interactiveCount": {
       "pass": true,
@@ -638,6 +646,15 @@
       "runningAnimations": 0
      },
      "textRuns": 28,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
+     "covered": {
+      "runs": 0,
+      "sample": []
+     },
      "waitForSeen": true,
      "pageErrors": [],
      "url": "/?v=current"
@@ -1140,6 +1157,15 @@
       "runningAnimations": 0
      },
      "textRuns": 28,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
+     "covered": {
+      "runs": 0,
+      "sample": []
+     },
      "waitForSeen": true,
      "pageErrors": [],
      "url": "/?v=current"
@@ -1710,6 +1736,15 @@
       "runningAnimations": 0
      },
      "textRuns": 69,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
+     "covered": {
+      "runs": 0,
+      "sample": []
+     },
      "waitForSeen": true,
      "pageErrors": [],
      "url": "/?v=current"
@@ -2280,6 +2315,15 @@
       "runningAnimations": 0
      },
      "textRuns": 69,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
+     "covered": {
+      "runs": 0,
+      "sample": []
+     },
      "waitForSeen": true,
      "pageErrors": [],
      "url": "/?v=current"
@@ -2782,6 +2826,15 @@
       "runningAnimations": 0
      },
      "textRuns": 28,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
+     "covered": {
+      "runs": 0,
+      "sample": []
+     },
      "waitForSeen": true,
      "pageErrors": [],
      "url": "/?v=current"
@@ -3284,6 +3337,15 @@
       "runningAnimations": 0
      },
      "textRuns": 28,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
+     "covered": {
+      "runs": 0,
+      "sample": []
+     },
      "waitForSeen": true,
      "pageErrors": [],
      "url": "/?v=current"
@@ -3786,6 +3848,15 @@
       "runningAnimations": 0
      },
      "textRuns": 28,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
+     "covered": {
+      "runs": 0,
+      "sample": []
+     },
      "waitForSeen": true,
      "pageErrors": [],
      "url": "/?v=current",
@@ -3808,6 +3879,10 @@
      "fontSizes": {
       "pass": false,
       "detail": "28/16/14/12"
+     },
+     "pageTitleVisible": {
+      "pass": true,
+      "detail": "h1 \"Issues\""
      },
      "headingVisible": {
       "pass": true,
@@ -3842,6 +3917,10 @@
      "coloursPerRowDesktop": {
       "pass": true,
       "detail": "max 2"
+     },
+     "nothingCutOff": {
+      "pass": true,
+      "detail": "0 texts cut short, 0 of them in list rows"
      },
      "interactiveCount": {
       "pass": true,
@@ -4361,6 +4440,15 @@
       "runningAnimations": 0
      },
      "textRuns": 63,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
+     "covered": {
+      "runs": 0,
+      "sample": []
+     },
      "waitForSeen": true,
      "pageErrors": [],
      "url": "/?v=proposed"
@@ -4814,6 +4902,15 @@
       "runningAnimations": 0
      },
      "textRuns": 63,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
+     "covered": {
+      "runs": 0,
+      "sample": []
+     },
      "waitForSeen": true,
      "pageErrors": [],
      "url": "/?v=proposed"
@@ -5335,6 +5432,15 @@
       "runningAnimations": 0
      },
      "textRuns": 70,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
+     "covered": {
+      "runs": 0,
+      "sample": []
+     },
      "waitForSeen": true,
      "pageErrors": [],
      "url": "/?v=proposed"
@@ -5856,6 +5962,15 @@
       "runningAnimations": 0
      },
      "textRuns": 70,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
+     "covered": {
+      "runs": 0,
+      "sample": []
+     },
      "waitForSeen": true,
      "pageErrors": [],
      "url": "/?v=proposed"
@@ -6304,6 +6419,15 @@
       "runningAnimations": 0
      },
      "textRuns": 63,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
+     "covered": {
+      "runs": 0,
+      "sample": []
+     },
      "waitForSeen": true,
      "pageErrors": [],
      "url": "/?v=proposed"
@@ -6757,6 +6881,15 @@
       "runningAnimations": 0
      },
      "textRuns": 63,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
+     "covered": {
+      "runs": 0,
+      "sample": []
+     },
      "waitForSeen": true,
      "pageErrors": [],
      "url": "/?v=proposed"
@@ -6765,5 +6898,6 @@
   }
  ],
  "mocks": [],
- "blocked": []
+ "blocked": [],
+ "unmockedLocal": []
 }

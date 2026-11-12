@@ -75,6 +75,10 @@
       "pass": true,
       "detail": "max 0"
      },
+     "nothingCutOff": {
+      "pass": false,
+      "detail": "1 texts cut short, 0 of them in list rows"
+     },
      "interactiveCount": {
       "pass": true,
       "detail": "15"
@@ -614,6 +618,13 @@
       "runningAnimations": 0
      },
      "textRuns": 35,
+     "truncated": {
+      "count": 1,
+      "inRows": 0,
+      "sample": [
+       "Workflows (95% shown)"
+      ]
+     },
      "covered": {
       "runs": 1,
       "sample": [
@@ -1094,6 +1105,13 @@
       "runningAnimations": 0
      },
      "textRuns": 35,
+     "truncated": {
+      "count": 1,
+      "inRows": 0,
+      "sample": [
+       "Workflows (95% shown)"
+      ]
+     },
      "covered": {
       "runs": 1,
       "sample": [
@@ -1632,6 +1650,11 @@
       "runningAnimations": 0
      },
      "textRuns": 36,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
      "covered": {
       "runs": 0,
       "sample": []
@@ -2168,6 +2191,11 @@
       "runningAnimations": 0
      },
      "textRuns": 36,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
      "covered": {
       "runs": 0,
       "sample": []
@@ -2647,6 +2675,13 @@
       "runningAnimations": 0
      },
      "textRuns": 35,
+     "truncated": {
+      "count": 1,
+      "inRows": 0,
+      "sample": [
+       "Workflows (71% shown)"
+      ]
+     },
      "covered": {
       "runs": 1,
       "sample": [
@@ -3127,6 +3162,13 @@
       "runningAnimations": 0
      },
      "textRuns": 35,
+     "truncated": {
+      "count": 1,
+      "inRows": 0,
+      "sample": [
+       "Workflows (95% shown)"
+      ]
+     },
      "covered": {
       "runs": 1,
       "sample": [
@@ -3607,6 +3649,13 @@
       "runningAnimations": 0
      },
      "textRuns": 35,
+     "truncated": {
+      "count": 1,
+      "inRows": 0,
+      "sample": [
+       "Workflows (95% shown)"
+      ]
+     },
      "covered": {
       "runs": 1,
       "sample": [
@@ -3683,6 +3732,10 @@
      "coloursPerRowDesktop": {
       "pass": true,
       "detail": "max 1"
+     },
+     "nothingCutOff": {
+      "pass": false,
+      "detail": "12 texts cut short, 11 of them in list rows"
      },
      "interactiveCount": {
       "pass": true,
@@ -4106,6 +4159,20 @@
       "runningAnimations": 0
      },
      "textRuns": 52,
+     "truncated": {
+      "count": 12,
+      "inRows": 11,
+      "sample": [
+       "Follow up the primitives usage audit before the ne (70% shown)",
+       "audit-follow-ups (87% shown)",
+       "Filter APS job roles by review status and by the d (76% shown)",
+       "jobs-role-review-filters (63% shown)",
+       "Add barcode lookup to the Stockade intake form so  (69% shown)",
+       "stockade-barcode-intake (65% shown)",
+       "Move category rules into the shared ledger schema  (69% shown)",
+       "budget-category-rules (76% shown)"
+      ]
+     },
      "covered": {
       "runs": 0,
       "sample": []
@@ -4467,6 +4534,20 @@
       "runningAnimations": 0
      },
      "textRuns": 52,
+     "truncated": {
+      "count": 12,
+      "inRows": 11,
+      "sample": [
+       "Follow up the primitives usage audit before the ne (70% shown)",
+       "audit-follow-ups (87% shown)",
+       "Filter APS job roles by review status and by the d (76% shown)",
+       "jobs-role-review-filters (63% shown)",
+       "Add barcode lookup to the Stockade intake form so  (69% shown)",
+       "stockade-barcode-intake (65% shown)",
+       "Move category rules into the shared ledger schema  (69% shown)",
+       "budget-category-rules (76% shown)"
+      ]
+     },
      "covered": {
       "runs": 0,
       "sample": []
@@ -4880,6 +4961,11 @@
       "runningAnimations": 0
      },
      "textRuns": 53,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
      "covered": {
       "runs": 0,
       "sample": []
@@ -5293,6 +5379,11 @@
       "runningAnimations": 0
      },
      "textRuns": 53,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
      "covered": {
       "runs": 0,
       "sample": []
@@ -5654,6 +5745,20 @@
       "runningAnimations": 0
      },
      "textRuns": 52,
+     "truncated": {
+      "count": 13,
+      "inRows": 12,
+      "sample": [
+       "Follow up the primitives usage audit before the ne (55% shown)",
+       "audit-follow-ups (31% shown)",
+       "Filter APS job roles by review status and by the d (60% shown)",
+       "jobs-role-review-filters (25% shown)",
+       "Add barcode lookup to the Stockade intake form so  (55% shown)",
+       "stockade-barcode-intake (26% shown)",
+       "Move category rules into the shared ledger schema  (54% shown)",
+       "budget-category-rules (34% shown)"
+      ]
+     },
      "covered": {
       "runs": 0,
       "sample": []
@@ -6015,6 +6120,20 @@
       "runningAnimations": 0
      },
      "textRuns": 52,
+     "truncated": {
+      "count": 12,
+      "inRows": 11,
+      "sample": [
+       "Follow up the primitives usage audit before the ne (70% shown)",
+       "audit-follow-ups (87% shown)",
+       "Filter APS job roles by review status and by the d (76% shown)",
+       "jobs-role-review-filters (63% shown)",
+       "Add barcode lookup to the Stockade intake form so  (69% shown)",
+       "stockade-barcode-intake (65% shown)",
+       "Move category rules into the shared ledger schema  (69% shown)",
+       "budget-category-rules (76% shown)"
+      ]
+     },
      "covered": {
       "runs": 0,
       "sample": []
@@ -6078,6 +6197,10 @@
      "coloursPerRowDesktop": {
       "pass": true,
       "detail": "max 2"
+     },
+     "nothingCutOff": {
+      "pass": false,
+      "detail": "1 texts cut short, 0 of them in list rows"
      },
      "interactiveCount": {
       "pass": true,
@@ -6630,6 +6753,13 @@
       "runningAnimations": 0
      },
      "textRuns": 87,
+     "truncated": {
+      "count": 1,
+      "inRows": 0,
+      "sample": [
+       "Workflows (97% shown)"
+      ]
+     },
      "covered": {
       "runs": 3,
       "sample": [
@@ -7039,6 +7169,13 @@
       "runningAnimations": 0
      },
      "textRuns": 87,
+     "truncated": {
+      "count": 1,
+      "inRows": 0,
+      "sample": [
+       "Workflows (97% shown)"
+      ]
+     },
      "covered": {
       "runs": 3,
       "sample": [
@@ -7690,6 +7827,11 @@
       "runningAnimations": 0
      },
      "textRuns": 88,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
      "covered": {
       "runs": 0,
       "sample": []
@@ -8253,6 +8395,11 @@
       "runningAnimations": 0
      },
      "textRuns": 88,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
      "covered": {
       "runs": 0,
       "sample": []
@@ -8664,6 +8811,13 @@
       "runningAnimations": 0
      },
      "textRuns": 87,
+     "truncated": {
+      "count": 1,
+      "inRows": 0,
+      "sample": [
+       "Workflows (72% shown)"
+      ]
+     },
      "covered": {
       "runs": 0,
       "sample": []
@@ -9154,6 +9308,13 @@
       "runningAnimations": 0
      },
      "textRuns": 87,
+     "truncated": {
+      "count": 1,
+      "inRows": 0,
+      "sample": [
+       "Workflows (97% shown)"
+      ]
+     },
      "covered": {
       "runs": 3,
       "sample": [

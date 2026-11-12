@@ -1,10 +1,26 @@
 {
   "app": "ds-sample",
   "repo": "design-system",
-  "note": "The registry's own sample screen from the hierarchy and density audit, as a baseline: `current` is the v3.24.0 components at their defaults, `proposed` is the design-system#207 scale. Build it with `HIERARCHY_DENSITY_OUT=<dir> npx vite build -c docs/audits/hierarchy-density/vite.config.mjs` and serve <dir> on port 4871.",
+  "note": "The registry's own sample screen from the hierarchy and density audit, as a baseline: `current` is the v3.24.0 components at their defaults, `proposed` is the design-system#207 scale. Build it with `HIERARCHY_DENSITY_OUT=~/.cache/primitives-usage/dist/ds-sample npx vite build -c docs/audits/hierarchy-density/vite.config.mjs`. The sample takes its dark mode from a `?theme=dark` parameter, not from the system setting, so its four screenshots here are all light.",
   "baseUrl": "http://127.0.0.1:4871",
   "screens": [
-    { "name": "current", "path": "/?v=current", "waitFor": "h1", "primaryAction": "text=New issue", "expectsProgress": true, "why": "Baseline: an issue list, a toolbar and a form built from the registry's components with no overrides." },
-    { "name": "proposed", "path": "/?v=proposed", "waitFor": "h1", "primaryAction": "text=New issue", "expectsProgress": true, "why": "The same screen on the scale design-system#207 proposes." }
-  ]
+    {
+      "name": "current",
+      "path": "/?v=current",
+      "waitFor": "h1",
+      "primaryAction": "text=New issue",
+      "expectsProgress": true,
+      "why": "Baseline: an issue list, a toolbar and a form built from the registry's components with no overrides."
+    },
+    {
+      "name": "proposed",
+      "path": "/?v=proposed",
+      "waitFor": "h1",
+      "primaryAction": "text=New issue",
+      "expectsProgress": true,
+      "why": "The same screen on the scale design-system#207 proposes."
+    }
+  ],
+  "base": "/",
+  "sha": "619bb88"
 }

@@ -75,6 +75,10 @@
       "pass": true,
       "detail": "max 1"
      },
+     "nothingCutOff": {
+      "pass": false,
+      "detail": "11 texts cut short, 11 of them in list rows"
+     },
      "interactiveCount": {
       "pass": false,
       "detail": "17"
@@ -131,7 +135,7 @@
      },
      "contrast": {
       "pass": false,
-      "detail": "iphone-light 0, iphone-dark 0, desktop-light 3, desktop-dark 4"
+      "detail": "iphone-light 0, iphone-dark 0, desktop-light 3, desktop-dark 3"
      },
      "noSidewaysScroll": {
       "pass": true,
@@ -602,6 +606,20 @@
       "runningAnimations": 0
      },
      "textRuns": 73,
+     "truncated": {
+      "count": 11,
+      "inRows": 11,
+      "sample": [
+       "Question about the invoice schedule for the Q4 ret (93% shown)",
+       "Before I approve the November invoice I need to co (49% shown)",
+       "Your order has shipped, but the tracking link retu (88% shown)",
+       "The courier email says it left the depot on Monday (46% shown)",
+       "Can we move Thursday's onboarding call to the foll (81% shown)",
+       "Our team lead is travelling on Thursday, so would  (45% shown)",
+       "Re: Renewal terms for the 2027 seat licence, with  (48% shown)",
+       "Thanks for the revised quote. Two things block our (40% shown)"
+      ]
+     },
      "covered": {
       "runs": 4,
       "sample": [
@@ -1073,6 +1091,20 @@
       "runningAnimations": 0
      },
      "textRuns": 73,
+     "truncated": {
+      "count": 11,
+      "inRows": 11,
+      "sample": [
+       "Question about the invoice schedule for the Q4 ret (93% shown)",
+       "Before I approve the November invoice I need to co (49% shown)",
+       "Your order has shipped, but the tracking link retu (88% shown)",
+       "The courier email says it left the depot on Monday (46% shown)",
+       "Can we move Thursday's onboarding call to the foll (81% shown)",
+       "Our team lead is travelling on Thursday, so would  (45% shown)",
+       "Re: Renewal terms for the 2027 seat licence, with  (48% shown)",
+       "Thanks for the revised quote. Two things block our (40% shown)"
+      ]
+     },
      "covered": {
       "runs": 4,
       "sample": [
@@ -1104,7 +1136,7 @@
        },
        {
         "size": 14,
-        "chars": 372
+        "chars": 734
        },
        {
         "size": 13.5,
@@ -1762,11 +1794,23 @@
       "runningAnimations": 0
      },
      "textRuns": 108,
-     "covered": {
-      "runs": 1,
+     "truncated": {
+      "count": 12,
+      "inRows": 12,
       "sample": [
-       "Hi Priya,\n\nThanks for catching (14px at -115)"
+       "Question about the invoice schedule for the Q4 ret (96% shown)",
+       "Before I approve the November invoice I need to co (50% shown)",
+       "Your order has shipped, but the tracking link retu (91% shown)",
+       "The courier email says it left the depot on Monday (47% shown)",
+       "Can we move Thursday's onboarding call to the foll (83% shown)",
+       "Our team lead is travelling on Thursday, so would  (46% shown)",
+       "Re: Renewal terms for the 2027 seat licence, with  (50% shown)",
+       "Thanks for the revised quote. Two things block our (42% shown)"
       ]
+     },
+     "covered": {
+      "runs": 0,
+      "sample": []
      },
      "waitForSeen": true,
      "pageErrors": [],
@@ -1790,7 +1834,7 @@
        },
        {
         "size": 14,
-        "chars": 372
+        "chars": 734
        },
        {
         "size": 13.5,
@@ -2442,25 +2486,30 @@
         "size": 11,
         "colour": "#a2a7b0",
         "on": "#324e66"
-       },
-       {
-        "text": "Send reply",
-        "ratio": 2.91,
-        "size": 14,
-        "colour": "#3f727c",
-        "on": "#5bd0d6"
        }
       ],
-      "contrastFailCount": 4,
+      "contrastFailCount": 3,
       "overflowX": 0,
       "runningAnimations": 0
      },
      "textRuns": 108,
-     "covered": {
-      "runs": 1,
+     "truncated": {
+      "count": 12,
+      "inRows": 12,
       "sample": [
-       "Hi Priya,\n\nThanks for catching (14px at -115)"
+       "Question about the invoice schedule for the Q4 ret (96% shown)",
+       "Before I approve the November invoice I need to co (50% shown)",
+       "Your order has shipped, but the tracking link retu (91% shown)",
+       "The courier email says it left the depot on Monday (47% shown)",
+       "Can we move Thursday's onboarding call to the foll (83% shown)",
+       "Our team lead is travelling on Thursday, so would  (46% shown)",
+       "Re: Renewal terms for the 2027 seat licence, with  (50% shown)",
+       "Thanks for the revised quote. Two things block our (42% shown)"
       ]
+     },
+     "covered": {
+      "runs": 0,
+      "sample": []
      },
      "waitForSeen": true,
      "pageErrors": [],
@@ -2925,6 +2974,20 @@
       "runningAnimations": 0
      },
      "textRuns": 73,
+     "truncated": {
+      "count": 10,
+      "inRows": 10,
+      "sample": [
+       "Question about the invoice schedule for the Q4 ret (72% shown)",
+       "Before I approve the November invoice I need to co (37% shown)",
+       "Your order has shipped, but the tracking link retu (68% shown)",
+       "The courier email says it left the depot on Monday (35% shown)",
+       "Can we move Thursday's onboarding call to the foll (62% shown)",
+       "Our team lead is travelling on Thursday, so would  (35% shown)",
+       "Re: Renewal terms for the 2027 seat licence, with  (37% shown)",
+       "Thanks for the revised quote. Two things block our (31% shown)"
+      ]
+     },
      "covered": {
       "runs": 2,
       "sample": [
@@ -3394,6 +3457,20 @@
       "runningAnimations": 0
      },
      "textRuns": 73,
+     "truncated": {
+      "count": 11,
+      "inRows": 11,
+      "sample": [
+       "Question about the invoice schedule for the Q4 ret (93% shown)",
+       "Before I approve the November invoice I need to co (49% shown)",
+       "Your order has shipped, but the tracking link retu (88% shown)",
+       "The courier email says it left the depot on Monday (46% shown)",
+       "Can we move Thursday's onboarding call to the foll (81% shown)",
+       "Our team lead is travelling on Thursday, so would  (45% shown)",
+       "Re: Renewal terms for the 2027 seat licence, with  (48% shown)",
+       "Thanks for the revised quote. Two things block our (40% shown)"
+      ]
+     },
      "covered": {
       "runs": 4,
       "sample": [
@@ -3778,8 +3855,8 @@
       {
        "what": "Compose",
        "tag": "button",
-       "top": 686.3,
-       "bottom": 742.3,
+       "top": 686,
+       "bottom": 742,
        "left": 305.2,
        "inFirstViewport": true,
        "centreAt": 0.8,
@@ -3865,6 +3942,20 @@
       "runningAnimations": 0
      },
      "textRuns": 73,
+     "truncated": {
+      "count": 11,
+      "inRows": 11,
+      "sample": [
+       "Question about the invoice schedule for the Q4 ret (93% shown)",
+       "Before I approve the November invoice I need to co (49% shown)",
+       "Your order has shipped, but the tracking link retu (88% shown)",
+       "The courier email says it left the depot on Monday (46% shown)",
+       "Can we move Thursday's onboarding call to the foll (81% shown)",
+       "Our team lead is travelling on Thursday, so would  (45% shown)",
+       "Re: Renewal terms for the 2027 seat licence, with  (48% shown)",
+       "Thanks for the revised quote. Two things block our (40% shown)"
+      ]
+     },
      "covered": {
       "runs": 5,
       "sample": [
@@ -3954,6 +4045,10 @@
      "coloursPerRowDesktop": {
       "pass": true,
       "detail": "max 1"
+     },
+     "nothingCutOff": {
+      "pass": false,
+      "detail": "2 texts cut short, 0 of them in list rows"
      },
      "interactiveCount": {
       "pass": true,
@@ -4243,6 +4338,14 @@
       "runningAnimations": 0
      },
      "textRuns": 28,
+     "truncated": {
+      "count": 2,
+      "inRows": 0,
+      "sample": [
+       "Question about the invoice schedule for the Q4 ret (52% shown)",
+       "agents@example.test (97% shown)"
+      ]
+     },
      "covered": {
       "runs": 0,
       "sample": []
@@ -4471,6 +4574,14 @@
       "runningAnimations": 0
      },
      "textRuns": 28,
+     "truncated": {
+      "count": 2,
+      "inRows": 0,
+      "sample": [
+       "Question about the invoice schedule for the Q4 ret (52% shown)",
+       "agents@example.test (97% shown)"
+      ]
+     },
      "covered": {
       "runs": 0,
       "sample": []
@@ -5155,6 +5266,20 @@
       "runningAnimations": 0
      },
      "textRuns": 108,
+     "truncated": {
+      "count": 12,
+      "inRows": 12,
+      "sample": [
+       "Question about the invoice schedule for the Q4 ret (96% shown)",
+       "Before I approve the November invoice I need to co (50% shown)",
+       "Your order has shipped, but the tracking link retu (91% shown)",
+       "The courier email says it left the depot on Monday (47% shown)",
+       "Can we move Thursday's onboarding call to the foll (83% shown)",
+       "Our team lead is travelling on Thursday, so would  (46% shown)",
+       "Re: Renewal terms for the 2027 seat licence, with  (50% shown)",
+       "Thanks for the revised quote. Two things block our (42% shown)"
+      ]
+     },
      "covered": {
       "runs": 1,
       "sample": [
@@ -5842,6 +5967,20 @@
       "runningAnimations": 0
      },
      "textRuns": 108,
+     "truncated": {
+      "count": 12,
+      "inRows": 12,
+      "sample": [
+       "Question about the invoice schedule for the Q4 ret (96% shown)",
+       "Before I approve the November invoice I need to co (50% shown)",
+       "Your order has shipped, but the tracking link retu (91% shown)",
+       "The courier email says it left the depot on Monday (47% shown)",
+       "Can we move Thursday's onboarding call to the foll (83% shown)",
+       "Our team lead is travelling on Thursday, so would  (46% shown)",
+       "Re: Renewal terms for the 2027 seat licence, with  (50% shown)",
+       "Thanks for the revised quote. Two things block our (42% shown)"
+      ]
+     },
      "covered": {
       "runs": 1,
       "sample": [
@@ -6071,6 +6210,15 @@
       "runningAnimations": 0
      },
      "textRuns": 28,
+     "truncated": {
+      "count": 3,
+      "inRows": 0,
+      "sample": [
+       "Question about the invoice schedule for the Q4 ret (33% shown)",
+       "agents@example.test (38% shown)",
+       "· Invoice and billing schedule questions (94% shown)"
+      ]
+     },
      "covered": {
       "runs": 0,
       "sample": []
@@ -6298,6 +6446,14 @@
       "runningAnimations": 0
      },
      "textRuns": 28,
+     "truncated": {
+      "count": 2,
+      "inRows": 0,
+      "sample": [
+       "Question about the invoice schedule for the Q4 ret (52% shown)",
+       "agents@example.test (97% shown)"
+      ]
+     },
      "covered": {
       "runs": 0,
       "sample": []
@@ -6361,6 +6517,10 @@
      "coloursPerRowDesktop": {
       "pass": true,
       "detail": "max 0"
+     },
+     "nothingCutOff": {
+      "pass": true,
+      "detail": "0 texts cut short, 0 of them in list rows"
      },
      "interactiveCount": {
       "pass": true,
@@ -6946,6 +7106,11 @@
       "runningAnimations": 0
      },
      "textRuns": 45,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
      "covered": {
       "runs": 6,
       "sample": [
@@ -7477,6 +7642,11 @@
       "runningAnimations": 0
      },
      "textRuns": 45,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
      "covered": {
       "runs": 6,
       "sample": [
@@ -8059,6 +8229,11 @@
       "runningAnimations": 0
      },
      "textRuns": 45,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
      "covered": {
       "runs": 0,
       "sample": []
@@ -8635,6 +8810,11 @@
       "runningAnimations": 0
      },
      "textRuns": 45,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
      "covered": {
       "runs": 0,
       "sample": []
@@ -9158,6 +9338,13 @@
       "runningAnimations": 0
      },
      "textRuns": 45,
+     "truncated": {
+      "count": 1,
+      "inRows": 0,
+      "sample": [
+       "http://127.0.0.1:4313/mcp (97% shown)"
+      ]
+     },
      "covered": {
       "runs": 3,
       "sample": [
@@ -9685,6 +9872,11 @@
       "runningAnimations": 0
      },
      "textRuns": 45,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
      "covered": {
       "runs": 6,
       "sample": [
@@ -9753,7 +9945,7 @@
  "blocked": [
   {
    "request": "GET https://unavatar.io/email/priya.raman%40example.test",
-   "count": 14
+   "count": 13
   },
   {
    "request": "GET https://unavatar.io/email/marcus.ellery%40example.test",
@@ -9794,6 +9986,12 @@
   {
    "request": "GET https://unavatar.io/email/agents%40example.test",
    "count": 4
+  }
+ ],
+ "unmockedLocal": [
+  {
+   "request": "GET /.well-known/oauth-protected-resource/mcp",
+   "count": 6
   }
  ]
 }

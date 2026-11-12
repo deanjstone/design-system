@@ -75,6 +75,10 @@
       "pass": true,
       "detail": "max 1"
      },
+     "nothingCutOff": {
+      "pass": false,
+      "detail": "1 texts cut short, 0 of them in list rows"
+     },
      "interactiveCount": {
       "pass": true,
       "detail": "11"
@@ -547,6 +551,13 @@
       "runningAnimations": 1
      },
      "textRuns": 63,
+     "truncated": {
+      "count": 1,
+      "inRows": 0,
+      "sample": [
+       "Promotions (87% shown)"
+      ]
+     },
      "covered": {
       "runs": 2,
       "sample": [
@@ -998,6 +1009,13 @@
       "runningAnimations": 1
      },
      "textRuns": 63,
+     "truncated": {
+      "count": 1,
+      "inRows": 0,
+      "sample": [
+       "Promotions (87% shown)"
+      ]
+     },
      "covered": {
       "runs": 2,
       "sample": [
@@ -1659,6 +1677,11 @@
       "runningAnimations": 1
      },
      "textRuns": 79,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
      "covered": {
       "runs": 0,
       "sample": []
@@ -2396,6 +2419,11 @@
       "runningAnimations": 1
      },
      "textRuns": 79,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
      "covered": {
       "runs": 0,
       "sample": []
@@ -2814,6 +2842,13 @@
       "runningAnimations": 1
      },
      "textRuns": 63,
+     "truncated": {
+      "count": 1,
+      "inRows": 0,
+      "sample": [
+       "Promotions (65% shown)"
+      ]
+     },
      "covered": {
       "runs": 4,
       "sample": [
@@ -3230,6 +3265,13 @@
       "runningAnimations": 0
      },
      "textRuns": 63,
+     "truncated": {
+      "count": 1,
+      "inRows": 0,
+      "sample": [
+       "Promotions (87% shown)"
+      ]
+     },
      "covered": {
       "runs": 2,
       "sample": [
@@ -3644,6 +3686,13 @@
       "runningAnimations": 1
      },
      "textRuns": 63,
+     "truncated": {
+      "count": 1,
+      "inRows": 0,
+      "sample": [
+       "Promotions (87% shown)"
+      ]
+     },
      "covered": {
       "runs": 2,
       "sample": [
@@ -3720,6 +3769,10 @@
      "coloursPerRowDesktop": {
       "pass": true,
       "detail": "max 1"
+     },
+     "nothingCutOff": {
+      "pass": false,
+      "detail": "1 texts cut short, 0 of them in list rows"
      },
      "interactiveCount": {
       "pass": true,
@@ -4148,6 +4201,13 @@
       "runningAnimations": 1
      },
      "textRuns": 51,
+     "truncated": {
+      "count": 1,
+      "inRows": 0,
+      "sample": [
+       "Promotions (89% shown)"
+      ]
+     },
      "covered": {
       "runs": 5,
       "sample": [
@@ -4521,6 +4581,13 @@
       "runningAnimations": 1
      },
      "textRuns": 51,
+     "truncated": {
+      "count": 1,
+      "inRows": 0,
+      "sample": [
+       "Promotions (89% shown)"
+      ]
+     },
      "covered": {
       "runs": 5,
       "sample": [
@@ -5067,6 +5134,11 @@
       "runningAnimations": 1
      },
      "textRuns": 62,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
      "covered": {
       "runs": 0,
       "sample": []
@@ -5616,6 +5688,11 @@
       "runningAnimations": 1
      },
      "textRuns": 62,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
      "covered": {
       "runs": 0,
       "sample": []
@@ -5976,6 +6053,13 @@
       "runningAnimations": 1
      },
      "textRuns": 51,
+     "truncated": {
+      "count": 1,
+      "inRows": 0,
+      "sample": [
+       "Promotions (67% shown)"
+      ]
+     },
      "covered": {
       "runs": 3,
       "sample": [
@@ -6346,6 +6430,13 @@
       "runningAnimations": 0
      },
      "textRuns": 51,
+     "truncated": {
+      "count": 1,
+      "inRows": 0,
+      "sample": [
+       "Promotions (89% shown)"
+      ]
+     },
      "covered": {
       "runs": 5,
       "sample": [
@@ -6415,6 +6506,10 @@
      "coloursPerRowDesktop": {
       "pass": true,
       "detail": "max 0"
+     },
+     "nothingCutOff": {
+      "pass": false,
+      "detail": "1 texts cut short, 0 of them in list rows"
      },
      "interactiveCount": {
       "pass": false,
@@ -6980,6 +7075,13 @@
       "runningAnimations": 1
      },
      "textRuns": 70,
+     "truncated": {
+      "count": 1,
+      "inRows": 0,
+      "sample": [
+       "Promotions (89% shown)"
+      ]
+     },
      "covered": {
       "runs": 0,
       "sample": []
@@ -7484,6 +7586,13 @@
       "runningAnimations": 1
      },
      "textRuns": 70,
+     "truncated": {
+      "count": 1,
+      "inRows": 0,
+      "sample": [
+       "Promotions (89% shown)"
+      ]
+     },
      "covered": {
       "runs": 0,
       "sample": []
@@ -8142,6 +8251,11 @@
       "runningAnimations": 1
      },
      "textRuns": 81,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
      "covered": {
       "runs": 0,
       "sample": []
@@ -8809,6 +8923,11 @@
       "runningAnimations": 1
      },
      "textRuns": 81,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
      "covered": {
       "runs": 0,
       "sample": []
@@ -9305,6 +9424,13 @@
       "runningAnimations": 1
      },
      "textRuns": 70,
+     "truncated": {
+      "count": 1,
+      "inRows": 0,
+      "sample": [
+       "Promotions (67% shown)"
+      ]
+     },
      "covered": {
       "runs": 2,
       "sample": [
@@ -9811,6 +9937,13 @@
       "runningAnimations": 0
      },
      "textRuns": 70,
+     "truncated": {
+      "count": 1,
+      "inRows": 0,
+      "sample": [
+       "Promotions (89% shown)"
+      ]
+     },
      "covered": {
       "runs": 0,
       "sample": []
@@ -9831,7 +9964,7 @@
   {
    "url": "**/api/board/events**",
    "method": "GET",
-   "hits": 38
+   "hits": 37
   },
   {
    "url": "**/api/github/events**",
@@ -9924,5 +10057,6 @@
    "hits": 0
   }
  ],
- "blocked": []
+ "blocked": [],
+ "unmockedLocal": []
 }
