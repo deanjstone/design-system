@@ -13,7 +13,7 @@
       "waitFor": "h1,h2,main",
       "primaryAction": null,
       "expectsProgress": false,
-      "why": "The index route (src/App.tsx:84): search and recent chats, the app's home."
+      "why": "The index route (src/App.tsx:84): search, the app's home. Results need the embedding model (blocked: it is fetched from huggingface.co), so this is the screen before a query."
     },
     {
       "name": "live-notes",
@@ -29,7 +29,7 @@
       "waitFor": "h1,h2,main",
       "primaryAction": null,
       "expectsProgress": false,
-      "why": "The reading view (`/chat/:id`): long-form text."
+      "why": "The reading view (`/chat/:id`). Rendered as its EMPTY state only: a chat's messages and entities live in the app's in-browser PGlite store (src/pages/ChatDetail.tsx:46), which no network mock can fill, so the populated view is not renderable locally."
     }
   ]
 }

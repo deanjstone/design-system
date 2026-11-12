@@ -103,7 +103,7 @@ async function route(context) {
     if (new URL(url).origin === origin) {
       // A data call to the app's own origin that no mock answers gets the static server's
       // reply, which is not what the app expects: list it so a fixture can be written.
-      if (["fetch", "xhr", "eventsource"].includes(request.request().resourceType())) {
+      if (["fetch", "xhr", "eventsource"].includes(request.request().resourceType()) && !/\.[a-z0-9]{2,5}$/i.test(new URL(url).pathname)) {
         const local = `${request.request().method()} ${url.replace(origin, "")}`
         unmocked.set(local, (unmocked.get(local) ?? 0) + 1)
       }

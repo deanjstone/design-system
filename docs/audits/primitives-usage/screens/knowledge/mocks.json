@@ -1,0 +1,261 @@
+[
+  {
+    "url": "**/auth/v1/user**",
+    "method": "GET",
+    "status": 200,
+    "json": {
+      "id": "00000000-0000-4000-8000-000000000001",
+      "aud": "authenticated",
+      "role": "authenticated",
+      "email": "owner@example.test",
+      "app_metadata": {},
+      "user_metadata": { "name": "Owner" },
+      "created_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "url": "**/auth/v1/**",
+    "status": 200,
+    "json": {}
+  },
+  {
+    "url": "**/realtime/**",
+    "status": 204,
+    "body": ""
+  },
+  {
+    "url": "**/rest/v1/rpc/match_knowledge_chats**",
+    "method": "POST",
+    "status": 200,
+    "json": []
+  },
+  {
+    "url": "**/rest/v1/knowledge_chats**",
+    "method": "GET",
+    "status": 200,
+    "json": [
+      {
+        "id": "c-1001",
+        "title": "Designing a passkey-only sign-in for the knowledge app, including what happens when a device has no passkey",
+        "date": "2026-11-10",
+        "source": "claude",
+        "summary": "Settled on passkey as the only sign-in route, with a clear error when the device has none.",
+        "tags": ["auth", "passkeys", "webauthn"],
+        "embedding": null,
+        "updated_at": "2026-11-10T09:14:00Z"
+      },
+      {
+        "id": "c-1002",
+        "title": "Why the PGlite worker stalls on the second tab",
+        "date": "2026-11-09",
+        "source": "chatgpt",
+        "summary": "Two tabs contend for the OPFS lock; the fix is one owning worker and a broadcast channel.",
+        "tags": ["pglite", "opfs", "workers"],
+        "embedding": null,
+        "updated_at": "2026-11-09T21:42:00Z"
+      },
+      {
+        "id": "c-1003",
+        "title": "Choosing a cadence for live notes when the research objective changes every few days",
+        "date": "2026-11-09",
+        "source": "claude",
+        "summary": "Daily for most objectives, hourly only for the ones tied to an active project.",
+        "tags": ["live-notes", "scheduling"],
+        "embedding": null,
+        "updated_at": "2026-11-09T11:05:00Z"
+      },
+      {
+        "id": "c-1004",
+        "title": "Comparing Cytoscape and Sigma for a knowledge graph that has to work on a phone",
+        "date": "2026-11-08",
+        "source": "gemini",
+        "summary": "Cytoscape wins on layout quality; the phone view lists chats instead of drawing them.",
+        "tags": ["graph", "cytoscape", "mobile"],
+        "embedding": null,
+        "updated_at": "2026-11-08T16:30:00Z"
+      },
+      {
+        "id": "c-1005",
+        "title": "Rotating Bitwarden secrets after the deploy token leak drill",
+        "date": "2026-11-07",
+        "source": "claude",
+        "summary": "Every credential now comes from Bitwarden; the old copies in .env files were removed.",
+        "tags": ["secrets", "bitwarden", "deploys"],
+        "embedding": null,
+        "updated_at": "2026-11-07T08:20:00Z"
+      },
+      {
+        "id": "c-1006",
+        "title": "Naming the search threshold setting so people understand what it filters out",
+        "date": "2026-11-06",
+        "source": "chatgpt",
+        "summary": "Renamed to Minimum match and added a hint that lower values show more results.",
+        "tags": ["search", "settings"],
+        "embedding": null,
+        "updated_at": "2026-11-06T13:55:00Z"
+      },
+      {
+        "id": "c-1007",
+        "title": "Splitting the vault-agent write path between the memory Worker and the Obsidian plugin",
+        "date": "2026-11-05",
+        "source": "claude",
+        "summary": "The Worker owns the store; the plugin only reads the mirror files it produces.",
+        "tags": ["vault-agent", "memory", "architecture"],
+        "embedding": null,
+        "updated_at": "2026-11-05T19:10:00Z"
+      },
+      {
+        "id": "c-1008",
+        "title": "Budget Buddy feature ideas, grouped by area",
+        "date": "2026-11-04",
+        "source": "gemini",
+        "summary": "A FIRE projection chart and round-up tracking came out on top.",
+        "tags": ["budget-buddy", "ideas"],
+        "embedding": null,
+        "updated_at": "2026-11-04T10:02:00Z"
+      }
+    ]
+  },
+  {
+    "url": "**/rest/v1/knowledge_graph_edges**",
+    "method": "GET",
+    "status": 200,
+    "json": [
+      { "from_id": "c-1001", "to_id": "c-1005", "edge_type": "similar", "weight": 0.81 },
+      { "from_id": "c-1001", "to_id": "c-1002", "edge_type": "similar", "weight": 0.74 },
+      { "from_id": "c-1001", "to_id": "c-1007", "edge_type": "similar", "weight": 0.69 },
+      { "from_id": "c-1002", "to_id": "c-1004", "edge_type": "similar", "weight": 0.66 },
+      { "from_id": "c-1003", "to_id": "c-1008", "edge_type": "similar", "weight": 0.71 }
+    ]
+  },
+  {
+    "url": "**/rest/v1/knowledge_clusters**",
+    "method": "GET",
+    "status": 200,
+    "json": []
+  },
+  {
+    "url": "**/rest/v1/knowledge_live_notes**",
+    "method": "GET",
+    "status": 200,
+    "json": [
+      {
+        "id": "ln-2001",
+        "user_id": "00000000-0000-4000-8000-000000000001",
+        "title": "Passkey rollout: what is wired and what is left",
+        "objective": "Keep a running list of where passkey sign-in is wired and what is left to do.",
+        "body": "## Wired\n- Sign-in page with a passkey button\n- Session gate on every signed-in route\n\n## Left\n- Recovery path for a lost device",
+        "interval_minutes": 1440,
+        "last_run_at": "2026-11-10T06:00:00Z",
+        "is_active": true,
+        "consecutive_failures": 0,
+        "last_error": null,
+        "last_error_at": null,
+        "pause_reason": null,
+        "created_at": "2026-10-28T02:15:00Z",
+        "updated_at": "2026-11-10T06:00:00Z"
+      },
+      {
+        "id": "ln-2002",
+        "user_id": "00000000-0000-4000-8000-000000000001",
+        "title": "Open questions about the vault-agent write path, kept current as new chats land and older threads get answered",
+        "objective": "Track every unresolved question about the vault-agent write path across my chats, and drop the ones that have since been answered.",
+        "body": "## Open\n- Should the mirror files be rebuilt on every write or on a timer?\n- Who resolves a refusal when the reconciler is offline?",
+        "interval_minutes": 720,
+        "last_run_at": "2026-11-10T22:40:00Z",
+        "is_active": true,
+        "consecutive_failures": 1,
+        "last_error": "Model returned an empty body; previous body kept.",
+        "last_error_at": "2026-11-10T22:40:00Z",
+        "pause_reason": null,
+        "created_at": "2026-10-30T09:00:00Z",
+        "updated_at": "2026-11-10T22:40:00Z"
+      },
+      {
+        "id": "ln-2003",
+        "user_id": "00000000-0000-4000-8000-000000000001",
+        "title": "Homelab hardware decisions and the reasons behind each one",
+        "objective": "Summarise each hardware purchase or upgrade I discussed, with the reasoning and the final choice.",
+        "body": "- 2TB NVMe for the laptop: chosen for Syncthing headroom.\n- UPS: deferred, no decision yet.",
+        "interval_minutes": 10080,
+        "last_run_at": "2026-11-03T07:30:00Z",
+        "is_active": false,
+        "consecutive_failures": 0,
+        "last_error": null,
+        "last_error_at": null,
+        "pause_reason": "user",
+        "created_at": "2026-10-20T18:45:00Z",
+        "updated_at": "2026-11-03T07:30:00Z"
+      },
+      {
+        "id": "ln-2004",
+        "user_id": "00000000-0000-4000-8000-000000000001",
+        "title": "Budget Buddy feature ideas, grouped by area and ordered newest first",
+        "objective": "Collect every feature idea for Budget Buddy mentioned in chats, grouped by area, newest first.",
+        "body": "- FIRE projection chart with an adjustable return rate.\n- Up Bank round-up tracking.",
+        "interval_minutes": 720,
+        "last_run_at": "2026-11-09T04:00:00Z",
+        "is_active": false,
+        "consecutive_failures": 3,
+        "last_error": null,
+        "last_error_at": null,
+        "pause_reason": "auto-failure",
+        "created_at": "2026-10-22T12:10:00Z",
+        "updated_at": "2026-11-09T04:00:00Z"
+      },
+      {
+        "id": "ln-2005",
+        "user_id": "00000000-0000-4000-8000-000000000001",
+        "title": "Reading list mentions from every chat this month",
+        "objective": "List every book or long-form article I said I wanted to read this month.",
+        "body": "",
+        "interval_minutes": 1440,
+        "last_run_at": null,
+        "is_active": true,
+        "consecutive_failures": 0,
+        "last_error": null,
+        "last_error_at": null,
+        "pause_reason": null,
+        "created_at": "2026-11-10T08:30:00Z",
+        "updated_at": "2026-11-10T08:30:00Z"
+      },
+      {
+        "id": "ln-2006",
+        "user_id": "00000000-0000-4000-8000-000000000001",
+        "title": "Argus memory consolidation: open threads by topic, with resolved ones moved out each run",
+        "objective": "Track open threads in the memory consolidation work and move each one to resolved once a later chat answers it.",
+        "body": "## Open\n- Per-topic or per-vault consolidation runs\n\n## Resolved since last run\n- Reconcile timer cadence settled at 20 minutes.",
+        "interval_minutes": 720,
+        "last_run_at": "2026-11-10T03:00:00Z",
+        "is_active": true,
+        "consecutive_failures": 0,
+        "last_error": null,
+        "last_error_at": null,
+        "pause_reason": null,
+        "created_at": "2026-10-26T14:00:00Z",
+        "updated_at": "2026-11-10T03:00:00Z"
+      }
+    ]
+  },
+  {
+    "url": "http://127.0.0.1:59003/**",
+    "status": 200,
+    "json": {}
+  },
+  {
+    "url": "http://127.0.0.1:59004/api/searchMemories**",
+    "method": "POST",
+    "status": 200,
+    "json": []
+  },
+  {
+    "url": "**/rest/v1/**",
+    "status": 200,
+    "json": []
+  },
+  {
+    "url": "http://127.0.0.1:54321/**",
+    "status": 200,
+    "json": []
+  }
+]

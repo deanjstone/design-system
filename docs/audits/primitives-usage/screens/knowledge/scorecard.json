@@ -1,0 +1,6702 @@
+{
+ "app": "knowledge",
+ "baseUrl": "http://127.0.0.1:4317",
+ "rules": {
+  "fontSizesInFirstViewport": 3,
+  "largestRatio": 1.2,
+  "largestElements": 2,
+  "chipsPerRow": 1,
+  "coloursPerRow": 2,
+  "interactiveInFirstViewport": 15,
+  "alphaSteps": 4,
+  "tapTarget": 44,
+  "inputFontSize": 16,
+  "thumbZoneFrom": 0.6,
+  "bodyFontSize": 16,
+  "lineLength": [
+   45,
+   75
+  ],
+  "contrast": 4.5,
+  "contrastLarge": 3
+ },
+ "screens": [
+  {
+   "name": "search",
+   "path": "/knowledge/",
+   "why": "The index route (src/App.tsx:84): search, the app's home. Results need the embedding model (blocked: it is fetched from huggingface.co), so this is the screen before a query.",
+   "primaryAction": null,
+   "expectsProgress": false,
+   "checks": {
+    "hierarchy": {
+     "oneLargest": {
+      "pass": true,
+      "detail": "21px ×1 \"Search\", next 16px"
+     },
+     "fontSizes": {
+      "pass": false,
+      "detail": "21/16/14/12"
+     },
+     "pageTitleVisible": {
+      "pass": true,
+      "detail": "h1 \"Search\""
+     },
+     "headingVisible": {
+      "pass": true,
+      "detail": "h1 \"Search\" at 72px"
+     },
+     "headingOutweighsRows": {
+      "pass": null,
+      "detail": "no rows or no heading"
+     },
+     "headingOutweighsRowsDesktop": {
+      "pass": null,
+      "detail": "no rows or no heading"
+     }
+    },
+    "clutter": {
+     "chipsPerRow": {
+      "pass": null,
+      "detail": "no rows"
+     },
+     "coloursPerRow": {
+      "pass": null,
+      "detail": "no rows"
+     },
+     "noNestedBorders": {
+      "pass": null,
+      "detail": "no rows"
+     },
+     "chipsPerRowDesktop": {
+      "pass": null,
+      "detail": "no rows"
+     },
+     "coloursPerRowDesktop": {
+      "pass": null,
+      "detail": "no rows"
+     },
+     "nothingCutOff": {
+      "pass": true,
+      "detail": "0 texts cut short, 0 of them in list rows"
+     },
+     "interactiveCount": {
+      "pass": true,
+      "detail": "6"
+     },
+     "alphaSteps": {
+      "pass": false,
+      "detail": "5: 0.5, 0.6, 0.7, 0.74, 0.8"
+     }
+    },
+    "action": {
+     "primaryVisible": {
+      "pass": null,
+      "detail": "no primary action on this screen"
+     },
+     "primaryInThumbZone": {
+      "pass": null,
+      "detail": "no primary action on this screen"
+     },
+     "tapTargets": {
+      "pass": true,
+      "detail": "0 of 6 under 44px"
+     },
+     "inputText": {
+      "pass": null,
+      "detail": "no inputs"
+     }
+    },
+    "state": {
+     "moreThanColour": {
+      "pass": null,
+      "detail": "no status colour on screen"
+     },
+     "statusFromTokens": {
+      "pass": null,
+      "detail": "no status colour on screen"
+     },
+     "progressShown": {
+      "pass": null,
+      "detail": "no goal on this screen"
+     },
+     "emptySaysNext": {
+      "pass": null,
+      "detail": "no empty state on screen"
+     }
+    },
+    "reading": {
+     "bodyText": {
+      "pass": false,
+      "detail": "14px"
+     },
+     "lineLength": {
+      "pass": null,
+      "detail": "no wrapped paragraph on desktop"
+     },
+     "contrast": {
+      "pass": false,
+      "detail": "iphone-light 1, iphone-dark 1, desktop-light 1, desktop-dark 1"
+     },
+     "noSidewaysScroll": {
+      "pass": true,
+      "detail": "390: 0px, 320: 0px"
+     },
+     "reducedMotion": {
+      "pass": true,
+      "detail": "0 running"
+     }
+    }
+   },
+   "variants": {
+    "iphone-light": {
+     "viewport": [
+      390,
+      844
+     ],
+     "coarse": true,
+     "hierarchy": {
+      "fontSizes": [
+       {
+        "size": 21,
+        "chars": 6
+       },
+       {
+        "size": 16,
+        "chars": 9
+       },
+       {
+        "size": 14,
+        "chars": 79
+       },
+       {
+        "size": 12,
+        "chars": 92
+       }
+      ],
+      "largest": {
+       "size": 21,
+       "elements": 1,
+       "weight": 600,
+       "text": "Search",
+       "nextSize": 16
+      },
+      "headings": [
+       {
+        "tag": "h1",
+        "text": "Search",
+        "size": 21,
+        "weight": 600,
+        "top": 72
+       }
+      ]
+     },
+     "rows": {
+      "count": 0,
+      "sample": [],
+      "maxChips": 0,
+      "maxColours": 0,
+      "nested": 0,
+      "heights": [],
+      "titleWeightMax": 0
+     },
+     "interactive": {
+      "firstViewport": 6,
+      "measured": 6,
+      "small": 0,
+      "smallSample": [],
+      "inputs": 0,
+      "smallInputs": []
+     },
+     "controls": [
+      {
+       "what": "Knowledge",
+       "tag": "button",
+       "top": 10,
+       "bottom": 54,
+       "left": 17,
+       "inFirstViewport": true,
+       "centreAt": 0,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 120.9,
+       "height": 44
+      },
+      {
+       "what": "Search",
+       "tag": "a",
+       "top": 781,
+       "bottom": 831,
+       "left": 25.8,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 64.5,
+       "height": 50
+      },
+      {
+       "what": "Graph",
+       "tag": "a",
+       "top": 781,
+       "bottom": 831,
+       "left": 94.3,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 64.5,
+       "height": 50
+      },
+      {
+       "what": "Entities",
+       "tag": "a",
+       "top": 781,
+       "bottom": 831,
+       "left": 162.8,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 64.5,
+       "height": 50
+      },
+      {
+       "what": "Live notes",
+       "tag": "a",
+       "top": 781,
+       "bottom": 831,
+       "left": 231.3,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 64.5,
+       "height": 50
+      },
+      {
+       "what": "More",
+       "tag": "button",
+       "top": 781,
+       "bottom": 831,
+       "left": 299.7,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 64.5,
+       "height": 50
+      }
+     ],
+     "alphaSteps": [
+      0.5,
+      0.6,
+      0.7,
+      0.74,
+      0.8
+     ],
+     "state": {
+      "statusTokens": [
+       "--warning #8a5300",
+       "--success #137333",
+       "--critical #c10007",
+       "--unreachable #b04400",
+       "--destructive #c10007"
+      ],
+      "statusColoured": 0,
+      "offToken": [],
+      "colourOnly": 0,
+      "colourOnlySamples": [],
+      "countsInHeadings": 0,
+      "progressText": 0,
+      "usesSafeTokens": true,
+      "progressElements": 0,
+      "empties": []
+     },
+     "reading": {
+      "bodySize": 14,
+      "lines": [],
+      "contrastChecked": 10,
+      "contrastUnknown": 0,
+      "contrastFails": [
+       {
+        "text": ".zip — Claude export  ·  .json",
+        "ratio": 2.81,
+        "size": 12,
+        "colour": "#97939b",
+        "on": "#f5f7f8"
+       }
+      ],
+      "contrastFailCount": 1,
+      "overflowX": 0,
+      "runningAnimations": 1
+     },
+     "textRuns": 10,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
+     "covered": {
+      "runs": 0,
+      "sample": []
+     },
+     "waitForSeen": true,
+     "pageErrors": [],
+     "url": "/knowledge/"
+    },
+    "iphone-dark": {
+     "viewport": [
+      390,
+      844
+     ],
+     "coarse": true,
+     "hierarchy": {
+      "fontSizes": [
+       {
+        "size": 21,
+        "chars": 6
+       },
+       {
+        "size": 16,
+        "chars": 9
+       },
+       {
+        "size": 14,
+        "chars": 79
+       },
+       {
+        "size": 12,
+        "chars": 92
+       }
+      ],
+      "largest": {
+       "size": 21,
+       "elements": 1,
+       "weight": 600,
+       "text": "Search",
+       "nextSize": 16
+      },
+      "headings": [
+       {
+        "tag": "h1",
+        "text": "Search",
+        "size": 21,
+        "weight": 600,
+        "top": 72
+       }
+      ]
+     },
+     "rows": {
+      "count": 0,
+      "sample": [],
+      "maxChips": 0,
+      "maxColours": 0,
+      "nested": 0,
+      "heights": [],
+      "titleWeightMax": 0
+     },
+     "interactive": {
+      "firstViewport": 6,
+      "measured": 6,
+      "small": 0,
+      "smallSample": [],
+      "inputs": 0,
+      "smallInputs": []
+     },
+     "controls": [
+      {
+       "what": "Knowledge",
+       "tag": "button",
+       "top": 10,
+       "bottom": 54,
+       "left": 17,
+       "inFirstViewport": true,
+       "centreAt": 0,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 120.9,
+       "height": 44
+      },
+      {
+       "what": "Search",
+       "tag": "a",
+       "top": 781,
+       "bottom": 831,
+       "left": 25.8,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 64.5,
+       "height": 50
+      },
+      {
+       "what": "Graph",
+       "tag": "a",
+       "top": 781,
+       "bottom": 831,
+       "left": 94.3,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 64.5,
+       "height": 50
+      },
+      {
+       "what": "Entities",
+       "tag": "a",
+       "top": 781,
+       "bottom": 831,
+       "left": 162.8,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 64.5,
+       "height": 50
+      },
+      {
+       "what": "Live notes",
+       "tag": "a",
+       "top": 781,
+       "bottom": 831,
+       "left": 231.3,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 64.5,
+       "height": 50
+      },
+      {
+       "what": "More",
+       "tag": "button",
+       "top": 781,
+       "bottom": 831,
+       "left": 299.7,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 64.5,
+       "height": 50
+      }
+     ],
+     "alphaSteps": [
+      0.51,
+      0.6,
+      0.7,
+      0.74,
+      0.8
+     ],
+     "state": {
+      "statusTokens": [
+       "--warning #fbbf24",
+       "--success #4ade80",
+       "--critical #ff7a7e",
+       "--unreachable #fb923c",
+       "--destructive #ff6467"
+      ],
+      "statusColoured": 0,
+      "offToken": [],
+      "colourOnly": 0,
+      "colourOnlySamples": [],
+      "countsInHeadings": 0,
+      "progressText": 0,
+      "usesSafeTokens": true,
+      "progressElements": 0,
+      "empties": []
+     },
+     "reading": {
+      "bodySize": 14,
+      "lines": [],
+      "contrastChecked": 10,
+      "contrastUnknown": 0,
+      "contrastFails": [
+       {
+        "text": ".zip — Claude export  ·  .json",
+        "ratio": 4.03,
+        "size": 12,
+        "colour": "#787f89",
+        "on": "#17212b"
+       }
+      ],
+      "contrastFailCount": 1,
+      "overflowX": 0,
+      "runningAnimations": 1
+     },
+     "textRuns": 10,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
+     "covered": {
+      "runs": 0,
+      "sample": []
+     },
+     "waitForSeen": true,
+     "pageErrors": [],
+     "url": "/knowledge/"
+    },
+    "desktop-light": {
+     "viewport": [
+      1440,
+      900
+     ],
+     "coarse": false,
+     "hierarchy": {
+      "fontSizes": [
+       {
+        "size": 26,
+        "chars": 6
+       },
+       {
+        "size": 16,
+        "chars": 9
+       },
+       {
+        "size": 14,
+        "chars": 124
+       },
+       {
+        "size": 12,
+        "chars": 59
+       }
+      ],
+      "largest": {
+       "size": 26,
+       "elements": 1,
+       "weight": 600,
+       "text": "Search",
+       "nextSize": 16
+      },
+      "headings": [
+       {
+        "tag": "h1",
+        "text": "Search",
+        "size": 26,
+        "weight": 600,
+        "top": 72
+       }
+      ]
+     },
+     "rows": {
+      "count": 0,
+      "sample": [],
+      "maxChips": 0,
+      "maxColours": 0,
+      "nested": 0,
+      "heights": [],
+      "titleWeightMax": 0
+     },
+     "interactive": {
+      "firstViewport": 7,
+      "measured": 7,
+      "small": 6,
+      "smallSample": [
+       {
+        "what": "Search",
+        "tag": "a",
+        "width": 231,
+        "height": 40
+       },
+       {
+        "what": "Graph",
+        "tag": "a",
+        "width": 231,
+        "height": 40
+       },
+       {
+        "what": "Entities",
+        "tag": "a",
+        "width": 231,
+        "height": 40
+       },
+       {
+        "what": "Live notes",
+        "tag": "a",
+        "width": 231,
+        "height": 40
+       },
+       {
+        "what": "Timeline",
+        "tag": "a",
+        "width": 231,
+        "height": 40
+       },
+       {
+        "what": "Settings",
+        "tag": "a",
+        "width": 231,
+        "height": 40
+       }
+      ],
+      "inputs": 0,
+      "smallInputs": []
+     },
+     "controls": [
+      {
+       "what": "Search",
+       "tag": "a",
+       "top": 0,
+       "bottom": 40,
+       "left": 12,
+       "inFirstViewport": true,
+       "centreAt": 0,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 231,
+       "height": 40
+      },
+      {
+       "what": "Graph",
+       "tag": "a",
+       "top": 44,
+       "bottom": 84,
+       "left": 12,
+       "inFirstViewport": true,
+       "centreAt": 0.1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 231,
+       "height": 40
+      },
+      {
+       "what": "Entities",
+       "tag": "a",
+       "top": 88,
+       "bottom": 128,
+       "left": 12,
+       "inFirstViewport": true,
+       "centreAt": 0.1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 231,
+       "height": 40
+      },
+      {
+       "what": "Live notes",
+       "tag": "a",
+       "top": 132,
+       "bottom": 172,
+       "left": 12,
+       "inFirstViewport": true,
+       "centreAt": 0.2,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 231,
+       "height": 40
+      },
+      {
+       "what": "Timeline",
+       "tag": "a",
+       "top": 176,
+       "bottom": 216,
+       "left": 12,
+       "inFirstViewport": true,
+       "centreAt": 0.2,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 231,
+       "height": 40
+      },
+      {
+       "what": "Settings",
+       "tag": "a",
+       "top": 220,
+       "bottom": 260,
+       "left": 12,
+       "inFirstViewport": true,
+       "centreAt": 0.3,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 231,
+       "height": 40
+      },
+      {
+       "what": "Knowledge",
+       "tag": "button",
+       "top": 10,
+       "bottom": 54,
+       "left": 273,
+       "inFirstViewport": true,
+       "centreAt": 0,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 120.9,
+       "height": 44
+      }
+     ],
+     "alphaSteps": [
+      0.51,
+      0.6,
+      0.7,
+      0.74,
+      0.8
+     ],
+     "state": {
+      "statusTokens": [
+       "--warning #8a5300",
+       "--success #137333",
+       "--critical #c10007",
+       "--unreachable #b04400",
+       "--destructive #c10007"
+      ],
+      "statusColoured": 0,
+      "offToken": [],
+      "colourOnly": 0,
+      "colourOnlySamples": [],
+      "countsInHeadings": 0,
+      "progressText": 0,
+      "usesSafeTokens": true,
+      "progressElements": 0,
+      "empties": []
+     },
+     "reading": {
+      "bodySize": 14,
+      "lines": [],
+      "contrastChecked": 11,
+      "contrastUnknown": 0,
+      "contrastFails": [
+       {
+        "text": ".zip — Claude export  ·  .json",
+        "ratio": 2.81,
+        "size": 12,
+        "colour": "#97939b",
+        "on": "#f5f7f8"
+       }
+      ],
+      "contrastFailCount": 1,
+      "overflowX": 0,
+      "runningAnimations": 1
+     },
+     "textRuns": 11,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
+     "covered": {
+      "runs": 0,
+      "sample": []
+     },
+     "waitForSeen": true,
+     "pageErrors": [],
+     "url": "/knowledge/"
+    },
+    "desktop-dark": {
+     "viewport": [
+      1440,
+      900
+     ],
+     "coarse": false,
+     "hierarchy": {
+      "fontSizes": [
+       {
+        "size": 26,
+        "chars": 6
+       },
+       {
+        "size": 16,
+        "chars": 9
+       },
+       {
+        "size": 14,
+        "chars": 124
+       },
+       {
+        "size": 12,
+        "chars": 59
+       }
+      ],
+      "largest": {
+       "size": 26,
+       "elements": 1,
+       "weight": 600,
+       "text": "Search",
+       "nextSize": 16
+      },
+      "headings": [
+       {
+        "tag": "h1",
+        "text": "Search",
+        "size": 26,
+        "weight": 600,
+        "top": 72
+       }
+      ]
+     },
+     "rows": {
+      "count": 0,
+      "sample": [],
+      "maxChips": 0,
+      "maxColours": 0,
+      "nested": 0,
+      "heights": [],
+      "titleWeightMax": 0
+     },
+     "interactive": {
+      "firstViewport": 7,
+      "measured": 7,
+      "small": 6,
+      "smallSample": [
+       {
+        "what": "Search",
+        "tag": "a",
+        "width": 231,
+        "height": 40
+       },
+       {
+        "what": "Graph",
+        "tag": "a",
+        "width": 231,
+        "height": 40
+       },
+       {
+        "what": "Entities",
+        "tag": "a",
+        "width": 231,
+        "height": 40
+       },
+       {
+        "what": "Live notes",
+        "tag": "a",
+        "width": 231,
+        "height": 40
+       },
+       {
+        "what": "Timeline",
+        "tag": "a",
+        "width": 231,
+        "height": 40
+       },
+       {
+        "what": "Settings",
+        "tag": "a",
+        "width": 231,
+        "height": 40
+       }
+      ],
+      "inputs": 0,
+      "smallInputs": []
+     },
+     "controls": [
+      {
+       "what": "Search",
+       "tag": "a",
+       "top": 0,
+       "bottom": 40,
+       "left": 12,
+       "inFirstViewport": true,
+       "centreAt": 0,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 231,
+       "height": 40
+      },
+      {
+       "what": "Graph",
+       "tag": "a",
+       "top": 44,
+       "bottom": 84,
+       "left": 12,
+       "inFirstViewport": true,
+       "centreAt": 0.1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 231,
+       "height": 40
+      },
+      {
+       "what": "Entities",
+       "tag": "a",
+       "top": 88,
+       "bottom": 128,
+       "left": 12,
+       "inFirstViewport": true,
+       "centreAt": 0.1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 231,
+       "height": 40
+      },
+      {
+       "what": "Live notes",
+       "tag": "a",
+       "top": 132,
+       "bottom": 172,
+       "left": 12,
+       "inFirstViewport": true,
+       "centreAt": 0.2,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 231,
+       "height": 40
+      },
+      {
+       "what": "Timeline",
+       "tag": "a",
+       "top": 176,
+       "bottom": 216,
+       "left": 12,
+       "inFirstViewport": true,
+       "centreAt": 0.2,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 231,
+       "height": 40
+      },
+      {
+       "what": "Settings",
+       "tag": "a",
+       "top": 220,
+       "bottom": 260,
+       "left": 12,
+       "inFirstViewport": true,
+       "centreAt": 0.3,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 231,
+       "height": 40
+      },
+      {
+       "what": "Knowledge",
+       "tag": "button",
+       "top": 10,
+       "bottom": 54,
+       "left": 273,
+       "inFirstViewport": true,
+       "centreAt": 0,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 120.9,
+       "height": 44
+      }
+     ],
+     "alphaSteps": [
+      0.5,
+      0.6,
+      0.7,
+      0.74,
+      0.8
+     ],
+     "state": {
+      "statusTokens": [
+       "--warning #fbbf24",
+       "--success #4ade80",
+       "--critical #ff7a7e",
+       "--unreachable #fb923c",
+       "--destructive #ff6467"
+      ],
+      "statusColoured": 0,
+      "offToken": [],
+      "colourOnly": 0,
+      "colourOnlySamples": [],
+      "countsInHeadings": 0,
+      "progressText": 0,
+      "usesSafeTokens": true,
+      "progressElements": 0,
+      "empties": []
+     },
+     "reading": {
+      "bodySize": 14,
+      "lines": [],
+      "contrastChecked": 11,
+      "contrastUnknown": 0,
+      "contrastFails": [
+       {
+        "text": ".zip — Claude export  ·  .json",
+        "ratio": 4.03,
+        "size": 12,
+        "colour": "#787f89",
+        "on": "#17212b"
+       }
+      ],
+      "contrastFailCount": 1,
+      "overflowX": 0,
+      "runningAnimations": 1
+     },
+     "textRuns": 11,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
+     "covered": {
+      "runs": 0,
+      "sample": []
+     },
+     "waitForSeen": true,
+     "pageErrors": [],
+     "url": "/knowledge/"
+    },
+    "iphone-320": {
+     "viewport": [
+      320,
+      844
+     ],
+     "coarse": true,
+     "hierarchy": {
+      "fontSizes": [
+       {
+        "size": 21,
+        "chars": 6
+       },
+       {
+        "size": 16,
+        "chars": 9
+       },
+       {
+        "size": 14,
+        "chars": 79
+       },
+       {
+        "size": 12,
+        "chars": 92
+       }
+      ],
+      "largest": {
+       "size": 21,
+       "elements": 1,
+       "weight": 600,
+       "text": "Search",
+       "nextSize": 16
+      },
+      "headings": [
+       {
+        "tag": "h1",
+        "text": "Search",
+        "size": 21,
+        "weight": 600,
+        "top": 72
+       }
+      ]
+     },
+     "rows": {
+      "count": 0,
+      "sample": [],
+      "maxChips": 0,
+      "maxColours": 0,
+      "nested": 0,
+      "heights": [],
+      "titleWeightMax": 0
+     },
+     "interactive": {
+      "firstViewport": 6,
+      "measured": 6,
+      "small": 0,
+      "smallSample": [],
+      "inputs": 0,
+      "smallInputs": []
+     },
+     "controls": [
+      {
+       "what": "Knowledge",
+       "tag": "button",
+       "top": 10,
+       "bottom": 54,
+       "left": 17,
+       "inFirstViewport": true,
+       "centreAt": 0,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 120.9,
+       "height": 44
+      },
+      {
+       "what": "Search",
+       "tag": "a",
+       "top": 781,
+       "bottom": 831,
+       "left": 25.8,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 50.5,
+       "height": 50
+      },
+      {
+       "what": "Graph",
+       "tag": "a",
+       "top": 781,
+       "bottom": 831,
+       "left": 80.3,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 50.5,
+       "height": 50
+      },
+      {
+       "what": "Entities",
+       "tag": "a",
+       "top": 781,
+       "bottom": 831,
+       "left": 134.8,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 50.5,
+       "height": 50
+      },
+      {
+       "what": "Live notes",
+       "tag": "a",
+       "top": 781,
+       "bottom": 831,
+       "left": 189.3,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 50.5,
+       "height": 50
+      },
+      {
+       "what": "More",
+       "tag": "button",
+       "top": 781,
+       "bottom": 831,
+       "left": 243.7,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 50.5,
+       "height": 50
+      }
+     ],
+     "alphaSteps": [
+      0.5,
+      0.6,
+      0.7,
+      0.74,
+      0.8
+     ],
+     "state": {
+      "statusTokens": [
+       "--warning #8a5300",
+       "--success #137333",
+       "--critical #c10007",
+       "--unreachable #b04400",
+       "--destructive #c10007"
+      ],
+      "statusColoured": 0,
+      "offToken": [],
+      "colourOnly": 0,
+      "colourOnlySamples": [],
+      "countsInHeadings": 0,
+      "progressText": 0,
+      "usesSafeTokens": true,
+      "progressElements": 0,
+      "empties": []
+     },
+     "reading": {
+      "bodySize": 14,
+      "lines": [],
+      "contrastChecked": 10,
+      "contrastUnknown": 0,
+      "contrastFails": [
+       {
+        "text": ".zip — Claude export  ·  .json",
+        "ratio": 2.81,
+        "size": 12,
+        "colour": "#97939b",
+        "on": "#f5f7f8"
+       }
+      ],
+      "contrastFailCount": 1,
+      "overflowX": 0,
+      "runningAnimations": 1
+     },
+     "textRuns": 10,
+     "truncated": {
+      "count": 1,
+      "inRows": 0,
+      "sample": [
+       "Live notes (76% shown)"
+      ]
+     },
+     "covered": {
+      "runs": 0,
+      "sample": []
+     },
+     "waitForSeen": true,
+     "pageErrors": [],
+     "url": "/knowledge/"
+    },
+    "iphone-reduced-motion": {
+     "viewport": [
+      390,
+      844
+     ],
+     "coarse": true,
+     "hierarchy": {
+      "fontSizes": [
+       {
+        "size": 21,
+        "chars": 6
+       },
+       {
+        "size": 16,
+        "chars": 9
+       },
+       {
+        "size": 14,
+        "chars": 79
+       },
+       {
+        "size": 12,
+        "chars": 92
+       }
+      ],
+      "largest": {
+       "size": 21,
+       "elements": 1,
+       "weight": 600,
+       "text": "Search",
+       "nextSize": 16
+      },
+      "headings": [
+       {
+        "tag": "h1",
+        "text": "Search",
+        "size": 21,
+        "weight": 600,
+        "top": 72
+       }
+      ]
+     },
+     "rows": {
+      "count": 0,
+      "sample": [],
+      "maxChips": 0,
+      "maxColours": 0,
+      "nested": 0,
+      "heights": [],
+      "titleWeightMax": 0
+     },
+     "interactive": {
+      "firstViewport": 6,
+      "measured": 6,
+      "small": 0,
+      "smallSample": [],
+      "inputs": 0,
+      "smallInputs": []
+     },
+     "controls": [
+      {
+       "what": "Knowledge",
+       "tag": "button",
+       "top": 10,
+       "bottom": 54,
+       "left": 17,
+       "inFirstViewport": true,
+       "centreAt": 0,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 120.9,
+       "height": 44
+      },
+      {
+       "what": "Search",
+       "tag": "a",
+       "top": 781,
+       "bottom": 831,
+       "left": 25.8,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 64.5,
+       "height": 50
+      },
+      {
+       "what": "Graph",
+       "tag": "a",
+       "top": 781,
+       "bottom": 831,
+       "left": 94.3,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 64.5,
+       "height": 50
+      },
+      {
+       "what": "Entities",
+       "tag": "a",
+       "top": 781,
+       "bottom": 831,
+       "left": 162.8,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 64.5,
+       "height": 50
+      },
+      {
+       "what": "Live notes",
+       "tag": "a",
+       "top": 781,
+       "bottom": 831,
+       "left": 231.3,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 64.5,
+       "height": 50
+      },
+      {
+       "what": "More",
+       "tag": "button",
+       "top": 781,
+       "bottom": 831,
+       "left": 299.7,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 64.5,
+       "height": 50
+      }
+     ],
+     "alphaSteps": [
+      0.6,
+      0.7,
+      0.74,
+      0.8
+     ],
+     "state": {
+      "statusTokens": [
+       "--warning #8a5300",
+       "--success #137333",
+       "--critical #c10007",
+       "--unreachable #b04400",
+       "--destructive #c10007"
+      ],
+      "statusColoured": 0,
+      "offToken": [],
+      "colourOnly": 0,
+      "colourOnlySamples": [],
+      "countsInHeadings": 0,
+      "progressText": 0,
+      "usesSafeTokens": true,
+      "progressElements": 0,
+      "empties": []
+     },
+     "reading": {
+      "bodySize": 14,
+      "lines": [],
+      "contrastChecked": 10,
+      "contrastUnknown": 0,
+      "contrastFails": [
+       {
+        "text": ".zip — Claude export  ·  .json",
+        "ratio": 2.81,
+        "size": 12,
+        "colour": "#97939b",
+        "on": "#f5f7f8"
+       }
+      ],
+      "contrastFailCount": 1,
+      "overflowX": 0,
+      "runningAnimations": 0
+     },
+     "textRuns": 10,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
+     "covered": {
+      "runs": 0,
+      "sample": []
+     },
+     "waitForSeen": true,
+     "pageErrors": [],
+     "url": "/knowledge/"
+    },
+    "iphone-insets-light": {
+     "viewport": [
+      390,
+      844
+     ],
+     "coarse": true,
+     "hierarchy": {
+      "fontSizes": [
+       {
+        "size": 21,
+        "chars": 6
+       },
+       {
+        "size": 16,
+        "chars": 9
+       },
+       {
+        "size": 14,
+        "chars": 79
+       },
+       {
+        "size": 12,
+        "chars": 92
+       }
+      ],
+      "largest": {
+       "size": 21,
+       "elements": 1,
+       "weight": 600,
+       "text": "Search",
+       "nextSize": 16
+      },
+      "headings": [
+       {
+        "tag": "h1",
+        "text": "Search",
+        "size": 21,
+        "weight": 600,
+        "top": 72
+       }
+      ]
+     },
+     "rows": {
+      "count": 0,
+      "sample": [],
+      "maxChips": 0,
+      "maxColours": 0,
+      "nested": 0,
+      "heights": [],
+      "titleWeightMax": 0
+     },
+     "interactive": {
+      "firstViewport": 6,
+      "measured": 6,
+      "small": 0,
+      "smallSample": [],
+      "inputs": 0,
+      "smallInputs": []
+     },
+     "controls": [
+      {
+       "what": "Knowledge",
+       "tag": "button",
+       "top": 10,
+       "bottom": 54,
+       "left": 17,
+       "inFirstViewport": true,
+       "centreAt": 0,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 120.9,
+       "height": 44
+      },
+      {
+       "what": "Search",
+       "tag": "a",
+       "top": 781,
+       "bottom": 831,
+       "left": 25.8,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 64.5,
+       "height": 50
+      },
+      {
+       "what": "Graph",
+       "tag": "a",
+       "top": 781,
+       "bottom": 831,
+       "left": 94.3,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 64.5,
+       "height": 50
+      },
+      {
+       "what": "Entities",
+       "tag": "a",
+       "top": 781,
+       "bottom": 831,
+       "left": 162.8,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 64.5,
+       "height": 50
+      },
+      {
+       "what": "Live notes",
+       "tag": "a",
+       "top": 781,
+       "bottom": 831,
+       "left": 231.3,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 64.5,
+       "height": 50
+      },
+      {
+       "what": "More",
+       "tag": "button",
+       "top": 781,
+       "bottom": 831,
+       "left": 299.7,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 64.5,
+       "height": 50
+      }
+     ],
+     "alphaSteps": [
+      0.6,
+      0.62,
+      0.7,
+      0.74,
+      0.8
+     ],
+     "state": {
+      "statusTokens": [
+       "--warning #8a5300",
+       "--success #137333",
+       "--critical #c10007",
+       "--unreachable #b04400",
+       "--destructive #c10007"
+      ],
+      "statusColoured": 0,
+      "offToken": [],
+      "colourOnly": 0,
+      "colourOnlySamples": [],
+      "countsInHeadings": 0,
+      "progressText": 0,
+      "usesSafeTokens": true,
+      "progressElements": 0,
+      "empties": []
+     },
+     "reading": {
+      "bodySize": 14,
+      "lines": [],
+      "contrastChecked": 10,
+      "contrastUnknown": 0,
+      "contrastFails": [
+       {
+        "text": ".zip — Claude export  ·  .json",
+        "ratio": 2.81,
+        "size": 12,
+        "colour": "#97939b",
+        "on": "#f5f7f8"
+       }
+      ],
+      "contrastFailCount": 1,
+      "overflowX": 0,
+      "runningAnimations": 1
+     },
+     "textRuns": 10,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
+     "covered": {
+      "runs": 0,
+      "sample": []
+     },
+     "waitForSeen": true,
+     "pageErrors": [],
+     "url": "/knowledge/",
+     "underInsets": [
+      "Knowledge",
+      "Search",
+      "Graph",
+      "Entities",
+      "Live notes",
+      "More"
+     ]
+    }
+   }
+  },
+  {
+   "name": "live-notes",
+   "path": "/knowledge/live-notes",
+   "why": "A nav section with status per row (running, failing, auto-paused).",
+   "primaryAction": null,
+   "expectsProgress": true,
+   "checks": {
+    "hierarchy": {
+     "oneLargest": {
+      "pass": true,
+      "detail": "21px ×1 \"Live notes\", next 16px"
+     },
+     "fontSizes": {
+      "pass": false,
+      "detail": "21/16/14/13/12.8/12"
+     },
+     "pageTitleVisible": {
+      "pass": true,
+      "detail": "h1 \"Live notes\""
+     },
+     "headingVisible": {
+      "pass": true,
+      "detail": "h1 \"Live notes\" at 72px"
+     },
+     "headingOutweighsRows": {
+      "pass": true,
+      "detail": "heading 600/500, row title 500"
+     },
+     "headingOutweighsRowsDesktop": {
+      "pass": true,
+      "detail": "heading 600/500, row title 500"
+     }
+    },
+    "clutter": {
+     "chipsPerRow": {
+      "pass": true,
+      "detail": "max 1 in 6 rows"
+     },
+     "coloursPerRow": {
+      "pass": true,
+      "detail": "max 2"
+     },
+     "noNestedBorders": {
+      "pass": true,
+      "detail": "0 rows"
+     },
+     "chipsPerRowDesktop": {
+      "pass": true,
+      "detail": "max 1 in 6 rows"
+     },
+     "coloursPerRowDesktop": {
+      "pass": true,
+      "detail": "max 2"
+     },
+     "nothingCutOff": {
+      "pass": false,
+      "detail": "8 texts cut short, 8 of them in list rows"
+     },
+     "interactiveCount": {
+      "pass": false,
+      "detail": "25"
+     },
+     "alphaSteps": {
+      "pass": false,
+      "detail": "5: 0.1, 0.5, 0.6, 0.74, 0.8"
+     }
+    },
+    "action": {
+     "primaryVisible": {
+      "pass": null,
+      "detail": "no primary action on this screen"
+     },
+     "primaryInThumbZone": {
+      "pass": null,
+      "detail": "no primary action on this screen"
+     },
+     "tapTargets": {
+      "pass": true,
+      "detail": "0 of 25 under 44px"
+     },
+     "inputText": {
+      "pass": null,
+      "detail": "no inputs"
+     }
+    },
+    "state": {
+     "moreThanColour": {
+      "pass": true,
+      "detail": "0 of 10 carry colour alone"
+     },
+     "statusFromTokens": {
+      "pass": false,
+      "detail": "#894e00×1"
+     },
+     "progressShown": {
+      "pass": true,
+      "detail": "1 counted headings, 0 progress elements, 0 \"n of m\" or percent texts"
+     },
+     "emptySaysNext": {
+      "pass": null,
+      "detail": "no empty state on screen"
+     }
+    },
+    "reading": {
+     "bodyText": {
+      "pass": false,
+      "detail": "13px"
+     },
+     "lineLength": {
+      "pass": null,
+      "detail": "no wrapped paragraph on desktop"
+     },
+     "contrast": {
+      "pass": false,
+      "detail": "iphone-light 0, iphone-dark 1, desktop-light 0, desktop-dark 1"
+     },
+     "noSidewaysScroll": {
+      "pass": true,
+      "detail": "390: 0px, 320: 0px"
+     },
+     "reducedMotion": {
+      "pass": true,
+      "detail": "0 running"
+     }
+    }
+   },
+   "variants": {
+    "iphone-light": {
+     "viewport": [
+      390,
+      844
+     ],
+     "coarse": true,
+     "hierarchy": {
+      "fontSizes": [
+       {
+        "size": 21,
+        "chars": 10
+       },
+       {
+        "size": 16,
+        "chars": 9
+       },
+       {
+        "size": 14,
+        "chars": 436
+       },
+       {
+        "size": 13,
+        "chars": 473
+       },
+       {
+        "size": 12.8,
+        "chars": 8
+       },
+       {
+        "size": 12,
+        "chars": 193
+       }
+      ],
+      "largest": {
+       "size": 21,
+       "elements": 1,
+       "weight": 600,
+       "text": "Live notes",
+       "nextSize": 16
+      },
+      "headings": [
+       {
+        "tag": "h1",
+        "text": "Live notes",
+        "size": 21,
+        "weight": 600,
+        "top": 72
+       },
+       {
+        "tag": "h2",
+        "text": "Live notes6",
+        "size": 14,
+        "weight": 500,
+        "top": 203
+       }
+      ]
+     },
+     "rows": {
+      "count": 6,
+      "sample": [
+       {
+        "height": 85,
+        "chips": 1,
+        "chipTexts": [
+         "Active"
+        ],
+        "colours": 2,
+        "colourValues": [
+         "#137333",
+         "#c4000a"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Passkey rollout: what is wired"
+       },
+       {
+        "height": 85,
+        "chips": 1,
+        "chipTexts": [
+         "Failing"
+        ],
+        "colours": 2,
+        "colourValues": [
+         "#8a5300",
+         "#c4000a"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Open questions about the vault"
+       },
+       {
+        "height": 85,
+        "chips": 1,
+        "chipTexts": [
+         "Paused"
+        ],
+        "colours": 1,
+        "colourValues": [
+         "#c4000a"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Homelab hardware decisions and"
+       },
+       {
+        "height": 85,
+        "chips": 1,
+        "chipTexts": [
+         "Auto-paused"
+        ],
+        "colours": 1,
+        "colourValues": [
+         "#c10007"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Budget Buddy feature ideas, gr"
+       },
+       {
+        "height": 85,
+        "chips": 1,
+        "chipTexts": [
+         "Waiting for first ru"
+        ],
+        "colours": 1,
+        "colourValues": [
+         "#c4000a"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Reading list mentions from eve"
+       },
+       {
+        "height": 85,
+        "chips": 1,
+        "chipTexts": [
+         "Active"
+        ],
+        "colours": 2,
+        "colourValues": [
+         "#137333",
+         "#c4000a"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Argus memory consolidation: op"
+       }
+      ],
+      "maxChips": 1,
+      "maxColours": 2,
+      "nested": 0,
+      "heights": [
+       85
+      ],
+      "titleWeightMax": 500
+     },
+     "interactive": {
+      "firstViewport": 25,
+      "measured": 25,
+      "small": 0,
+      "smallSample": [],
+      "inputs": 0,
+      "smallInputs": []
+     },
+     "controls": [
+      {
+       "what": "Knowledge",
+       "tag": "button",
+       "top": 10,
+       "bottom": 54,
+       "left": 17,
+       "inFirstViewport": true,
+       "centreAt": 0,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 120.9,
+       "height": 44
+      },
+      {
+       "what": "New note",
+       "tag": "button",
+       "top": 135,
+       "bottom": 179,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.2,
+       "pinnedToBottom": false,
+       "primaryFill": true,
+       "width": 77.7,
+       "height": 44
+      },
+      {
+       "what": "Passkey rollout: what is wired and what ",
+       "tag": "a",
+       "top": 239.5,
+       "bottom": 257.5,
+       "left": 29,
+       "inFirstViewport": true,
+       "centreAt": 0.3,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 356,
+       "height": 83
+      },
+      {
+       "what": "Pause",
+       "tag": "button",
+       "top": 262,
+       "bottom": 306,
+       "left": 267,
+       "inFirstViewport": true,
+       "centreAt": 0.3,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Delete",
+       "tag": "button",
+       "top": 262,
+       "bottom": 306,
+       "left": 317,
+       "inFirstViewport": true,
+       "centreAt": 0.3,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Open questions about the vault-agent wri",
+       "tag": "a",
+       "top": 332.5,
+       "bottom": 350.5,
+       "left": 29,
+       "inFirstViewport": true,
+       "centreAt": 0.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 720.4,
+       "height": 83
+      },
+      {
+       "what": "Pause",
+       "tag": "button",
+       "top": 355,
+       "bottom": 399,
+       "left": 267,
+       "inFirstViewport": true,
+       "centreAt": 0.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Delete",
+       "tag": "button",
+       "top": 355,
+       "bottom": 399,
+       "left": 317,
+       "inFirstViewport": true,
+       "centreAt": 0.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Homelab hardware decisions and the reaso",
+       "tag": "a",
+       "top": 425.5,
+       "bottom": 443.5,
+       "left": 29,
+       "inFirstViewport": true,
+       "centreAt": 0.5,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 400.4,
+       "height": 83
+      },
+      {
+       "what": "Resume",
+       "tag": "button",
+       "top": 448,
+       "bottom": 492,
+       "left": 267,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Delete",
+       "tag": "button",
+       "top": 448,
+       "bottom": 492,
+       "left": 317,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Budget Buddy feature ideas, grouped by a",
+       "tag": "a",
+       "top": 518.5,
+       "bottom": 536.5,
+       "left": 29,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 448.8,
+       "height": 83
+      },
+      {
+       "what": "Resume",
+       "tag": "button",
+       "top": 541,
+       "bottom": 585,
+       "left": 267,
+       "inFirstViewport": true,
+       "centreAt": 0.7,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Delete",
+       "tag": "button",
+       "top": 541,
+       "bottom": 585,
+       "left": 317,
+       "inFirstViewport": true,
+       "centreAt": 0.7,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Reading list mentions from every chat th",
+       "tag": "a",
+       "top": 611.5,
+       "bottom": 629.5,
+       "left": 29,
+       "inFirstViewport": true,
+       "centreAt": 0.7,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 356,
+       "height": 83
+      },
+      {
+       "what": "Pause",
+       "tag": "button",
+       "top": 634,
+       "bottom": 678,
+       "left": 267,
+       "inFirstViewport": true,
+       "centreAt": 0.8,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Delete",
+       "tag": "button",
+       "top": 634,
+       "bottom": 678,
+       "left": 317,
+       "inFirstViewport": true,
+       "centreAt": 0.8,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Argus memory consolidation: open threads",
+       "tag": "a",
+       "top": 704.5,
+       "bottom": 722.5,
+       "left": 29,
+       "inFirstViewport": true,
+       "centreAt": 0.8,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 586.3,
+       "height": 83
+      },
+      {
+       "what": "Pause",
+       "tag": "button",
+       "top": 727,
+       "bottom": 771,
+       "left": 267,
+       "inFirstViewport": true,
+       "centreAt": 0.9,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Delete",
+       "tag": "button",
+       "top": 727,
+       "bottom": 771,
+       "left": 317,
+       "inFirstViewport": true,
+       "centreAt": 0.9,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Search",
+       "tag": "a",
+       "top": 781,
+       "bottom": 831,
+       "left": 25.8,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 64.5,
+       "height": 50
+      },
+      {
+       "what": "Graph",
+       "tag": "a",
+       "top": 781,
+       "bottom": 831,
+       "left": 94.3,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 64.5,
+       "height": 50
+      },
+      {
+       "what": "Entities",
+       "tag": "a",
+       "top": 781,
+       "bottom": 831,
+       "left": 162.8,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 64.5,
+       "height": 50
+      },
+      {
+       "what": "Live notes",
+       "tag": "a",
+       "top": 781,
+       "bottom": 831,
+       "left": 231.3,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 64.5,
+       "height": 50
+      },
+      {
+       "what": "More",
+       "tag": "button",
+       "top": 781,
+       "bottom": 831,
+       "left": 299.7,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 64.5,
+       "height": 50
+      }
+     ],
+     "alphaSteps": [
+      0.1,
+      0.5,
+      0.6,
+      0.74,
+      0.8
+     ],
+     "state": {
+      "statusTokens": [
+       "--warning #8a5300",
+       "--success #137333",
+       "--critical #c10007",
+       "--unreachable #b04400",
+       "--destructive #c10007"
+      ],
+      "statusColoured": 10,
+      "offToken": [
+       {
+        "colour": "#894e00",
+        "family": "amber",
+        "count": 1,
+        "sample": "Failing"
+       }
+      ],
+      "colourOnly": 0,
+      "colourOnlySamples": [],
+      "countsInHeadings": 1,
+      "progressText": 0,
+      "usesSafeTokens": true,
+      "progressElements": 0,
+      "empties": []
+     },
+     "reading": {
+      "bodySize": 13,
+      "lines": [],
+      "contrastChecked": 33,
+      "contrastUnknown": 0,
+      "contrastFails": [],
+      "contrastFailCount": 0,
+      "overflowX": 0,
+      "runningAnimations": 0
+     },
+     "textRuns": 33,
+     "truncated": {
+      "count": 8,
+      "inRows": 8,
+      "sample": [
+       "Keep a running list of where passkey sign-in is wi (2% shown)",
+       "Open questions about the vault-agent write path, k (46% shown)",
+       "Track every unresolved question about the vault-ag (1% shown)",
+       "Homelab hardware decisions and the reasons behind  (83% shown)",
+       "Summarise each hardware purchase or upgrade I disc (1% shown)",
+       "Budget Buddy feature ideas, grouped by area and or (74% shown)",
+       "Argus memory consolidation: open threads by topic, (57% shown)",
+       "Track open threads in the memory consolidation wor (1% shown)"
+      ]
+     },
+     "covered": {
+      "runs": 0,
+      "sample": []
+     },
+     "waitForSeen": true,
+     "pageErrors": [],
+     "url": "/knowledge/live-notes"
+    },
+    "iphone-dark": {
+     "viewport": [
+      390,
+      844
+     ],
+     "coarse": true,
+     "hierarchy": {
+      "fontSizes": [
+       {
+        "size": 21,
+        "chars": 10
+       },
+       {
+        "size": 16,
+        "chars": 9
+       },
+       {
+        "size": 14,
+        "chars": 436
+       },
+       {
+        "size": 13,
+        "chars": 473
+       },
+       {
+        "size": 12.8,
+        "chars": 8
+       },
+       {
+        "size": 12,
+        "chars": 193
+       }
+      ],
+      "largest": {
+       "size": 21,
+       "elements": 1,
+       "weight": 600,
+       "text": "Live notes",
+       "nextSize": 16
+      },
+      "headings": [
+       {
+        "tag": "h1",
+        "text": "Live notes",
+        "size": 21,
+        "weight": 600,
+        "top": 72
+       },
+       {
+        "tag": "h2",
+        "text": "Live notes6",
+        "size": 14,
+        "weight": 500,
+        "top": 203
+       }
+      ]
+     },
+     "rows": {
+      "count": 6,
+      "sample": [
+       {
+        "height": 85,
+        "chips": 1,
+        "chipTexts": [
+         "Active"
+        ],
+        "colours": 2,
+        "colourValues": [
+         "#4ade80",
+         "#ff6469"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Passkey rollout: what is wired"
+       },
+       {
+        "height": 85,
+        "chips": 1,
+        "chipTexts": [
+         "Failing"
+        ],
+        "colours": 2,
+        "colourValues": [
+         "#fbbf24",
+         "#ff6469"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Open questions about the vault"
+       },
+       {
+        "height": 85,
+        "chips": 1,
+        "chipTexts": [
+         "Paused"
+        ],
+        "colours": 1,
+        "colourValues": [
+         "#ff6469"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Homelab hardware decisions and"
+       },
+       {
+        "height": 85,
+        "chips": 1,
+        "chipTexts": [
+         "Auto-paused"
+        ],
+        "colours": 1,
+        "colourValues": [
+         "#ff6467"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Budget Buddy feature ideas, gr"
+       },
+       {
+        "height": 85,
+        "chips": 1,
+        "chipTexts": [
+         "Waiting for first ru"
+        ],
+        "colours": 1,
+        "colourValues": [
+         "#ff6469"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Reading list mentions from eve"
+       },
+       {
+        "height": 85,
+        "chips": 1,
+        "chipTexts": [
+         "Active"
+        ],
+        "colours": 2,
+        "colourValues": [
+         "#4ade80",
+         "#ff6469"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Argus memory consolidation: op"
+       }
+      ],
+      "maxChips": 1,
+      "maxColours": 2,
+      "nested": 0,
+      "heights": [
+       85
+      ],
+      "titleWeightMax": 500
+     },
+     "interactive": {
+      "firstViewport": 25,
+      "measured": 25,
+      "small": 0,
+      "smallSample": [],
+      "inputs": 0,
+      "smallInputs": []
+     },
+     "controls": [
+      {
+       "what": "Knowledge",
+       "tag": "button",
+       "top": 10,
+       "bottom": 54,
+       "left": 17,
+       "inFirstViewport": true,
+       "centreAt": 0,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 120.9,
+       "height": 44
+      },
+      {
+       "what": "New note",
+       "tag": "button",
+       "top": 135,
+       "bottom": 179,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.2,
+       "pinnedToBottom": false,
+       "primaryFill": true,
+       "width": 77.7,
+       "height": 44
+      },
+      {
+       "what": "Passkey rollout: what is wired and what ",
+       "tag": "a",
+       "top": 239.5,
+       "bottom": 257.5,
+       "left": 29,
+       "inFirstViewport": true,
+       "centreAt": 0.3,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 356,
+       "height": 83
+      },
+      {
+       "what": "Pause",
+       "tag": "button",
+       "top": 262,
+       "bottom": 306,
+       "left": 267,
+       "inFirstViewport": true,
+       "centreAt": 0.3,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Delete",
+       "tag": "button",
+       "top": 262,
+       "bottom": 306,
+       "left": 317,
+       "inFirstViewport": true,
+       "centreAt": 0.3,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Open questions about the vault-agent wri",
+       "tag": "a",
+       "top": 332.5,
+       "bottom": 350.5,
+       "left": 29,
+       "inFirstViewport": true,
+       "centreAt": 0.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 720.4,
+       "height": 83
+      },
+      {
+       "what": "Pause",
+       "tag": "button",
+       "top": 355,
+       "bottom": 399,
+       "left": 267,
+       "inFirstViewport": true,
+       "centreAt": 0.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Delete",
+       "tag": "button",
+       "top": 355,
+       "bottom": 399,
+       "left": 317,
+       "inFirstViewport": true,
+       "centreAt": 0.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Homelab hardware decisions and the reaso",
+       "tag": "a",
+       "top": 425.5,
+       "bottom": 443.5,
+       "left": 29,
+       "inFirstViewport": true,
+       "centreAt": 0.5,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 400.4,
+       "height": 83
+      },
+      {
+       "what": "Resume",
+       "tag": "button",
+       "top": 448,
+       "bottom": 492,
+       "left": 267,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Delete",
+       "tag": "button",
+       "top": 448,
+       "bottom": 492,
+       "left": 317,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Budget Buddy feature ideas, grouped by a",
+       "tag": "a",
+       "top": 518.5,
+       "bottom": 536.5,
+       "left": 29,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 448.8,
+       "height": 83
+      },
+      {
+       "what": "Resume",
+       "tag": "button",
+       "top": 541,
+       "bottom": 585,
+       "left": 267,
+       "inFirstViewport": true,
+       "centreAt": 0.7,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Delete",
+       "tag": "button",
+       "top": 541,
+       "bottom": 585,
+       "left": 317,
+       "inFirstViewport": true,
+       "centreAt": 0.7,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Reading list mentions from every chat th",
+       "tag": "a",
+       "top": 611.5,
+       "bottom": 629.5,
+       "left": 29,
+       "inFirstViewport": true,
+       "centreAt": 0.7,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 356,
+       "height": 83
+      },
+      {
+       "what": "Pause",
+       "tag": "button",
+       "top": 634,
+       "bottom": 678,
+       "left": 267,
+       "inFirstViewport": true,
+       "centreAt": 0.8,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Delete",
+       "tag": "button",
+       "top": 634,
+       "bottom": 678,
+       "left": 317,
+       "inFirstViewport": true,
+       "centreAt": 0.8,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Argus memory consolidation: open threads",
+       "tag": "a",
+       "top": 704.5,
+       "bottom": 722.5,
+       "left": 29,
+       "inFirstViewport": true,
+       "centreAt": 0.8,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 586.3,
+       "height": 83
+      },
+      {
+       "what": "Pause",
+       "tag": "button",
+       "top": 727,
+       "bottom": 771,
+       "left": 267,
+       "inFirstViewport": true,
+       "centreAt": 0.9,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Delete",
+       "tag": "button",
+       "top": 727,
+       "bottom": 771,
+       "left": 317,
+       "inFirstViewport": true,
+       "centreAt": 0.9,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Search",
+       "tag": "a",
+       "top": 781,
+       "bottom": 831,
+       "left": 25.8,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 64.5,
+       "height": 50
+      },
+      {
+       "what": "Graph",
+       "tag": "a",
+       "top": 781,
+       "bottom": 831,
+       "left": 94.3,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 64.5,
+       "height": 50
+      },
+      {
+       "what": "Entities",
+       "tag": "a",
+       "top": 781,
+       "bottom": 831,
+       "left": 162.8,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 64.5,
+       "height": 50
+      },
+      {
+       "what": "Live notes",
+       "tag": "a",
+       "top": 781,
+       "bottom": 831,
+       "left": 231.3,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 64.5,
+       "height": 50
+      },
+      {
+       "what": "More",
+       "tag": "button",
+       "top": 781,
+       "bottom": 831,
+       "left": 299.7,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 64.5,
+       "height": 50
+      }
+     ],
+     "alphaSteps": [
+      0.1,
+      0.15,
+      0.2,
+      0.3,
+      0.5,
+      0.6,
+      0.74,
+      0.8
+     ],
+     "state": {
+      "statusTokens": [
+       "--warning #fbbf24",
+       "--success #4ade80",
+       "--critical #ff7a7e",
+       "--unreachable #fb923c",
+       "--destructive #ff6467"
+      ],
+      "statusColoured": 10,
+      "offToken": [
+       {
+        "colour": "#ff626c",
+        "family": "red",
+        "count": 1,
+        "sample": "Auto-paused"
+       }
+      ],
+      "colourOnly": 0,
+      "colourOnlySamples": [],
+      "countsInHeadings": 1,
+      "progressText": 0,
+      "usesSafeTokens": true,
+      "progressElements": 0,
+      "empties": []
+     },
+     "reading": {
+      "bodySize": 13,
+      "lines": [],
+      "contrastChecked": 33,
+      "contrastUnknown": 0,
+      "contrastFails": [
+       {
+        "text": "Auto-paused",
+        "ratio": 4.4,
+        "size": 13,
+        "colour": "#ff6467",
+        "on": "#34313d"
+       }
+      ],
+      "contrastFailCount": 1,
+      "overflowX": 0,
+      "runningAnimations": 0
+     },
+     "textRuns": 33,
+     "truncated": {
+      "count": 8,
+      "inRows": 8,
+      "sample": [
+       "Keep a running list of where passkey sign-in is wi (2% shown)",
+       "Open questions about the vault-agent write path, k (46% shown)",
+       "Track every unresolved question about the vault-ag (1% shown)",
+       "Homelab hardware decisions and the reasons behind  (83% shown)",
+       "Summarise each hardware purchase or upgrade I disc (1% shown)",
+       "Budget Buddy feature ideas, grouped by area and or (74% shown)",
+       "Argus memory consolidation: open threads by topic, (57% shown)",
+       "Track open threads in the memory consolidation wor (1% shown)"
+      ]
+     },
+     "covered": {
+      "runs": 0,
+      "sample": []
+     },
+     "waitForSeen": true,
+     "pageErrors": [],
+     "url": "/knowledge/live-notes"
+    },
+    "desktop-light": {
+     "viewport": [
+      1440,
+      900
+     ],
+     "coarse": false,
+     "hierarchy": {
+      "fontSizes": [
+       {
+        "size": 26,
+        "chars": 10
+       },
+       {
+        "size": 16,
+        "chars": 9
+       },
+       {
+        "size": 14,
+        "chars": 481
+       },
+       {
+        "size": 13,
+        "chars": 639
+       },
+       {
+        "size": 12.8,
+        "chars": 8
+       },
+       {
+        "size": 12,
+        "chars": 160
+       }
+      ],
+      "largest": {
+       "size": 26,
+       "elements": 1,
+       "weight": 600,
+       "text": "Live notes",
+       "nextSize": 16
+      },
+      "headings": [
+       {
+        "tag": "h1",
+        "text": "Live notes",
+        "size": 26,
+        "weight": 600,
+        "top": 72
+       },
+       {
+        "tag": "h2",
+        "text": "Live notes6",
+        "size": 14,
+        "weight": 500,
+        "top": 151
+       }
+      ]
+     },
+     "rows": {
+      "count": 6,
+      "sample": [
+       {
+        "height": 69,
+        "chips": 1,
+        "chipTexts": [
+         "Active"
+        ],
+        "colours": 2,
+        "colourValues": [
+         "#137333",
+         "#c4000a"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Passkey rollout: what is wired"
+       },
+       {
+        "height": 69,
+        "chips": 1,
+        "chipTexts": [
+         "Failing"
+        ],
+        "colours": 2,
+        "colourValues": [
+         "#8a5300",
+         "#c4000a"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Open questions about the vault"
+       },
+       {
+        "height": 69,
+        "chips": 1,
+        "chipTexts": [
+         "Paused"
+        ],
+        "colours": 1,
+        "colourValues": [
+         "#c4000a"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Homelab hardware decisions and"
+       },
+       {
+        "height": 69,
+        "chips": 1,
+        "chipTexts": [
+         "Auto-paused"
+        ],
+        "colours": 1,
+        "colourValues": [
+         "#c10007"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Budget Buddy feature ideas, gr"
+       },
+       {
+        "height": 69,
+        "chips": 1,
+        "chipTexts": [
+         "Waiting for first ru"
+        ],
+        "colours": 1,
+        "colourValues": [
+         "#c4000a"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Reading list mentions from eve"
+       },
+       {
+        "height": 69,
+        "chips": 1,
+        "chipTexts": [
+         "Active"
+        ],
+        "colours": 2,
+        "colourValues": [
+         "#137333",
+         "#c4000a"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Argus memory consolidation: op"
+       }
+      ],
+      "maxChips": 1,
+      "maxColours": 2,
+      "nested": 0,
+      "heights": [
+       69
+      ],
+      "titleWeightMax": 500
+     },
+     "interactive": {
+      "firstViewport": 26,
+      "measured": 26,
+      "small": 19,
+      "smallSample": [
+       {
+        "what": "Search",
+        "tag": "a",
+        "width": 231,
+        "height": 40
+       },
+       {
+        "what": "Graph",
+        "tag": "a",
+        "width": 231,
+        "height": 40
+       },
+       {
+        "what": "Entities",
+        "tag": "a",
+        "width": 231,
+        "height": 40
+       },
+       {
+        "what": "Live notes",
+        "tag": "a",
+        "width": 231,
+        "height": 40
+       },
+       {
+        "what": "Timeline",
+        "tag": "a",
+        "width": 231,
+        "height": 40
+       },
+       {
+        "what": "Settings",
+        "tag": "a",
+        "width": 231,
+        "height": 40
+       },
+       {
+        "what": "New note",
+        "tag": "button",
+        "width": 77.7,
+        "height": 28
+       },
+       {
+        "what": "Pause",
+        "tag": "button",
+        "width": 28,
+        "height": 28
+       },
+       {
+        "what": "Delete",
+        "tag": "button",
+        "width": 28,
+        "height": 28
+       },
+       {
+        "what": "Pause",
+        "tag": "button",
+        "width": 28,
+        "height": 28
+       }
+      ],
+      "inputs": 0,
+      "smallInputs": []
+     },
+     "controls": [
+      {
+       "what": "Search",
+       "tag": "a",
+       "top": 0,
+       "bottom": 40,
+       "left": 12,
+       "inFirstViewport": true,
+       "centreAt": 0,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 231,
+       "height": 40
+      },
+      {
+       "what": "Graph",
+       "tag": "a",
+       "top": 44,
+       "bottom": 84,
+       "left": 12,
+       "inFirstViewport": true,
+       "centreAt": 0.1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 231,
+       "height": 40
+      },
+      {
+       "what": "Entities",
+       "tag": "a",
+       "top": 88,
+       "bottom": 128,
+       "left": 12,
+       "inFirstViewport": true,
+       "centreAt": 0.1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 231,
+       "height": 40
+      },
+      {
+       "what": "Live notes",
+       "tag": "a",
+       "top": 132,
+       "bottom": 172,
+       "left": 12,
+       "inFirstViewport": true,
+       "centreAt": 0.2,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 231,
+       "height": 40
+      },
+      {
+       "what": "Timeline",
+       "tag": "a",
+       "top": 176,
+       "bottom": 216,
+       "left": 12,
+       "inFirstViewport": true,
+       "centreAt": 0.2,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 231,
+       "height": 40
+      },
+      {
+       "what": "Settings",
+       "tag": "a",
+       "top": 220,
+       "bottom": 260,
+       "left": 12,
+       "inFirstViewport": true,
+       "centreAt": 0.3,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 231,
+       "height": 40
+      },
+      {
+       "what": "Knowledge",
+       "tag": "button",
+       "top": 10,
+       "bottom": 54,
+       "left": 273,
+       "inFirstViewport": true,
+       "centreAt": 0,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 120.9,
+       "height": 44
+      },
+      {
+       "what": "New note",
+       "tag": "button",
+       "top": 72,
+       "bottom": 100,
+       "left": 1154.3,
+       "inFirstViewport": true,
+       "centreAt": 0.1,
+       "pinnedToBottom": false,
+       "primaryFill": true,
+       "width": 77.7,
+       "height": 28
+      },
+      {
+       "what": "Passkey rollout: what is wired and what ",
+       "tag": "a",
+       "top": 187.5,
+       "bottom": 205.5,
+       "left": 477,
+       "inFirstViewport": true,
+       "centreAt": 0.2,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 766,
+       "height": 67
+      },
+      {
+       "what": "Pause",
+       "tag": "button",
+       "top": 210,
+       "bottom": 238,
+       "left": 1157,
+       "inFirstViewport": true,
+       "centreAt": 0.2,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 28,
+       "height": 28
+      },
+      {
+       "what": "Delete",
+       "tag": "button",
+       "top": 210,
+       "bottom": 238,
+       "left": 1191,
+       "inFirstViewport": true,
+       "centreAt": 0.2,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 28,
+       "height": 28
+      },
+      {
+       "what": "Open questions about the vault-agent wri",
+       "tag": "a",
+       "top": 264.5,
+       "bottom": 282.5,
+       "left": 477,
+       "inFirstViewport": true,
+       "centreAt": 0.3,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 766,
+       "height": 67
+      },
+      {
+       "what": "Pause",
+       "tag": "button",
+       "top": 287,
+       "bottom": 315,
+       "left": 1157,
+       "inFirstViewport": true,
+       "centreAt": 0.3,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 28,
+       "height": 28
+      },
+      {
+       "what": "Delete",
+       "tag": "button",
+       "top": 287,
+       "bottom": 315,
+       "left": 1191,
+       "inFirstViewport": true,
+       "centreAt": 0.3,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 28,
+       "height": 28
+      },
+      {
+       "what": "Homelab hardware decisions and the reaso",
+       "tag": "a",
+       "top": 341.5,
+       "bottom": 359.5,
+       "left": 477,
+       "inFirstViewport": true,
+       "centreAt": 0.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 766,
+       "height": 67
+      },
+      {
+       "what": "Resume",
+       "tag": "button",
+       "top": 364,
+       "bottom": 392,
+       "left": 1157,
+       "inFirstViewport": true,
+       "centreAt": 0.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 28,
+       "height": 28
+      },
+      {
+       "what": "Delete",
+       "tag": "button",
+       "top": 364,
+       "bottom": 392,
+       "left": 1191,
+       "inFirstViewport": true,
+       "centreAt": 0.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 28,
+       "height": 28
+      },
+      {
+       "what": "Budget Buddy feature ideas, grouped by a",
+       "tag": "a",
+       "top": 418.5,
+       "bottom": 436.5,
+       "left": 477,
+       "inFirstViewport": true,
+       "centreAt": 0.5,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 766,
+       "height": 67
+      },
+      {
+       "what": "Resume",
+       "tag": "button",
+       "top": 441,
+       "bottom": 469,
+       "left": 1157,
+       "inFirstViewport": true,
+       "centreAt": 0.5,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 28,
+       "height": 28
+      },
+      {
+       "what": "Delete",
+       "tag": "button",
+       "top": 441,
+       "bottom": 469,
+       "left": 1191,
+       "inFirstViewport": true,
+       "centreAt": 0.5,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 28,
+       "height": 28
+      },
+      {
+       "what": "Reading list mentions from every chat th",
+       "tag": "a",
+       "top": 495.5,
+       "bottom": 513.5,
+       "left": 477,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 766,
+       "height": 67
+      },
+      {
+       "what": "Pause",
+       "tag": "button",
+       "top": 518,
+       "bottom": 546,
+       "left": 1157,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 28,
+       "height": 28
+      },
+      {
+       "what": "Delete",
+       "tag": "button",
+       "top": 518,
+       "bottom": 546,
+       "left": 1191,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 28,
+       "height": 28
+      },
+      {
+       "what": "Argus memory consolidation: open threads",
+       "tag": "a",
+       "top": 572.5,
+       "bottom": 590.5,
+       "left": 477,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 766,
+       "height": 67
+      },
+      {
+       "what": "Pause",
+       "tag": "button",
+       "top": 595,
+       "bottom": 623,
+       "left": 1157,
+       "inFirstViewport": true,
+       "centreAt": 0.7,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 28,
+       "height": 28
+      },
+      {
+       "what": "Delete",
+       "tag": "button",
+       "top": 595,
+       "bottom": 623,
+       "left": 1191,
+       "inFirstViewport": true,
+       "centreAt": 0.7,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 28,
+       "height": 28
+      }
+     ],
+     "alphaSteps": [
+      0.1,
+      0.5,
+      0.6,
+      0.74,
+      0.8
+     ],
+     "state": {
+      "statusTokens": [
+       "--warning #8a5300",
+       "--success #137333",
+       "--critical #c10007",
+       "--unreachable #b04400",
+       "--destructive #c10007"
+      ],
+      "statusColoured": 10,
+      "offToken": [
+       {
+        "colour": "#894e00",
+        "family": "amber",
+        "count": 1,
+        "sample": "Failing"
+       }
+      ],
+      "colourOnly": 0,
+      "colourOnlySamples": [],
+      "countsInHeadings": 1,
+      "progressText": 0,
+      "usesSafeTokens": true,
+      "progressElements": 0,
+      "empties": []
+     },
+     "reading": {
+      "bodySize": 13,
+      "lines": [],
+      "contrastChecked": 36,
+      "contrastUnknown": 0,
+      "contrastFails": [],
+      "contrastFailCount": 0,
+      "overflowX": 0,
+      "runningAnimations": 0
+     },
+     "textRuns": 36,
+     "truncated": {
+      "count": 5,
+      "inRows": 5,
+      "sample": [
+       "Track every unresolved question about the vault-ag (58% shown)",
+       "Summarise each hardware purchase or upgrade I disc (77% shown)",
+       "Collect every feature idea for Budget Buddy mentio (75% shown)",
+       "List every book or long-form article I said I want (94% shown)",
+       "Track open threads in the memory consolidation wor (68% shown)"
+      ]
+     },
+     "covered": {
+      "runs": 0,
+      "sample": []
+     },
+     "waitForSeen": true,
+     "pageErrors": [],
+     "url": "/knowledge/live-notes"
+    },
+    "desktop-dark": {
+     "viewport": [
+      1440,
+      900
+     ],
+     "coarse": false,
+     "hierarchy": {
+      "fontSizes": [
+       {
+        "size": 26,
+        "chars": 10
+       },
+       {
+        "size": 16,
+        "chars": 9
+       },
+       {
+        "size": 14,
+        "chars": 481
+       },
+       {
+        "size": 13,
+        "chars": 639
+       },
+       {
+        "size": 12.8,
+        "chars": 8
+       },
+       {
+        "size": 12,
+        "chars": 160
+       }
+      ],
+      "largest": {
+       "size": 26,
+       "elements": 1,
+       "weight": 600,
+       "text": "Live notes",
+       "nextSize": 16
+      },
+      "headings": [
+       {
+        "tag": "h1",
+        "text": "Live notes",
+        "size": 26,
+        "weight": 600,
+        "top": 72
+       },
+       {
+        "tag": "h2",
+        "text": "Live notes6",
+        "size": 14,
+        "weight": 500,
+        "top": 151
+       }
+      ]
+     },
+     "rows": {
+      "count": 6,
+      "sample": [
+       {
+        "height": 69,
+        "chips": 1,
+        "chipTexts": [
+         "Active"
+        ],
+        "colours": 2,
+        "colourValues": [
+         "#4ade80",
+         "#ff6469"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Passkey rollout: what is wired"
+       },
+       {
+        "height": 69,
+        "chips": 1,
+        "chipTexts": [
+         "Failing"
+        ],
+        "colours": 2,
+        "colourValues": [
+         "#fbbf24",
+         "#ff6469"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Open questions about the vault"
+       },
+       {
+        "height": 69,
+        "chips": 1,
+        "chipTexts": [
+         "Paused"
+        ],
+        "colours": 1,
+        "colourValues": [
+         "#ff6469"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Homelab hardware decisions and"
+       },
+       {
+        "height": 69,
+        "chips": 1,
+        "chipTexts": [
+         "Auto-paused"
+        ],
+        "colours": 1,
+        "colourValues": [
+         "#ff6467"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Budget Buddy feature ideas, gr"
+       },
+       {
+        "height": 69,
+        "chips": 1,
+        "chipTexts": [
+         "Waiting for first ru"
+        ],
+        "colours": 1,
+        "colourValues": [
+         "#ff6469"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Reading list mentions from eve"
+       },
+       {
+        "height": 69,
+        "chips": 1,
+        "chipTexts": [
+         "Active"
+        ],
+        "colours": 2,
+        "colourValues": [
+         "#4ade80",
+         "#ff6469"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Argus memory consolidation: op"
+       }
+      ],
+      "maxChips": 1,
+      "maxColours": 2,
+      "nested": 0,
+      "heights": [
+       69
+      ],
+      "titleWeightMax": 500
+     },
+     "interactive": {
+      "firstViewport": 26,
+      "measured": 26,
+      "small": 19,
+      "smallSample": [
+       {
+        "what": "Search",
+        "tag": "a",
+        "width": 231,
+        "height": 40
+       },
+       {
+        "what": "Graph",
+        "tag": "a",
+        "width": 231,
+        "height": 40
+       },
+       {
+        "what": "Entities",
+        "tag": "a",
+        "width": 231,
+        "height": 40
+       },
+       {
+        "what": "Live notes",
+        "tag": "a",
+        "width": 231,
+        "height": 40
+       },
+       {
+        "what": "Timeline",
+        "tag": "a",
+        "width": 231,
+        "height": 40
+       },
+       {
+        "what": "Settings",
+        "tag": "a",
+        "width": 231,
+        "height": 40
+       },
+       {
+        "what": "New note",
+        "tag": "button",
+        "width": 77.7,
+        "height": 28
+       },
+       {
+        "what": "Pause",
+        "tag": "button",
+        "width": 28,
+        "height": 28
+       },
+       {
+        "what": "Delete",
+        "tag": "button",
+        "width": 28,
+        "height": 28
+       },
+       {
+        "what": "Pause",
+        "tag": "button",
+        "width": 28,
+        "height": 28
+       }
+      ],
+      "inputs": 0,
+      "smallInputs": []
+     },
+     "controls": [
+      {
+       "what": "Search",
+       "tag": "a",
+       "top": 0,
+       "bottom": 40,
+       "left": 12,
+       "inFirstViewport": true,
+       "centreAt": 0,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 231,
+       "height": 40
+      },
+      {
+       "what": "Graph",
+       "tag": "a",
+       "top": 44,
+       "bottom": 84,
+       "left": 12,
+       "inFirstViewport": true,
+       "centreAt": 0.1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 231,
+       "height": 40
+      },
+      {
+       "what": "Entities",
+       "tag": "a",
+       "top": 88,
+       "bottom": 128,
+       "left": 12,
+       "inFirstViewport": true,
+       "centreAt": 0.1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 231,
+       "height": 40
+      },
+      {
+       "what": "Live notes",
+       "tag": "a",
+       "top": 132,
+       "bottom": 172,
+       "left": 12,
+       "inFirstViewport": true,
+       "centreAt": 0.2,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 231,
+       "height": 40
+      },
+      {
+       "what": "Timeline",
+       "tag": "a",
+       "top": 176,
+       "bottom": 216,
+       "left": 12,
+       "inFirstViewport": true,
+       "centreAt": 0.2,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 231,
+       "height": 40
+      },
+      {
+       "what": "Settings",
+       "tag": "a",
+       "top": 220,
+       "bottom": 260,
+       "left": 12,
+       "inFirstViewport": true,
+       "centreAt": 0.3,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 231,
+       "height": 40
+      },
+      {
+       "what": "Knowledge",
+       "tag": "button",
+       "top": 10,
+       "bottom": 54,
+       "left": 273,
+       "inFirstViewport": true,
+       "centreAt": 0,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 120.9,
+       "height": 44
+      },
+      {
+       "what": "New note",
+       "tag": "button",
+       "top": 72,
+       "bottom": 100,
+       "left": 1154.3,
+       "inFirstViewport": true,
+       "centreAt": 0.1,
+       "pinnedToBottom": false,
+       "primaryFill": true,
+       "width": 77.7,
+       "height": 28
+      },
+      {
+       "what": "Passkey rollout: what is wired and what ",
+       "tag": "a",
+       "top": 187.5,
+       "bottom": 205.5,
+       "left": 477,
+       "inFirstViewport": true,
+       "centreAt": 0.2,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 766,
+       "height": 67
+      },
+      {
+       "what": "Pause",
+       "tag": "button",
+       "top": 210,
+       "bottom": 238,
+       "left": 1157,
+       "inFirstViewport": true,
+       "centreAt": 0.2,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 28,
+       "height": 28
+      },
+      {
+       "what": "Delete",
+       "tag": "button",
+       "top": 210,
+       "bottom": 238,
+       "left": 1191,
+       "inFirstViewport": true,
+       "centreAt": 0.2,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 28,
+       "height": 28
+      },
+      {
+       "what": "Open questions about the vault-agent wri",
+       "tag": "a",
+       "top": 264.5,
+       "bottom": 282.5,
+       "left": 477,
+       "inFirstViewport": true,
+       "centreAt": 0.3,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 766,
+       "height": 67
+      },
+      {
+       "what": "Pause",
+       "tag": "button",
+       "top": 287,
+       "bottom": 315,
+       "left": 1157,
+       "inFirstViewport": true,
+       "centreAt": 0.3,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 28,
+       "height": 28
+      },
+      {
+       "what": "Delete",
+       "tag": "button",
+       "top": 287,
+       "bottom": 315,
+       "left": 1191,
+       "inFirstViewport": true,
+       "centreAt": 0.3,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 28,
+       "height": 28
+      },
+      {
+       "what": "Homelab hardware decisions and the reaso",
+       "tag": "a",
+       "top": 341.5,
+       "bottom": 359.5,
+       "left": 477,
+       "inFirstViewport": true,
+       "centreAt": 0.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 766,
+       "height": 67
+      },
+      {
+       "what": "Resume",
+       "tag": "button",
+       "top": 364,
+       "bottom": 392,
+       "left": 1157,
+       "inFirstViewport": true,
+       "centreAt": 0.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 28,
+       "height": 28
+      },
+      {
+       "what": "Delete",
+       "tag": "button",
+       "top": 364,
+       "bottom": 392,
+       "left": 1191,
+       "inFirstViewport": true,
+       "centreAt": 0.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 28,
+       "height": 28
+      },
+      {
+       "what": "Budget Buddy feature ideas, grouped by a",
+       "tag": "a",
+       "top": 418.5,
+       "bottom": 436.5,
+       "left": 477,
+       "inFirstViewport": true,
+       "centreAt": 0.5,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 766,
+       "height": 67
+      },
+      {
+       "what": "Resume",
+       "tag": "button",
+       "top": 441,
+       "bottom": 469,
+       "left": 1157,
+       "inFirstViewport": true,
+       "centreAt": 0.5,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 28,
+       "height": 28
+      },
+      {
+       "what": "Delete",
+       "tag": "button",
+       "top": 441,
+       "bottom": 469,
+       "left": 1191,
+       "inFirstViewport": true,
+       "centreAt": 0.5,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 28,
+       "height": 28
+      },
+      {
+       "what": "Reading list mentions from every chat th",
+       "tag": "a",
+       "top": 495.5,
+       "bottom": 513.5,
+       "left": 477,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 766,
+       "height": 67
+      },
+      {
+       "what": "Pause",
+       "tag": "button",
+       "top": 518,
+       "bottom": 546,
+       "left": 1157,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 28,
+       "height": 28
+      },
+      {
+       "what": "Delete",
+       "tag": "button",
+       "top": 518,
+       "bottom": 546,
+       "left": 1191,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 28,
+       "height": 28
+      },
+      {
+       "what": "Argus memory consolidation: open threads",
+       "tag": "a",
+       "top": 572.5,
+       "bottom": 590.5,
+       "left": 477,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 766,
+       "height": 67
+      },
+      {
+       "what": "Pause",
+       "tag": "button",
+       "top": 595,
+       "bottom": 623,
+       "left": 1157,
+       "inFirstViewport": true,
+       "centreAt": 0.7,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 28,
+       "height": 28
+      },
+      {
+       "what": "Delete",
+       "tag": "button",
+       "top": 595,
+       "bottom": 623,
+       "left": 1191,
+       "inFirstViewport": true,
+       "centreAt": 0.7,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 28,
+       "height": 28
+      }
+     ],
+     "alphaSteps": [
+      0.1,
+      0.15,
+      0.2,
+      0.3,
+      0.5,
+      0.6,
+      0.74,
+      0.8
+     ],
+     "state": {
+      "statusTokens": [
+       "--warning #fbbf24",
+       "--success #4ade80",
+       "--critical #ff7a7e",
+       "--unreachable #fb923c",
+       "--destructive #ff6467"
+      ],
+      "statusColoured": 10,
+      "offToken": [
+       {
+        "colour": "#ff626c",
+        "family": "red",
+        "count": 1,
+        "sample": "Auto-paused"
+       }
+      ],
+      "colourOnly": 0,
+      "colourOnlySamples": [],
+      "countsInHeadings": 1,
+      "progressText": 0,
+      "usesSafeTokens": true,
+      "progressElements": 0,
+      "empties": []
+     },
+     "reading": {
+      "bodySize": 13,
+      "lines": [],
+      "contrastChecked": 36,
+      "contrastUnknown": 0,
+      "contrastFails": [
+       {
+        "text": "Auto-paused",
+        "ratio": 4.4,
+        "size": 13,
+        "colour": "#ff6467",
+        "on": "#34313d"
+       }
+      ],
+      "contrastFailCount": 1,
+      "overflowX": 0,
+      "runningAnimations": 0
+     },
+     "textRuns": 36,
+     "truncated": {
+      "count": 5,
+      "inRows": 5,
+      "sample": [
+       "Track every unresolved question about the vault-ag (58% shown)",
+       "Summarise each hardware purchase or upgrade I disc (77% shown)",
+       "Collect every feature idea for Budget Buddy mentio (75% shown)",
+       "List every book or long-form article I said I want (94% shown)",
+       "Track open threads in the memory consolidation wor (68% shown)"
+      ]
+     },
+     "covered": {
+      "runs": 0,
+      "sample": []
+     },
+     "waitForSeen": true,
+     "pageErrors": [],
+     "url": "/knowledge/live-notes"
+    },
+    "iphone-320": {
+     "viewport": [
+      320,
+      844
+     ],
+     "coarse": true,
+     "hierarchy": {
+      "fontSizes": [
+       {
+        "size": 21,
+        "chars": 10
+       },
+       {
+        "size": 16,
+        "chars": 9
+       },
+       {
+        "size": 14,
+        "chars": 436
+       },
+       {
+        "size": 13,
+        "chars": 58
+       },
+       {
+        "size": 12.8,
+        "chars": 8
+       },
+       {
+        "size": 12,
+        "chars": 193
+       }
+      ],
+      "largest": {
+       "size": 21,
+       "elements": 1,
+       "weight": 600,
+       "text": "Live notes",
+       "nextSize": 16
+      },
+      "headings": [
+       {
+        "tag": "h1",
+        "text": "Live notes",
+        "size": 21,
+        "weight": 600,
+        "top": 72
+       },
+       {
+        "tag": "h2",
+        "text": "Live notes6",
+        "size": 14,
+        "weight": 500,
+        "top": 203
+       }
+      ]
+     },
+     "rows": {
+      "count": 6,
+      "sample": [
+       {
+        "height": 85,
+        "chips": 1,
+        "chipTexts": [
+         "Active"
+        ],
+        "colours": 2,
+        "colourValues": [
+         "#137333",
+         "#c4000a"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Passkey rollout: what is wired"
+       },
+       {
+        "height": 85,
+        "chips": 1,
+        "chipTexts": [
+         "Failing"
+        ],
+        "colours": 2,
+        "colourValues": [
+         "#8a5300",
+         "#c4000a"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Open questions about the vault"
+       },
+       {
+        "height": 85,
+        "chips": 1,
+        "chipTexts": [
+         "Paused"
+        ],
+        "colours": 1,
+        "colourValues": [
+         "#c4000a"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Homelab hardware decisions and"
+       },
+       {
+        "height": 85,
+        "chips": 1,
+        "chipTexts": [
+         "Auto-paused"
+        ],
+        "colours": 1,
+        "colourValues": [
+         "#c10007"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Budget Buddy feature ideas, gr"
+       },
+       {
+        "height": 85,
+        "chips": 1,
+        "chipTexts": [
+         "Waiting for first ru"
+        ],
+        "colours": 1,
+        "colourValues": [
+         "#c4000a"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Reading list mentions from eve"
+       },
+       {
+        "height": 85,
+        "chips": 1,
+        "chipTexts": [
+         "Active"
+        ],
+        "colours": 2,
+        "colourValues": [
+         "#137333",
+         "#c4000a"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Argus memory consolidation: op"
+       }
+      ],
+      "maxChips": 1,
+      "maxColours": 2,
+      "nested": 0,
+      "heights": [
+       85
+      ],
+      "titleWeightMax": 500
+     },
+     "interactive": {
+      "firstViewport": 25,
+      "measured": 25,
+      "small": 0,
+      "smallSample": [],
+      "inputs": 0,
+      "smallInputs": []
+     },
+     "controls": [
+      {
+       "what": "Knowledge",
+       "tag": "button",
+       "top": 10,
+       "bottom": 54,
+       "left": 17,
+       "inFirstViewport": true,
+       "centreAt": 0,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 120.9,
+       "height": 44
+      },
+      {
+       "what": "New note",
+       "tag": "button",
+       "top": 135,
+       "bottom": 179,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.2,
+       "pinnedToBottom": false,
+       "primaryFill": true,
+       "width": 77.7,
+       "height": 44
+      },
+      {
+       "what": "Passkey rollout: what is wired and what ",
+       "tag": "a",
+       "top": 239.5,
+       "bottom": 257.5,
+       "left": 29,
+       "inFirstViewport": true,
+       "centreAt": 0.3,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 292.5,
+       "height": 83
+      },
+      {
+       "what": "Pause",
+       "tag": "button",
+       "top": 262,
+       "bottom": 306,
+       "left": 197,
+       "inFirstViewport": true,
+       "centreAt": 0.3,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Delete",
+       "tag": "button",
+       "top": 262,
+       "bottom": 306,
+       "left": 247,
+       "inFirstViewport": true,
+       "centreAt": 0.3,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Open questions about the vault-agent wri",
+       "tag": "a",
+       "top": 332.5,
+       "bottom": 350.5,
+       "left": 29,
+       "inFirstViewport": true,
+       "centreAt": 0.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 720.4,
+       "height": 83
+      },
+      {
+       "what": "Pause",
+       "tag": "button",
+       "top": 355,
+       "bottom": 399,
+       "left": 197,
+       "inFirstViewport": true,
+       "centreAt": 0.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Delete",
+       "tag": "button",
+       "top": 355,
+       "bottom": 399,
+       "left": 247,
+       "inFirstViewport": true,
+       "centreAt": 0.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Homelab hardware decisions and the reaso",
+       "tag": "a",
+       "top": 425.5,
+       "bottom": 443.5,
+       "left": 29,
+       "inFirstViewport": true,
+       "centreAt": 0.5,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 400.4,
+       "height": 83
+      },
+      {
+       "what": "Resume",
+       "tag": "button",
+       "top": 448,
+       "bottom": 492,
+       "left": 197,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Delete",
+       "tag": "button",
+       "top": 448,
+       "bottom": 492,
+       "left": 247,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Budget Buddy feature ideas, grouped by a",
+       "tag": "a",
+       "top": 518.5,
+       "bottom": 536.5,
+       "left": 29,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 448.8,
+       "height": 83
+      },
+      {
+       "what": "Resume",
+       "tag": "button",
+       "top": 541,
+       "bottom": 585,
+       "left": 197,
+       "inFirstViewport": true,
+       "centreAt": 0.7,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Delete",
+       "tag": "button",
+       "top": 541,
+       "bottom": 585,
+       "left": 247,
+       "inFirstViewport": true,
+       "centreAt": 0.7,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Reading list mentions from every chat th",
+       "tag": "a",
+       "top": 611.5,
+       "bottom": 629.5,
+       "left": 29,
+       "inFirstViewport": true,
+       "centreAt": 0.7,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 313.6,
+       "height": 83
+      },
+      {
+       "what": "Pause",
+       "tag": "button",
+       "top": 634,
+       "bottom": 678,
+       "left": 197,
+       "inFirstViewport": true,
+       "centreAt": 0.8,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Delete",
+       "tag": "button",
+       "top": 634,
+       "bottom": 678,
+       "left": 247,
+       "inFirstViewport": true,
+       "centreAt": 0.8,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Argus memory consolidation: open threads",
+       "tag": "a",
+       "top": 704.5,
+       "bottom": 722.5,
+       "left": 29,
+       "inFirstViewport": true,
+       "centreAt": 0.8,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 586.3,
+       "height": 83
+      },
+      {
+       "what": "Pause",
+       "tag": "button",
+       "top": 727,
+       "bottom": 771,
+       "left": 197,
+       "inFirstViewport": true,
+       "centreAt": 0.9,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Delete",
+       "tag": "button",
+       "top": 727,
+       "bottom": 771,
+       "left": 247,
+       "inFirstViewport": true,
+       "centreAt": 0.9,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Search",
+       "tag": "a",
+       "top": 781,
+       "bottom": 831,
+       "left": 25.8,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 50.5,
+       "height": 50
+      },
+      {
+       "what": "Graph",
+       "tag": "a",
+       "top": 781,
+       "bottom": 831,
+       "left": 80.3,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 50.5,
+       "height": 50
+      },
+      {
+       "what": "Entities",
+       "tag": "a",
+       "top": 781,
+       "bottom": 831,
+       "left": 134.8,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 50.5,
+       "height": 50
+      },
+      {
+       "what": "Live notes",
+       "tag": "a",
+       "top": 781,
+       "bottom": 831,
+       "left": 189.3,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 50.5,
+       "height": 50
+      },
+      {
+       "what": "More",
+       "tag": "button",
+       "top": 781,
+       "bottom": 831,
+       "left": 243.7,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 50.5,
+       "height": 50
+      }
+     ],
+     "alphaSteps": [
+      0.1,
+      0.5,
+      0.6,
+      0.74,
+      0.8
+     ],
+     "state": {
+      "statusTokens": [
+       "--warning #8a5300",
+       "--success #137333",
+       "--critical #c10007",
+       "--unreachable #b04400",
+       "--destructive #c10007"
+      ],
+      "statusColoured": 10,
+      "offToken": [
+       {
+        "colour": "#894e00",
+        "family": "amber",
+        "count": 1,
+        "sample": "Failing"
+       }
+      ],
+      "colourOnly": 0,
+      "colourOnlySamples": [],
+      "countsInHeadings": 1,
+      "progressText": 0,
+      "usesSafeTokens": true,
+      "progressElements": 0,
+      "empties": []
+     },
+     "reading": {
+      "bodySize": 14,
+      "lines": [],
+      "contrastChecked": 29,
+      "contrastUnknown": 0,
+      "contrastFails": [],
+      "contrastFailCount": 0,
+      "overflowX": 0,
+      "runningAnimations": 0
+     },
+     "textRuns": 29,
+     "truncated": {
+      "count": 7,
+      "inRows": 6,
+      "sample": [
+       "Passkey rollout: what is wired and what is left (89% shown)",
+       "Open questions about the vault-agent write path, k (36% shown)",
+       "Homelab hardware decisions and the reasons behind  (66% shown)",
+       "Budget Buddy feature ideas, grouped by area and or (58% shown)",
+       "Reading list mentions from every chat this month (83% shown)",
+       "Argus memory consolidation: open threads by topic, (45% shown)",
+       "Live notes (76% shown)"
+      ]
+     },
+     "covered": {
+      "runs": 0,
+      "sample": []
+     },
+     "waitForSeen": true,
+     "pageErrors": [],
+     "url": "/knowledge/live-notes"
+    },
+    "iphone-reduced-motion": {
+     "viewport": [
+      390,
+      844
+     ],
+     "coarse": true,
+     "hierarchy": {
+      "fontSizes": [
+       {
+        "size": 21,
+        "chars": 10
+       },
+       {
+        "size": 16,
+        "chars": 9
+       },
+       {
+        "size": 14,
+        "chars": 436
+       },
+       {
+        "size": 13,
+        "chars": 473
+       },
+       {
+        "size": 12.8,
+        "chars": 8
+       },
+       {
+        "size": 12,
+        "chars": 193
+       }
+      ],
+      "largest": {
+       "size": 21,
+       "elements": 1,
+       "weight": 600,
+       "text": "Live notes",
+       "nextSize": 16
+      },
+      "headings": [
+       {
+        "tag": "h1",
+        "text": "Live notes",
+        "size": 21,
+        "weight": 600,
+        "top": 72
+       },
+       {
+        "tag": "h2",
+        "text": "Live notes6",
+        "size": 14,
+        "weight": 500,
+        "top": 203
+       }
+      ]
+     },
+     "rows": {
+      "count": 6,
+      "sample": [
+       {
+        "height": 85,
+        "chips": 1,
+        "chipTexts": [
+         "Active"
+        ],
+        "colours": 2,
+        "colourValues": [
+         "#137333",
+         "#c4000a"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Passkey rollout: what is wired"
+       },
+       {
+        "height": 85,
+        "chips": 1,
+        "chipTexts": [
+         "Failing"
+        ],
+        "colours": 2,
+        "colourValues": [
+         "#8a5300",
+         "#c4000a"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Open questions about the vault"
+       },
+       {
+        "height": 85,
+        "chips": 1,
+        "chipTexts": [
+         "Paused"
+        ],
+        "colours": 1,
+        "colourValues": [
+         "#c4000a"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Homelab hardware decisions and"
+       },
+       {
+        "height": 85,
+        "chips": 1,
+        "chipTexts": [
+         "Auto-paused"
+        ],
+        "colours": 1,
+        "colourValues": [
+         "#c10007"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Budget Buddy feature ideas, gr"
+       },
+       {
+        "height": 85,
+        "chips": 1,
+        "chipTexts": [
+         "Waiting for first ru"
+        ],
+        "colours": 1,
+        "colourValues": [
+         "#c4000a"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Reading list mentions from eve"
+       },
+       {
+        "height": 85,
+        "chips": 1,
+        "chipTexts": [
+         "Active"
+        ],
+        "colours": 2,
+        "colourValues": [
+         "#137333",
+         "#c4000a"
+        ],
+        "nested": 0,
+        "titleWeight": 500,
+        "titleSize": 14,
+        "titleText": "Argus memory consolidation: op"
+       }
+      ],
+      "maxChips": 1,
+      "maxColours": 2,
+      "nested": 0,
+      "heights": [
+       85
+      ],
+      "titleWeightMax": 500
+     },
+     "interactive": {
+      "firstViewport": 25,
+      "measured": 25,
+      "small": 0,
+      "smallSample": [],
+      "inputs": 0,
+      "smallInputs": []
+     },
+     "controls": [
+      {
+       "what": "Knowledge",
+       "tag": "button",
+       "top": 10,
+       "bottom": 54,
+       "left": 17,
+       "inFirstViewport": true,
+       "centreAt": 0,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 120.9,
+       "height": 44
+      },
+      {
+       "what": "New note",
+       "tag": "button",
+       "top": 135,
+       "bottom": 179,
+       "left": 16,
+       "inFirstViewport": true,
+       "centreAt": 0.2,
+       "pinnedToBottom": false,
+       "primaryFill": true,
+       "width": 77.7,
+       "height": 44
+      },
+      {
+       "what": "Passkey rollout: what is wired and what ",
+       "tag": "a",
+       "top": 239.5,
+       "bottom": 257.5,
+       "left": 29,
+       "inFirstViewport": true,
+       "centreAt": 0.3,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 356,
+       "height": 83
+      },
+      {
+       "what": "Pause",
+       "tag": "button",
+       "top": 262,
+       "bottom": 306,
+       "left": 267,
+       "inFirstViewport": true,
+       "centreAt": 0.3,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Delete",
+       "tag": "button",
+       "top": 262,
+       "bottom": 306,
+       "left": 317,
+       "inFirstViewport": true,
+       "centreAt": 0.3,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Open questions about the vault-agent wri",
+       "tag": "a",
+       "top": 332.5,
+       "bottom": 350.5,
+       "left": 29,
+       "inFirstViewport": true,
+       "centreAt": 0.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 720.4,
+       "height": 83
+      },
+      {
+       "what": "Pause",
+       "tag": "button",
+       "top": 355,
+       "bottom": 399,
+       "left": 267,
+       "inFirstViewport": true,
+       "centreAt": 0.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Delete",
+       "tag": "button",
+       "top": 355,
+       "bottom": 399,
+       "left": 317,
+       "inFirstViewport": true,
+       "centreAt": 0.4,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Homelab hardware decisions and the reaso",
+       "tag": "a",
+       "top": 425.5,
+       "bottom": 443.5,
+       "left": 29,
+       "inFirstViewport": true,
+       "centreAt": 0.5,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 400.4,
+       "height": 83
+      },
+      {
+       "what": "Resume",
+       "tag": "button",
+       "top": 448,
+       "bottom": 492,
+       "left": 267,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Delete",
+       "tag": "button",
+       "top": 448,
+       "bottom": 492,
+       "left": 317,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Budget Buddy feature ideas, grouped by a",
+       "tag": "a",
+       "top": 518.5,
+       "bottom": 536.5,
+       "left": 29,
+       "inFirstViewport": true,
+       "centreAt": 0.6,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 448.8,
+       "height": 83
+      },
+      {
+       "what": "Resume",
+       "tag": "button",
+       "top": 541,
+       "bottom": 585,
+       "left": 267,
+       "inFirstViewport": true,
+       "centreAt": 0.7,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Delete",
+       "tag": "button",
+       "top": 541,
+       "bottom": 585,
+       "left": 317,
+       "inFirstViewport": true,
+       "centreAt": 0.7,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Reading list mentions from every chat th",
+       "tag": "a",
+       "top": 611.5,
+       "bottom": 629.5,
+       "left": 29,
+       "inFirstViewport": true,
+       "centreAt": 0.7,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 356,
+       "height": 83
+      },
+      {
+       "what": "Pause",
+       "tag": "button",
+       "top": 634,
+       "bottom": 678,
+       "left": 267,
+       "inFirstViewport": true,
+       "centreAt": 0.8,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Delete",
+       "tag": "button",
+       "top": 634,
+       "bottom": 678,
+       "left": 317,
+       "inFirstViewport": true,
+       "centreAt": 0.8,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Argus memory consolidation: open threads",
+       "tag": "a",
+       "top": 704.5,
+       "bottom": 722.5,
+       "left": 29,
+       "inFirstViewport": true,
+       "centreAt": 0.8,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 586.3,
+       "height": 83
+      },
+      {
+       "what": "Pause",
+       "tag": "button",
+       "top": 727,
+       "bottom": 771,
+       "left": 267,
+       "inFirstViewport": true,
+       "centreAt": 0.9,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Delete",
+       "tag": "button",
+       "top": 727,
+       "bottom": 771,
+       "left": 317,
+       "inFirstViewport": true,
+       "centreAt": 0.9,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Search",
+       "tag": "a",
+       "top": 781,
+       "bottom": 831,
+       "left": 25.8,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 64.5,
+       "height": 50
+      },
+      {
+       "what": "Graph",
+       "tag": "a",
+       "top": 781,
+       "bottom": 831,
+       "left": 94.3,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 64.5,
+       "height": 50
+      },
+      {
+       "what": "Entities",
+       "tag": "a",
+       "top": 781,
+       "bottom": 831,
+       "left": 162.8,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 64.5,
+       "height": 50
+      },
+      {
+       "what": "Live notes",
+       "tag": "a",
+       "top": 781,
+       "bottom": 831,
+       "left": 231.3,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 64.5,
+       "height": 50
+      },
+      {
+       "what": "More",
+       "tag": "button",
+       "top": 781,
+       "bottom": 831,
+       "left": 299.7,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 64.5,
+       "height": 50
+      }
+     ],
+     "alphaSteps": [
+      0.1,
+      0.5,
+      0.6,
+      0.74,
+      0.8
+     ],
+     "state": {
+      "statusTokens": [
+       "--warning #8a5300",
+       "--success #137333",
+       "--critical #c10007",
+       "--unreachable #b04400",
+       "--destructive #c10007"
+      ],
+      "statusColoured": 10,
+      "offToken": [
+       {
+        "colour": "#894e00",
+        "family": "amber",
+        "count": 1,
+        "sample": "Failing"
+       }
+      ],
+      "colourOnly": 0,
+      "colourOnlySamples": [],
+      "countsInHeadings": 1,
+      "progressText": 0,
+      "usesSafeTokens": true,
+      "progressElements": 0,
+      "empties": []
+     },
+     "reading": {
+      "bodySize": 13,
+      "lines": [],
+      "contrastChecked": 33,
+      "contrastUnknown": 0,
+      "contrastFails": [],
+      "contrastFailCount": 0,
+      "overflowX": 0,
+      "runningAnimations": 0
+     },
+     "textRuns": 33,
+     "truncated": {
+      "count": 8,
+      "inRows": 8,
+      "sample": [
+       "Keep a running list of where passkey sign-in is wi (2% shown)",
+       "Open questions about the vault-agent write path, k (46% shown)",
+       "Track every unresolved question about the vault-ag (1% shown)",
+       "Homelab hardware decisions and the reasons behind  (83% shown)",
+       "Summarise each hardware purchase or upgrade I disc (1% shown)",
+       "Budget Buddy feature ideas, grouped by area and or (74% shown)",
+       "Argus memory consolidation: open threads by topic, (57% shown)",
+       "Track open threads in the memory consolidation wor (1% shown)"
+      ]
+     },
+     "covered": {
+      "runs": 0,
+      "sample": []
+     },
+     "waitForSeen": true,
+     "pageErrors": [],
+     "url": "/knowledge/live-notes"
+    }
+   }
+  },
+  {
+   "name": "chat",
+   "path": "/knowledge/chat/c-1001",
+   "why": "The reading view (`/chat/:id`). Rendered as its EMPTY state only: a chat's messages and entities live in the app's in-browser PGlite store (src/pages/ChatDetail.tsx:46), which no network mock can fill, so the populated view is not renderable locally.",
+   "primaryAction": null,
+   "expectsProgress": false,
+   "checks": {
+    "hierarchy": {
+     "oneLargest": {
+      "pass": true,
+      "detail": "16px ×1 \"Knowledge\", next 12px"
+     },
+     "fontSizes": {
+      "pass": true,
+      "detail": "16/12"
+     },
+     "pageTitleVisible": {
+      "pass": false,
+      "detail": "no h1 on show in the first viewport"
+     },
+     "headingVisible": {
+      "pass": false,
+      "detail": "no heading in the first viewport"
+     },
+     "headingOutweighsRows": {
+      "pass": null,
+      "detail": "no rows or no heading"
+     },
+     "headingOutweighsRowsDesktop": {
+      "pass": null,
+      "detail": "no rows or no heading"
+     }
+    },
+    "clutter": {
+     "chipsPerRow": {
+      "pass": null,
+      "detail": "no rows"
+     },
+     "coloursPerRow": {
+      "pass": null,
+      "detail": "no rows"
+     },
+     "noNestedBorders": {
+      "pass": null,
+      "detail": "no rows"
+     },
+     "chipsPerRowDesktop": {
+      "pass": null,
+      "detail": "no rows"
+     },
+     "coloursPerRowDesktop": {
+      "pass": null,
+      "detail": "no rows"
+     },
+     "nothingCutOff": {
+      "pass": true,
+      "detail": "0 texts cut short, 0 of them in list rows"
+     },
+     "interactiveCount": {
+      "pass": true,
+      "detail": "7"
+     },
+     "alphaSteps": {
+      "pass": true,
+      "detail": "4: 0.5, 0.6, 0.74, 0.8"
+     }
+    },
+    "action": {
+     "primaryVisible": {
+      "pass": null,
+      "detail": "no primary action on this screen"
+     },
+     "primaryInThumbZone": {
+      "pass": null,
+      "detail": "no primary action on this screen"
+     },
+     "tapTargets": {
+      "pass": true,
+      "detail": "0 of 7 under 44px"
+     },
+     "inputText": {
+      "pass": null,
+      "detail": "no inputs"
+     }
+    },
+    "state": {
+     "moreThanColour": {
+      "pass": null,
+      "detail": "no status colour on screen"
+     },
+     "statusFromTokens": {
+      "pass": null,
+      "detail": "no status colour on screen"
+     },
+     "progressShown": {
+      "pass": null,
+      "detail": "no goal on this screen"
+     },
+     "emptySaysNext": {
+      "pass": null,
+      "detail": "no empty state on screen"
+     }
+    },
+    "reading": {
+     "bodyText": {
+      "pass": true,
+      "detail": "16px"
+     },
+     "lineLength": {
+      "pass": null,
+      "detail": "no wrapped paragraph on desktop"
+     },
+     "contrast": {
+      "pass": true,
+      "detail": "iphone-light 0, iphone-dark 0, desktop-light 0, desktop-dark 0"
+     },
+     "noSidewaysScroll": {
+      "pass": true,
+      "detail": "390: 0px, 320: 0px"
+     },
+     "reducedMotion": {
+      "pass": true,
+      "detail": "0 running"
+     }
+    }
+   },
+   "variants": {
+    "iphone-light": {
+     "viewport": [
+      390,
+      844
+     ],
+     "coarse": true,
+     "hierarchy": {
+      "fontSizes": [
+       {
+        "size": 16,
+        "chars": 9
+       },
+       {
+        "size": 12,
+        "chars": 33
+       }
+      ],
+      "largest": {
+       "size": 16,
+       "elements": 1,
+       "weight": 600,
+       "text": "Knowledge",
+       "nextSize": 12
+      },
+      "headings": []
+     },
+     "rows": {
+      "count": 0,
+      "sample": [],
+      "maxChips": 0,
+      "maxColours": 0,
+      "nested": 0,
+      "heights": [],
+      "titleWeightMax": 0
+     },
+     "interactive": {
+      "firstViewport": 7,
+      "measured": 7,
+      "small": 0,
+      "smallSample": [],
+      "inputs": 0,
+      "smallInputs": []
+     },
+     "controls": [
+      {
+       "what": "Back to search",
+       "tag": "a",
+       "top": 10,
+       "bottom": 54,
+       "left": 17,
+       "inFirstViewport": true,
+       "centreAt": 0,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Knowledge",
+       "tag": "button",
+       "top": 10,
+       "bottom": 54,
+       "left": 65,
+       "inFirstViewport": true,
+       "centreAt": 0,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 120.9,
+       "height": 44
+      },
+      {
+       "what": "Search",
+       "tag": "a",
+       "top": 781,
+       "bottom": 831,
+       "left": 25.8,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 64.5,
+       "height": 50
+      },
+      {
+       "what": "Graph",
+       "tag": "a",
+       "top": 781,
+       "bottom": 831,
+       "left": 94.3,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 64.5,
+       "height": 50
+      },
+      {
+       "what": "Entities",
+       "tag": "a",
+       "top": 781,
+       "bottom": 831,
+       "left": 162.8,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 64.5,
+       "height": 50
+      },
+      {
+       "what": "Live notes",
+       "tag": "a",
+       "top": 781,
+       "bottom": 831,
+       "left": 231.3,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 64.5,
+       "height": 50
+      },
+      {
+       "what": "More",
+       "tag": "button",
+       "top": 781,
+       "bottom": 831,
+       "left": 299.7,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 64.5,
+       "height": 50
+      }
+     ],
+     "alphaSteps": [
+      0.5,
+      0.6,
+      0.74,
+      0.8
+     ],
+     "state": {
+      "statusTokens": [
+       "--warning #8a5300",
+       "--success #137333",
+       "--critical #c10007",
+       "--unreachable #b04400",
+       "--destructive #c10007"
+      ],
+      "statusColoured": 0,
+      "offToken": [],
+      "colourOnly": 0,
+      "colourOnlySamples": [],
+      "countsInHeadings": 0,
+      "progressText": 0,
+      "usesSafeTokens": true,
+      "progressElements": 0,
+      "empties": []
+     },
+     "reading": {
+      "bodySize": 16,
+      "lines": [],
+      "contrastChecked": 6,
+      "contrastUnknown": 0,
+      "contrastFails": [],
+      "contrastFailCount": 0,
+      "overflowX": 0,
+      "runningAnimations": 8
+     },
+     "textRuns": 6,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
+     "covered": {
+      "runs": 0,
+      "sample": []
+     },
+     "waitForSeen": true,
+     "pageErrors": [],
+     "url": "/knowledge/chat/c-1001"
+    },
+    "iphone-dark": {
+     "viewport": [
+      390,
+      844
+     ],
+     "coarse": true,
+     "hierarchy": {
+      "fontSizes": [
+       {
+        "size": 16,
+        "chars": 9
+       },
+       {
+        "size": 12,
+        "chars": 33
+       }
+      ],
+      "largest": {
+       "size": 16,
+       "elements": 1,
+       "weight": 600,
+       "text": "Knowledge",
+       "nextSize": 12
+      },
+      "headings": []
+     },
+     "rows": {
+      "count": 0,
+      "sample": [],
+      "maxChips": 0,
+      "maxColours": 0,
+      "nested": 0,
+      "heights": [],
+      "titleWeightMax": 0
+     },
+     "interactive": {
+      "firstViewport": 7,
+      "measured": 7,
+      "small": 0,
+      "smallSample": [],
+      "inputs": 0,
+      "smallInputs": []
+     },
+     "controls": [
+      {
+       "what": "Back to search",
+       "tag": "a",
+       "top": 10,
+       "bottom": 54,
+       "left": 17,
+       "inFirstViewport": true,
+       "centreAt": 0,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Knowledge",
+       "tag": "button",
+       "top": 10,
+       "bottom": 54,
+       "left": 65,
+       "inFirstViewport": true,
+       "centreAt": 0,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 120.9,
+       "height": 44
+      },
+      {
+       "what": "Search",
+       "tag": "a",
+       "top": 781,
+       "bottom": 831,
+       "left": 25.8,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 64.5,
+       "height": 50
+      },
+      {
+       "what": "Graph",
+       "tag": "a",
+       "top": 781,
+       "bottom": 831,
+       "left": 94.3,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 64.5,
+       "height": 50
+      },
+      {
+       "what": "Entities",
+       "tag": "a",
+       "top": 781,
+       "bottom": 831,
+       "left": 162.8,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 64.5,
+       "height": 50
+      },
+      {
+       "what": "Live notes",
+       "tag": "a",
+       "top": 781,
+       "bottom": 831,
+       "left": 231.3,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 64.5,
+       "height": 50
+      },
+      {
+       "what": "More",
+       "tag": "button",
+       "top": 781,
+       "bottom": 831,
+       "left": 299.7,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 64.5,
+       "height": 50
+      }
+     ],
+     "alphaSteps": [
+      0.5,
+      0.6,
+      0.74,
+      0.8
+     ],
+     "state": {
+      "statusTokens": [
+       "--warning #fbbf24",
+       "--success #4ade80",
+       "--critical #ff7a7e",
+       "--unreachable #fb923c",
+       "--destructive #ff6467"
+      ],
+      "statusColoured": 0,
+      "offToken": [],
+      "colourOnly": 0,
+      "colourOnlySamples": [],
+      "countsInHeadings": 0,
+      "progressText": 0,
+      "usesSafeTokens": true,
+      "progressElements": 0,
+      "empties": []
+     },
+     "reading": {
+      "bodySize": 16,
+      "lines": [],
+      "contrastChecked": 6,
+      "contrastUnknown": 0,
+      "contrastFails": [],
+      "contrastFailCount": 0,
+      "overflowX": 0,
+      "runningAnimations": 8
+     },
+     "textRuns": 6,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
+     "covered": {
+      "runs": 0,
+      "sample": []
+     },
+     "waitForSeen": true,
+     "pageErrors": [],
+     "url": "/knowledge/chat/c-1001"
+    },
+    "desktop-light": {
+     "viewport": [
+      1440,
+      900
+     ],
+     "coarse": false,
+     "hierarchy": {
+      "fontSizes": [
+       {
+        "size": 16,
+        "chars": 9
+       },
+       {
+        "size": 14,
+        "chars": 45
+       }
+      ],
+      "largest": {
+       "size": 16,
+       "elements": 1,
+       "weight": 600,
+       "text": "Knowledge",
+       "nextSize": 14
+      },
+      "headings": []
+     },
+     "rows": {
+      "count": 0,
+      "sample": [],
+      "maxChips": 0,
+      "maxColours": 0,
+      "nested": 0,
+      "heights": [],
+      "titleWeightMax": 0
+     },
+     "interactive": {
+      "firstViewport": 8,
+      "measured": 8,
+      "small": 6,
+      "smallSample": [
+       {
+        "what": "Search",
+        "tag": "a",
+        "width": 231,
+        "height": 40
+       },
+       {
+        "what": "Graph",
+        "tag": "a",
+        "width": 231,
+        "height": 40
+       },
+       {
+        "what": "Entities",
+        "tag": "a",
+        "width": 231,
+        "height": 40
+       },
+       {
+        "what": "Live notes",
+        "tag": "a",
+        "width": 231,
+        "height": 40
+       },
+       {
+        "what": "Timeline",
+        "tag": "a",
+        "width": 231,
+        "height": 40
+       },
+       {
+        "what": "Settings",
+        "tag": "a",
+        "width": 231,
+        "height": 40
+       }
+      ],
+      "inputs": 0,
+      "smallInputs": []
+     },
+     "controls": [
+      {
+       "what": "Search",
+       "tag": "a",
+       "top": 0,
+       "bottom": 40,
+       "left": 12,
+       "inFirstViewport": true,
+       "centreAt": 0,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 231,
+       "height": 40
+      },
+      {
+       "what": "Graph",
+       "tag": "a",
+       "top": 44,
+       "bottom": 84,
+       "left": 12,
+       "inFirstViewport": true,
+       "centreAt": 0.1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 231,
+       "height": 40
+      },
+      {
+       "what": "Entities",
+       "tag": "a",
+       "top": 88,
+       "bottom": 128,
+       "left": 12,
+       "inFirstViewport": true,
+       "centreAt": 0.1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 231,
+       "height": 40
+      },
+      {
+       "what": "Live notes",
+       "tag": "a",
+       "top": 132,
+       "bottom": 172,
+       "left": 12,
+       "inFirstViewport": true,
+       "centreAt": 0.2,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 231,
+       "height": 40
+      },
+      {
+       "what": "Timeline",
+       "tag": "a",
+       "top": 176,
+       "bottom": 216,
+       "left": 12,
+       "inFirstViewport": true,
+       "centreAt": 0.2,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 231,
+       "height": 40
+      },
+      {
+       "what": "Settings",
+       "tag": "a",
+       "top": 220,
+       "bottom": 260,
+       "left": 12,
+       "inFirstViewport": true,
+       "centreAt": 0.3,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 231,
+       "height": 40
+      },
+      {
+       "what": "Back to search",
+       "tag": "a",
+       "top": 10,
+       "bottom": 54,
+       "left": 273,
+       "inFirstViewport": true,
+       "centreAt": 0,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Knowledge",
+       "tag": "button",
+       "top": 10,
+       "bottom": 54,
+       "left": 321,
+       "inFirstViewport": true,
+       "centreAt": 0,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 120.9,
+       "height": 44
+      }
+     ],
+     "alphaSteps": [
+      0.5,
+      0.6,
+      0.74,
+      0.8
+     ],
+     "state": {
+      "statusTokens": [
+       "--warning #8a5300",
+       "--success #137333",
+       "--critical #c10007",
+       "--unreachable #b04400",
+       "--destructive #c10007"
+      ],
+      "statusColoured": 0,
+      "offToken": [],
+      "colourOnly": 0,
+      "colourOnlySamples": [],
+      "countsInHeadings": 0,
+      "progressText": 0,
+      "usesSafeTokens": true,
+      "progressElements": 0,
+      "empties": []
+     },
+     "reading": {
+      "bodySize": 16,
+      "lines": [],
+      "contrastChecked": 7,
+      "contrastUnknown": 0,
+      "contrastFails": [],
+      "contrastFailCount": 0,
+      "overflowX": 0,
+      "runningAnimations": 8
+     },
+     "textRuns": 7,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
+     "covered": {
+      "runs": 0,
+      "sample": []
+     },
+     "waitForSeen": true,
+     "pageErrors": [],
+     "url": "/knowledge/chat/c-1001"
+    },
+    "desktop-dark": {
+     "viewport": [
+      1440,
+      900
+     ],
+     "coarse": false,
+     "hierarchy": {
+      "fontSizes": [
+       {
+        "size": 16,
+        "chars": 9
+       },
+       {
+        "size": 14,
+        "chars": 45
+       }
+      ],
+      "largest": {
+       "size": 16,
+       "elements": 1,
+       "weight": 600,
+       "text": "Knowledge",
+       "nextSize": 14
+      },
+      "headings": []
+     },
+     "rows": {
+      "count": 0,
+      "sample": [],
+      "maxChips": 0,
+      "maxColours": 0,
+      "nested": 0,
+      "heights": [],
+      "titleWeightMax": 0
+     },
+     "interactive": {
+      "firstViewport": 8,
+      "measured": 8,
+      "small": 6,
+      "smallSample": [
+       {
+        "what": "Search",
+        "tag": "a",
+        "width": 231,
+        "height": 40
+       },
+       {
+        "what": "Graph",
+        "tag": "a",
+        "width": 231,
+        "height": 40
+       },
+       {
+        "what": "Entities",
+        "tag": "a",
+        "width": 231,
+        "height": 40
+       },
+       {
+        "what": "Live notes",
+        "tag": "a",
+        "width": 231,
+        "height": 40
+       },
+       {
+        "what": "Timeline",
+        "tag": "a",
+        "width": 231,
+        "height": 40
+       },
+       {
+        "what": "Settings",
+        "tag": "a",
+        "width": 231,
+        "height": 40
+       }
+      ],
+      "inputs": 0,
+      "smallInputs": []
+     },
+     "controls": [
+      {
+       "what": "Search",
+       "tag": "a",
+       "top": 0,
+       "bottom": 40,
+       "left": 12,
+       "inFirstViewport": true,
+       "centreAt": 0,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 231,
+       "height": 40
+      },
+      {
+       "what": "Graph",
+       "tag": "a",
+       "top": 44,
+       "bottom": 84,
+       "left": 12,
+       "inFirstViewport": true,
+       "centreAt": 0.1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 231,
+       "height": 40
+      },
+      {
+       "what": "Entities",
+       "tag": "a",
+       "top": 88,
+       "bottom": 128,
+       "left": 12,
+       "inFirstViewport": true,
+       "centreAt": 0.1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 231,
+       "height": 40
+      },
+      {
+       "what": "Live notes",
+       "tag": "a",
+       "top": 132,
+       "bottom": 172,
+       "left": 12,
+       "inFirstViewport": true,
+       "centreAt": 0.2,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 231,
+       "height": 40
+      },
+      {
+       "what": "Timeline",
+       "tag": "a",
+       "top": 176,
+       "bottom": 216,
+       "left": 12,
+       "inFirstViewport": true,
+       "centreAt": 0.2,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 231,
+       "height": 40
+      },
+      {
+       "what": "Settings",
+       "tag": "a",
+       "top": 220,
+       "bottom": 260,
+       "left": 12,
+       "inFirstViewport": true,
+       "centreAt": 0.3,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 231,
+       "height": 40
+      },
+      {
+       "what": "Back to search",
+       "tag": "a",
+       "top": 10,
+       "bottom": 54,
+       "left": 273,
+       "inFirstViewport": true,
+       "centreAt": 0,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Knowledge",
+       "tag": "button",
+       "top": 10,
+       "bottom": 54,
+       "left": 321,
+       "inFirstViewport": true,
+       "centreAt": 0,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 120.9,
+       "height": 44
+      }
+     ],
+     "alphaSteps": [
+      0.5,
+      0.6,
+      0.74,
+      0.8
+     ],
+     "state": {
+      "statusTokens": [
+       "--warning #fbbf24",
+       "--success #4ade80",
+       "--critical #ff7a7e",
+       "--unreachable #fb923c",
+       "--destructive #ff6467"
+      ],
+      "statusColoured": 0,
+      "offToken": [],
+      "colourOnly": 0,
+      "colourOnlySamples": [],
+      "countsInHeadings": 0,
+      "progressText": 0,
+      "usesSafeTokens": true,
+      "progressElements": 0,
+      "empties": []
+     },
+     "reading": {
+      "bodySize": 16,
+      "lines": [],
+      "contrastChecked": 7,
+      "contrastUnknown": 0,
+      "contrastFails": [],
+      "contrastFailCount": 0,
+      "overflowX": 0,
+      "runningAnimations": 8
+     },
+     "textRuns": 7,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
+     "covered": {
+      "runs": 0,
+      "sample": []
+     },
+     "waitForSeen": true,
+     "pageErrors": [],
+     "url": "/knowledge/chat/c-1001"
+    },
+    "iphone-320": {
+     "viewport": [
+      320,
+      844
+     ],
+     "coarse": true,
+     "hierarchy": {
+      "fontSizes": [
+       {
+        "size": 16,
+        "chars": 9
+       },
+       {
+        "size": 12,
+        "chars": 33
+       }
+      ],
+      "largest": {
+       "size": 16,
+       "elements": 1,
+       "weight": 600,
+       "text": "Knowledge",
+       "nextSize": 12
+      },
+      "headings": []
+     },
+     "rows": {
+      "count": 0,
+      "sample": [],
+      "maxChips": 0,
+      "maxColours": 0,
+      "nested": 0,
+      "heights": [],
+      "titleWeightMax": 0
+     },
+     "interactive": {
+      "firstViewport": 7,
+      "measured": 7,
+      "small": 0,
+      "smallSample": [],
+      "inputs": 0,
+      "smallInputs": []
+     },
+     "controls": [
+      {
+       "what": "Back to search",
+       "tag": "a",
+       "top": 10,
+       "bottom": 54,
+       "left": 17,
+       "inFirstViewport": true,
+       "centreAt": 0,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Knowledge",
+       "tag": "button",
+       "top": 10,
+       "bottom": 54,
+       "left": 65,
+       "inFirstViewport": true,
+       "centreAt": 0,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 120.9,
+       "height": 44
+      },
+      {
+       "what": "Search",
+       "tag": "a",
+       "top": 781,
+       "bottom": 831,
+       "left": 25.8,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 50.5,
+       "height": 50
+      },
+      {
+       "what": "Graph",
+       "tag": "a",
+       "top": 781,
+       "bottom": 831,
+       "left": 80.3,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 50.5,
+       "height": 50
+      },
+      {
+       "what": "Entities",
+       "tag": "a",
+       "top": 781,
+       "bottom": 831,
+       "left": 134.8,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 50.5,
+       "height": 50
+      },
+      {
+       "what": "Live notes",
+       "tag": "a",
+       "top": 781,
+       "bottom": 831,
+       "left": 189.3,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 50.5,
+       "height": 50
+      },
+      {
+       "what": "More",
+       "tag": "button",
+       "top": 781,
+       "bottom": 831,
+       "left": 243.7,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 50.5,
+       "height": 50
+      }
+     ],
+     "alphaSteps": [
+      0.5,
+      0.6,
+      0.74,
+      0.8
+     ],
+     "state": {
+      "statusTokens": [
+       "--warning #8a5300",
+       "--success #137333",
+       "--critical #c10007",
+       "--unreachable #b04400",
+       "--destructive #c10007"
+      ],
+      "statusColoured": 0,
+      "offToken": [],
+      "colourOnly": 0,
+      "colourOnlySamples": [],
+      "countsInHeadings": 0,
+      "progressText": 0,
+      "usesSafeTokens": true,
+      "progressElements": 0,
+      "empties": []
+     },
+     "reading": {
+      "bodySize": 16,
+      "lines": [],
+      "contrastChecked": 6,
+      "contrastUnknown": 0,
+      "contrastFails": [],
+      "contrastFailCount": 0,
+      "overflowX": 0,
+      "runningAnimations": 8
+     },
+     "textRuns": 6,
+     "truncated": {
+      "count": 1,
+      "inRows": 0,
+      "sample": [
+       "Live notes (76% shown)"
+      ]
+     },
+     "covered": {
+      "runs": 0,
+      "sample": []
+     },
+     "waitForSeen": true,
+     "pageErrors": [],
+     "url": "/knowledge/chat/c-1001"
+    },
+    "iphone-reduced-motion": {
+     "viewport": [
+      390,
+      844
+     ],
+     "coarse": true,
+     "hierarchy": {
+      "fontSizes": [
+       {
+        "size": 16,
+        "chars": 9
+       },
+       {
+        "size": 12,
+        "chars": 33
+       }
+      ],
+      "largest": {
+       "size": 16,
+       "elements": 1,
+       "weight": 600,
+       "text": "Knowledge",
+       "nextSize": 12
+      },
+      "headings": []
+     },
+     "rows": {
+      "count": 0,
+      "sample": [],
+      "maxChips": 0,
+      "maxColours": 0,
+      "nested": 0,
+      "heights": [],
+      "titleWeightMax": 0
+     },
+     "interactive": {
+      "firstViewport": 7,
+      "measured": 7,
+      "small": 0,
+      "smallSample": [],
+      "inputs": 0,
+      "smallInputs": []
+     },
+     "controls": [
+      {
+       "what": "Back to search",
+       "tag": "a",
+       "top": 10,
+       "bottom": 54,
+       "left": 17,
+       "inFirstViewport": true,
+       "centreAt": 0,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 44,
+       "height": 44
+      },
+      {
+       "what": "Knowledge",
+       "tag": "button",
+       "top": 10,
+       "bottom": 54,
+       "left": 65,
+       "inFirstViewport": true,
+       "centreAt": 0,
+       "pinnedToBottom": false,
+       "primaryFill": false,
+       "width": 120.9,
+       "height": 44
+      },
+      {
+       "what": "Search",
+       "tag": "a",
+       "top": 781,
+       "bottom": 831,
+       "left": 25.8,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 64.5,
+       "height": 50
+      },
+      {
+       "what": "Graph",
+       "tag": "a",
+       "top": 781,
+       "bottom": 831,
+       "left": 94.3,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 64.5,
+       "height": 50
+      },
+      {
+       "what": "Entities",
+       "tag": "a",
+       "top": 781,
+       "bottom": 831,
+       "left": 162.8,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 64.5,
+       "height": 50
+      },
+      {
+       "what": "Live notes",
+       "tag": "a",
+       "top": 781,
+       "bottom": 831,
+       "left": 231.3,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 64.5,
+       "height": 50
+      },
+      {
+       "what": "More",
+       "tag": "button",
+       "top": 781,
+       "bottom": 831,
+       "left": 299.7,
+       "inFirstViewport": true,
+       "centreAt": 1,
+       "pinnedToBottom": true,
+       "primaryFill": false,
+       "width": 64.5,
+       "height": 50
+      }
+     ],
+     "alphaSteps": [
+      0.6,
+      0.74,
+      0.8
+     ],
+     "state": {
+      "statusTokens": [
+       "--warning #8a5300",
+       "--success #137333",
+       "--critical #c10007",
+       "--unreachable #b04400",
+       "--destructive #c10007"
+      ],
+      "statusColoured": 0,
+      "offToken": [],
+      "colourOnly": 0,
+      "colourOnlySamples": [],
+      "countsInHeadings": 0,
+      "progressText": 0,
+      "usesSafeTokens": true,
+      "progressElements": 0,
+      "empties": []
+     },
+     "reading": {
+      "bodySize": 16,
+      "lines": [],
+      "contrastChecked": 6,
+      "contrastUnknown": 0,
+      "contrastFails": [],
+      "contrastFailCount": 0,
+      "overflowX": 0,
+      "runningAnimations": 0
+     },
+     "textRuns": 6,
+     "truncated": {
+      "count": 0,
+      "inRows": 0,
+      "sample": []
+     },
+     "covered": {
+      "runs": 0,
+      "sample": []
+     },
+     "waitForSeen": true,
+     "pageErrors": [],
+     "url": "/knowledge/chat/c-1001"
+    }
+   }
+  }
+ ],
+ "mocks": [
+  {
+   "url": "**/auth/v1/user**",
+   "method": "GET",
+   "hits": 0
+  },
+  {
+   "url": "**/auth/v1/**",
+   "method": "any",
+   "hits": 0
+  },
+  {
+   "url": "**/realtime/**",
+   "method": "any",
+   "hits": 0
+  },
+  {
+   "url": "**/rest/v1/rpc/match_knowledge_chats**",
+   "method": "POST",
+   "hits": 0
+  },
+  {
+   "url": "**/rest/v1/knowledge_chats**",
+   "method": "GET",
+   "hits": 0
+  },
+  {
+   "url": "**/rest/v1/knowledge_graph_edges**",
+   "method": "GET",
+   "hits": 0
+  },
+  {
+   "url": "**/rest/v1/knowledge_clusters**",
+   "method": "GET",
+   "hits": 0
+  },
+  {
+   "url": "**/rest/v1/knowledge_live_notes**",
+   "method": "GET",
+   "hits": 6
+  },
+  {
+   "url": "http://127.0.0.1:59003/**",
+   "method": "any",
+   "hits": 0
+  },
+  {
+   "url": "http://127.0.0.1:59004/api/searchMemories**",
+   "method": "POST",
+   "hits": 0
+  },
+  {
+   "url": "**/rest/v1/**",
+   "method": "any",
+   "hits": 0
+  },
+  {
+   "url": "http://127.0.0.1:54321/**",
+   "method": "any",
+   "hits": 0
+  }
+ ],
+ "blocked": [
+  {
+   "request": "GET https://huggingface.co/Xenova/nomic-embed-text-v1/resolve/main/config.json",
+   "count": 19
+  }
+ ],
+ "unmockedLocal": []
+}
