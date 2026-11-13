@@ -7,6 +7,7 @@ import {
   mkdirSync,
   mkdtempSync,
   readFileSync,
+  realpathSync,
   rmSync,
   writeFileSync,
 } from "node:fs"
@@ -18,7 +19,7 @@ import { afterEach, beforeEach, describe, expect, it } from "vitest"
 // scripts/check.sh runs the four CI checks before a push (argus-config#1013,
 // #1015). pnpm and npx are stubs on PATH inside a throwaway git repo: no
 // network, no real scan. Each stub appends its arguments to calls.txt and exits
-// with the status the test picks.
+// with the status the test picks, and the directory it ran in to dirs.txt.
 
 const root = fileURLToPath(new URL("../", import.meta.url))
 const scriptSource = join(root, "scripts/check.sh")
@@ -40,6 +41,7 @@ const installStubs = () => {
   stub(
     "pnpm",
     `echo "pnpm $*" >> "$CALLS"
+pwd -P >> "$DIRS"
 case "$*" in
   test) [ -z "\${STUB_FAIL_TEST:-}" ] || exit 1 ;;
   lint) [ -z "\${STUB_FAIL_LINT:-}" ] || exit 1 ;;
@@ -48,6 +50,7 @@ esac`,
   stub(
     "npx",
     `echo "npx $*" >> "$CALLS"
+pwd -P >> "$DIRS"
 case "$*" in
   *impeccable*) [ -z "\${STUB_FAIL_DETECT:-}" ] || exit 1 ;;
   *shadcn*) [ -z "\${STUB_BUILD_WRITES:-}" ] || echo regenerated > "$STUB_BUILD_WRITES" ;;
@@ -55,12 +58,24 @@ esac`,
   )
 }
 
-const run = (env: Record<string, string> = {}) =>
-  spawnSync("bash", ["scripts/check.sh"], {
-    cwd: repo,
+const run = (env: Record<string, string> = {}, { script = "scripts/check.sh", cwd = repo } = {}) =>
+  spawnSync("bash", [script], {
+    cwd,
     encoding: "utf8",
-    env: { ...process.env, PATH: `${bin}:${process.env.PATH}`, CALLS: join(bin, "calls.txt"), ...env },
+    env: {
+      ...process.env,
+      PATH: `${bin}:${process.env.PATH}`,
+      CALLS: join(bin, "calls.txt"),
+      DIRS: join(bin, "dirs.txt"),
+      ...env,
+    },
   })
+
+const stepDirectories = () =>
+  readFileSync(join(bin, "dirs.txt"), "utf8")
+    .trim()
+    .split("\n")
+    .map((line) => realpathSync(line))
 
 const calls = () => {
   try {
@@ -91,6 +106,43 @@ afterEach(() => {
 })
 
 describe("scripts/check.sh", () => {
+  // The root comes from the script's own path, not the caller's cwd: another repo's pre-push
+  // gate runs it from its own checkout (frontend#232).
+  it("checks its own tree when run from another git repo", () => {
+    const other = mkdtempSync(join(tmpdir(), "check-script-other-"))
+    try {
+      execFileSync("git", ["init", "-q", "-b", "main", other])
+      execFileSync(
+        "git",
+        ["-c", "user.name=t", "-c", "user.email=t@t", "-C", other, "commit", "-q", "--allow-empty", "-m", "init"],
+      )
+      const otherSha = execFileSync("git", ["-C", other, "rev-parse", "--short", "HEAD"], {
+        encoding: "utf8",
+      }).trim()
+
+      const result = run({}, { script: join(repo, "scripts/check.sh"), cwd: other })
+
+      expect(result.status).toBe(0)
+      expect(result.stdout.trim()).toBe(`check: pass ${git("rev-parse", "--short", "HEAD")}`)
+      expect(result.stdout).not.toContain(otherSha)
+      expect(stepDirectories().every((directory) => directory === realpathSync(repo))).toBe(true)
+    } finally {
+      rmSync(other, { recursive: true, force: true })
+    }
+  })
+
+  it("checks its own tree when run from a directory outside any repo", () => {
+    const outside = mkdtempSync(join(tmpdir(), "check-script-outside-"))
+    try {
+      const result = run({}, { script: join(repo, "scripts/check.sh"), cwd: outside })
+
+      expect(result.status).toBe(0)
+      expect(stepDirectories().every((directory) => directory === realpathSync(repo))).toBe(true)
+    } finally {
+      rmSync(outside, { recursive: true, force: true })
+    }
+  })
+
   it("runs test, detect, build and lint in order, then prints one pass line with the short sha", () => {
     const result = run()
     expect(result.status).toBe(0)

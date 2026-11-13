@@ -24,7 +24,9 @@ set -euo pipefail
 IMPECCABLE_VERSION=3.6.1
 SHADCN_VERSION=4.19.1
 
-builtin cd "$(git rev-parse --show-toplevel)"
+# The root comes from this script's own path, never the caller's cwd: another repo's
+# pre-push gate runs it from its own checkout (frontend#232).
+builtin cd "$(dirname "${BASH_SOURCE[0]}")/.."
 
 fail() {
   echo "check: FAIL at step $1 ($2)" >&2

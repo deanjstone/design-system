@@ -576,6 +576,8 @@ regenerating it (`npx shadcn@4.19.1 build --output ./r`) and committing the
 result, never by hand-merging. No git hook runs it: it is a step you run, and CI
 is the backstop. Its pins live in `scripts/check.sh`; `test/check-script.test.ts`
 fails if they drift from `.github/workflows/design.yml` or `package.json`.
+The script resolves the repo root from its own path, so `bash /path/to/frontend/scripts/check.sh`
+checks this tree from any directory (another repo's pre-push gate calls it that way).
 
 The browser-side geometry check is separate: `pnpm gate:geometry` (see
 [Curve-geometry gate](#curve-geometry-gate)).
